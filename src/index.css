@@ -1,0 +1,22 @@
+@font-face {
+
+  font-family: vazir;
+
+  src: url("./assets/fonts/vazir/Vazir.woff"); /*woff */
+
+  src: url("./assets/fonts/vazir/Vazir.woff") format("woff"),
+  url("./assets/fonts/vazir/Vazir.ttf") format("ttf"),
+  url("./assets/fonts/vazir/Vazir.woff2") format("woff2"); /*eot */
+
+}
+
+
+*{
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+}
+
+body {
+  font-family: vazir;
+}
