@@ -17,7 +17,7 @@ const Login = () => {
                 <div className={style.inputsbox}>
                     <input type="text" id="username" placeholder="نام کاربری" onChange={(e) => setUsername(e.target.value)}/>
                     <input type="password" id="password" placeholder="کلمه عبور" onChange={(e) => setPassword(e.target.value)}/>
-                    <button type="submit" onClick={submitLogin}>ورود</button>
+                    <button type="submit" onClick={submitLogin}>تایید</button>
                 </div>
             </div>
         </React.Fragment>
