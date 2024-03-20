@@ -81,7 +81,7 @@ function Usernamee(){
                 </button>
                 {Usernamee()}
                 </div>
-              <div id="dropdownHover" className={`absolute z-10 ${isDropdownOpen ? '' : 'hidden'} bg-peach divide-y rounded-lg shadow w-44 dark:bg-gray-700`}>
+              <div id="dropdownHover" className={`absolute z-10 ${isDropdownOpen ? '' : 'hidden'} dropdown-me divide-y rounded-lg shadow w-44 dark:bg-gray-700`}>
                 <ul className="py-2 text-sm text-white" aria-labelledby="dropdownDefaultButton">
                   <li><a className="block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600">userpanel</a></li>
                   <li><a href="../public/index.html" onClick={handleLogout} className="block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600">Logout</a></li>
@@ -91,11 +91,11 @@ function Usernamee(){
           </div>
           <div className="flex items-center justify-end">
             <div className="flex items-center justify-end space-x-3 elements-me">
-              <a href="../public/index.html" id="GFG" className="fantasyfont text-white hover:text-blue-900" style={{ fontSize: '20px' }}>element1</a>
-              <a href="../public/index.html" id="GFG" className="fantasyfont text-white hover:text-blue-900" style={{ fontSize: '20px' }}>element2</a>
+              <a href="#" id="GFG" className="fantasyfont text-white hover:text-blue-900" style={{ fontSize: '20px' }}>element1</a>
+              <a href="#" id="GFG" className="fantasyfont text-white hover:text-blue-900" style={{ fontSize: '20px' }}>element2</a>
             </div>
             <div className="flex justify-end">
-              <a href="../public/index.html" className="items-center text-white farsifont" style={{ fontSize: '35px', fontFamily: 'vazir' }} id="GFG">قابلمه</a>
+              <a href="#" className="items-center text-white farsifont" style={{ fontSize: '35px', fontFamily: 'vazir' }} id="GFG">قابلمه</a>
             </div>
           </div>
         </div>
