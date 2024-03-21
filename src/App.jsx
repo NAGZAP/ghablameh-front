@@ -1,16 +1,17 @@
-import { useState } from 'react'
-import './App.css'
-import HelloWorld from '../APIs/HelloWorld'
+import Header from './header.jsx'
+import Footer from './footer.jsx'
+import Button from './Button-signup.jsx';
 
-function App()
-{
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <HelloWorld />
-    </>
-  )
+function App() {
+    return(
+      <>
+        <Header></Header> 
+        <Button></Button>
+        <Footer></Footer>  
+      </>
+
+    );
 }
 
 export default App
