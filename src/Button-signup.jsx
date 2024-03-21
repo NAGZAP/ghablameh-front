@@ -8,7 +8,7 @@ const validationSchema = Yup.object({
   Firstname: Yup.string().required('نام خود را به شکل درست وارد کنید!'),
   Lastname: Yup.string().required('نام خانوادگی خود را به شکل درست وارد کنید!'),
   email: Yup.string().email('فرم نادرست برای ایمیل').required('ایمیل خود را به شکل درست وارد کنید!'),
-  phonenumber: Yup.string().required(),
+  phonenumber: Yup.string().matches(/^\+98\d{10}$/,"فرم شماره تلفن باید به شکل +۹۸۹۹۰۴۰۳۵۰۶۹ باشد!").required(),
   password: Yup.string()
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 'رمز کوتاه تر از ۸ حرف نمی تواند باشد.')
     .required(),
