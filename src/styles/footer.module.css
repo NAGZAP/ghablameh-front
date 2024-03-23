@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.footer {
+ display: grid;
+grid-template-columns: 1fr;
+ gap: 1rem;
+ }
+  .app {
+    overflow-y: auto;
+  
+  }
+.iner-footer
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+}
+ul {
+    margin: 0px;
+    padding: 0px;
+  }
+  .footersection {
+    background: #26577c;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+  .footer-cta {
+  border-bottom: 1px solid #ca3918;
+  }
+  .single-cta i {
+  color: #ff5e14;
+  font-size: 30px;
+  float: left;
+  margin-top: 8px;
+  }
+  .cta-text {
+  padding-left: 15px;
+  display: inline-block;
+  }
+  .cta-text h4 {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  }
+  .cta-text span {
+  color: #ffefe6;
+  font-size: 15px;
+  }
+  .footer-content {
+  position: relative;
+  z-index: 2;
+  }
+  .footer-pattern img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 330px;
+  background-size: cover;
+  background-position: 100% 100%;
+  }
+  .footer-logo {
+  margin-bottom: 30px;
+  }
+  .footer-logo img {
+    max-width: 200px;
+  }
+  .footer-text p {
+  margin-bottom: 14px;
+  font-size: 14px;
+      color: #ffffff;
+  line-height: 28px;
+  }
+  .footer-social-icon span {
+  color: #fffefe;
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 20px;
+  }
+  .footer-social-icon a {
+  color: #fff;
+  font-size: 16px;
+  margin-right: 15px;
+  }
+  
+  .facebook-bg {
+    display: inline-block;
+    width: 40px; /* Adjust the width and height to your desired size */
+    height: 40px;
+    border-radius: 50%; /* Creates a circular shape */
+    background-color: #3b5998; /* Facebook's primary color */
+    text-align: center;
+    line-height: 40px;
+  }
+  
+  .facebook-bg {
+    font-size: 14px;
+    text-align: left;
+     /* Adjust the font size to make the "f" icon smaller or larger */
+    color: rgb(246, 229, 229); /* Icon color */
+  }
+  .twitter-bg{
+  background: #55ACEE;
+  display: inline-block;
+  width: 40px; /* Adjust the width and height to your desired size */
+  height: 40px;
+  border-radius: 50%; /* Creates a circular shape */
+  text-align: center;
+  line-height: 40px;
+  }
+  .insta-bg{
+  background: #d139a3;
+  display: inline-block;
+  width: 40px; /* Adjust the width and height to your desired size */
+  height: 40px;
+  border-radius: 50%; /* Creates a circular shape */
+  text-align: center;
+  line-height: 40px;
+  }
+  .tel-bg{
+    background: #398fd1;
+    display: inline-block;
+    width: 40px; /* Adjust the width and height to your desired size */
+    height: 40px;
+    border-radius: 50%; /* Creates a circular shape */
+    text-align: center;
+    line-height: 40px;
+    }
+  .footer-widget-heading h3 {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  position: relative;
+  }
+  .footer-widget-heading h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -15px;
+  height: 2px;
+  width: 50px;
+  background: #ff5e14;
+  }
+  .footer-widget ul li {
+  display: inline-block;
+  float: left;
+  width: 50%;
+  margin-bottom: 12px;
+  }
+  .footer-widget ul li a:hover{
+  color: #ff5e14;
+  }
+  .footer-widget ul li a {
+  color: #efe5db;
+  text-transform: capitalize;
+  }
+
+  .subscribe-form button {
+    position: absolute;
+    right: 0;
+    background: #ff5e14;
+    padding: 13px 20px;
+    border: 1px solid #ff5e14;
+    top: 0;
+  }
+  .subscribe-form button .telegram{
+  color: #fff;
+  font-size: 22px;
+  transform: rotate(-6deg);
+  }
+  .copyright-area{
+  background: #202020;
+  padding: 1px 0;
+  }
+  .copyright-text p {
+  padding-top: 20px;
+  font-size: 14px;
+  color: #878787;
+  }
+  .copyright-text p a{
+  color: #ff5e14;
+  }
+  .footer-menu li {
+  display: inline-block;
+  margin-left: 20px;
+  }
+  .footer-menu li:hover a{
+  color: #ff5e14;
+  }
+  .footer-menu li a {
+  font-size: 14px;
+  color: #878787;
+  }

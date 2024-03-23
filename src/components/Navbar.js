@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Avatar from 'react-avatar';
-import './Navbar.css';
+import '../styles/Navbar.css';
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
