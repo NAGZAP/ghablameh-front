@@ -1,16 +1,24 @@
-import { useState } from 'react'
-import './App.css'
-import HelloWorld from '../APIs/HelloWorld'
-
-function App()
-{
-  const [count, setCount] = useState(0)
-
+import { useState } from 'react';
+import {
+  BrowserRouter,
+  Routes, 
+  Route,
+} from "react-router-dom";
+import Login from './components/login';
+import './App.css';
+import Footer from './components/footer';
+import Navbar from './components/Navbar';
+function App() {
   return (
-    <>
-      <HelloWorld />
-    </>
-  )
+    <BrowserRouter>
+    <Routes>
+      <Route  path="/" element={<Login />} />
+      <Route path="/footer" element={<Footer />} />
+      <Route path="/navbar" element={<Navbar />} />
+    </Routes>
+    </BrowserRouter>
+  );
 }
+export default App;
 
-export default App
+
