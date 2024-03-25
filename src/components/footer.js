@@ -12,7 +12,6 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faTelegram} from '@fortawesome/free-brands-svg-icons';
 const Footer = () => {
   return (
-   
     <div className={styles.app}>
     <footer className={styles.footersection}>
       <div className={`${styles.container} mx-auto`}>
