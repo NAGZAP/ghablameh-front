@@ -2,7 +2,7 @@ import '../styles/PageNotFound.css';
 
 function PageNotFound() {
     return (
-        <div>
+        <div className="page-not-found">
 
             <div className='size-me'>
                 <section className="error-container">
@@ -13,7 +13,11 @@ function PageNotFound() {
             </div>
 
             <div className='flex justify-center'>
-                <a href="#" className="text-white home-link">Back to Homepage</a>
+                <h3 className="text-white">!صفحه مورد نظر یافت نشد</h3>
+            </div>
+
+            <div className='flex justify-center'>
+                <a href="#" className="text-white home-link">بازگشت به صفحه اصلی</a>
             </div>
 
         </div>
