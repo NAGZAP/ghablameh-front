@@ -36,8 +36,8 @@ function SignUp() {
         gender: null,
         birthdate: null
       };
-  
-      await axios.post('https://gheychi-api.comp-iust.ir/auth/signup/', formattedData);
+      /* https://ghablameh.fiust.ir/api/v1/swagger/ */
+      await axios.post('https://ghablameh.fiust.ir/api/v1/auth/signup/', formattedData);
       console.log('Data sent successfully!');
     } catch (error) {
       console.error('Error sending data:', error);
@@ -89,12 +89,12 @@ function SignUp() {
         {errors.confirmPassword && <p className={styles.Errors}>{"*"+errors.confirmPassword.message}</p>}
         <br />
         <p>
+          <input className={styles.button} type="submit" value="ثبت نام" />
+        </p>
+        <p>
           <a className={styles.link_to_signin} href="#">
             قبلا ثبت نام کرده اید؟
           </a>
-        </p>
-        <p>
-          <input className={styles.button} type="submit" value="ثبت نام" />
         </p>
       </form>
     </div>
