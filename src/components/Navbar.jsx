@@ -3,11 +3,25 @@ import Avatar from 'react-avatar';
 import '../styles/Navbar.css';
 // import isLoggedIn from '../APIs/AuthManager'
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [userData, setUserData] = useState(null);
+
+  //user data
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get('https://api.example.com/userdata');
+        setUserData(response.data);
+      } catch (error) {
+        console.error('Error fetching user data: ', error);
+      }
+    };
+    fetchUserData();
+  }, []);
 
   //dropdown
   useEffect(() => {
@@ -27,41 +41,41 @@ function Navbar() {
     }
   };
 
-  //log in log out
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-
-  };
-
+  //log out
   const handleLogout = () => {
     setIsLoggedIn(false);
     setIsDropdownOpen(false); // Close the dropdown menu on logout
   };
 
-  function UserProfile() {
-    if (!isLoggedIn) {
+  function UserAvatar() {
+    if (isLoggedIn) {
       return (
-        <div className="user-profile flex items-center p-1">
-          <Avatar onClick={toggleDropdown} name="emma elise" size="60" round={true} maxInitials={1} />
+        <div className="flex items-center p-1">
+          {userData && userData.profilePicture ? (
+            <img src={userData.profilePicture} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
+          ) : (
+            <Avatar onClick={toggleDropdown} name="emma elise" size="60" round={true} maxInitials={1} />
+          )}
         </div>
       );
     }
   }
 
-  function Username() {
-    if (!isLoggedIn) {
+  function Username(username) {
+    if (isLoggedIn) {
       return (
-        <h6 className="text-white vazir" style={{ marginLeft: '15px', fontSize: '20px' }}>emma elise</h6>
+
+        <h6 className="text-white vazir" style={{ marginLeft: '15px', fontSize: '20px' }}>{username}</h6>
       )
     }
   }
 
   function LogInButton() {
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       return (
         <div className='flex justify-between items-center'>
           <div style={{ marginRight: '10px' }}><Link to="/" className='text-white' style={{ fontSize: '18px', fontFamily: 'vazir' }}>وارد شوید</Link></div>
-          <div><h6 className='text-white' style={{ fontSize: '23px', fontFamily: 'vazir' , marginRight: '10px' }}>/</h6></div>
+          <div><h6 className='text-white' style={{ fontSize: '23px', fontFamily: 'vazir', marginRight: '10px' }}>/</h6></div>
           <div><Link to="/" className='text-white' style={{ fontSize: '18px', fontFamily: 'vazir' }}>ثبت نام کنید</Link></div>
         </div>
       );
@@ -77,8 +91,14 @@ function Navbar() {
             <div ref={dropdownRef}>
               {/* Avatar, username and Login button */}
               <div className="flex justify-between items-center">
-                {UserProfile()}
-                {Username()}
+                {userData && (
+                  <>
+                    {UserAvatar()}
+                    {Username(userData.username)}
+                    
+                  </>
+                )}
+
                 {LogInButton()}
               </div>
 
