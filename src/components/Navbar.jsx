@@ -1,20 +1,21 @@
 import { useState, useEffect, useRef } from 'react';
 import Avatar from 'react-avatar';
 import '../styles/Navbar.css';
-// import isLoggedIn from '../APIs/AuthManager'
+import isLoggedIn from '../APIs/AuthManager'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [userData, setUserData] = useState(null);
+
 
   //fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
+        const response = await axios.get('https://aaajsonplaceholder.typicode.com/users/1');
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data: ', error);
@@ -42,10 +43,11 @@ function Navbar() {
   };
 
   //log out
-  const handleLogout = () => {
-    setIsLoggedIn(false);
+  async function handleLogout(){
+    setUserData(null); // Clear user data
     setIsDropdownOpen(false); // Close the dropdown menu on logout
-  };
+    await axios.post('https://axsdccdf/logout');
+  }
 
   function UserAvatar() {
     if (!isLoggedIn) {
@@ -105,7 +107,7 @@ function Navbar() {
               <div className={`absolute z-10 ${isDropdownOpen ? '' : 'hidden'} rounded-lg shadow dropdown-me`}>
                 <ul className="py-1 text-sm text-white">
                   <li><a className="block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600">userpanel</a></li>
-                  <li><a href="#" onClick={handleLogout} className="block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600">Logout</a></li>
+                  <li><a onClick={handleLogout} className="block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600">Logout</a></li>
                 </ul>
               </div>
             </div>
@@ -114,11 +116,11 @@ function Navbar() {
           {/* Elements - Logo */}
           <div className="flex items-center justify-end">
             <div className="flex items-center justify-end space-x-3 elements-me">
-              <a href="../public/index.html" id="GFG" className="text-white hover:text-blue-900" style={{ fontSize: '20px' }}>element1</a>
-              <a href="../public/index.html" id="GFG" className="text-white hover:text-blue-900" style={{ fontSize: '20px' }}>element2</a>
+              <a id="GFG" className="text-white hover:text-blue-900" style={{ fontSize: '20px' }}>element1</a>
+              <a id="GFG" className="text-white hover:text-blue-900" style={{ fontSize: '20px' }}>element2</a>
             </div>
             <div className="flex justify-end">
-              <a href="../public/index.html" className="items-center text-white " style={{ fontSize: '35px', fontFamily: 'vazir' }} id="GFG">قابلمه</a>
+              <a className="items-center text-white " style={{ fontSize: '35px', fontFamily: 'vazir' }} id="GFG">قابلمه</a>
             </div>
           </div>
 
