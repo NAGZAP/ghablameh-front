@@ -1,0 +1,31 @@
+body{
+    background-color: rgb(176, 159, 228);
+}
+
+.button-me {
+    width: 100px; /* Adjust the width as needed */
+    margin: 20px;
+    padding: 5px;
+    background-color: rgb(38, 87, 124);
+}
+
+.button-me:hover{
+    background-color: rgb(19, 21, 22);
+    color: white;
+}
+
+.bg-black {
+    background-color: rgba(0, 0, 0, 1); /* Black background color */
+}
+
+.bg-opacity-30 {
+    background-color: rgba(0, 0, 0, 0.3); /* 30% opacity black background */
+}
+
+.backdrop-blur-sm {
+    backdrop-filter: blur(4px); /* Apply a small blur effect */
+}
+.full-screen {
+    position: fixed;
+    inset: 0;
+}
