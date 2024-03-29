@@ -10,11 +10,11 @@ function Navbar() {
   const dropdownRef = useRef(null);
   const [userData, setUserData] = useState(null);
 
-  //user data
+  //fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('https://api.example.com/userdata');
+        const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data: ', error);
@@ -48,30 +48,29 @@ function Navbar() {
   };
 
   function UserAvatar() {
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       return (
         <div className="flex items-center p-1">
           {userData && userData.profilePicture ? (
             <img src={userData.profilePicture} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
           ) : (
-            <Avatar onClick={toggleDropdown} name="emma elise" size="60" round={true} maxInitials={1} />
+            <Avatar onClick={toggleDropdown} name={userData.name} size="60" round={true} maxInitials={1} />
           )}
         </div>
       );
     }
   }
 
-  function Username(username) {
-    if (isLoggedIn) {
+  function Username() {
+    if (!isLoggedIn && userData) {
       return (
-
-        <h6 className="text-white vazir" style={{ marginLeft: '15px', fontSize: '20px' }}>{username}</h6>
-      )
+        <h6 className="text-white vazir" style={{ marginLeft: '15px', fontSize: '20px' }}>{userData.name}</h6>
+      );
     }
   }
 
   function LogInButton() {
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
       return (
         <div className='flex justify-between items-center'>
           <div style={{ marginRight: '10px' }}><Link to="/" className='text-white' style={{ fontSize: '18px', fontFamily: 'vazir' }}>وارد شوید</Link></div>
