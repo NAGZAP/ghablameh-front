@@ -2,20 +2,22 @@ import { useState, useEffect, useRef } from 'react';
 import Avatar from 'react-avatar';
 import '../styles/Navbar.css';
 import isLoggedIn from '../APIs/AuthManager'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+// import Router from 'next/router';
+
 function Navbar() {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [userData, setUserData] = useState(null);
-
+  const navigate = useNavigate();
 
   //fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
-      try {
-        const response = await axios.get('https://aaajsonplaceholder.typicode.com/users/1');
+      try { //https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi/me
+        const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data: ', error);
@@ -44,13 +46,18 @@ function Navbar() {
 
   //log out
   async function handleLogout(){
-    setUserData(null); // Clear user data
     setIsDropdownOpen(false); // Close the dropdown menu on logout
-    await axios.post('https://axsdccdf/logout');
+
+    setUserData(null); // Clear user data
+    localStorage.removeItem('access-token');
+    localStorage.removeItem('refresh-token');
+
+    navigate('/');
   }
 
+
   function UserAvatar() {
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
       return (
         <div className="flex items-center p-1">
           {userData && userData.profilePicture ? (
@@ -62,17 +69,17 @@ function Navbar() {
       );
     }
   }
-
   function Username() {
-    if (!isLoggedIn && userData) {
+    if (isLoggedIn && userData) {
       return (
+        //{userData.first_name} {userData.last_name}
         <h6 className="text-white vazir" style={{ marginLeft: '15px', fontSize: '20px' }}>{userData.name}</h6>
       );
     }
   }
 
   function LogInButton() {
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       return (
         <div className='flex justify-between items-center'>
           <div style={{ marginRight: '10px' }}><Link to="/" className='text-white' style={{ fontSize: '18px', fontFamily: 'vazir' }}>وارد شوید</Link></div>
