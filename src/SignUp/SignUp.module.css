@@ -1,56 +1,24 @@
-/* body {
-  margin: 0 auto;
-  font-family: Arial;   Optional
-} */
+/* Main Body */
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap');
 body {
   direction: rtl;
-  background-color: #EBE4D1;
-  font-family: "Vazirmatn","Arabic Typesetting", sans-serif;
+  /* B4B4B3 */
+  background-color: #ffffff;
+  font-family: "Vazir","Vazirmatn","Arabic Typesetting", sans-serif;
   font-optical-sizing: auto;
   font-weight: 200;
   font-style: normal;
   font-size:9pt;
+  background-image: url('../assets/colorkit.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+/* Button */
 .button{
-  background-color: #26577C;
-  color: white;
-  padding:10px 20px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  margin: 5px;
-
+  @apply bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 px-20 rounded-full border-none cursor-pointer mt-1 mb-1;
 }
-.button:hover{
-  background-color:#E55604;
-}
-.zone {
-  /*padding:30px 50px;*/
-  margin-right: 200px;
-  margin-left: 200px ;
-  color:#B4B4B3;
-  font-size:2em;
-  border-radius:4px;
-  border:1px solid #bbb;
-  transition: all 0.3s linear;
-}
-@media only screen and (max-width: 900px) {
-  .zone {
-    font-size: 1rem;
-    margin-right: 40px;
-    margin-left: 40px ;
-  }
-}
-
-.zone:hover {
-  -webkit-box-shadow:#E55604 0px 5px 15px;
-  -moz-box-shadow:#E55604 0px 5px 15px, inset #E55604 0px -10px 20px;
-  -o-box-shadow:#E55604 0px 5px 15px, inset #E55604 0px -10px 20px;
-  box-shadow:#E55604 0px 5px 15px;
-}
-/* Main Form */
-.form_style {  
+/* Main Form zone and card */
+/* .form_style {  
   justify-content: center;
   align-items: center;  
   display: flex;
@@ -60,10 +28,11 @@ body {
 }
 @media only screen and (max-width: 600px) {
   .form_style {
-      font-size: 0.5em;
+      font-size: 1.5em;
       padding: 0;
   }
-}
+}  */
+
 .form_zone {
   margin-top: 30px;
   margin-right: 200px;
@@ -73,31 +42,25 @@ body {
   color:#26577C;
   font-size:1rem;
   border-radius:4px;
-  background-color : #B4B4B3;
-  border:1px solid #B4B4B3;
+  background-color : #EBE4D1;
+  border:1px solid #EBE4D1;
   transition: all 0.3s linear;
 }
-.form_zone:hover {
+/* .form_zone:hover {
   -webkit-box-shadow:#E55604 0px 5px 15px;
   -moz-box-shadow:#E55604 0px 5px 15px, inset #E55604 0px -10px 20px;
   -o-box-shadow:#E55604 0px 5px 15px, inset #E55604 0px -10px 20px;
   box-shadow:#E55604 0px 5px 15px;
-}
+} */
 @media only screen and (max-width: 900px) {
   .form_zone {
     margin-right: 100px;
     margin-left: 100px ;
   }
-}
-input{
-    width:auto;
-    padding: 10px 10px;
-    margin: 0px 1px 5px 2px;
-    box-sizing: border-box;
-    border: 2px solid #26577C;
-    border-radius: 4px;
-  }
-input:focus { 
+} 
+
+/* Input forms */
+/* input:focus { 
     outline: none;
     border: 3px solid #E55604;
   }
@@ -105,7 +68,40 @@ input::placeholder {
     color: #B4B4B3;
     font-size: 1em;
     font-style: italic;
+  }   */
+/*  */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+}
+
+.signup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #EBE4D1;
+  border-radius: 10px;
+  padding: 20%; /* Increase the padding to make the box bigger */
+  border: 2px solid rgba(0, 0, 0, 0.298); /* Add a black border */
+
+  /* Responsive Adjustments */
+  width: 100%;
+  max-width: 1000px; /* Increase the max-width to make the box bigger */
+
+  @media (max-width: 768px) {
+    padding: 4%; /* Increase the padding for smaller screens */
+    margin: 10px; /* Adjust the margin for smaller screens */
   }
+}
 .link_to_signin{
     color: #26577C;
     text-decoration: none;
@@ -114,14 +110,12 @@ input::placeholder {
   color: #E55604;
   text-decoration: none;
 }
-.center{
-  text-align: center;
-}
+
 p{
   text-align: center;
 }
 .Errors{
   color: #E55604;
   font-size: small;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
 }
