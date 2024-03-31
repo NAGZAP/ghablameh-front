@@ -9,7 +9,7 @@ body {
   font-weight: 200;
   font-style: normal;
   font-size:9pt;
-  background-image: url('../assets/colorkit.png');
+  background-image: url('../assets/colorkit1.png');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -88,7 +88,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #EBE4D1;
+  background-color: #ffffff78;
   border-radius: 10px;
   padding: 20%; /* Increase the padding to make the box bigger */
   border: 2px solid rgba(0, 0, 0, 0.298); /* Add a black border */
