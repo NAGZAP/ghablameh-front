@@ -15,7 +15,7 @@ const validationSchema = Yup.object({
     .required(),
 });
 
-function SignUp() {
+function Login() {
   const {
     register,
     handleSubmit,
@@ -84,4 +84,4 @@ function SignUp() {
     </div>
   );
 }
-export default SignUp;
+export default Login;
