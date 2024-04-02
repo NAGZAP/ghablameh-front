@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import styles from '../styles/updateinfo.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Update = () => {
   const [birthdate, setBirthdate] = useState('');
   const [gender, setGender] = useState('');
@@ -12,19 +14,50 @@ const Update = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [avatar, setAvatar] = useState('');
+  const [formErrors, setFormErrors] = useState([]);
 
   const togglePasswordVisibility = () => {
-    setShowPassword(prevState => !prevState);
+    setShowPassword((prevState) => !prevState);
   };
 
-  const handleFormSubmit = e => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (newPassword !== confirmPassword) {
-      // Handle password mismatch error
-      return;
+    const errors = [];
+
+    if (!birthdate) {
+      errors.push('تاریخ تولد را وارد کنید');
     }
 
+    if (!gender) {
+      errors.push('جنسیت را انتخاب کنید');
+    }
+
+    if (!username) {
+      errors.push('نام کاربری را وارد کنید');
+    }
+
+    if (!currentPassword) {
+      errors.push('رمز عبور فعلی را وارد کنید');
+    }
+
+    if (!newPassword) {
+      errors.push('رمز عبور جدید را وارد کنید');
+    }
+
+    if (!confirmPassword) {
+      errors.push('تأیید رمز عبور جدید را وارد کنید');
+    }
+
+    if (newPassword !== confirmPassword) {
+      errors.push('رمز عبور جدید و تأیید رمز عبور مطابقت ندارند');
+    }
+
+    
+    if (errors.length > 0) {
+      alert(errors.join('\n')); // Display error messages in an alert
+      return;
+    }
     // Submit the form with all the data
     const formData = {
       birthdate,
@@ -33,17 +66,17 @@ const Update = () => {
       currentPassword,
       newPassword,
       confirmPassword,
-      avatar
+      avatar,
     };
 
     // Perform form submission
     console.log(formData);
   };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
-    reader.onload = e => {
+    reader.onload = (e) => {
       let img = e.target.result;
       setAvatar(img);
     };
@@ -55,6 +88,15 @@ const Update = () => {
       <div className={styles.card}>
         <h2 className={styles.title}>به‌روزرسانی اطلاعات کاربر</h2>
         <form onSubmit={handleFormSubmit} className={styles.form}>
+          {formErrors.length > 0 && (
+            <div className={styles.errorContainer}>
+              <ul className={styles.errorList}>
+                {formErrors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
           <div className={styles.formGroup}>
             <div className={styles.avatarimg}>
               <img src={avatar} className={styles.avatar} alt="" />
@@ -69,8 +111,9 @@ const Update = () => {
               type="date"
               id="birthdate"
               value={birthdate}
-              onChange={e => setBirthdate(e.target.value)}
+              onChange={(e) => setBirthdate(e.target.value)}
               className={styles.input}
+              required
             />
           </div>
           <div className={styles.formGroup}>
@@ -80,8 +123,9 @@ const Update = () => {
             <select
               id="gender"
               value={gender}
-              onChange={e => setGender(e.target.value)}
+              onChange={(e) => setGender(e.target.value)}
               className={styles.input}
+              required
             >
               <option value="">انتخاب جنسیت</option>
               <option value="مرد">مرد</option>
@@ -97,8 +141,9 @@ const Update = () => {
               type="text"
               id="username"
               value={username}
-              onChange={e => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
               className={styles.input}
+              required
             />
           </div>
           <div className={styles.formGroup}>
@@ -110,8 +155,9 @@ const Update = () => {
                 type={showPassword ? 'text' : 'password'}
                 id="currentPassword"
                 value={currentPassword}
-                onChange={e => setCurrentPassword(e.target.value)}
+                onChange={(e) => setCurrentPassword(e.target.value)}
                 className={styles.input}
+                required
               />
               <FontAwesomeIcon
                 icon={showPassword ? faEyeSlash : faEye}
@@ -129,8 +175,9 @@ const Update = () => {
                 type={showPassword ? 'text' : 'password'}
                 id="newPassword"
                 value={newPassword}
-                onChange={e => setNewPassword(e.target.value)}
+                onChange={(e) => setNewPassword(e.target.value)}
                 className={styles.input}
+                required
               />
               <FontAwesomeIcon
                 icon={showPassword ? faEyeSlash : faEye}
@@ -148,8 +195,9 @@ const Update = () => {
                 type={showPassword ? 'text' : 'password'}
                 id="confirmPassword"
                 value={confirmPassword}
-                onChange={e => setConfirmPassword(e.target.value)}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 className={styles.input}
+                required
               />
               <FontAwesomeIcon
                 icon={showPassword ? faEyeSlash : faEye}
