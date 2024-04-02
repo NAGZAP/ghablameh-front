@@ -53,7 +53,7 @@ function SignUp() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <p className="max font-semibold text-gray-900 text-4xl dark:text-template-custom-blue text-center">ثبت نام</p>
           {/* FName */}
-          <div className="w-72 mt-4 mb-1 mr-20 ml-20">
+          <div className="w-72 mt-10 mb-1 mr-20 ml-20">
             <div className="relative w-full min-w-[200px] h-10">
               <input 
               className="peer w-full h-full bg-transparent text-template-custom-blue                      
@@ -173,7 +173,9 @@ function SignUp() {
 
         <br/>
         <p>
-          <input className={styles.button} type="submit" value="ثبت نام" />
+        <div className="w-72 mb-1 mr-20 ml-20">
+          <input className={styles.button +" "+"peer w-full h-[40px] bg-template-custom-blue text-white outline-none focus:outline-none disabled:bg-template-custom-orange disabled:border-0 transition-all rounded-full cursor-pointer"} type="submit" value="ثبت نام" />
+        </div>
         </p>
         <p>
           <a className={styles.link_to_signin} href="#">
