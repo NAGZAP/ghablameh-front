@@ -9,6 +9,7 @@ import './App.css';
 import Footer from './components/footer';
 import Navbar from './components/Navbar';
 import Update from './components/info';
+import Register from './components/org';
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +18,7 @@ function App() {
       <Route path="/footer" element={<Footer />} />
       <Route path="/Navbar" element={<Navbar />} />
       <Route path="/Update" element={<Update />} />
+      <Route path="/Register" element={<Register />} />
     </Routes>
     </BrowserRouter>
   );
