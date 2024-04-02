@@ -1,0 +1,110 @@
+/* body{
+    font-family: 'vazir', sans-serif;
+    font-weight: 500; 
+} */
+
+/* button */
+.update-button-me , .submit-button-me , .button-pass-me {
+    width: 100px;
+    margin: 20px;
+    padding: 5px;
+    color: white;
+    background-color: rgb(38, 87, 124);
+    font-family: 'vazir';
+    font-weight: 500;
+}
+
+.close-button-me {
+    width: 30px;
+    margin-top: 0.25px;
+    padding: 2px;
+    color: white;
+    color: rgba(38, 87, 124, 0.8);
+}
+
+.close-button-me:hover,
+.update-button-me:hover,
+.submit-button-me:hover {
+    background-color: rgb(14, 64, 101);
+    color: white;
+}
+
+/* esentials */
+.bg-white-me {
+    background-color: rgb(255, 255, 255);
+}
+.bg-opacity-30 {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.full-screen {
+    position: fixed;
+    inset: 0;
+}
+.text-right {
+    text-align: right;
+  }
+
+/* input */
+input:placeholder-shown {
+    background-color: white;
+    border: 1px solid rgb(38, 87, 124);
+    margin: 2px;
+    text-align: right;
+    font-family: 'vazir';
+  }
+
+input::placeholder {
+    font: 0.9rem/0.9 'vazir'; 
+}
+
+
+/* lable */
+label{
+    font-family: 'vazir', sans-serif;
+    font-weight: bold; /* Bold font weight */
+}
+
+/* profile pic */
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 5px;
+}
+.custom-file-upload:hover {
+    background-color: #e0e0e0;
+}
+
+.circle-edit {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+.circle-edit img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.meee {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font: 0.9rem/0.9 'vazir'; 
+    position: absolute;
+}
+/* other */
+.modal-me {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
