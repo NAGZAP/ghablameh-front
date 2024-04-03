@@ -53,6 +53,14 @@ h3{
   }
 
 /* input */
+input{
+    background-color: white;
+    border: 1px solid rgb(38, 87, 124);
+    margin: 2px;
+    text-align: right;
+    font-family: 'vazir';
+    outline: none;
+}
 
 input:placeholder-shown {
     background-color: white;
@@ -61,10 +69,32 @@ input:placeholder-shown {
     text-align: right;
     font-family: 'vazir';
   }
+
 input::placeholder {
     font: 0.9rem/0.9 'vazir'; 
 }
-   
+
+input:focus{
+    background-color: white;
+    border: 1px solid rgb(38, 87, 124);
+}
+
+input:hover{
+    background-color: white;
+    /* border: 1px solid rgb(38, 87, 124); */
+}
+input[type="password"] {
+    border-radius: 0.375rem
+
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+
 /* other */
 .modal-me {
     display: flex;

@@ -10,21 +10,22 @@ function Updateorg() {
     const [userData, setUserData] = useState(null);
     useEffect(() => {
         const fetchUserData = async () => {
-          try { //https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/Organization/me
-            const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
-            setUserData(response.data);
-          } catch (error) {
-            console.error('Error fetching user data: ', error);
-          }
+            try { //https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/Organization/me
+                const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
+                setUserData(response.data);
+            } catch (error) {
+                console.error('Error fetching user data: ', error);
+            }
         };
         fetchUserData();
-      }, []);
+    }, []);
 
-    //pic
+    //read and save pic
+    const [profilePic, setProfilePic] = useState('');
     const [imagePreview, setImagePreview] = useState('');
     const fileInputRef = useRef(null);
 
-    const displayImage = (event) => {
+    const handleImage = (event) => {
         const file = event.target.files[0];
         let reader = new FileReader();
 
@@ -35,6 +36,12 @@ function Updateorg() {
         if (file) {
             reader.readAsDataURL(file);
         }
+
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onload = (e) => {
+            let img = e.target.result;
+            setProfilePic(img);
+        };
     };
 
     // model
@@ -43,7 +50,6 @@ function Updateorg() {
     const onClose = () => {
         setShowMyModel(false);
     };
-
     const handleOnClose = (e) => {
         if (e.target.id === "close") onClose();
     };
@@ -53,7 +59,7 @@ function Updateorg() {
         return (
             <div className="flex justify-center mt-4">
                 <label htmlFor="fileInput" className="relative w-20 h-20 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center cursor-pointer">
-                    <input name='image' type="file" id="fileInput" ref={fileInputRef} className="hidden" onChange={displayImage} accept="image/*" />
+                    <input name='profilepic' type="file" id="fileInput" ref={fileInputRef} className="hidden" onChange={handleImage} accept="image/*" />
                     {imagePreview ? (
                         <div className="w-full h-full" style={{ backgroundImage: `url(${imagePreview})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
                     ) : (
@@ -66,64 +72,91 @@ function Updateorg() {
         );
     }
 
+    //information
+    const [name, setName] = useState('');
+    const [adminName, setAdminName] = useState('');
+    const [adminUsername, setAdminUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [adminLastName, setAdminLastName] = useState('');
+
     function userInfo() {
         return (
             <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5 ">
 
                 <div className="sm:col-span-2 p-2 ">
                     <label className="block mb-2 text-sm text-gray-90 text-right"> نام سازمان </label>
-                    <input  name="name" id="name" className=" input-me text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام سازمان " />
+                    <input name="name" onChange={(e) => setName(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام سازمان " />
                 </div>
-                <div className="sm:col-span-2">
+                <div className="sm:col-span-2 p-2">
                     <label className="block mb-2 text-sm text-gray-90 text-right">نام مدیر سازمان</label>
-                    <input name="admin_name" id="name" className=" input-me text-gray-900 rounded-md block w-full p-2.5" placeholder="نام کاربری" />
+                    <input name="adminName" onChange={(e) => setAdminName(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام " />
+                    <input name="adminLastName" onChange={(e) => setAdminLastName(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام خانوادگی" />
                 </div>
                 <div className="sm:col-span-2 p-2 ">
                     <label className="block mb-2 text-sm text-gray-90 text-right"> نام کاربری مدیر سازمان </label>
-                    <input  name="admin_username" id="name" className=" input-me text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام سازمان " />
+                    <input name="adminUsername" onChange={(e) => setAdminUsername(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام کاربری مدیر سازمان " />
                 </div>
                 <div className="sm:col-span-2 p-2 ">
                     <label className="block mb-2 text-sm text-gray-90 text-right"> ایمیل مدیر سازمان</label>
-                    <input  name="email" id="name" className=" input-me text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام سازمان " />
+                    <input name="email" onChange={(e) => setEmail(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" ایمیل مدیر سازمان" />
                 </div>
-                
 
             </div>
         );
     }
-
+    //password
+    const [currentPass, setCurrentPass] = useState('');
+    const [newPass, setNewPass] = useState('');
+    const [confirmNewPass, setConfirmNewPass] = useState('');
     function PasswordFields() {
-    const [showPasswordFields, setShowPasswordFields] = useState(false);
 
-    const togglePasswordFields = () => {
-        setShowPasswordFields(!showPasswordFields);
+        return (
+            <div className='flex justify-center flex-col'>
+                <div className='flex justify-center'>
+                    <h3 className='flex justify-center p2 mb-1 changepassbutton text-base'>تغییر رمز عبور</h3>
+                </div>
+                <div className="border-t my-4"></div>
+                <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5 p-2">
+                    <div className="sm:col-span-2">
+                        <label className="block mb-2 text-sm text-gray-90 text-right">رمز عبور فعلی</label>
+                        <input type="password" name="currentPass" onChange={(e) => setCurrentPass(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="رمز عبور قبلی" />
+                    </div>
+                    <div className="sm:col-span-2">
+                        <label className="block mb-2 text-sm text-gray-90 text-right">رمز عبور جدید</label>
+                        <input type="password" name="newPass" onChange={(e) => setNewPass(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="رمز عبور جدید" />
+                    </div>
+                    <div className="sm:col-span-2">
+                        <label className="block mb-2 text-sm text-gray-90 text-right">تکرار رمز عبور جدید</label>
+                        <input type="password" name="confirmNewPass" onChange={(e) => setConfirmNewPass(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="تکرار رمز عبور جدید" />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    //submit form
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const orgData = {
+            name,
+            email,
+            currentPass,
+            newPass,
+            confirmNewPass,
+            profilePic,
+        };
+
+        const adminData = {
+            adminName,
+            adminLastName,
+            adminUsername,
+        }
+
+        console.log(orgData);
+        console.log(adminData);
     };
 
-    return (
-        <div className='flex justify-center flex-col'>
-            <div className='flex justify-center'>
-            <h3 className='flex justify-center p2 mb-1 changepassbutton text-base' onClick={togglePasswordFields}>تغییر رمز عبور</h3>
-            </div>
-                    <div className="border-t my-4"></div>
-                    <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5 p-2">
-                        <div className="sm:col-span-2">
-                            <label className="block mb-2 text-sm text-gray-90 text-right">رمز عبور قبلی</label>
-                            <input  name="oldPassword" id="oldPassword" className="input-me text-gray-900 rounded-md block w-full p-2.5" placeholder="رمز عبور قبلی" />
-                        </div>
-                        <div className="sm:col-span-2">
-                            <label className="block mb-2 text-sm text-gray-90 text-right">رمز عبور جدید</label>
-                            <input  name="newPassword" id="newPassword" className="input-me text-gray-900 rounded-md block w-full p-2.5" placeholder="رمز عبور جدید" />
-                        </div>
-                        <div className="sm:col-span-2">
-                            <label className="block mb-2 text-sm text-gray-90 text-right">تکرار رمز عبور جدید</label>
-                            <input  name="confirmPassword" id="confirmPassword" className="input-me text-gray-900 rounded-md block w-full p-2.5" placeholder="تکرار رمز عبور جدید" />
-                        </div>
-                        
-                    </div>
-
-        </div>
-    );
-}
 
     return (
         <div>
@@ -133,7 +166,7 @@ function Updateorg() {
             {/* Main modal */}
             {showMyModel && (
                 <div id='close' onClick={handleOnClose} className="fixed full-screen bg-black bg-opacity-30 modal-me ">
-                    <section className="bg-white dark:bg-gray-900 rounded p-2">
+                    <div className="bg-white dark:bg-gray-900 rounded p-2">
                         <div className='flex flex-row justify-end'>
                             <button onClick={onClose} className='close-button-me text-sm'>X</button>
                         </div>
@@ -141,7 +174,7 @@ function Updateorg() {
                         <div className="form-container" style={{ height: "600px", overflowY: "scroll" }}>
                             <div className="max-w-2xl px-4 py-8 lg:py-16">
                                 <h2 className="mb-2 text-xl font-bold text-gray-900 dark:text-white text-center">ویرایش اطلاعات</h2>
-                                <form  className='border-t'>
+                                <form onSubmit={handleSubmit} className='border-t'>
                                     {userPicuter()}
                                     {userInfo()}
                                     <PasswordFields />
@@ -152,7 +185,7 @@ function Updateorg() {
                                 </form>
                             </div>
                         </div>
-                    </section>
+                    </div>
                 </div>
             )}
         </div>
