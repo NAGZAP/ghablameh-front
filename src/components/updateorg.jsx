@@ -6,18 +6,32 @@ import axios from 'axios';
 
 function Updateorg() {
 
-    //fetch user data
-    const [userData, setUserData] = useState(null);
+    //fetch org data
+    const [orgData, setOrgData] = useState(null);
     useEffect(() => {
-        const fetchUserData = async () => {
-            try { //https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/Organization/me
+        const fetchOrgData = async () => {
+            try { //https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/Organizations/me
                 const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
-                setUserData(response.data);
+                setOrgData(response.data);
             } catch (error) {
                 console.error('Error fetching user data: ', error);
             }
         };
-        fetchUserData();
+        fetchOrgData();
+    }, []);
+
+    //fetch admin data
+    const [adminData, setAdimData] = useState(null);
+    useEffect(() => {
+        const fetchOrgData = async () => {
+            try { //https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/Organizations/admin
+                const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
+                setAdimData(response.data);
+            } catch (error) {
+                console.error('Error fetching user data: ', error);
+            }
+        };
+        fetchOrgData();
     }, []);
 
     //read and save pic
@@ -27,21 +41,18 @@ function Updateorg() {
 
     const handleImage = (event) => {
         const file = event.target.files[0];
-        let reader = new FileReader();
-
-        reader.onload = function (e) {
-            setImagePreview(e.target.result);
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
+        if (!file) {
+            return;
         }
-
-        reader.readAsDataURL(event.target.files[0]);
+    
+        let reader = new FileReader();
+    
         reader.onload = (e) => {
-            let img = e.target.result;
-            setProfilePic(img);
+            setImagePreview(e.target.result);
+            setProfilePic(e.target.result);
         };
+    
+        reader.readAsDataURL(file);
     };
 
     // model
@@ -64,7 +75,7 @@ function Updateorg() {
                         <div className="w-full h-full" style={{ backgroundImage: `url(${imagePreview})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
                     ) : (
                         <div className="user-profile flex items-center">
-                            <Avatar name={userData.name} size="80" round={true} maxInitials={1} />
+                            <Avatar name={orgData.name} size="80" round={true} maxInitials={1} />
                         </div>
                     )}
                 </label>
@@ -85,20 +96,25 @@ function Updateorg() {
 
                 <div className="sm:col-span-2 p-2 ">
                     <label className="block mb-2 text-sm text-gray-90 text-right"> نام سازمان </label>
-                    <input name="name" onChange={(e) => setName(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام سازمان " />
+                    <input name="name" onChange={(e) => setName(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام سازمان "/>
+                    {/* value={orgData.name} */}
                 </div>
                 <div className="sm:col-span-2 p-2">
                     <label className="block mb-2 text-sm text-gray-90 text-right">نام مدیر سازمان</label>
                     <input name="adminName" onChange={(e) => setAdminName(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام " />
                     <input name="adminLastName" onChange={(e) => setAdminLastName(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام خانوادگی" />
-                </div>
+                    {/* value={adminData.name} */}
+                    {/* value={adminData.Lastname} */}
+                    </div>
                 <div className="sm:col-span-2 p-2 ">
                     <label className="block mb-2 text-sm text-gray-90 text-right"> نام کاربری مدیر سازمان </label>
                     <input name="adminUsername" onChange={(e) => setAdminUsername(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام کاربری مدیر سازمان " />
+                    {/* value={adminData.username} */}
                 </div>
                 <div className="sm:col-span-2 p-2 ">
                     <label className="block mb-2 text-sm text-gray-90 text-right"> ایمیل مدیر سازمان</label>
-                    <input name="email" onChange={(e) => setEmail(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" ایمیل مدیر سازمان" />
+                    <input name="email" onChange={(e) => setEmail(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" ایمیل مدیر سازمان" /> 
+                    {/* value={adminData.email} */}
                 </div>
 
             </div>
@@ -157,7 +173,6 @@ function Updateorg() {
         console.log(adminData);
     };
 
-
     return (
         <div>
             {/* Modal toggle button */}
@@ -178,7 +193,6 @@ function Updateorg() {
                                     {userPicuter()}
                                     {userInfo()}
                                     <PasswordFields />
-
                                     <div className="flex items-center justify-center space-x-4">
                                         <button type="submit" className="text-white text-center submit-button-me">ذخیره</button>
                                     </div>
