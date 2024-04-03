@@ -7,25 +7,25 @@ return (<>
    <Sidebar aria-label="Default sidebar example" className="bg-blue-900">
       <Sidebar.Items>
         <Sidebar.ItemGroup>
-          <Sidebar.Item href="#" icon={HiChartPie}>
+          <Sidebar.Item href="#" icon={HiChartPie} className="text-sky-50">
             داشبورد
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={HiViewBoards} label="Pro" labelColor="dark">
+          <Sidebar.Item href="#" icon={HiViewBoards} label="Pro" labelColor="dark" className="text-sky-50">
             تست
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={HiInbox} label="3">
+          <Sidebar.Item href="#" icon={HiInbox} label="3" className="text-sky-50">
             تست
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={HiUser}>
+          <Sidebar.Item href="#" icon={HiUser} className="text-sky-50">
           تست
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={HiShoppingBag}>
+          <Sidebar.Item href="#" icon={HiShoppingBag} className="text-sky-50">
           تست
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={HiArrowSmRight}>
+          <Sidebar.Item href="#" icon={HiArrowSmRight} className="text-sky-50">
             <Link to="/Login">ورود</Link>
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={HiTable}>
+          <Sidebar.Item href="#" icon={HiTable} className="text-sky-50">
           <Link to="/Signup">ثبت نام</Link>
           </Sidebar.Item>
         </Sidebar.ItemGroup>
