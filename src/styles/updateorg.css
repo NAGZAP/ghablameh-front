@@ -1,6 +1,9 @@
+body{
+    font-family: 'vazir';
+}
 /* button */
 h3{
-    font-family: 'vazir';
+
     font-weight: 600;
 }
 .update-button-me , .submit-button-me , .button-pass-me {
@@ -9,7 +12,6 @@ h3{
     padding: 5px;
     color: white;
     background-color: rgb(38, 87, 124);
-    font-family: 'vazir';
     font-weight: 500;
 }
 
@@ -28,6 +30,13 @@ h3{
     color: white;
 }
 
+.changepassbutton{
+    width: 120px;
+    font-weight: 700;
+}
+.changepassbutton:hover{
+    background-color: rgb(255, 255, 255);
+}
 /* esentials */
 .bg-white-me {
     background-color: rgb(255, 255, 255);
@@ -44,6 +53,7 @@ h3{
   }
 
 /* input */
+
 input:placeholder-shown {
     background-color: white;
     border: 1px solid rgb(38, 87, 124);
@@ -81,4 +91,20 @@ label{
 
 .margine-me{
     margin-top: 50px;
+}
+
+/* Define the styles for the scrollbar track */
+::-webkit-scrollbar {
+    width: 6px; /* 1px thinner than the default width */
+}
+
+/* Define the styles for the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+    background-color: #dadada; /* light grey color */
+    border-radius: 5px; /* border radius of the thumb */
+}
+
+/* Define the styles for the scrollbar track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* color of the track */
 }
