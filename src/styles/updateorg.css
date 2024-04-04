@@ -133,3 +133,13 @@ label{
 ::-webkit-scrollbar-track {
     background: #f1f1f1; /* color of the track */
 }
+
+
+/* validation */
+
+.not-valid{
+    display: flex;
+    justify-content: end;
+    font-weight: 100;
+    font-size: x-small;
+}
