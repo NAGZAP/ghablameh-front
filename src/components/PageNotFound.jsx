@@ -1,23 +1,24 @@
-import '../styles/PageNotFound.css';
-
+import styles from '../styles/PageNotFound.module.css';
+import classnames from 'classnames';
 function PageNotFound() {
     return (
-        <div className="page-not-found">
+        <div className={`${styles['page-not-found']}`}>
 
-            <div className='size-me'>
-                <section className="error-container flex justify-center items-center ">
-                    <span className="four flex"><span className="screen-reader-text">4</span></span>
-                    <span className="zero flex"><span className="screen-reader-text">0</span></span>
-                    <span className="four flex"><span className="screen-reader-text">4</span></span>
+            <div className={`${styles['size-me']}`}>
+                <section className={`${styles['error-container']} flex justify-center items-center`}>
+                
+                    <span className={`${styles['four']} flex`}><span className={`${styles['screen-reader-text']}`}>4</span></span>
+                    <span className={`${styles['zero']} flex`}><span className={`${styles['screen-reader-text']}`}>0</span></span>
+                    <span className={`${styles['four']} flex`}><span className={`${styles['screen-reader-text']}`}>4</span></span>
                 </section>
             </div>
 
-            <div className='flex justify-center text-me'>
-                <h3 className="text-white">!صفحه مورد نظر یافت نشد</h3>
+            <div className={`${styles['text-me']} flex justify-center`}>
+                <h3 className={`text-white`}>!صفحه مورد نظر یافت نشد</h3>
             </div>
 
-            <div className='flex justify-center'>
-                <a href="#" className="text-white home-link">بازگشت به صفحه اصلی</a>
+            <div className={`flex justify-center`}>
+                <a href="#" className={`${styles['home-link']} text-white`}>بازگشت به صفحه اصلی</a>
             </div>
 
         </div>

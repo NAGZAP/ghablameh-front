@@ -207,3 +207,10 @@ body {
     margin-top: 0rem;
   }
 }
+
+
+.flex{
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+}
