@@ -12,6 +12,7 @@ function Updateorg() {
             try { //https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/Organizations/me
                 const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
                 setFetchedOrgData(response.data);
+                
             } catch (error) {
                 console.error('Error fetching user data: ', error);
             }
@@ -19,7 +20,7 @@ function Updateorg() {
         fetchOrgData();
     }, []);
 
-    // fetch org password
+    // fetch org password ???
     const [fetchedorgPassData, setFetchedorgPassData] = useState(null);
     useEffect(() => {
         const fetchorgPassData = async () => {
@@ -102,12 +103,14 @@ function Updateorg() {
     const [orgData, setOrgData] = useState({
         name: "",
         image: "",
-        adminUsername: "",
-
+        admin_username: ""
     })
+
+
     const [adminData, setAdminData] = useState({
-        adminLastName: "",
-        adminUsername: "",
+        admin_firstName:"",
+        admin_lastName: "",
+        admin_username: "",
         email: ""
     })
 
@@ -118,7 +121,7 @@ function Updateorg() {
         setAdminData({ ...adminData, [event.target.name]: event.target.value })
     }
 
-    function userInfo() {
+    function organizationInfo() {
         return (
             <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5 ">
 
@@ -129,14 +132,14 @@ function Updateorg() {
                 </div>
                 <div className="sm:col-span-2 p-2">
                     <label className="block mb-2 text-sm text-gray-90 text-right">نام مدیر سازمان</label>
-                    <input name="adminName" onChange={handleAdminInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام " />
-                    <input name="adminLastName" onChange={handleAdminInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام خانوادگی" />
+                    <input name="admin_firstName" onChange={handleAdminInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام " />
+                    <input name="admin_lastName" onChange={handleAdminInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام خانوادگی" />
                     {/* value={adminData.name} */}
                     {/* value={adminData.Lastname} */}
                 </div>
                 <div className="sm:col-span-2 p-2 ">
                     <label className="block mb-2 text-sm text-gray-90 text-right"> نام کاربری مدیر سازمان </label>
-                    <input name="adminUsername" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام کاربری مدیر سازمان " />
+                    <input name="admin_username" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام کاربری مدیر سازمان " />
                     {/* value={orgData.admin_username} */}
                 </div>
                 <div className="sm:col-span-2 p-2 ">
@@ -169,7 +172,7 @@ function Updateorg() {
                 <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5 p-2">
                     <div className="sm:col-span-2">
                         <label className="block mb-2 text-sm text-gray-90 text-right">رمز عبور فعلی</label>
-                        <input type="password" name="old_password" onChange={handleOrgPass} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="رمز عبور قبلی" />
+                        <input type="password" name="old_password" onKeyUp={handleOrgPass} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="رمز عبور قبلی" />
                     </div>
                     <div className="sm:col-span-2">
                         <label className="block mb-2 text-sm text-gray-90 text-right">رمز عبور جدید</label>
@@ -188,8 +191,9 @@ function Updateorg() {
     const handleSubmit = (e) => {
         e.preventDefault();
         //org
-        // https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/Organizations/me
-        axios.put('https://jsonplaceholder.typicode.com/posts', { orgData })
+        //https://jsonplaceholder.typicode.com/posts
+        // 
+        axios.put('https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/Organizations/me', { orgData })
             .then(response => console.log(response))
             .catch(error => console.log(error));
 
@@ -198,7 +202,6 @@ function Updateorg() {
         axios.put('https://jsonplaceholder.typicode.com/posts', { adminData })
             .then(response => console.log(response))
             .catch(error => console.log(error));
-
 
         //pass
         axios.put('https://jsonplaceholder.typicode.com/posts', { orgPassData })
@@ -226,7 +229,7 @@ function Updateorg() {
                                 <h2 className="mb-2 text-xl font-bold text-gray-900 dark:text-white text-center">ویرایش اطلاعات</h2>
                                 <form onSubmit={handleSubmit} className='border-t'>
                                     {userPicuter()}
-                                    {userInfo()}
+                                    {organizationInfo()}
                                     <PasswordFields />
                                     <div className="flex items-center justify-center space-x-4">
                                         <button type="submit" className="text-white text-center submit-button-me">ذخیره</button>
