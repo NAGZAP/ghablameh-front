@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import axios from 'axios';
 import styles from './SignUp.module.css' 
+import { Link, redirect } from 'react-router-dom';
 
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
@@ -37,13 +38,15 @@ function SignUp() {
         email: data.email,
         phone_number: formattedPhoneNumber, 
         password: data.password,
-        password2: data.confirmPassword,
-        gender: null,
-        birthdate: null
+        gender: "M",
+        birthdate: "2024-04-04"
       };
-      /* https://ghablameh.fiust.ir/api/v1/swagger/ */
-      await axios.post('https://ghablameh.fiust.ir/api/v1/auth/signup/', formattedData);
-      console.log('Data sent successfully!');
+      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/client/register/', formattedData);
+      const accessToken = response.data.tokens.access;
+      localStorage.setItem('token', accessToken);
+/*       console.log(accessToken);
+ */      console.log('Data sent successfully!');
+      return redirect("/")
     } catch (error) {
       console.error('Error sending data:', error);
     }
@@ -177,11 +180,13 @@ function SignUp() {
           <input className={styles.button +" "+"peer w-full h-[40px] bg-template-custom-blue text-white outline-none focus:outline-none disabled:bg-template-custom-orange disabled:border-0 transition-all rounded-full cursor-pointer"} type="submit" value="ثبت نام" />
         </div>
         </p>
-        <p>
-          <a className={styles.link_to_signin} href="#">
-            قبلا ثبت نام کرده اید؟
-          </a>
-        </p>
+{/*         <link path="/login">        </link> */}
+          <p>
+            <a className={styles.link_to_signin} href="#">
+              قبلا ثبت نام کرده اید؟
+            </a>
+          </p>
+
       </form>
     </div>
     
