@@ -1,16 +1,12 @@
-import { useState } from 'react'
-import './App.css'
-import HelloWorld from '../APIs/HelloWorld'
-
-function App()
-{
-  const [count, setCount] = useState(0)
-
+import Boofeh from "./BoofehsOfOrganization/Boofeh"
+import Cards from "./BoofehsOfOrganization/Cards"
+import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList"
+function MyApp() {
   return (
     <>
-      <HelloWorld />
+      <DataFromApiList />
     </>
-  )
+  );
 }
 
-export default App
+export default MyApp;
