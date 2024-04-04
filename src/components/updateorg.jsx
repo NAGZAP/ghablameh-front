@@ -1,18 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import '../styles/updateorg.css';
 import Avatar from 'react-avatar';
 import axios from 'axios';
 
 function Updateorg() {
 
-    //fetch org data
-    const [orgData, setOrgData] = useState(null);
+    // fetch org data
+    const [fetchedOrgData, setFetchedOrgData] = useState(null);
     useEffect(() => {
         const fetchOrgData = async () => {
             try { //https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/Organizations/me
                 const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
-                setOrgData(response.data);
+                setFetchedOrgData(response.data);
             } catch (error) {
                 console.error('Error fetching user data: ', error);
             }
@@ -20,40 +19,33 @@ function Updateorg() {
         fetchOrgData();
     }, []);
 
-    //fetch admin data
-    const [adminData, setAdimData] = useState(null);
+    // fetch org password
+    const [fetchedorgPassData, setFetchedorgPassData] = useState(null);
     useEffect(() => {
-        const fetchOrgData = async () => {
+        const fetchorgPassData = async () => {
+            try { //https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/OrganizationChangePassword
+                const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
+                setFetchedorgPassData(response.data);
+            } catch (error) {
+                console.error('Error fetching user data: ', error);
+            }
+        };
+        fetchorgPassData();
+    }, []);
+
+    // fetch admin data
+    const [fetchedAdminData, setFetchedAdminData] = useState(null);
+    useEffect(() => {
+        const fetchAdminData = async () => {
             try { //https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/Organizations/admin
                 const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
-                setAdimData(response.data);
+                setFetchedAdminData(response.data);
             } catch (error) {
                 console.error('Error fetching user data: ', error);
             }
         };
-        fetchOrgData();
+        fetchAdminData();
     }, []);
-
-    //read and save pic
-    const [profilePic, setProfilePic] = useState('');
-    const [imagePreview, setImagePreview] = useState('');
-    const fileInputRef = useRef(null);
-
-    const handleImage = (event) => {
-        const file = event.target.files[0];
-        if (!file) {
-            return;
-        }
-    
-        let reader = new FileReader();
-    
-        reader.onload = (e) => {
-            setImagePreview(e.target.result);
-            setProfilePic(e.target.result);
-        };
-    
-        reader.readAsDataURL(file);
-    };
 
     // model
     const [showMyModel, setShowMyModel] = useState(false);
@@ -65,7 +57,27 @@ function Updateorg() {
         if (e.target.id === "close") onClose();
     };
 
-    //functions
+    //read and save image
+    const [imagePreview, setImagePreview] = useState('');
+    const fileInputRef = useRef(null);
+
+    const handleImage = (event) => {
+        const file = event.target.files[0];
+        if (!file) {
+            return;
+        }
+
+        let reader = new FileReader();
+
+        reader.onload = (e) => {
+            setImagePreview(e.target.result);
+            setOrgData({ ...orgData, [event.target.name]: event.target.value })
+        };
+
+        reader.readAsDataURL(file);
+    };
+
+    //show image
     function userPicuter() {
         return (
             <div className="flex justify-center mt-4">
@@ -73,10 +85,13 @@ function Updateorg() {
                     <input name='profilepic' type="file" id="fileInput" ref={fileInputRef} className="hidden" onChange={handleImage} accept="image/*" />
                     {imagePreview ? (
                         <div className="w-full h-full" style={{ backgroundImage: `url(${imagePreview})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+                    ) : (fetchedOrgData.image ? (
+                        <div className="w-full h-full" style={{ backgroundImage: `url(${orgData.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
                     ) : (
                         <div className="user-profile flex items-center">
                             <Avatar name={orgData.name} size="80" round={true} maxInitials={1} />
                         </div>
+                    )
                     )}
                 </label>
             </div>
@@ -84,11 +99,24 @@ function Updateorg() {
     }
 
     //information
-    const [name, setName] = useState('');
-    const [adminName, setAdminName] = useState('');
-    const [adminUsername, setAdminUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [adminLastName, setAdminLastName] = useState('');
+    const [orgData, setOrgData] = useState({
+        name: "",
+        image: "",
+        adminUsername: "",
+
+    })
+    const [adminData, setAdminData] = useState({
+        adminLastName: "",
+        adminUsername: "",
+        email: ""
+    })
+
+    const handleOrgInput = (event) => {
+        setOrgData({ ...orgData, [event.target.name]: event.target.value })
+    }
+    const handleAdminInput = (event) => {
+        setAdminData({ ...adminData, [event.target.name]: event.target.value })
+    }
 
     function userInfo() {
         return (
@@ -96,36 +124,42 @@ function Updateorg() {
 
                 <div className="sm:col-span-2 p-2 ">
                     <label className="block mb-2 text-sm text-gray-90 text-right"> نام سازمان </label>
-                    <input name="name" onChange={(e) => setName(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام سازمان "/>
+                    <input name="name" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام سازمان " />
                     {/* value={orgData.name} */}
                 </div>
                 <div className="sm:col-span-2 p-2">
                     <label className="block mb-2 text-sm text-gray-90 text-right">نام مدیر سازمان</label>
-                    <input name="adminName" onChange={(e) => setAdminName(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام " />
-                    <input name="adminLastName" onChange={(e) => setAdminLastName(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام خانوادگی" />
+                    <input name="adminName" onChange={handleAdminInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام " />
+                    <input name="adminLastName" onChange={handleAdminInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام خانوادگی" />
                     {/* value={adminData.name} */}
                     {/* value={adminData.Lastname} */}
-                    </div>
+                </div>
                 <div className="sm:col-span-2 p-2 ">
                     <label className="block mb-2 text-sm text-gray-90 text-right"> نام کاربری مدیر سازمان </label>
-                    <input name="adminUsername" onChange={(e) => setAdminUsername(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام کاربری مدیر سازمان " />
-                    {/* value={adminData.username} */}
+                    <input name="adminUsername" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام کاربری مدیر سازمان " />
+                    {/* value={orgData.admin_username} */}
                 </div>
                 <div className="sm:col-span-2 p-2 ">
                     <label className="block mb-2 text-sm text-gray-90 text-right"> ایمیل مدیر سازمان</label>
-                    <input name="email" onChange={(e) => setEmail(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" ایمیل مدیر سازمان" /> 
+                    <input name="email" onChange={handleAdminInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" ایمیل مدیر سازمان" />
                     {/* value={adminData.email} */}
                 </div>
 
             </div>
         );
     }
+    
     //password
-    const [currentPass, setCurrentPass] = useState('');
-    const [newPass, setNewPass] = useState('');
-    const [confirmNewPass, setConfirmNewPass] = useState('');
-    function PasswordFields() {
+    const [orgPassData, setOrgPass] = useState({
+        old_password: "",
+        new_password: ""
+    })
 
+    const handleOrgPass = (event) => {
+        setOrgPass({ ...orgPassData, [event.target.name]: event.target.value })
+    }
+
+    function PasswordFields() {
         return (
             <div className='flex justify-center flex-col'>
                 <div className='flex justify-center'>
@@ -135,15 +169,15 @@ function Updateorg() {
                 <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5 p-2">
                     <div className="sm:col-span-2">
                         <label className="block mb-2 text-sm text-gray-90 text-right">رمز عبور فعلی</label>
-                        <input type="password" name="currentPass" onChange={(e) => setCurrentPass(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="رمز عبور قبلی" />
+                        <input type="password" name="old_password" onChange={handleOrgPass} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="رمز عبور قبلی" />
                     </div>
                     <div className="sm:col-span-2">
                         <label className="block mb-2 text-sm text-gray-90 text-right">رمز عبور جدید</label>
-                        <input type="password" name="newPass" onChange={(e) => setNewPass(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="رمز عبور جدید" />
+                        <input type="password" name="new_password" onChange={handleOrgPass} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="رمز عبور جدید" />
                     </div>
                     <div className="sm:col-span-2">
                         <label className="block mb-2 text-sm text-gray-90 text-right">تکرار رمز عبور جدید</label>
-                        <input type="password" name="confirmNewPass" onChange={(e) => setConfirmNewPass(e.target.value)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="تکرار رمز عبور جدید" />
+                        <input type="password" name="confirm_new_password" onChange={handleOrgPass} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="تکرار رمز عبور جدید" />
                     </div>
                 </div>
             </div>
@@ -153,25 +187,26 @@ function Updateorg() {
     //submit form
     const handleSubmit = (e) => {
         e.preventDefault();
+        //org
+        // https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/Organizations/me
+        axios.put('https://jsonplaceholder.typicode.com/posts', { orgData })
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
 
-        const orgData = {
-            name,
-            email,
-            currentPass,
-            newPass,
-            confirmNewPass,
-            profilePic,
-        };
+        //admin
+        // https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/Organizations/admin
+        axios.put('https://jsonplaceholder.typicode.com/posts', { adminData })
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
 
-        const adminData = {
-            adminName,
-            adminLastName,
-            adminUsername,
-        }
 
-        console.log(orgData);
-        console.log(adminData);
-    };
+        //pass
+        axios.put('https://jsonplaceholder.typicode.com/posts', { orgPassData })
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
+
+        setShowMyModel(false);
+    }
 
     return (
         <div>
