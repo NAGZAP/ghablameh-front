@@ -20,7 +20,7 @@ const Update = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async(e) => {
     e.preventDefault();
 
     const errors = [];
@@ -68,9 +68,30 @@ const Update = () => {
       confirmPassword,
       avatar,
     };
-
+    try {
+      const response = await fetch('https://ghablameh.fiust.ir/api/v1/client/me/', {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '4IqnkAsVtRhkrwE8YiGnyiQFkbvCrIJRrFjxMcqXAmLBESd8MCuulfCFSHFSTpIr',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (response.ok) {
+       
+        console.log('Form submitted successfully');
+      } else {
+       
+        const errorData = await response.json();
+        console.log('Form submission failed:', errorData);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
     // Perform form submission
-    console.log(formData);
+ 
   };
 
   const handleChange = (event) => {
