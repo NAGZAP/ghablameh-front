@@ -20,7 +20,7 @@ const Update = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     const errors = [];
@@ -53,12 +53,11 @@ const Update = () => {
       errors.push('رمز عبور جدید و تأیید رمز عبور مطابقت ندارند');
     }
 
-    
     if (errors.length > 0) {
-      alert(errors.join('\n')); // Display error messages in an alert
+      alert(errors.join('\n'));
       return;
     }
-    // Submit the form with all the data
+  
     const formData = {
       birthdate,
       gender,
@@ -68,11 +67,10 @@ const Update = () => {
       confirmPassword,
       avatar,
     };
-
-    // Perform form submission
-    console.log(formData);
+  
+    
   };
-
+   
   const handleChange = (event) => {
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
