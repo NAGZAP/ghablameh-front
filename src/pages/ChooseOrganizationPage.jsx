@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import { Grid } from "@mui/material";
-//import { Sidebar } from "flowbite-react";
+import  CustomSidebar from '../components/Sidebar';
 const ChooseOrganizationPage = () => {
 
     return (
@@ -10,7 +10,7 @@ const ChooseOrganizationPage = () => {
         <Navbar/>
         <Grid container>
             <Grid item>
-                <Sidebar/>
+                <CustomSidebar/>
             </Grid>
             <Grid item>
                 <ChooseOrganizationPage/>
