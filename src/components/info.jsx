@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/updateinfo.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 const Update = () => {
   const [birthdate, setBirthdate] = useState('');
   const [gender, setGender] = useState('');
@@ -15,6 +16,7 @@ const Update = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [avatar, setAvatar] = useState('');
   const [formErrors, setFormErrors] = useState([]);
+  const [token, setToken] = useState('');
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -57,7 +59,7 @@ const Update = () => {
       alert(errors.join('\n'));
       return;
     }
-  
+
     const formData = {
       birthdate,
       gender,
@@ -67,10 +69,31 @@ const Update = () => {
       confirmPassword,
       avatar,
     };
-  
-    
+
+    try {
+      const token = await getToken();
+      const response = await fetch('https://ghablameh.fiust.ir/api/v1/client/me/', {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'X-CSRFToken': '4IqnkAsVtRhkrwE8YiGnyiQFkbvCrIJRrFjxMcqXAmLBESd8MCuulfCFSHFSTpIr',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        console.log('Form submitted successfully');
+      } else {
+        const errorData = await response.json();
+        console.log('Form submission failed:', errorData);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
   };
-   
+
   const handleChange = (event) => {
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
@@ -80,6 +103,21 @@ const Update = () => {
     };
   };
 
+  const getToken = async () => {
+    try {
+      const response = await fetch('YOUR_TOKEN_ENDPOINT_URL');
+      const data = await response.json();
+      const token = data.token; // Replace "token" with your actual token property name
+      setToken(token);
+      return token;
+    } catch (error) {
+      console.error('Failed to fetch token:', error);
+    }
+  };
+
+  useEffect(() => {
+    getToken();
+  }, []);
   return (
     <div className={styles.container}>
       <div className={styles.pattern}></div>

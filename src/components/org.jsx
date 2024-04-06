@@ -58,41 +58,41 @@ const Register = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    const userData = {
-      organization_name: organizationName,
-      username,
-      password,
-      email,
-      first_name: firstName || undefined,
-      last_name: lastName || undefined,
-      phone_number: phoneNumber || undefined,
-    };
-  
-    try {
-      const response = await axios.post(
-        'https://ghablameh.fiust.ir/api/v1/organizations/register/',
-        userData,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': '4IqnkAsVtRhkrwE8YiGnyiQFkbvCrIJRrFjxMcqXAmLBESd8MCuulfCFSHFSTpIr',
-          },
-        }
-      );
-      console.log('Registration successful');
-      setEmail('');
-      setUsername('');
-      setOrganizationName('');
-      setPassword('');
-      setFirstName('');
-      setLastName('');
-      setPhoneNumber('');
-    } catch (error) {
-      console.log('Error during registration:', error);
-    }
+  e.preventDefault();
+
+  const userData = {
+    organization_name: organizationName,
+    username,
+    password,
+    email,
+    first_name: firstName || undefined,
+    last_name: lastName || undefined,
+    phone_number: phoneNumber || undefined,
   };
+
+  try {
+    const response = await axios.post(
+      'https://ghablameh.fiust.ir/api/v1/organizations/register/',
+      userData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '4IqnkAsVtRhkrwE8YiGnyiQFkbvCrIJRrFjxMcqXAmLBESd8MCuulfCFSHFSTpIr',
+        },
+      }
+    );
+    console.log('Registration successful');
+    setEmail('');
+    setUsername('');
+    setOrganizationName('');
+    setPassword('');
+    setFirstName('');
+    setLastName('');
+    setPhoneNumber('');
+  } catch (error) {
+    console.log('Error during registration:', error);
+  }
+};
   return (
     <div className={styles.container}>
       <div className={styles.pattern}></div>
@@ -160,7 +160,7 @@ const Register = () => {
     
           <div className={styles.formGroup}>
             <label htmlFor="firstName" className={styles.label}>
-              نام
+             نام ادمین
             </label>
             <input
               type="text"
@@ -173,7 +173,7 @@ const Register = () => {
      
           <div className={styles.formGroup}>
             <label htmlFor="lastName" className={styles.label}>
-              نام خانوادگی
+              نام خانوادگی ادمین 
             </label>
             <input
               type="text"
@@ -184,7 +184,7 @@ const Register = () => {
             />
             <div className={styles.formGroup}>
               <label htmlFor="phoneNumber" className={styles.label}>
-                شماره تلفن
+                شماره تلفن ادمین
               </label>
               <input
                 type="text"
