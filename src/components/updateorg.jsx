@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import '../styles/updateorg.css';
+import styles from '../styles/updateorg.module.css';
 import Avatar from 'react-avatar';
 import axios from 'axios';
 // import isLoggedIn from '../APIs/AuthManager.js';
@@ -68,7 +68,7 @@ function Updateorg() {
     function userPicuter() {
         return (
             <div className="flex justify-center mt-4">
-                <label htmlFor="fileInput" className="relative w-20 h-20 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center cursor-pointer">
+                <label htmlFor="fileInput" className="relative w-20 h-20 overflow-hidden bg-gray-100 rounded-full flex items-center justify-center">
                     <input name='image_base64' type="file" id="fileInput" ref={fileInputRef} className="hidden" onChange={handleImage} accept="image/*" />
                     {imagePreview ? (
                         <div className="w-full h-full" style={{ backgroundImage: `url(${imagePreview})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
@@ -97,15 +97,7 @@ function Updateorg() {
         admin_email: fetchedOrgData && fetchedOrgData.admin_email !== null ? fetchedOrgData.admin_email : ""
     });
 
-    // const [orgData, setOrgData] = useState({
-    //     name: '',
-    //     image_base64: '',
-    //     admin_username: '',
-    //     admin_first_name: '',
-    //     admin_last_name: '',
-    //     admin_phone_number: '',
-    //     admin_email: ''
-    // })
+
     const handleOrgInput = (event) => {
         setOrgData({ ...orgData, [event.target.name]: event.target.value })
     }
@@ -115,35 +107,35 @@ function Updateorg() {
             <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5 ">
 
                 <div className="sm:col-span-2 p-2 ">
-                    <label className="block mb-2 text-sm text-gray-90 text-right"> نام سازمان </label>
+                    <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}> نام سازمان </label>
                     <input name="name" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام سازمان " />
-                    <span className='not-valid'>{formError.name} </span>
+                    <span className={`${styles['not-valid']}`}>{formError.name} </span>
                 </div>
 
                 <div className="sm:col-span-2 p-2">
-                    <label className="block mb-2 text-sm text-gray-90 text-right">نام مدیر سازمان</label>
+                    <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}>نام مدیر سازمان</label>
                     <input name="admin_first_name" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام " />
-                    <span className='not-valid'> {formError.admin_first_name} </span>
+                    <span className={`${styles['not-valid']}`}> {formError.admin_first_name} </span>
                     <input name="admin_last_name" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام خانوادگی" />
-                    <span className='not-valid'> {formError.admin_last_name} </span>
+                    <span className={`${styles['not-valid']}`}> {formError.admin_last_name} </span>
                 </div>
 
                 <div className="sm:col-span-2 p-2 ">
-                    <label className="block mb-2 text-sm text-gray-90 text-right"> نام کاربری مدیر سازمان </label>
+                    <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}> نام کاربری مدیر سازمان </label>
                     <input name="admin_username" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام کاربری مدیر سازمان " />
-                    <span className='not-valid'> {formError.admin_username} </span>
+                    <span className={`${styles['not-valid']}`}> {formError.admin_username} </span>
                 </div>
 
                 <div className="sm:col-span-2 p-2 ">
-                    <label className="block mb-2 text-sm text-gray-90 text-right"> ایمیل مدیر سازمان</label>
+                    <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}> ایمیل مدیر سازمان</label>
                     <input name="admin_email" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" ایمیل مدیر سازمان" />
-                    <span className='not-valid'> {formError.admin_email} </span>
+                    <span className={`${styles['not-valid']}`}> {formError.admin_email} </span>
                 </div>
 
                 <div className="sm:col-span-2 p-2 ">
-                    <label className="block mb-2 text-sm text-gray-90 text-right"> شماره تماس مدیر سازمان</label>
+                    <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}> شماره تماس مدیر سازمان</label>
                     <input name="admin_phone_number" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" شماره تماس مدیر سازمان" />
-                    <span className='not-valid'> {formError.admin_phone_number} </span>
+                    <span className={`${styles['not-valid']}`}> {formError.admin_phone_number} </span>
                 </div>
 
             </div>
@@ -165,6 +157,7 @@ function Updateorg() {
     //         ,[event.target.name]: event.target.value
     //     })
     // }
+    
     const handleOrgPass = (event) => {
         const { name, value } = event.target;
         setOrgPassData(prevState => ({
@@ -176,23 +169,24 @@ function Updateorg() {
         return (
             <div className='flex justify-center flex-col'>
                 <div className='flex justify-center'>
-                    <h3 className='flex justify-center p2 mb-1 changepassbutton text-base'>تغییر رمز عبور</h3>
+                    <h3 className={`${styles.changepassbutton} flex justify-center p2 mb-1 text-base`}>تغییر رمز عبور</h3>
                 </div>
-                <div className="border-t my-4"></div>
+                
+                <div className={`${styles['border-t']} my-4`}></div>
                 <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5 p-2">
                     <div className="sm:col-span-2">
-                        <label className="block mb-2 text-sm text-gray-90 text-right">رمز عبور فعلی</label>
+                        <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}>رمز عبور فعلی</label>
                         <input ref={inputRef} type="password" name="old_password" value={orgPassData.old_password} onChange={(e) => handleOrgPass(e)}className="text-gray-900 rounded-md block w-full p-2.5" placeholder="رمز عبور فعلی"/>
                     </div>
                     <div className="sm:col-span-2">
-                        <label className="block mb-2 text-sm text-gray-90 text-right">رمز عبور جدید</label>
+                        <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}>رمز عبور جدید</label>
                         <input type="password" name="new_password" value={orgPassData.new_password} onChange={(e) => handleOrgPass(e)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="رمز عبور جدید" />
                     </div>
                     <div className="sm:col-span-2">
-                        <label className="block mb-2 text-sm text-gray-90 text-right">تکرار رمز عبور جدید</label>
+                        <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}>تکرار رمز عبور جدید</label>
                         <input type="password" name="confirm_new_password" onChange={(e) => handleOrgPass(e)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="تکرار رمز عبور جدید" />
                     </div>
-                    <span className='not-valid'>{formError.passwordsDonotMatch} </span>
+                    <span className={`${styles['not-valid']}`}>{formError.passwordsDonotMatch} </span>
                 </div>
             </div>
         );
@@ -205,32 +199,32 @@ function Updateorg() {
         let err = {}
 
         if (typeof orgData.name !== 'string' || orgData.name.length < 1 || orgData.name.length > 127) {
-            err.name = 'نام باید یک رشته با طول بین 1 تا 127 کاراکتر باشد!';
+            err.name = '.نام سازمان نمی تواند خالی باشد!';
         }
         
         if (typeof orgPassData.admin_username !== 'string' || orgPassData.admin_username.length < 1) {
-            err.admin_username = 'نام کاربری مدیر باید یک رشته خالی نباشد!';
+            err.admin_username = '.نام کاربری مدیر باید یک رشته خالی نباشد!';
         }
         
         if (typeof orgPassData.admin_first_name !== 'string' || orgPassData.admin_first_name.length < 1) {
-            err.admin_first_name = 'نام مدیر باید یک رشته خالی نباشد!';
+            err.admin_first_name = '.نام مدیر نمی تواند خالی باشد';
         }
         
         if (typeof orgPassData.admin_last_name !== 'string' || orgPassData.admin_last_name.length < 1) {
-            err.admin_last_name = 'نام خانوادگی مدیر باید یک رشته خالی نباشد!';
+            err.admin_last_name = '.نام خانوادگی مدیر  نمی تواند خالی باشد';
         }
         
         const emailPattern = /\S+@\S+\.\S+/;
         if (typeof orgPassData.admin_email !== 'string' || !emailPattern.test(orgPassData.admin_email)) {
-            err.admin_email = 'ایمیل مدیر باید یک آدرس ایمیل معتبر باشد!';
+            err.admin_email = '.یک آدرس ایمیل معتبر وارد کنید';
         }
 
         if (typeof orgPassData.admin_phone_number !== 'string' || orgPassData.admin_phone_number.length < 1) {
-            err.admin_phone_number = 'شماره تماس مدیر باید یک رشته خالی نباشد!';
+            err.admin_phone_number = '.شماره تماس مدیر نمی تواند خالی باشد';
         }
         
-        if (orgPassData.new_password !== orgPassData.old_password) {
-            err.passwordsDonotMatch = 'رمز عبورها مطابقت ندارند!';
+        if (orgPassData.new_password !== orgPassData.confirm_new_password) {
+            err.passwordsDonotMatch = '.رمز عبور جدید و تکرار آن مطابقت ندارند ';
         }
         setFormError({ ...err })
 
@@ -261,29 +255,32 @@ function Updateorg() {
             setShowMyModel(false);
         }
     }
-
+// <footer className={styles.footersection}>
+    //   <div className={`${styles.changepassbutton} flex justify-center p2 mb-1 text-base`}>
+    //     <div className={`${styles['submit-button-me']} text-white text-center`}></div>
+    //     </footer>
     return (
         <div>
             {/* Modal toggle button */}
-            <button onClick={() => setShowMyModel(true)} className="text-white rounded text-sm text-center update-button-me" type="button">ویرایش اطلاعات</button>
+            <button onClick={() => setShowMyModel(true)} className={`${styles['update-button-me']} text-white rounded text-sm text-center`} type="button">ویرایش اطلاعات</button>
 
             {/* Main modal */}
             {showMyModel && (
-                <div id='close' onClick={handleOnClose} className="fixed full-screen bg-black bg-opacity-30 modal-me ">
-                    <div className="bg-white dark:bg-gray-900 rounded p-2">
+                <div id='close' onClick={handleOnClose} className={`${styles['modal-me']} fixed bg-black`}>
+                    <div className="bg-white rounded p-2">
                         <div className='flex flex-row justify-end'>
-                            <button onClick={onClose} className='close-button-me text-sm'>X</button>
+                            <button onClick={onClose} className={`${styles['close-button-me']} text-sm`}>X</button>
                         </div>
 
-                        <div className="form-container" style={{ height: "600px", overflowY: "scroll" }}>
+                        <div style={{ height: "600px", overflowY: "scroll" }}>
                             <div className="max-w-2xl px-4 py-8 lg:py-16">
-                                <h2 className="mb-2 text-xl font-bold text-gray-900 dark:text-white text-center">ویرایش اطلاعات</h2>
-                                <form onSubmit={handleSubmit} className='border-t'>
+                                <h2 className="mb-2 text-xl font-bold text-gray-900 text-center">ویرایش اطلاعات</h2>
+                                <form onSubmit={handleSubmit} className={`${styles['border-t']}`}>
                                     {userPicuter()}
                                     {organizationInfo()}
                                     <PasswordFields />
                                     <div className="flex items-center justify-center space-x-4">
-                                        <button type="submit" className="text-white text-center submit-button-me">ذخیره</button>
+                                        <button type="submit" className={`${styles['submit-button-me']} text-white text-center`}>ذخیره</button>
                                     </div>
                                 </form>
                             </div>
