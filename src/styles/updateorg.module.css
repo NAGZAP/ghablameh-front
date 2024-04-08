@@ -17,7 +17,9 @@ h3{
 .close-button-me {
     width: 30px;
     margin-top: 0.25px;
+    margin-bottom: 7px;
     padding: 2px;
+    padding-top: 4px;
     color: white;
     color: rgba(38, 87, 124, 0.8);
 }
@@ -98,8 +100,11 @@ input[type="password"] {
     background-color: rgba(0, 0, 0, 0.4);
     position: fixed;
     inset: 0;
+    
 }
-
+.modal-content {
+    max-width: 500vw; /* Set the maximum width of the modal content */
+}
 
 .border-t {
     border-top: 1px solid; /* Adjust the width as needed */
@@ -134,12 +139,13 @@ label{
     background: #f1f1f1; /* color of the track */
 }
 
-
 /* validation */
-
 .not-valid{
     display: flex;
     justify-content: end;
     font-weight: 100;
     font-size: x-small;
+    color: red;
+    margin: 5px;
+
 }

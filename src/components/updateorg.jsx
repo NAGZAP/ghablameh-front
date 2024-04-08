@@ -104,35 +104,37 @@ function Updateorg() {
 
     function organizationInfo() {
         return (
-            <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5 ">
+            <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5 p2">
 
-                <div className="sm:col-span-2 p-2 ">
+                <div className="sm:col-span-2">
                     <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}> نام سازمان </label>
                     <input name="name" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام سازمان " />
                     <span className={`${styles['not-valid']}`}>{formError.name} </span>
                 </div>
 
-                <div className="sm:col-span-2 p-2">
+                <div className="sm:col-span-2">
+                    <div className='mb-4'>
                     <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}>نام مدیر سازمان</label>
                     <input name="admin_first_name" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام " />
+                    </div>
                     <span className={`${styles['not-valid']}`}> {formError.admin_first_name} </span>
                     <input name="admin_last_name" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام خانوادگی" />
                     <span className={`${styles['not-valid']}`}> {formError.admin_last_name} </span>
                 </div>
 
-                <div className="sm:col-span-2 p-2 ">
+                <div className="sm:col-span-2">
                     <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}> نام کاربری مدیر سازمان </label>
                     <input name="admin_username" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام کاربری مدیر سازمان " />
                     <span className={`${styles['not-valid']}`}> {formError.admin_username} </span>
                 </div>
 
-                <div className="sm:col-span-2 p-2 ">
+                <div className="sm:col-span-2">
                     <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}> ایمیل مدیر سازمان</label>
                     <input name="admin_email" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" ایمیل مدیر سازمان" />
                     <span className={`${styles['not-valid']}`}> {formError.admin_email} </span>
                 </div>
 
-                <div className="sm:col-span-2 p-2 ">
+                <div className="sm:col-span-2">
                     <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}> شماره تماس مدیر سازمان</label>
                     <input name="admin_phone_number" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" شماره تماس مدیر سازمان" />
                     <span className={`${styles['not-valid']}`}> {formError.admin_phone_number} </span>
@@ -199,28 +201,28 @@ function Updateorg() {
         let err = {}
 
         if (typeof orgData.name !== 'string' || orgData.name.length < 1 || orgData.name.length > 127) {
-            err.name = '.نام سازمان نمی تواند خالی باشد!';
+            err.name = '.نام سازمان نمی تواند خالی یا کمتر از یک حرف باشد';
         }
         
         if (typeof orgPassData.admin_username !== 'string' || orgPassData.admin_username.length < 1) {
-            err.admin_username = '.نام کاربری مدیر باید یک رشته خالی نباشد!';
+            err.admin_username = '.نام کاربری مدیر نمی تواند خالی یا کمتر از یک حرف باشد';
         }
         
         if (typeof orgPassData.admin_first_name !== 'string' || orgPassData.admin_first_name.length < 1) {
-            err.admin_first_name = '.نام مدیر نمی تواند خالی باشد';
+            err.admin_first_name = '.نام مدیر نمی تواند خالی یا کمتر از یک حرف باشد';
         }
         
         if (typeof orgPassData.admin_last_name !== 'string' || orgPassData.admin_last_name.length < 1) {
-            err.admin_last_name = '.نام خانوادگی مدیر  نمی تواند خالی باشد';
+            err.admin_last_name = '.نام خانوادگی مدیر نمی تواند خالی یا کمتر از یک حرف باشد';
         }
         
-        const emailPattern = /\S+@\S+\.\S+/;
+        const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (typeof orgPassData.admin_email !== 'string' || !emailPattern.test(orgPassData.admin_email)) {
             err.admin_email = '.یک آدرس ایمیل معتبر وارد کنید';
         }
 
-        if (typeof orgPassData.admin_phone_number !== 'string' || orgPassData.admin_phone_number.length < 1) {
-            err.admin_phone_number = '.شماره تماس مدیر نمی تواند خالی باشد';
+        if (typeof orgPassData.admin_phone_number !== 'string' || orgPassData.admin_phone_number.length < 1 || !/^09|98/.test(orgPassData.admin_phone_number)) {
+            err.admin_phone_number = '.یک شماره تماس معتبر وارد کنید';
         }
         
         if (orgPassData.new_password !== orgPassData.confirm_new_password) {
@@ -267,7 +269,7 @@ function Updateorg() {
             {/* Main modal */}
             {showMyModel && (
                 <div id='close' onClick={handleOnClose} className={`${styles['modal-me']} fixed bg-black`}>
-                    <div className="bg-white rounded p-2">
+                    <div className={`bg-white rounded p-2 ${styles['modal-content']}`}>
                         <div className='flex flex-row justify-end'>
                             <button onClick={onClose} className={`${styles['close-button-me']} text-sm`}>X</button>
                         </div>
