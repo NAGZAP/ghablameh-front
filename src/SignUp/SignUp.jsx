@@ -44,8 +44,8 @@ function SignUp() {
       const response = await axios.post('https://ghablameh.fiust.ir/api/v1/client/register/', formattedData);
       const accessToken = response.data.tokens.access;
       localStorage.setItem('token', accessToken);
-/*       console.log(accessToken);
- */      console.log('Data sent successfully!');
+      console.log(accessToken);
+       console.log('Data sent successfully!');
       return redirect("/")
     } catch (error) {
       console.error('Error sending data:', error);
