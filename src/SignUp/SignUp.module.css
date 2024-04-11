@@ -114,6 +114,61 @@ input::placeholder {
     overflow: hidden;
   }
 }
+/* @media (max-width: 364px) {
+  .signup{
+    width: 80%;
+}} */
+@media (max-height: 679px) {
+  .signup {
+    transform: scale(0.8);
+  }
+}
+@media (max-height: 542px) {
+  .signup {
+    transform: scale(0.75);
+  }
+}
+@media (max-height: 508px) {
+  .signup {
+    transform: scale(0.5);
+  }
+}
+@media (max-height: 339px) {
+  .signup {
+    transform: scale(0.45);
+  }
+}
+@media (max-height: 309px) {
+  .signup {
+    transform: scale(0.40);
+  }
+}
+@media (max-height: 276px) {
+  .signup {
+    transform: scale(0.35);
+  }
+}
+@media (max-height: 238px) {
+  .signup {
+    transform: scale(0.25);
+  }
+}
+@media (max-height: 174px) {
+  .signup {
+    transform: scale(0.1);
+  }
+}
+/* ++++++++ */
+/* @media (max-width: 336px) {
+  .signup{
+    transform: scale(0.8);
+  }
+} */
+/* @media (max-width: 336px) {
+  .signup{
+    transform: scale(0.7);
+  }
+} */
 .link_to_signin{
     color: #26577C;
     text-decoration: none;
