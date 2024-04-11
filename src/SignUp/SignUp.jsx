@@ -175,7 +175,7 @@ function SignUp() {
         <br/>
         <p>
         <div className="w-72 mb-1 mr-20 ml-20">
-          <input className={styles.button +" "+"peer w-full h-[40px] bg-template-custom-blue text-white outline-none focus:outline-none disabled:bg-template-custom-orange disabled:border-0 transition-all rounded-full cursor-pointer"} type="submit" value="ثبت نام" />
+          <input className={styles.button_sign +" "+"peer w-full h-[40px] bg-template-custom-blue text-white outline-none focus:outline-none disabled:bg-template-custom-orange disabled:border-0 transition-all rounded-full cursor-pointer"} type="submit" value="ثبت نام" />
         </div>
         </p>
 {/*         <link path="/login">        </link> */}
