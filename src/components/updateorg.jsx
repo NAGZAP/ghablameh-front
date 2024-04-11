@@ -171,7 +171,7 @@ function Updateorg() {
         return (
             <div className='flex justify-center flex-col'>
                 <div className='flex justify-center'>
-                    <h3 className={`${styles.changepassbutton} flex justify-center p2 mb-1 text-base`}>تغییر رمز عبور</h3>
+                    <h3 className={`${styles.changepassbutton} ${styles['h3-me']} flex justify-center p2 mb-1 text-base`}>تغییر رمز عبور</h3>
                 </div>
                 
                 <div className={`${styles['border-t']} my-4`}></div>
