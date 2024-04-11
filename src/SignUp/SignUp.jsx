@@ -24,6 +24,7 @@ const validationSchema = Yup.object({
 });
 
 function SignUp() {
+
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(validationSchema),
   });
@@ -52,9 +53,10 @@ function SignUp() {
     }
   };
   return (
-    <div className={styles.signup}>
+    <div className={styles.container}>
+      <div className={styles.signup}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <p className="max font-semibold text-gray-900 text-4xl dark:text-template-custom-blue text-center">ثبت نام</p>
+          <p className="max font-semibold text-template-custom-blue text-4xl dark:text-template-custom-blue text-center mt-5">ثبت نام</p>
           {/* FName */}
           <div className="w-72 mt-10 mb-1 mr-20 ml-20">
             <div className="relative w-full min-w-[200px] h-10">
@@ -170,7 +172,6 @@ function SignUp() {
               </div>
             </div>
         <br />
-
         <br/>
         <p>
         <div className="w-72 mb-1 mr-20 ml-20">
@@ -186,7 +187,7 @@ function SignUp() {
 
       </form>
     </div>
-    
+    </div>
   );
 }
 export default SignUp;

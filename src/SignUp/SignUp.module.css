@@ -1,6 +1,6 @@
 /* Main Body */
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap');
-body {
+.container {
   direction: rtl;
   background-color: #ffffff;
   font-family: "Vazir", "Vazirmatn", "Arabic Typesetting", sans-serif;
@@ -11,7 +11,19 @@ body {
   background-image: url('../assets/colorkit1.png');
   background-repeat: no-repeat;
   background-size: cover;
-  background-attachment: fixed;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    background-size: 100% 100%;
+  }
 }
 /* Button */
 .button{
@@ -34,18 +46,20 @@ body {
 }  */
 
 .form_zone {
-  margin-top: 30px;
-  margin-right: 200px;
-  margin-left: 200px;
-  margin-bottom: 50px;
-  padding:30px 50px;
-  color:#26577C;
-  font-size:1rem;
-  border-radius:4px;
-  background-color : #EBE4D1;
-  border:1px solid #EBE4D1;
+  position: fixed;
+  top: 500%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  padding: 30px 50px;
+  color: #26577C;
+  font-size: 1rem;
+  border-radius: 4px;
+  background-color: #EBE4D1;
+  border: 1px solid #EBE4D1;
   transition: all 0.3s linear;
 }
+
 /* .form_zone:hover {
   -webkit-box-shadow:#E55604 0px 5px 15px;
   -moz-box-shadow:#E55604 0px 5px 15px, inset #E55604 0px -10px 20px;
@@ -70,18 +84,8 @@ input::placeholder {
     font-style: italic;
   }   */
 /*  */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f5f5f5;
-}
+
 
 .signup {
   display: flex;
@@ -89,16 +93,25 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #ffffff78;
-  border-radius: 10px;
-  padding: 10%;
+  border-radius: 5%;
+  padding: 5%;
   border: 2px solid rgba(0, 0, 0, 0.298);
-
+  margin-top: 10%;
+  margin-right: 10%;
+  margin-left: 10%;
+  margin-bottom: 10%;
   /* Responsive Adjustments */
   width: 100%;
   max-width: 600px;
 
   @media (max-width: 768px) {
-    padding: 4%;
+    padding-top: 0%;
+    margin-right:5%;
+    margin-left: 5%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    border: 20%;
+    overflow: hidden;
   }
 }
 .link_to_signin{
