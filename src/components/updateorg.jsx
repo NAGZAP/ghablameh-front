@@ -268,7 +268,7 @@ function Updateorg() {
 
             {/* Main modal */}
             {showMyModel && (
-                <div id='close' onClick={handleOnClose} className={`${styles['modal-me']} fixed bg-black`}>
+                <div id='close' onClick={handleOnClose} className={`${styles['modal-me']} fixed `}>
                     <div className={`bg-white rounded p-2 ${styles['modal-content']}`}>
                         <div className='flex flex-row justify-end'>
                             <button onClick={onClose} className={`${styles['close-button-me']} text-sm`}>X</button>
