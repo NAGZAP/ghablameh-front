@@ -2,7 +2,7 @@ body{
     font-family: 'vazir';
 }
 /* button */
-h3{
+.h3-me{
     font-weight: 600;
 }
 .update-button-me , .submit-button-me , .button-pass-me {

@@ -22,8 +22,8 @@ function App() {
       <Route path="/Register" element={<Register />} />
       <Route path="/sidebar" element={<CustomSidebar />} />
       <Route path="/navbar" element={<Navbar />} />
-      <Route path="/org" element={<Updateorg />} />
-      <Route path="/" element={<SignUp/>} />
+      <Route path="/" element={<Updateorg />} />
+      <Route path="/signup" element={<SignUp/>} />
       <Route path="*" element={<PageNotFound />} />
       
     </Routes>
