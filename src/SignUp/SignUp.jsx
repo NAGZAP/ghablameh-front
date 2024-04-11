@@ -128,7 +128,6 @@ function SignUp() {
               className="peer w-full h-full bg-transparent text-template-custom-blue                      
               font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"             
               placeholder=" "
-              type="text"
               {...register('phonenumber')}
             />
             <label
@@ -145,7 +144,6 @@ function SignUp() {
               className="peer w-full h-full bg-transparent text-template-custom-blue                      
               font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"             
               placeholder=" "
-              type="password"
               {...register('password')}
             />
             <label
@@ -162,7 +160,6 @@ function SignUp() {
                   className="peer w-full h-full bg-transparent text-template-custom-blue                      
                   font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"                             
                   placeholder=" "
-                  type="password"
                   {...register('confirmPassword')}
                 />
               <label
