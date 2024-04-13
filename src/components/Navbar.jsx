@@ -4,7 +4,6 @@ import styles from '../styles/Navbar.module.css';
 import isLoggedIn from '../APIs/AuthManager'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
 function Navbar() {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
