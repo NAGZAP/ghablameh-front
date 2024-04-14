@@ -13,6 +13,7 @@ import CustomSidebar from './components/Sidebar'
 import PageNotFound from './components/pagenotfound'
 import Navbar from './components/Navbar'
 import Updateorg from './components/updateorg'
+import Login from './components/login';
 function App() {
   return (
     <BrowserRouter>
@@ -25,7 +26,7 @@ function App() {
       <Route path="/" element={<Updateorg />} />
       <Route path="/signup" element={<SignUp/>} />
       <Route path="*" element={<PageNotFound />} />
-      
+      <Route path="/login" element={<Login/>}/>
     </Routes>
     </BrowserRouter>
   );

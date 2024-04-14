@@ -15,9 +15,9 @@ const isLoggedIn = () =>
 }
 
 const LoginRequest = (username , password) => {
-    const baseurl = "https://gheychi-api.comp-iust.ir";
+    const baseurl = "https://ghablameh.fiust.ir/api/v1";
     let data = null;
-    axios.post(baseurl+"/auth/login" , {username :username , password : password}).then(resp => data = resp.data);
+    axios.post(baseurl+"/auth/login/" , {username :username , password : password}).then(resp => data = resp.data);
     return data;
 }
 export default {isLoggedIn , LoginRequest};
