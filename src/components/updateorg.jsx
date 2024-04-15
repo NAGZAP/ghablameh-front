@@ -2,6 +2,9 @@ import { useState, useRef, useEffect } from 'react';
 import styles from '../styles/updateorg.module.css';
 import Avatar from 'react-avatar';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+
 // import isLoggedIn from '../APIs/AuthManager.js';
 function Updateorg() {
 
@@ -114,8 +117,8 @@ function Updateorg() {
 
                 <div className="sm:col-span-2">
                     <div className='mb-4'>
-                    <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}>نام مدیر سازمان</label>
-                    <input name="admin_first_name" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام " />
+                        <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}>نام مدیر سازمان</label>
+                        <input name="admin_first_name" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام " />
                     </div>
                     <span className={`${styles['not-valid']}`}> {formError.admin_first_name} </span>
                     <input name="admin_last_name" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام خانوادگی" />
@@ -159,21 +162,31 @@ function Updateorg() {
     //         ,[event.target.name]: event.target.value
     //     })
     // }
-    
-    const handleOrgPass = (event) => {
-        const { name, value } = event.target;
-        setOrgPassData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+
+    // const handleOrgPass = (event) => {
+    //     const { name, value } = event.target;
+    //     setOrgPassData(prevState => ({
+    //         ...prevState,
+    //         [name]: value
+    //     }));
+    // };
+
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevState) => !prevState);
     };
+
     function PasswordFields() {
         return (
             <div className='flex justify-center flex-col'>
                 <div className='flex justify-center'>
                     <h3 className={`${styles.changepassbutton} flex justify-center p2 mb-1 text-base`}>تغییر رمز عبور</h3>
                 </div>
-                
+
                 <div className={`${styles['border-t']} my-4`}></div>
                 <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5 p-2">
                     <div className="sm:col-span-2">
@@ -191,6 +204,68 @@ function Updateorg() {
                     <span className={`${styles['not-valid']}`}>{formError.passwordsDonotMatch} </span>
                 </div>
             </div>
+            // <div>
+            //     <div className={styles.formGroup}>
+            //         <label htmlFor="currentPassword" className={styles.label}>
+            //             رمز عبور فعلی
+            //         </label>
+            //         <div className={styles.passwordInputContainer}>
+            //             <input
+            //                 type={showPassword ? 'text' : 'password'}
+            //                 id="currentPassword"
+            //                 value={currentPassword}
+            //                 onChange={(e) => setCurrentPassword(e.target.value)}
+            //                 className={styles.input}
+            //                 required
+            //             />
+            //             <FontAwesomeIcon
+            //                 icon={showPassword ? faEyeSlash : faEye}
+            //                 className={styles.passwordIcon}
+            //                 onClick={togglePasswordVisibility}
+            //             />
+            //         </div>
+            //     </div>
+            //     <div className={styles.formGroup}>
+            //         <label htmlFor="newPassword" className={styles.label}>
+            //             رمز عبور جدید
+            //         </label>
+            //         <div className={styles.passwordInputContainer}>
+            //             <input
+            //                 type={showPassword ? 'text' : 'password'}
+            //                 id="newPassword"
+            //                 value={newPassword}
+            //                 onChange={(e) => setNewPassword(e.target.value)}
+            //                 className={styles.input}
+            //                 required
+            //             />
+            //             <FontAwesomeIcon
+            //                 icon={showPassword ? faEyeSlash : faEye}
+            //                 className={styles.passwordIcon}
+            //                 onClick={togglePasswordVisibility}
+            //             />
+            //         </div>
+            //     </div>
+            //     <div className={styles.formGroup}>
+            //         <label htmlFor="confirmPassword" className={styles.label}>
+            //             تأیید رمز عبور جدید
+            //         </label>
+            //         <div className={styles.passwordInputContainer}>
+            //             <input
+            //                 type={showPassword ? 'text' : 'password'}
+            //                 id="confirmPassword"
+            //                 value={confirmPassword}
+            //                 onChange={(e) => setConfirmPassword(e.target.value)}
+            //                 className={styles.input}
+            //                 required
+            //             />
+            //             <FontAwesomeIcon
+            //                 icon={showPassword ? faEyeSlash : faEye}
+            //                 className={styles.passwordIcon}
+            //                 onClick={togglePasswordVisibility}
+            //             />
+            //         </div>
+            //     </div>
+            // </div>
         );
     }
 
@@ -203,19 +278,19 @@ function Updateorg() {
         if (typeof orgData.name !== 'string' || orgData.name.length < 1 || orgData.name.length > 127) {
             err.name = '.نام سازمان نمی تواند خالی یا کمتر از یک حرف باشد';
         }
-        
+
         if (typeof orgPassData.admin_username !== 'string' || orgPassData.admin_username.length < 1) {
             err.admin_username = '.نام کاربری مدیر نمی تواند خالی یا کمتر از یک حرف باشد';
         }
-        
+
         if (typeof orgPassData.admin_first_name !== 'string' || orgPassData.admin_first_name.length < 1) {
             err.admin_first_name = '.نام مدیر نمی تواند خالی یا کمتر از یک حرف باشد';
         }
-        
+
         if (typeof orgPassData.admin_last_name !== 'string' || orgPassData.admin_last_name.length < 1) {
             err.admin_last_name = '.نام خانوادگی مدیر نمی تواند خالی یا کمتر از یک حرف باشد';
         }
-        
+
         const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (typeof orgPassData.admin_email !== 'string' || !emailPattern.test(orgPassData.admin_email)) {
             err.admin_email = '.یک آدرس ایمیل معتبر وارد کنید';
@@ -224,7 +299,7 @@ function Updateorg() {
         if (typeof orgPassData.admin_phone_number !== 'string' || orgPassData.admin_phone_number.length < 1 || !/^09|98/.test(orgPassData.admin_phone_number)) {
             err.admin_phone_number = '.یک شماره تماس معتبر وارد کنید';
         }
-        
+
         if (orgPassData.new_password !== orgPassData.confirm_new_password) {
             err.passwordsDonotMatch = '.رمز عبور جدید و تکرار آن مطابقت ندارند ';
         }
@@ -237,27 +312,27 @@ function Updateorg() {
     const handleSubmit = (e) => {
         e.preventDefault();
         // console.log(orgData);
-        
+
         let isValid = validateForm();
         // console.log(isValid);
-    
+
         if (isValid) {
             //org
             //https://jsonplaceholder.typicode.com/users/1
             axios.put('https://ghablameh.fiust.ir/api/v1/organizations/me/', { orgData })
                 .then(response => console.log(response))
                 .catch(error => console.log(error));
-    
+
             //pass
             //https://jsonplaceholder.typicode.com/posts
             axios.post('https://ghablameh.fiust.ir/api/v1/organizations/password/', { orgPassData })
                 .then(response => console.log(response))
                 .catch(error => console.log(error));
-    
+
             setShowMyModel(false);
         }
     }
-// <footer className={styles.footersection}>
+    // <footer className={styles.footersection}>
     //   <div className={`${styles.changepassbutton} flex justify-center p2 mb-1 text-base`}>
     //     <div className={`${styles['submit-button-me']} text-white text-center`}></div>
     //     </footer>
