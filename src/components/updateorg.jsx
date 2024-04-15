@@ -3,14 +3,20 @@ import styles from '../styles/updateorg.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
+
 const Update = () => {
-  const [birthdate, setBirthdate] = useState('');
-  const [gender, setGender] = useState('');
-  const [username, setUsername] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('');
+  const [admin_first_name, setAdmin_first_name] = useState('');
+  const [admin_last_name, setAdmin_last_name] = useState('');
+  const [admin_username, SetAdmin_username] = useState('');
+  const [admin_email, setAdmin_email] = useState('');
+  const [admin_phone_number, setAdmin_phone_number] = useState('');
+
+  const [old_password, setOld_password] = useState('');
+  const [new_password, setNew_password] = useState('');
+  const [confirm_new_password, setConfirm_new_password] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
   const [avatar, setAvatar] = useState('');
   const [formErrors, setFormErrors] = useState([]);
 
@@ -22,59 +28,112 @@ const Update = () => {
     e.preventDefault();
 
     const errors = [];
-
-    if (!birthdate) {
-      errors.push('تاریخ تولد را وارد کنید');
+    if (!name) {
+      errors.push('نام سازمان را وارد کنید');
     }
 
-    if (!gender) {
-      errors.push('جنسیت را انتخاب کنید');
+    if (!admin_first_name) {
+      errors.push('نام مدیر را وارد کنید');
     }
 
-    if (!username) {
-      errors.push('نام کاربری را وارد کنید');
+    if (!admin_last_name) {
+      errors.push('نام خانودگی مدیر را وارد کنید');
     }
 
-    if (!currentPassword) {
-      errors.push('رمز عبور فعلی را وارد کنید');
+    if (!admin_username) {
+      errors.push('نام کاربری مدیر را وارد کنید');
     }
 
-    if (!newPassword) {
+    if (!admin_email) {
+      errors.push(' ایمیل مدیر را وارد کنید');
+    }
+
+    if (!admin_phone_number) {
+      errors.push('شماره مدیر را وارد کنید');
+    }
+    if (!new_password) {
       errors.push('رمز عبور جدید را وارد کنید');
     }
 
-    if (!confirmPassword) {
+    if (!old_password) {
+      errors.push('رمز عبور جدید را وارد کنید');
+    }
+
+    if (!confirm_new_password) {
       errors.push('تأیید رمز عبور جدید را وارد کنید');
     }
 
-    if (newPassword !== confirmPassword) {
+    if (new_password !== confirm_new_password) {
       errors.push('رمز عبور جدید و تأیید رمز عبور مطابقت ندارند');
     }
-
 
     if (errors.length > 0) {
       alert(errors.join('\n')); // Display error messages in an alert
       return;
     }
+
+
+    // Retrieve the CSRF token from the cookie
+    const csrftoken = getCookie('csrftoken');
+
     // Submit the form with all the data
     const formData = {
-      birthdate,
-      gender,
-      username,
-      currentPassword,
-      newPassword,
-      confirmPassword,
       avatar,
+      name,
+      admin_first_name,
+      admin_last_name,
+      username: admin_username,
+      admin_email,
+      admin_phone_number
     };
+
+    console.log(formData);
+
     try {
-      const response = await fetch('https://ghablameh.fiust.ir/api/v1/client/me/', {
+      const response = await fetch('https://ghablameh.fiust.ir/api/v1/organizations/me/', {
         method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        console.log('Form submitted successfully');
+      } else {
+        const errorData = await response.json();
+        console.log('Form submission failed:', errorData);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+
+    // Function to get the CSRF token from the cookie
+    function getCookie(name) {
+      const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+      return cookieValue ? cookieValue.pop() : '';
+    }
+
+
+
+    //pass data
+    const PassData = {
+      old_password: old_password,
+      newPassword: new_password,
+      confirmPassword: confirm_new_password
+    }
+    console.log(PassData)
+    try {
+      const response = await fetch('https://ghablameh.fiust.ir/api/v1/organizations/password/', {
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'X-CSRFToken': '4IqnkAsVtRhkrwE8YiGnyiQFkbvCrIJRrFjxMcqXAmLBESd8MCuulfCFSHFSTpIr',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(PassData),
       });
 
       if (response.ok) {
@@ -88,6 +147,7 @@ const Update = () => {
     } catch (error) {
       console.error('An error occurred:', error);
     }
+
     // Perform form submission
 
   };
@@ -111,9 +171,9 @@ const Update = () => {
           <div className={styles.passwordInputContainer}>
             <input
               type={showPassword ? 'text' : 'password'}
-              id="currentPassword"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
+              id="old_password"
+              value={old_password}
+              onChange={(e) => setOld_password(e.target.value)}
               className={styles.input}
               required
             />
@@ -131,9 +191,9 @@ const Update = () => {
           <div className={styles.passwordInputContainer}>
             <input
               type={showPassword ? 'text' : 'password'}
-              id="newPassword"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+              id="new_password"
+              value={new_password}
+              onChange={(e) => setNew_password(e.target.value)}
               className={styles.input}
               required
             />
@@ -151,9 +211,9 @@ const Update = () => {
           <div className={styles.passwordInputContainer}>
             <input
               type={showPassword ? 'text' : 'password'}
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              id="confirm_new_password"
+              value={confirm_new_password}
+              onChange={(e) => setConfirm_new_password(e.target.value)}
               className={styles.input}
               required
             />
@@ -192,31 +252,30 @@ const Update = () => {
 
           <div className={styles.formGroup}>
             <label htmlFor="name" className={styles.label}> نام سازمان  </label>
-            <input type="text" id="name" value={name} onChange={(e) => setUsername(e.target.value)} className={styles.input} required placeholder='نام سازمان'/>
+            <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} className={styles.input} required placeholder='نام سازمان' />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="admin_username" className={styles.label}> نام کاربری مدیر سازمان  </label>
+            <input type="text" id="admin_username" value={admin_username} onChange={(e) => SetAdmin_username(e.target.value)} className={styles.input} required placeholder=' نام کاربری مدیر سازمان  ' />
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="name" className={styles.label}>نام مدیر سازمان</label>
+            <label className={styles.label}>نام مدیر سازمان</label>
             <div className='flex'>
-              <input type="text" id="admin_first_name" value={username} onChange={(e) => setUsername(e.target.value)} className={styles.input} required  placeholder='نام'/>
+              <input type="text" id="admin_first_name" value={admin_first_name} onChange={(e) => setAdmin_first_name(e.target.value)} className={styles.input} required placeholder='نام' />
               <div style={{ marginLeft: '10px' }}></div> {/* Add some space */}
-              <input type="text" id="admin_last_name" value={username} onChange={(e) => setUsername(e.target.value)} className={styles.input} required placeholder='نام خانوادگی'/>
+              <input type="text" id="admin_last_name" value={admin_last_name} onChange={(e) => setAdmin_last_name(e.target.value)} className={styles.input} required placeholder='نام خانوادگی' />
             </div>
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="admin_username" className={styles.label}> نام کاربری مدیر سازمان  </label>
-            <input type="text" id="admin_username" value={username} onChange={(e) => setUsername(e.target.value)} className={styles.input} required placeholder=' نام کاربری مدیر سازمان  '/>
-          </div>
-
-          <div className={styles.formGroup}>
             <label htmlFor="admin_email" className={styles.label}> ایمیل مدیر سازمان </label>
-            <input type="text" id="admin_email" value={username} onChange={(e) => setUsername(e.target.value)} className={styles.input} required placeholder='  ایمیل مدیر سازمان  '/>
+            <input type="text" id="admin_email" value={admin_email} onChange={(e) => setAdmin_email(e.target.value)} className={styles.input} required placeholder='  ایمیل مدیر سازمان  ' />
           </div>
 
           <div className={styles.formGroup}>
             <label htmlFor="admin_phone_number" className={styles.label}> شماره تماس مدیر سازمان </label>
-            <input type="text" id="admin_phone_number" value={username} onChange={(e) => setUsername(e.target.value)} className={styles.input} required placeholder=' شماره تماس مدیر سازمان '/>
+            <input type="text" id="admin_phone_number" value={admin_phone_number} onChange={(e) => setAdmin_phone_number(e.target.value)} className={styles.input} required placeholder=' شماره تماس مدیر سازمان ' />
           </div>
 
           <PasswordFields />
