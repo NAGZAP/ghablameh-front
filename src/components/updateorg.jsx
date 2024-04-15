@@ -31,51 +31,41 @@ const Update = () => {
     if (!name) {
       errors.push('نام سازمان را وارد کنید');
     }
-
     if (!admin_first_name) {
       errors.push('نام مدیر را وارد کنید');
     }
-
     if (!admin_last_name) {
       errors.push('نام خانودگی مدیر را وارد کنید');
     }
-
     if (!admin_username) {
       errors.push('نام کاربری مدیر را وارد کنید');
     }
-
     if (!admin_email) {
       errors.push(' ایمیل مدیر را وارد کنید');
     }
-
     if (!admin_phone_number) {
       errors.push('شماره مدیر را وارد کنید');
     }
     if (!new_password) {
       errors.push('رمز عبور جدید را وارد کنید');
     }
-
     if (!old_password) {
       errors.push('رمز عبور جدید را وارد کنید');
     }
-
     if (!confirm_new_password) {
       errors.push('تأیید رمز عبور جدید را وارد کنید');
     }
-
     if (new_password !== confirm_new_password) {
       errors.push('رمز عبور جدید و تأیید رمز عبور مطابقت ندارند');
     }
-
     if (errors.length > 0) {
       alert(errors.join('\n')); // Display error messages in an alert
       return;
     }
 
-
     // Retrieve the CSRF token from the cookie
     const csrftoken = getCookie('csrftoken');
-
+    console.log(csrftoken)
     // Submit the form with all the data
     const formData = {
       avatar,
@@ -115,8 +105,6 @@ const Update = () => {
       const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
       return cookieValue ? cookieValue.pop() : '';
     }
-
-
 
     //pass data
     const PassData = {
