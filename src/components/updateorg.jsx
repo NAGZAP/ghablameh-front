@@ -24,7 +24,10 @@ const Update = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const handleErrors = () => {
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
     const errors = [];
     if (!name) {
       errors.push('نام سازمان را وارد کنید');
@@ -61,21 +64,6 @@ const Update = () => {
       return;
     }
 
-    // Set form errors if needed
-    // setFormErrors({ errors });
-
-    return false;
-  };
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-
-    let isValid = handleErrors();
-
-    if (!isValid) {
-      return;
-    }
-
     // Retrieve token
     const token = localStorage.getItem("token");
 
@@ -96,14 +84,16 @@ const Update = () => {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-CSRFToken': token,
+          'X-CSRFToken': 'YvssuFk0cc5yM0IIRmBPcHbYr1LomsbWtFJAnn9OlsVgjjBUX55o9u6whvuRajmb',
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (response.ok) {
+       
         console.log('Form submitted successfully');
       } else {
+       
         const errorData = await response.json();
         console.log('Form submission failed:', errorData);
       }
@@ -117,7 +107,6 @@ const Update = () => {
       newPassword: new_password,
       confirmPassword: confirm_new_password
     };
-    console.log(passData);
 
     try {
       const response = await fetch('https://ghablameh.fiust.ir/api/v1/organizations/password/', {
