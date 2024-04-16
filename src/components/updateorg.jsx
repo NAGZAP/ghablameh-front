@@ -3,7 +3,7 @@ import styles from '../styles/updateorg.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
-
+import axios from 'axios';
 const Update = () => {
   const [name, setName] = useState('');
   const [admin_first_name, setAdmin_first_name] = useState('');
@@ -24,9 +24,7 @@ const Update = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleErrors = () => {
     const errors = [];
     if (!name) {
       errors.push('نام سازمان را وارد کنید');
@@ -63,9 +61,24 @@ const Update = () => {
       return;
     }
 
-    // Retrieve the CSRF token from the cookie
-    const csrftoken = getCookie('csrftoken');
-    console.log(csrftoken)
+    // Set form errors if needed
+    // setFormErrors({ errors });
+
+    return false;
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    let isValid = handleErrors();
+
+    if (!isValid) {
+      return;
+    }
+
+    // Retrieve token
+    const token = localStorage.getItem("token");
+
     // Submit the form with all the data
     const formData = {
       avatar,
@@ -77,15 +90,13 @@ const Update = () => {
       admin_phone_number
     };
 
-    console.log(formData);
-
     try {
       const response = await fetch('https://ghablameh.fiust.ir/api/v1/organizations/me/', {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-CSRFToken': csrftoken,
+          'X-CSRFToken': token,
         },
         body: JSON.stringify(formData),
       });
@@ -100,46 +111,39 @@ const Update = () => {
       console.error('An error occurred:', error);
     }
 
-    // Function to get the CSRF token from the cookie
-    function getCookie(name) {
-      const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-      return cookieValue ? cookieValue.pop() : '';
-    }
-
-    //pass data
-    const PassData = {
+    // Pass data for password update
+    const passData = {
       old_password: old_password,
       newPassword: new_password,
       confirmPassword: confirm_new_password
-    }
-    console.log(PassData)
+    };
+    console.log(passData);
+
     try {
       const response = await fetch('https://ghablameh.fiust.ir/api/v1/organizations/password/', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-CSRFToken': '4IqnkAsVtRhkrwE8YiGnyiQFkbvCrIJRrFjxMcqXAmLBESd8MCuulfCFSHFSTpIr',
+          'X-CSRFToken': 'YvssuFk0cc5yM0IIRmBPcHbYr1LomsbWtFJAnn9OlsVgjjBUX55o9u6whvuRajmb',
         },
-        body: JSON.stringify(PassData),
+        body: JSON.stringify(passData),
       });
 
       if (response.ok) {
-
-        console.log('Form submitted successfully');
+        console.log('Password updated successfully');
       } else {
-
         const errorData = await response.json();
-        console.log('Form submission failed:', errorData);
+        console.log('Password update failed:', errorData);
       }
     } catch (error) {
       console.error('An error occurred:', error);
     }
 
-    // Perform form submission
-
+    // Close the form after submission
   };
 
+  //image
   const handleChange = (event) => {
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
@@ -148,7 +152,7 @@ const Update = () => {
       setAvatar(img);
     };
   };
-
+  //passwords
   function PasswordFields() {
     return (
       <div>
