@@ -7,8 +7,10 @@ import {
 import './App.css';
 import Footer from './components/footer';
 import Update from './components/info';
+
 import Register from './components/org';
 import SignUp from './SignUp/SignUp'
+import WeeklyMenu from './components/weeklymenu'
 import CustomSidebar from './components/Sidebar'
 import PageNotFound from './components/pagenotfound'
 import Navbar from './components/Navbar'
@@ -22,7 +24,8 @@ function App() {
       <Route path="/Register" element={<Register />} />
       <Route path="/sidebar" element={<CustomSidebar />} />
       <Route path="/navbar" element={<Navbar />} />
-      <Route path="/org" element={<Updateorg />} />
+      <Route path="/org" element={<Updateorg />} /> 
+       <Route path="/menu" element={<WeeklyMenu />} />
       <Route path="/" element={<SignUp/>} />
       <Route path="*" element={<PageNotFound />} />
       

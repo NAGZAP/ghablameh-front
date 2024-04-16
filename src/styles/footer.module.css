@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 .footer {
  display: grid;
 grid-template-columns: 1fr;
@@ -21,12 +22,13 @@ ul {
     padding: 0px;
   }
   .footersection {
-    background: #26577c;
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 0;
     width: 100%;
+    background: #26577c;
   }
+  
   .footer-cta {
   border-bottom: 1px solid #ca3918;
   }

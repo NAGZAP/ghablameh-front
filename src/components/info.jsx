@@ -5,7 +5,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import LoginRequest from "../APIs/Login"
 const Update = () => {
   const [birthdate, setBirthdate] = useState('');
   const [gender, setGender] = useState('');
@@ -59,6 +59,9 @@ const Update = () => {
       alert(errors.join('\n'));
       return;
     }
+    
+    const [username , setUsername] = useState () ;
+    const [password , setPassword] = useState() ;
 
     const formData = {
       birthdate,
@@ -71,7 +74,9 @@ const Update = () => {
     };
 
     try {
-      const token = await getToken();
+
+      const token = LoginRequest (username , password) ;
+        localStorage.setItem("token", token) ;
       const response = await fetch('https://ghablameh.fiust.ir/api/v1/client/me/', {
         method: 'PUT',
         headers: {
