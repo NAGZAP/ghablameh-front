@@ -26,7 +26,7 @@ const validationSchema = Yup.object({
 });
 
 function SignUp() {
-  const [activeTab, setActiveTab] = useState('tabs-Persons');
+  const [activeTab, setActiveTab] = useState();
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
