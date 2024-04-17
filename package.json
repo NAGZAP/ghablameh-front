@@ -31,6 +31,7 @@
     "react-icons-kit": "^2.0.0",
     "react-router-dom": "^6.22.3",
     "react-toastify": "^10.0.5",
+    "tw-elements": "^2.0.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
