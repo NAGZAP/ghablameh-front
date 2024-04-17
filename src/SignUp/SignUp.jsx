@@ -180,13 +180,11 @@ function SignUp() {
           <input className={styles.button_sign +" "+"peer w-full h-[40px] bg-template-custom-blue text-white outline-none focus:outline-none disabled:bg-template-custom-orange disabled:border-0 transition-all rounded-full cursor-pointer"} type="submit" value="ثبت نام" />
         </div>
         </p>
-{/*         <link path="/login">        </link> */}
           <p>
-            <a className={styles.link_to_signin} href="#">
+            <Link to="login" className={styles.link_to_signin}>
               قبلا ثبت نام کرده اید؟
-            </a>
+            </Link>
           </p>
-
       </form>
     </div>
     </div>
