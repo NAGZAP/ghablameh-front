@@ -14,6 +14,9 @@ import PageNotFound from './components/pagenotfound'
 import Navbar from './components/Navbar'
 import Updateorg from './components/updateorg'
 import Login from './components/login';
+import Boofeh from "./BoofehsOfOrganization/Boofeh"
+import Cards from "./BoofehsOfOrganization/Cards"
+import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList"
 function App() {
   return (
     <BrowserRouter>
@@ -27,6 +30,7 @@ function App() {
       <Route path="/signup" element={<SignUp/>} />
       <Route path="*" element={<PageNotFound />} />
       <Route path="/login" element={<Login/>}/>
+      <Route path="/DataFromApiList" element={<DataFromApiList/>}/>
     </Routes>
     </BrowserRouter>
   );
