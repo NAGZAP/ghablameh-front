@@ -15,6 +15,9 @@ import Navbar from './components/Navbar'
 import Updateorg from './components/updateorg'
 import Login from './components/login';
 import JoinRequestsList from './components/listofrequests';
+import Boofeh from "./BoofehsOfOrganization/Boofeh"
+import Cards from "./BoofehsOfOrganization/Cards"
+import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList"
 function App() {
   return (
     <BrowserRouter>
