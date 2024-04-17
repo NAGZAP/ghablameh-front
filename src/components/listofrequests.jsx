@@ -31,20 +31,20 @@ function JoinRequestsList() {
   return (
     <div>
       {requests.length > 0 && (
-        <ul style={{ border: '1px solid rgb(38, 87, 124)', borderRadius: '8px' }} className="w-64 text-sm font-medium text-gray-900 bg-white rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white m-2">
+        <ul style={{ border: '1px solid rgb(38, 87, 124)', borderRadius: '8px', width:'17rem' }} className="w-64 text-sm font-medium text-gray-900 bg-white rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white m-2" >
           {requests.map((user, index) => (
             <li key={index} style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }} className="w-full px-4 py-2">
-              <div className="flex items-center">
+              <div className="flex items-center p-2">
                 {user.avatar ? (
                   <img src={user.avatar} alt={`${user.firstName} ${user.lastName}`} className="h-8 w-8 rounded-full" />
                 ) : (
                   <Avatar name={`${user.firstName} ${user.lastName}`} size={32} round={true} maxInitials={1} />
                 )}
-                <div className="ml-2">
+                <div className="ml-2 text-base">
                   <p>{user.firstName} {user.lastName}</p>
                 </div>
-                <XIcon className="h-5 w-5 cursor-pointer ml-auto" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleCrossClick(user)} />
-                <CheckIcon className="h-5 w-5 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleCheckClick(user)} />
+                <XIcon className="h-6 w-6 cursor-pointer ml-auto mx-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleCrossClick(user)} />
+                <CheckIcon className="h-6 w-6 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleCheckClick(user)} />
               </div>
             </li>
           ))}
