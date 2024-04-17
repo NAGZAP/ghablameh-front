@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 import styles from "./Boofeh.module.css";
 import AddBuffet from '../components/addbuffet';
+import { useModalState } from '../components/modalState';
 
 function Boofeh({ searchTerm, onSearchChange }) {
-
+  const { showMyModel, setShowMyModel } = useModalState();
+  
   return (
     <>
       <form className="mt-52 max-w-md mx-auto items-center">
@@ -29,12 +31,15 @@ function Boofeh({ searchTerm, onSearchChange }) {
         </div>
       </form>
 
-      <div className="justify-center mt-0 mb-10 flex flex-col items-center">
+      {/* <div className="justify-center mt-0 mb-10 flex flex-col items-center">
         <button onClick={AddBuffet.onOpen} className={styles.button} type="button">
           <a href="#">افزودن بوفه</a>
         </button>
-      </div>
-      {AddBuffet.showMyModel && <AddBuffet />}
+      </div> */}
+      <button onClick={() => setShowMyModel(true)} className={styles.button} type="button">
+     <a href="#">افزودن بوفه</a>
+   </button>
+      {showMyModel && <AddBuffet />}
 
     </>
   );

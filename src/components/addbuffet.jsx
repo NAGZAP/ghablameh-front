@@ -1,19 +1,13 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import styles from '../styles/addBuffet.module.css';
-
+import { useModalState } from './modalState';
 function AddBuffet() {
-    // Model
+    const { showMyModel, setShowMyModel } = useModalState();
     
+    // Model
     const onClose = () => {
         setShowMyModel(false);
     };
-
-    const [showMyModel, setShowMyModel] = useState(false);
-    window.showMyModel = showMyModel;
-
-    const onOpen =() =>{
-        setShowMyModel(true)
-    }
 
     const handleOnClose = (e) => {
         if (e.target.id === "close") onClose();
