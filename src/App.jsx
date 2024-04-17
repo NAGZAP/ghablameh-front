@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
   BrowserRouter,
-  Routes, 
+  Routes,
   Route,
 } from "react-router-dom";
 import './App.css';
@@ -21,19 +21,20 @@ import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList"
 function App() {
   return (
     <BrowserRouter>
-    <Routes>
-      <Route path="/footer" element={<Footer />} />
-      <Route path="/Update" element={<Update />} />
-      <Route path="/Register" element={<Register />} />
-      <Route path="/sidebar" element={<CustomSidebar />} />
-      <Route path="/navbar" element={<Navbar />} />
-      <Route path="/" element={<Updateorg />} />
-      <Route path="/signup" element={<SignUp/>} />
-      <Route path="/login" element={<Login/>}/>
-      <Route path="/JoinRequestsList" element={<JoinRequestsList/>}/>
-      <Route path="*" element={<PageNotFound />} />
+      <Routes>
+        <Route path="/footer" element={<Footer />} />
+        <Route path="/Update" element={<Update />} />
+        <Route path="/Register" element={<Register />} />
+        <Route path="/sidebar" element={<CustomSidebar />} />
+        <Route path="/navbar" element={<Navbar />} />
+        <Route path="/" element={<Updateorg />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="*" element={<PageNotFound />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/DataFromApiList" element={<DataFromApiList />} />
+        <Route path="/JoinRequestsList" element={<JoinRequestsList />} />
 
-    </Routes>
+      </Routes>
     </BrowserRouter>
   );
 }
