@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Cards from './Cards';
 import Boofeh from './Boofeh';
+import styles from './Cards.module.css';
 
 function DataFromApiList() {
   const [cards, setCards] = useState([
@@ -31,8 +32,8 @@ function DataFromApiList() {
 
   return (
     <>
+    <div className={styles.containment_boof}>
       <Boofeh searchTerm={searchTerm} onSearchChange={onSearchChange} />
-
       {filteredCards.map((card, index) => (
         <Cards
           key={index}
@@ -41,6 +42,7 @@ function DataFromApiList() {
           onDelete={() => handleDeleteCard(card)}
         />
       ))}
+      </div>
     </>
   );
 }
