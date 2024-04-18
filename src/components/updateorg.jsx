@@ -20,20 +20,6 @@ function Updateorg() {
         fetchOrgData();
     }, []);
 
-    // fetch org password ???
-    // const [fetchedorgPassData, setFetchedorgPassData] = useState(null);
-    // useEffect(() => {
-    //     const fetchorgPassData = async () => {
-    //         try { //https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/OrganizationChangePassword
-    //             const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
-    //             setFetchedorgPassData(response.data);
-    //         } catch (error) {
-    //             console.error('Error fetching user data: ', error);
-    //         }
-    //     };
-    //     fetchorgPassData();
-    // }, []);
-
     // model
     const [showMyModel, setShowMyModel] = useState(false);
 

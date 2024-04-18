@@ -5,3 +5,31 @@
 /* .search{
   border: 10px solid rgba(0, 0, 0, 0.298);
 } */
+
+.modal-me {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.submit-button-me {
+  width: 110px;
+  margin: 20px;
+  padding: 5px;
+  color: white;
+  background-color: rgb(38, 87, 124);
+  font-weight: 500;
+  border-radius: 3px;
+}
+
+.close-button-me {
+  width: 30px;
+  margin-top: 0.25px;
+  margin-bottom: 7px;
+  padding: 2px;
+  padding-top: 4px;
+  color: white;
+  color: rgba(38, 87, 124, 0.8);
+}
