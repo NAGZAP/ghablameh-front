@@ -73,85 +73,56 @@ const Update = () => {
       name,
       admin_first_name,
       admin_last_name,
-      username: admin_username,
+      admin_username,
       admin_email,
       admin_phone_number
     };
 
+    //3
     try {
-      const response = await fetch('https://ghablameh.fiust.ir/api/v1/organizations/me/', {
-        method: 'PUT',
+      const token = "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDM4MTM4LCJpYXQiOjE3MTM0NDYxMzgsImp0aSI6IjRhOTE0ZWZhNjQwNzRhYjk4YWQ2ZTU4YjkzNmFkNzZjIiwidXNlcl9pZCI6MTV9.8KHde7AWbU0R7EY7UVyaC5GJT-UuErtzRXS8-41KuCE";
+      
+      const response = await axios.put('https://ghablameh.fiust.ir/api/v1/organizations/me/', formData, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'X-CSRFToken': 'jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDMyMDk5LCJpYXQiOjE3MTM0NDAwOTksImp0aSI6IjUzNGUzODg2Y2VhMjQ2OTg4MWIwZTZmOGQzYTEzMzQ3IiwidXNlcl9pZCI6MTJ9.B_fOo-D8s7LLzuX1_JVDJ0QvHvrxKo9fib2_G5sCmOg',
-        },
-        body: JSON.stringify(formData),
+          'Authorization': token
+        }
       });
-  
-      if (response.ok) {
-       
+    
+      if (response.status === 200) {
         console.log('Form submitted successfully');
       } else {
-       
         const errorData = await response.json();
         console.log('Form submission failed:', errorData);
       }
     } catch (error) {
       console.error('An error occurred:', error);
     }
-
-    // const url='https://ghablameh.fiust.ir/api/v1/organizations/me/'
-    // const token="jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDMwNDI1LCJpYXQiOjE3MTM0Mzg0MjUsImp0aSI6IjkyZTI1MzhiOTk0NTQ2NGM4ZjUwM2Q0ODc5NmIwOGIxIiwidXNlcl9pZCI6MTJ9.s-Lhrj4BckvhY23y6xHAT2_Q6PB8DfFafjH3qk9hIH8"
-
-    // try {
-    //   const response= await axios.put(url,{
-    //     headers:{
-    //       Authorization: `Bearer ${token}`
-    //     },
-    //     body: JSON.stringify(formData),
-    //   });
-  
-    //   if (response.ok) {
-       
-    //     console.log('Form submitted successfully');
-    //   } else {
-       
-    //     const errorData = await response.json();
-    //     console.log('Form submission failed:', errorData);
-    //   }
-    // } catch (error) {
-    //   console.error('An error occurred:', error);
-    // }
-
+    
     // Pass data for password update
     const passData = {
       old_password: old_password,
       newPassword: new_password,
       confirmPassword: confirm_new_password
     };
-
-    // try {
-    //   const response = await fetch('https://ghablameh.fiust.ir/api/v1/organizations/password/', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json',
-    //       'Token': 'jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDMwNDI1LCJpYXQiOjE3MTM0Mzg0MjUsImp0aSI6IjkyZTI1MzhiOTk0NTQ2NGM4ZjUwM2Q0ODc5NmIwOGIxIiwidXNlcl9pZCI6MTJ9.s-Lhrj4BckvhY23y6xHAT2_Q6PB8DfFafjH3qk9hIH8',
-    //     },
-    //     body: JSON.stringify(passData),
-    //   });
-
-    //   if (response.ok) {
-    //     console.log('Password updated successfully');
-    //   } else {
-    //     const errorData = await response.json();
-    //     console.log('Password update failed:', errorData);
-    //   }
-    // } catch (error) {
-    //   console.error('An error occurred:', error);
-    // }
-
+ 
+    try {
+      const token = "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDM3ODc2LCJpYXQiOjE3MTM0NDU4NzYsImp0aSI6ImNmY2Q4NjRmMjcxNzRiNzQ4MTJlYjI0Njc3MWE2MzVjIiwidXNlcl9pZCI6MTV9.0AeKwZMI6j-dsJ9lxC6cU1X25thjOSqrkdH2ybZgpFU";
+      
+      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/password/', passData, {
+        headers: {
+          'Authorization': token
+        }
+      });
+    
+      if (response.status === 200) {
+        console.log('Form submitted successfully');
+      } else {
+        const errorData = await response.json();
+        console.log('Form submission failed:', errorData);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
     // Close the form after submission
   };
 
