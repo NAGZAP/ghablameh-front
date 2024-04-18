@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap');
 .containment_boof {
-/*   direction: rtl;
- */  background-color: #ffffff;
+
+  background-color: #ffffff;
   font-family: "Vazir", "Vazirmatn", "Arabic Typesetting", sans-serif;
   font-optical-sizing: auto;
   font-weight: 200;
@@ -11,13 +11,10 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  text-align: center;
-  justify-content: center;
-  background-position: center;
-  align-items: center;
   margin: 0;
   padding: 0;
-}
+/*   height: 100vh;
+ */}
 @media only screen and (max-width: 600px) {
   @media (max-width: 768px) {
   .containment_boof {
@@ -27,8 +24,12 @@
   }
   }
 }
-.rtl {
+.itemscenter{
   direction: rtl;
+  text-align: center;
+  justify-content: center;
+  background-position: center;
+  align-items: center;
 }
 .card{
     background-color: rgba(0, 0, 0, 0.145);

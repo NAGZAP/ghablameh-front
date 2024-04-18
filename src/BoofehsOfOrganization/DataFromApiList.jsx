@@ -33,22 +33,22 @@ function DataFromApiList() {
   };
 
   return (
-    <>
-    <div className={styles.containment_boof}>
-      <Navbar></Navbar>
-      <div className={styles.rtl}>
-      <Boofeh searchTerm={searchTerm} onSearchChange={onSearchChange} />
-      {filteredCards.map((card, index) => (
-        <Cards
-          key={index}
-          name={card.name}
-          counter_organ={card.counter_organ}
-          onDelete={() => handleDeleteCard(card)}
-        />
-      ))}
-      </div>
-      </div>
-      <Footer></Footer>
+    <>        
+     <div className={styles.containment_boof}> 
+        <Navbar></Navbar>
+        <div className={styles.itemscenter}>
+              <Boofeh searchTerm={searchTerm} onSearchChange={onSearchChange} />
+              {filteredCards.map((card, index) => (
+                <Cards
+                  key={index}
+                  name={card.name}
+                  counter_organ={card.counter_organ}
+                  onDelete={() => handleDeleteCard(card)}
+                />
+              ))}
+          </div>    
+        <Footer></Footer>       
+      </div>   
     </>
   );
 }
