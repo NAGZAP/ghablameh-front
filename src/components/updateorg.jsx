@@ -65,7 +65,7 @@ const Update = () => {
     }
 
     // Retrieve token
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
     // Submit the form with all the data
     const formData = {
@@ -84,7 +84,7 @@ const Update = () => {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-CSRFToken': 'YvssuFk0cc5yM0IIRmBPcHbYr1LomsbWtFJAnn9OlsVgjjBUX55o9u6whvuRajmb',
+          'X-CSRFToken': 'jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDMyMDk5LCJpYXQiOjE3MTM0NDAwOTksImp0aSI6IjUzNGUzODg2Y2VhMjQ2OTg4MWIwZTZmOGQzYTEzMzQ3IiwidXNlcl9pZCI6MTJ9.B_fOo-D8s7LLzuX1_JVDJ0QvHvrxKo9fib2_G5sCmOg',
         },
         body: JSON.stringify(formData),
       });
@@ -101,6 +101,29 @@ const Update = () => {
       console.error('An error occurred:', error);
     }
 
+    // const url='https://ghablameh.fiust.ir/api/v1/organizations/me/'
+    // const token="jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDMwNDI1LCJpYXQiOjE3MTM0Mzg0MjUsImp0aSI6IjkyZTI1MzhiOTk0NTQ2NGM4ZjUwM2Q0ODc5NmIwOGIxIiwidXNlcl9pZCI6MTJ9.s-Lhrj4BckvhY23y6xHAT2_Q6PB8DfFafjH3qk9hIH8"
+
+    // try {
+    //   const response= await axios.put(url,{
+    //     headers:{
+    //       Authorization: `Bearer ${token}`
+    //     },
+    //     body: JSON.stringify(formData),
+    //   });
+  
+    //   if (response.ok) {
+       
+    //     console.log('Form submitted successfully');
+    //   } else {
+       
+    //     const errorData = await response.json();
+    //     console.log('Form submission failed:', errorData);
+    //   }
+    // } catch (error) {
+    //   console.error('An error occurred:', error);
+    // }
+
     // Pass data for password update
     const passData = {
       old_password: old_password,
@@ -108,26 +131,26 @@ const Update = () => {
       confirmPassword: confirm_new_password
     };
 
-    try {
-      const response = await fetch('https://ghablameh.fiust.ir/api/v1/organizations/password/', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'X-CSRFToken': 'YvssuFk0cc5yM0IIRmBPcHbYr1LomsbWtFJAnn9OlsVgjjBUX55o9u6whvuRajmb',
-        },
-        body: JSON.stringify(passData),
-      });
+    // try {
+    //   const response = await fetch('https://ghablameh.fiust.ir/api/v1/organizations/password/', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Accept': 'application/json',
+    //       'Content-Type': 'application/json',
+    //       'Token': 'jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDMwNDI1LCJpYXQiOjE3MTM0Mzg0MjUsImp0aSI6IjkyZTI1MzhiOTk0NTQ2NGM4ZjUwM2Q0ODc5NmIwOGIxIiwidXNlcl9pZCI6MTJ9.s-Lhrj4BckvhY23y6xHAT2_Q6PB8DfFafjH3qk9hIH8',
+    //     },
+    //     body: JSON.stringify(passData),
+    //   });
 
-      if (response.ok) {
-        console.log('Password updated successfully');
-      } else {
-        const errorData = await response.json();
-        console.log('Password update failed:', errorData);
-      }
-    } catch (error) {
-      console.error('An error occurred:', error);
-    }
+    //   if (response.ok) {
+    //     console.log('Password updated successfully');
+    //   } else {
+    //     const errorData = await response.json();
+    //     console.log('Password update failed:', errorData);
+    //   }
+    // } catch (error) {
+    //   console.error('An error occurred:', error);
+    // }
 
     // Close the form after submission
   };
