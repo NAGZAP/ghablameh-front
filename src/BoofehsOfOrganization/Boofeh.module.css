@@ -1,5 +1,5 @@
 .button{
-    @apply  bg-template-custom-blue hover:bg-template-custom-orange text-white font-bold py-2 px-28 rounded-full border-none cursor-pointer mt-10 mb-1 mr-1;
+    @apply  bg-template-custom-blue hover:bg-template-custom-orange text-white font-bold py-2 px-24 rounded-full border-none cursor-pointer mt-10 mb-1 mr-1;
     border: 2px solid rgba(0, 0, 0, 0.298);
 }
 /* .search{
@@ -20,6 +20,15 @@
   padding: 5px;
   color: white;
   background-color: rgb(38, 87, 124);
+  font-weight: 500;
+  border-radius: 3px;
+}
+.submit-button-me:hover {
+  width: 110px;
+  margin: 20px;
+  padding: 5px;
+  color: white;
+  background-color: #E55604;
   font-weight: 500;
   border-radius: 3px;
 }
