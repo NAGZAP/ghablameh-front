@@ -64,9 +64,6 @@ const Update = () => {
       return;
     }
 
-    // Retrieve token
-    // const token = localStorage.getItem("token");
-
     // Submit the form with all the data
     const formData = {
       avatar,
@@ -78,16 +75,17 @@ const Update = () => {
       admin_phone_number
     };
 
-    //3
+    // Retrieve token
+    const token = 'JWT ' + localStorage.getItem("token");
+
+    //send form data
     try {
-      const token = "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDM4NzM2LCJpYXQiOjE3MTM0NDY3MzYsImp0aSI6IjJkZWQ1ODc0MjNiNTQ1NmQ5MDY1NjMzOTk4YjRhNWU5IiwidXNlcl9pZCI6MTZ9.jXuXBTYVkUKpBGmWAewzl0zeF9WewM2tQM19gFZpS10";
-      
       const response = await axios.put('https://ghablameh.fiust.ir/api/v1/organizations/me/', formData, {
         headers: {
           'Authorization': token
         }
       });
-    
+
       if (response.status === 200) {
         console.log('Form submitted successfully');
       } else {
@@ -97,23 +95,24 @@ const Update = () => {
     } catch (error) {
       console.error('An error occurred:', error);
     }
-    
+
     // Pass data for password update
     const passData = {
       old_password: old_password,
       newPassword: new_password,
       confirmPassword: confirm_new_password
     };
- 
+    
+    //send pass data
     try {
       const token = "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDM4NzM2LCJpYXQiOjE3MTM0NDY3MzYsImp0aSI6IjJkZWQ1ODc0MjNiNTQ1NmQ5MDY1NjMzOTk4YjRhNWU5IiwidXNlcl9pZCI6MTZ9.jXuXBTYVkUKpBGmWAewzl0zeF9WewM2tQM19gFZpS10";
-      
+
       const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/password/', passData, {
         headers: {
           'Authorization': token
         }
       });
-    
+
       if (response.status === 200) {
         console.log('Form submitted successfully');
       } else {
