@@ -4,7 +4,7 @@ import { Sidebar } from "flowbite-react";
 import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser, HiViewBoards } from "react-icons/hi";
 const CustomSidebar = () => {
 return (<>
-   <Sidebar aria-label="Default sidebar example" >
+   <Sidebar aria-label=" Default sidebar example" style={{height:"700px"}} >
       <Sidebar.Items>
         <Sidebar.ItemGroup>
           <Sidebar.Item href="#" icon={HiChartPie}>
