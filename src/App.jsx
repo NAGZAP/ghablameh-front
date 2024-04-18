@@ -29,10 +29,10 @@ function App() {
         <Route path="/navbar" element={<Navbar />} />
         <Route path="/" element={<Updateorg />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="*" element={<PageNotFound />} />
         <Route path="/login" element={<Login />} />
         <Route path="/DataFromApiList" element={<DataFromApiList />} />
         <Route path="/JoinRequestsList" element={<JoinRequestsList />} />
+        <Route path="*" element={<PageNotFound />} />
 
       </Routes>
     </BrowserRouter>

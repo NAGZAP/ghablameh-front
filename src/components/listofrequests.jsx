@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { XIcon, CheckIcon } from '@heroicons/react/solid';
 import Avatar from 'react-avatar';
-
+import CustomSidebar from './Sidebar';
+import Navbar from './Navbar';
+import Footer from './footer';
 function JoinRequestsList() {
   const [approved, setApproved] = useState([]);
   const [rejected, setRejected] = useState([]);
   const [requests, setRequests] = useState([
-    { id: 1, firstName: 'John', lastName: 'Doe', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-    { id: 2, firstName: 'Jane', lastName: 'Smith', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-    { id: 3, firstName: 'Alice', lastName: 'Johnson', avatar: '' },
+    { buffet: 'buffet1', id: 1, firstName: 'John', lastName: 'Doe', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
+    { buffet: 'buffet2', id: 2, firstName: 'Jane', lastName: 'Smith', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
+    { buffet: 'buffet3', id: 3, firstName: 'Alice', lastName: 'Johnson', avatar: '' },
   ]);
 
   const handleCheckClick = (user) => {
@@ -28,29 +30,54 @@ function JoinRequestsList() {
     }
   };
 
-  return (
-    <div>
+  const listofuserrequests = () => (
+    <div style={{
+      border: '1px solid rgb(38, 87, 124)',
+      borderRadius: '8px',
+      width: '24rem',
+      // position: 'absolute',
+      // top: 0,
+      right: 0
+    }} className="w-64 text-sm font-medium text-gray-900 bg-white rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white m-2 ml-auto" >
       {requests.length > 0 && (
-        <ul style={{ border: '1px solid rgb(38, 87, 124)', borderRadius: '8px', width:'17rem' }} className="w-64 text-sm font-medium text-gray-900 bg-white rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white m-2" >
+        <ul className="w-full">
           {requests.map((user, index) => (
-            <li key={index} style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }} className="w-full px-4 py-2">
-              <div className="flex items-center p-2">
-                {user.avatar ? (
-                  <img src={user.avatar} alt={`${user.firstName} ${user.lastName}`} className="h-8 w-8 rounded-full" />
-                ) : (
-                  <Avatar name={`${user.firstName} ${user.lastName}`} size={32} round={true} maxInitials={1} />
-                )}
-                <div className="ml-2 text-base">
-                  <p>{user.firstName} {user.lastName}</p>
+            <li key={index} style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }} className="px-4 py-2">
+              <div className="flex items-center p-2 flex-row justify-between">
+                <div className="flex items-center">
+                  {user.avatar ? (
+                    <img src={user.avatar} alt={`${user.firstName} ${user.lastName}`} className="h-8 w-8 rounded-full" />
+                  ) : (
+                    <Avatar name={`${user.firstName} ${user.lastName}`} size={32} round={true} maxInitials={1} />
+                  )}
+                  <div className="ml-2 text-base">
+                    <div>{user.firstName} {user.lastName}</div>
+                  </div>
                 </div>
-                <XIcon className="h-6 w-6 cursor-pointer ml-auto mx-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleCrossClick(user)} />
-                <CheckIcon className="h-6 w-6 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleCheckClick(user)} />
+                <div style={{ backgroundColor: 'rgb(38, 87, 124)', color: 'white', borderRadius: '5px' }} className="rounded p-1 mx-5">
+                  {user.buffet}
+                </div>
+                <div className="flex items-center">
+                  <XIcon className="h-6 w-6 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleCrossClick(user)} />
+                  <CheckIcon className="h-6 w-6 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleCheckClick(user)} />
+                </div>
               </div>
             </li>
           ))}
         </ul>
+
+        
       )}
-      {requests.length === 0 && logListsIfEmpty()} 
+      {requests.length === 0 && logListsIfEmpty()}
+    </div>
+  );
+
+  return (
+    <div>
+      <Navbar />
+      <CustomSidebar />
+      {listofuserrequests()}
+      <Footer />
     </div>
   );
 }
