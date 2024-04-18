@@ -80,7 +80,7 @@ const Update = () => {
 
     //3
     try {
-      const token = "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDM4MTM4LCJpYXQiOjE3MTM0NDYxMzgsImp0aSI6IjRhOTE0ZWZhNjQwNzRhYjk4YWQ2ZTU4YjkzNmFkNzZjIiwidXNlcl9pZCI6MTV9.8KHde7AWbU0R7EY7UVyaC5GJT-UuErtzRXS8-41KuCE";
+      const token = "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDM4NzM2LCJpYXQiOjE3MTM0NDY3MzYsImp0aSI6IjJkZWQ1ODc0MjNiNTQ1NmQ5MDY1NjMzOTk4YjRhNWU5IiwidXNlcl9pZCI6MTZ9.jXuXBTYVkUKpBGmWAewzl0zeF9WewM2tQM19gFZpS10";
       
       const response = await axios.put('https://ghablameh.fiust.ir/api/v1/organizations/me/', formData, {
         headers: {
@@ -106,7 +106,7 @@ const Update = () => {
     };
  
     try {
-      const token = "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDM3ODc2LCJpYXQiOjE3MTM0NDU4NzYsImp0aSI6ImNmY2Q4NjRmMjcxNzRiNzQ4MTJlYjI0Njc3MWE2MzVjIiwidXNlcl9pZCI6MTV9.0AeKwZMI6j-dsJ9lxC6cU1X25thjOSqrkdH2ybZgpFU";
+      const token = "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDM4NzM2LCJpYXQiOjE3MTM0NDY3MzYsImp0aSI6IjJkZWQ1ODc0MjNiNTQ1NmQ5MDY1NjMzOTk4YjRhNWU5IiwidXNlcl9pZCI6MTZ9.jXuXBTYVkUKpBGmWAewzl0zeF9WewM2tQM19gFZpS10";
       
       const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/password/', passData, {
         headers: {
