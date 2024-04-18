@@ -1,37 +1,10 @@
 import React, { useState } from 'react';
 import styles from "./Boofeh.module.css";
-
-function Addbuffet({ showMyModel, onClose, handleOnClose, handleSubmit }) {
-  return (
-    showMyModel && (
-      <div id='close' onClick={handleOnClose} className={`${styles['modal-me']} fixed `}>
-        <div className={`bg-white rounded p-2 ${styles['modal-content']}`} >
-          <div className='flex flex-row justify-end'>
-            <button onClick={onClose} className={`${styles['close-button-me']} text-sm`}>X</button>
-          </div>
-          <div style={{ width: "400px" }}>
-            <div className="max-w-2xl px-4 ">
-              <h2 className="mb-2 text-xl font-bold text-gray-900 text-center">افزودن بوفه</h2>
-              <form onSubmit={handleSubmit} className={`${styles['border-t']}`}>
-                <div className="sm:col-span-2 p-3">
-                  <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}>نام بوفه</label>
-                  <input name="admin_phone_number" className="text-gray-900 rounded-md block w-full p-2.5" style={{ border: '1px solid #000000' }} />
-                </div>
-                <div className="flex items-center justify-center space-x-4">
-                  <button type="submit" className={`${styles['submit-button-me']} text-white text-center`}>ذخیره</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  );
-}
+import axios from 'axios';
 
 function Boofeh({ searchTerm, onSearchChange }) {
+  //model
   const [showModel, setShowModel] = useState(false);
-
   const onClose = () => {
     setShowModel(false);
   };
@@ -40,9 +13,41 @@ function Boofeh({ searchTerm, onSearchChange }) {
     if (e.target.id === "close") onClose();
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  //data for backend
+  const [name, setName] = useState('');
+  const [buffetData, setBuffetData] = useState({
+    name: '',
+  });
+  const handleAddBuffet = (event) => {
+    setBuffetData({ ...buffetData, [event.target.name]: event.target.value });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Retrieve token
+    const token = 'JWT ' + localStorage.getItem("token");
+
+    // Send form data
+    try {
+      const response = await axios.put('https://ghablameh.fiust.ir/api/v1/organizations/me/', buffetData, {
+        headers: {
+          'Authorization': token
+        }
+      });
+
+      if (response.status === 200) {
+        console.log('Form submitted successfully');
+        setShowModel(false);
+      } else {
+        const errorData = response.data;
+        console.log('Form submission failed:', errorData);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  };
+
+  
 
   return (
     <>
@@ -68,15 +73,36 @@ function Boofeh({ searchTerm, onSearchChange }) {
               />
             </div>
           </div>
-        </form> 
+        </form>
         <div className='flex items-center justify-center'>
-        <button onClick={() => setShowModel(true)} className={styles.button} type="button">
-          <a href="#">افزودن بوفه</a>
-        </button>
+          <button onClick={() => setShowModel(true)} className={styles.button} type="button">
+            <a href="#">افزودن بوفه</a>
+          </button>
+        </div>
       </div>
-      </div>
-
-      <Addbuffet showMyModel={showModel} onClose={onClose} handleOnClose={handleOnClose} handleSubmit={handleSubmit} />
+      {showModel && (
+        <div id='close' onClick={handleOnClose} className={`${styles['modal-me']} fixed `}>
+          <div className={`bg-white rounded p-2 ${styles['modal-content']}`} >
+            <div className='flex flex-row justify-end'>
+              <button onClick={onClose} className={`${styles['close-button-me']} text-sm`}>X</button>
+            </div>
+            <div style={{ width: "400px" }}>
+              <div className="max-w-2xl px-4 ">
+                <h2 className="mb-2 text-xl font-bold text-gray-900 text-center">افزودن بوفه</h2>
+                <form onSubmit={handleSubmit} className={`${styles['border-t']}`}>
+                  <div className="sm:col-span-2 p-3">
+                    <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}>نام بوفه</label>
+                    <input name="name" onChange={handleAddBuffet} className="text-gray-900 rounded-md block w-full p-2.5" style={{ border: '1px solid #000000' }} />
+                  </div>
+                  <div className="flex items-center justify-center space-x-4">
+                    <button type="submit" className={`${styles['submit-button-me']} text-white text-center`}>ذخیره</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

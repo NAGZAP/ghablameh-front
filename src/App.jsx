@@ -33,7 +33,7 @@ function App() {
       <Route path="*" element={<PageNotFound />} />
       <Route path="/login" element={<Login/>}/>
       <Route path="/DataFromApiList" element={<DataFromApiList/>}/>
-      <Route path="/addBuffet" element={<AddBuffet/>}/>
+
     </Routes>
     </BrowserRouter>
   );
