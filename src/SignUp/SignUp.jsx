@@ -27,7 +27,7 @@ const validationSchema = Yup.object({
 });
 
 function SignUp() {
-  const [activeTab, setActiveTab] = useState();
+  const [activeTab, setActiveTab] = useState('tabs-Persons');
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
@@ -236,8 +236,8 @@ function SignUp() {
       )}
         {activeTab === 'tabs-Organization' && (
           <div className="opacity-100 transition-opacity duration-150 ease-linear" id="tabs-Organization" role="tabpanel" aria-labelledby="tabs-profile-tab02">
-            <Register/>
-          </div>
+{/*             <Register/>
+ */}          </div>
         )}
       </div>
     </div>
