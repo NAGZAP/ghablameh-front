@@ -76,7 +76,8 @@ const Update = () => {
     };
 
     // Retrieve token
-    const token = 'JWT ' + localStorage.getItem("token");
+    // const token = 'JWT ' + localStorage.getItem("token");
+    const token= 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDY4MDYzLCJpYXQiOjE3MTM0NzYwNjMsImp0aSI6IjYwMzhiNWE4MWMxMzRiYTNiMDJiMjU4YTliZDk5MThjIiwidXNlcl9pZCI6MTZ9.t1L6HviyFnEFxCgfNEK6teJmv2KLkYMCBb_HH_jhlwg'
 
     //send form data
     try {
@@ -87,10 +88,10 @@ const Update = () => {
       });
 
       if (response.status === 200) {
-        console.log('Form submitted successfully');
+        console.log('formData submitted successfully');
       } else {
         const errorData = await response.json();
-        console.log('Form submission failed:', errorData);
+        console.log('formData submission failed:', errorData);
       }
     } catch (error) {
       console.error('An error occurred:', error);
@@ -99,7 +100,7 @@ const Update = () => {
     // Pass data for password update
     const passData = {
       old_password: old_password,
-      newPassword: new_password,
+      new_password: new_password,
       confirmPassword: confirm_new_password
     };
     
@@ -114,10 +115,10 @@ const Update = () => {
       });
 
       if (response.status === 200) {
-        console.log('Form submitted successfully');
+        console.log('PassData submitted successfully');
       } else {
         const errorData = await response.json();
-        console.log('Form submission failed:', errorData);
+        console.log('PassData submission failed:', errorData);
       }
     } catch (error) {
       console.error('An error occurred:', error);
