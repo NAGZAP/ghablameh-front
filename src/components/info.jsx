@@ -63,7 +63,7 @@ const Update = () => {
     const [username , setUsername] = useState () ;
     const [password , setPassword] = useState() ;
 
-    const formData = {
+    const userData = {
       birthdate,
       gender,
       username,
@@ -71,31 +71,29 @@ const Update = () => {
       newPassword,
       confirmPassword,
       avatar,
+      email,
+      first_name: firstName,
+      last_name: lastName,
+      phone_number: phoneNumber,
     };
-
+    
     try {
-
-      const token = LoginRequest (username , password) ;
-        localStorage.setItem("token", token) ;
-      const response = await fetch('https://ghablameh.fiust.ir/api/v1/client/me/', {
-        method: 'PUT',
+      const token = "jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDk1Nzk2LCJpYXQiOjE3MTM1MDM3OTYsImp0aSI6ImI2YzY2NmMzMzA0MDQ4OWNiOTU4MjU0ZGYwMjZiZGNiIiwidXNlcl9pZCI6MTd9.S13ehZA_19i0EtLWlKuT8sPrKgElj1pfAikrV6iC55Q";
+    
+      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/client/me/', userData, {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-          'X-CSRFToken': '4IqnkAsVtRhkrwE8YiGnyiQFkbvCrIJRrFjxMcqXAmLBESd8MCuulfCFSHFSTpIr',
-        },
-        body: JSON.stringify(formData),
+          'Authorization': token
+        }
       });
-
-      if (response.ok) {
+    
+      if (response.status === 200) {
         console.log('Form submitted successfully');
       } else {
-        const errorData = await response.json();
-        console.log('Form submission failed:', errorData);
+        setError('Form submission failed: ' + response.data.message);
       }
     } catch (error) {
       console.error('An error occurred:', error);
+      setError('An error occurred. Please try again later.');
     }
   };
 
@@ -108,21 +106,7 @@ const Update = () => {
     };
   };
 
-  const getToken = async () => {
-    try {
-      const response = await fetch('YOUR_TOKEN_ENDPOINT_URL');
-      const data = await response.json();
-      const token = data.token; // Replace "token" with your actual token property name
-      setToken(token);
-      return token;
-    } catch (error) {
-      console.error('Failed to fetch token:', error);
-    }
-  };
 
-  useEffect(() => {
-    getToken();
-  }, []);
   return (
     <div className={styles.container}>
       <div className={styles.pattern}></div>

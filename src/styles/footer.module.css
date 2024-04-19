@@ -6,6 +6,7 @@
  display: grid;
 grid-template-columns: 1fr;
  gap: 1rem;
+
  }
   .app {
     overflow-y: auto;
@@ -22,13 +23,13 @@ ul {
     padding: 0px;
   }
   .footersection {
-    position: relative;
+    position: sticky;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #26577c;
-  }
   
+    background: #26577c;
+}
   .footer-cta {
   border-bottom: 1px solid #ca3918;
   }

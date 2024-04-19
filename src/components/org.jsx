@@ -13,18 +13,8 @@ const Register = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/OrganizationAdminCreate');
-        console.log(response.data);
-      } catch (error) {
-        console.log('Error while fetching data:', error);
-      }
-    };
+  const [error, setError] = useState('');
 
-    fetchData();
-  }, []);
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
@@ -58,41 +48,37 @@ const Register = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    const userData = {
+      organization_name: organizationName,
+      username,
+      password,
+      email,
+      first_name: firstName || undefined,
+      last_name: lastName || undefined,
+      phone_number: phoneNumber || undefined,
+    };
 
-  const userData = {
-    organization_name: organizationName,
-    username,
-    password,
-    email,
-    first_name: firstName || undefined,
-    last_name: lastName || undefined,
-    phone_number: phoneNumber || undefined,
+    try {
+      const token = "jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDk1Nzk2LCJpYXQiOjE3MTM1MDM3OTYsImp0aSI6ImI2YzY2NmMzMzA0MDQ4OWNiOTU4MjU0ZGYwMjZiZGNiIiwidXNlcl9pZCI6MTd9.S13ehZA_19i0EtLWlKuT8sPrKgElj1pfAikrV6iC55Q";
+    
+      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/register/', userData, {
+        headers: {
+          'Authorization': token
+        }
+      });
+    
+      if (response.status === 200) {
+        console.log('Form submitted successfully');
+      } else {
+        setError('Form submission failed: ' + response.data.message);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+      setError('An error occurred. Please try again later.');
+    }
   };
 
-  try {
-    const response = await axios.post(
-      'https://ghablameh.fiust.ir/api/v1/organizations/register/',
-      userData,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': '4IqnkAsVtRhkrwE8YiGnyiQFkbvCrIJRrFjxMcqXAmLBESd8MCuulfCFSHFSTpIr',
-        },
-      }
-    );
-    console.log('Registration successful');
-    setEmail('');
-    setUsername('');
-    setOrganizationName('');
-    setPassword('');
-    setFirstName('');
-    setLastName('');
-    setPhoneNumber('');
-  } catch (error) {
-    console.log('Error during registration:', error);
-  }
-};
   return (
     <div className={styles.container}>
       <div className={styles.pattern}></div>
