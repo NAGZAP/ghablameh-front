@@ -6,8 +6,10 @@ import Navbar from '../components/Navbar'
 function Boofeh({ searchTerm, onSearchChange }) {
   //model
   const [showModel, setShowModel] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const onClose = () => {
     setShowModel(false);
+    setSubmitError('');
   };
 
   const handleOnClose = (e) => {
@@ -26,7 +28,7 @@ function Boofeh({ searchTerm, onSearchChange }) {
     e.preventDefault();
     // Retrieve token
     const token = 'JWT ' + localStorage.getItem("token");
-    // const token='JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTMzOTk0LCJpYXQiOjE3MTM1NDE5OTQsImp0aSI6ImRlZGQ3NWUyYzVkNDRjNjI5NjA2MTVmZjE3MjUzOWI3IiwidXNlcl9pZCI6MzF9.wozhtNVQ1Q_hW3YfRGCrOfHI5lqmAYjwBhB6WoTIjmo'
+    // const token='JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTM2NjEzLCJpYXQiOjE3MTM1NDQ2MTMsImp0aSI6IjBiN2YwNzM4OWMxYTRmMzZiNWM1MDQ2ZDhhM2NmOWE1IiwidXNlcl9pZCI6MzF9.IotlHGPBqWO2tSWq50Q5cD87JNrbyDTqt6HbA91rShg'
 
     // Send form data
     try {
@@ -37,14 +39,19 @@ function Boofeh({ searchTerm, onSearchChange }) {
       });
       // console.log(response.status)
       if (response.status === 201) {
-        // console.log('Form submitted successfully');
         setShowModel(false);
       } else {
         const errorData = response.data;
-        console.log('Form submission failed:', errorData);
+  
+        if (response.status === 400 && errorData.name && errorData.name[0] === "This field may not be blank.") {
+          setSubmitError('نام بوفه نمی تواند خالی باشد');
+        } else {
+          setSubmitError('نام بوفه نمی تواند خالی باشد');
+        }
       }
     } catch (error) {
-      console.error('An error occurred:', error);
+      // console.error('An error occurred:', error);
+      setSubmitError('نام بوفه نمی تواند خالی باشد');
     }
   };
 
@@ -62,6 +69,7 @@ function Boofeh({ searchTerm, onSearchChange }) {
                 <div className="sm:col-span-2 p-3">
                   <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}>نام بوفه</label>
                   <input name="name" onChange={handleAddBuffet} className="text-gray-900 rounded-md block w-full p-2.5" style={{ border: '1px solid #000000' }} />
+                  {submitError && <span className="text-red-500 m-2">{submitError}</span>}
                 </div>
                 <div className="flex items-center justify-center space-x-4">
                   <button type="submit" className={`${styles['submit-button-me']} text-white text-center`}>ذخیره</button>
@@ -106,6 +114,7 @@ function Boofeh({ searchTerm, onSearchChange }) {
         </div>
       </div>
       {showModel && addBuffet()}
+      
 {/* <Footer/> */}
     </>
   );
