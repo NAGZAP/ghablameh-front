@@ -5,13 +5,13 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import styles from './SignUp.module.css' 
 import { Link, redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Tab, initTWE } from 'tw-elements';
 import Register from '../components/org'
 initTWE({ Tab });
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
-
 const validationSchema = Yup.object({
   Firstname: Yup.string().required('نام خود را به شکل درست وارد کنید!'),
   Lastname: Yup.string().required('نام خانوادگی خود را به شکل درست وارد کنید!'),
@@ -33,6 +33,7 @@ function SignUp() {
     setActiveTab(tabId);
   };
 
+  const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(validationSchema),
   });
@@ -50,12 +51,14 @@ function SignUp() {
         gender: "M",
         birthdate: "2024-04-04"
       };
-      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/client/register/', formattedData);
+      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/clients/register/', formattedData);
       const accessToken = response.data.tokens.access;
       localStorage.setItem('token', accessToken);
-      console.log(accessToken);
-       console.log('Data sent successfully!');
-      return redirect("/")
+/*       console.log(accessToken);
+ */       console.log('Data sent successfully!');
+/*       return redirect("/")
+*/
+          navigate("/");
     } catch (error) {
       console.error('Error sending data:', error);
     }

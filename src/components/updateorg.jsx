@@ -24,6 +24,8 @@ const Update = () => {
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
+    // model
+    const [showMyModel, setShowMyModel] = useState(false);
 
 
   const handleFormSubmit = async (e) => {
