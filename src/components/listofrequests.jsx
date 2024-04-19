@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { XIcon, CheckIcon } from '@heroicons/react/solid';
 import Avatar from 'react-avatar';
 import CustomSidebar from './Sidebar';
 import Navbar from './Navbar';
 import Footer from './footer';
 import styles from '../styles/listofrequests.module.css';
-
+import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -21,34 +21,72 @@ function ListOfJoinRequests() {
     { buffet: 'buffet3', id: 6, firstName: 'loralie', lastName: 'eliise', avatar: '' },
 
   ]);
-  // model
-  const [showMyModel, setShowMyModel] = useState(false);
 
-  const onClose = () => {
-    setShowMyModel(false);
-  };
-  const handleOnClose = (e) => {
-    if (e.target.id === "close") onClose();
-  };
-  const handleCheckClick = (user) => {
+  // model
+  // const [showMyModel, setShowMyModel] = useState(false);
+
+  // const onClose = () => {
+  //   setShowMyModel(false);
+  // };
+  // const handleOnClose = (e) => {
+  //   if (e.target.id === "close") onClose();
+  // };
+
+  // function crossModal(user) {
+  //   // setShowMyModel(true);
+  //   handleCrossClick(user)
+  //   return (
+  //     <div>
+  //       <h3>hi</h3>
+  //     </div>
+  //   );
+  // };
+
+  //fetch list of requests
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/clients/join-requests/');
+        setRequests(response.data);
+      } catch (error) {
+        console.error('Error fetching user data: ', error);
+      }
+    };
+    fetchUserData();
+  }, []);
+
+  //patch requests
+  const handleaccept = (user) => {
     setApproved([...approved, user]);
     setRequests(requests.filter((request) => request.id !== user.id));
     toast.dismiss()
   };
 
-  const handleCrossClick = (user) => {
+  const handlereject = (user) => {
     setRejected([...rejected, user]);
     setRequests(requests.filter((request) => request.id !== user.id));
     toast.dismiss()
   };
 
-  function crossModal(user) {
-    // setShowMyModel(true);
-    handleCrossClick(user)
-    return (
-      <div>
-        <h3>hi</h3>
-      </div>
+  const crossToast = (user) => {
+    toast.info(
+      <div className="flex flex-col items-center">
+        <div className="text-center mb-4"> آیا از رد کردن این درخواست مطمئن هستید؟</div>
+        <div className="flex justify-center space-x-4">
+          <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handlereject(user)}> بله </button>
+          <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => toast.dismiss()}> خیر </button>
+        </div>
+      </div>,
+      {
+        position: 'top-center',
+        autoClose: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        closeButton: true,
+        icon: false,
+      }
     );
   };
 
@@ -57,7 +95,7 @@ function ListOfJoinRequests() {
       <div className="flex flex-col items-center">
         <div className="text-center mb-4"> آیا از قبول کردن این درخواست مطمئن هستید؟</div>
         <div className="flex justify-center space-x-4">
-          <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handleCheckClick(user)}> بله </button>
+          <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handleaccept(user)}> بله </button>
           <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => toast.dismiss()}> خیر </button>
         </div>
       </div>,
@@ -100,27 +138,27 @@ function ListOfJoinRequests() {
                   {user.buffet}
                 </div>
                 <div className="flex items-center">
-                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => showMyModel(true)} />
+                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => crossToast(user)} />
                   <CheckIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => checkToast(user)} />
                 </div>
               </div>
             </li>
           )
-          
+
           )}
-{showMyModel && (
+          {/* {showMyModel && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
               <div id="close" onClick={handleOnClose} className={`${styles['modal-me']} bg-white rounded p-2`} style={{ position: 'absolute' }}>
                 <div className="flex flex-col items-center">
                   <div className="text-center mb-4">آیا از قبول کردن این درخواست مطمئن هستید؟</div>
                   <div className="flex justify-center space-x-4">
-                    <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handleCrossClick(user)}>بله</button>
+                    <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handlereject(user)}>بله</button>
                     <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowMyModel(false)}>خیر</button>
                   </div>
                 </div>
               </div>
             </div>
-          )}
+          )} */}
         </ul>
       )}
 
