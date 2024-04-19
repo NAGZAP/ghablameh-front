@@ -32,11 +32,11 @@ const ReservationCalendar = () => {
           endAccessor="end"
           defaultView="week"
           views={['week']}
-          min={new Date(2024, 3, 15, 8, 0)} // ساعت شروع نمایش تقویم
-          max={new Date(2024, 12, 15, 23, 0)} // ساعت پایان نمایش تقویم
-          step={120} // مدت زمان بلاک‌ها در تقویم (در این حالت 2 ساعت)
-          timeslots={1} // تعداد بلاک‌ها در هر ساعت
-          defaultDate={new Date()} // تاریخ پیش‌فرض برای نمایش تقویم
+          min={new Date(2024, 3, 15, 8, 0)} 
+          max={new Date(2024, 12, 15, 23, 0)} 
+          step={120} 
+          timeslots={1}
+          defaultDate={new Date()} 
         />
       </div>
       <Footer></Footer>
