@@ -25,8 +25,8 @@ function Boofeh({ searchTerm, onSearchChange }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Retrieve token
-    // const token = 'JWT ' + localStorage.getItem("token");
-    const token='JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTMzOTk0LCJpYXQiOjE3MTM1NDE5OTQsImp0aSI6ImRlZGQ3NWUyYzVkNDRjNjI5NjA2MTVmZjE3MjUzOWI3IiwidXNlcl9pZCI6MzF9.wozhtNVQ1Q_hW3YfRGCrOfHI5lqmAYjwBhB6WoTIjmo'
+    const token = 'JWT ' + localStorage.getItem("token");
+    // const token='JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTMzOTk0LCJpYXQiOjE3MTM1NDE5OTQsImp0aSI6ImRlZGQ3NWUyYzVkNDRjNjI5NjA2MTVmZjE3MjUzOWI3IiwidXNlcl9pZCI6MzF9.wozhtNVQ1Q_hW3YfRGCrOfHI5lqmAYjwBhB6WoTIjmo'
 
     // Send form data
     try {
