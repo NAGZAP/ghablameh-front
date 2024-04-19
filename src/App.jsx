@@ -17,7 +17,7 @@ import Login from './components/login';
 import Boofeh from "./BoofehsOfOrganization/Boofeh"
 import Cards from "./BoofehsOfOrganization/Cards"
 import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList"
-
+import OrgPage from "./OrgPage/OrgPage"
 function App() {
 
   return (
@@ -33,6 +33,7 @@ function App() {
       <Route path="*" element={<PageNotFound />} />
       <Route path="/login" element={<Login/>}/>
       <Route path="/DataFromApiList" element={<DataFromApiList/>}/>
+      <Route path="/OrgPage" element={<OrgPage/>}/>
 
     </Routes>
     </BrowserRouter>
