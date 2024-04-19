@@ -30,9 +30,9 @@ function Boofeh({ searchTerm, onSearchChange }) {
 
     // Send form data
     try {
-      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/buffet/', buffetData, {
+      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/buffets/', buffetData, {
         headers: {
-          'Authorization': token
+          Authorization: `JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDUxMzk4LCJpYXQiOjE3MTM0NTkzOTgsImp0aSI6IjBkYzBhMGFhN2VmNzQwMWE4ZjQzNzZjZmMyZDQzZmY1IiwidXNlcl9pZCI6MTh9.dF5OAekvQhkmz1fVPx7ZXJURXnpX70jk_woW33QH24U`,
         }
       });
 
