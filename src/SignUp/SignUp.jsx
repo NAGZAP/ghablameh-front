@@ -7,6 +7,7 @@ import styles from './SignUp.module.css'
 import { Link, redirect } from 'react-router-dom';
 import { useState } from 'react';
 import { Tab, initTWE } from 'tw-elements';
+import Register from '../components/org'
 initTWE({ Tab });
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
@@ -235,7 +236,7 @@ function SignUp() {
       )}
         {activeTab === 'tabs-Organization' && (
           <div className="opacity-100 transition-opacity duration-150 ease-linear" id="tabs-Organization" role="tabpanel" aria-labelledby="tabs-profile-tab02">
-            Tab 2 content
+            <Register/>
           </div>
         )}
       </div>
