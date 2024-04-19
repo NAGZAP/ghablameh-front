@@ -5,11 +5,16 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 import LoginRequest from "../APIs/Login"
 const Update = () => {
   const [birthdate, setBirthdate] = useState('');
   const [gender, setGender] = useState('');
   const [username, setUsername] = useState('');
+  const [firstName, setfirstName] = useState('');
+  const [lastName, setlastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setphoneNumber] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -17,7 +22,7 @@ const Update = () => {
   const [avatar, setAvatar] = useState('');
   const [formErrors, setFormErrors] = useState([]);
   const [token, setToken] = useState('');
-
+  const [error, setError] = useState('');
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
@@ -55,32 +60,27 @@ const Update = () => {
       errors.push('رمز عبور جدید و تأیید رمز عبور مطابقت ندارند');
     }
 
+  
     if (errors.length > 0) {
-      alert(errors.join('\n'));
+      toast.error(errors.join('\n'));
       return;
     }
     
-    const [username , setUsername] = useState () ;
-    const [password , setPassword] = useState() ;
-
     const userData = {
+      avatar,
       birthdate,
       gender,
-      username,
-      currentPassword,
-      newPassword,
-      confirmPassword,
-      avatar,
-      email,
       first_name: firstName,
       last_name: lastName,
+      email,
+      username,
       phone_number: phoneNumber,
     };
     
     try {
       const token = "jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDk1Nzk2LCJpYXQiOjE3MTM1MDM3OTYsImp0aSI6ImI2YzY2NmMzMzA0MDQ4OWNiOTU4MjU0ZGYwMjZiZGNiIiwidXNlcl9pZCI6MTd9.S13ehZA_19i0EtLWlKuT8sPrKgElj1pfAikrV6iC55Q";
     
-      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/client/me/', userData, {
+      const response = await axios.put('https://ghablameh.fiust.ir/api/v1/client/me/', userData, {
         headers: {
           'Authorization': token
         }
@@ -172,6 +172,58 @@ const Update = () => {
             />
           </div>
           <div className={styles.formGroup}>
+            <label htmlFor="firstName" className={styles.label}>
+           به‌روزرسانی نام
+            </label>
+            <input
+              type="text"
+              id="firstname"
+              value={firstName}
+              onChange={(e) => setfirstName(e.target.value)}
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="lastName" className={styles.label}>
+              به‌روزرسانی نام خانوادگی
+            </label>
+            <input
+              type="text"
+              id="lastname"
+              value={lastName}
+              onChange={(e) => setlastName(e.target.value)}
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="phoneNumber" className={styles.label}>
+              به روز رسانی شماره تلفن
+            </label>
+            <input
+              type="text"
+              id="phonenumber"
+              value={phoneNumber}
+              onChange={(e) => setphoneNumber(e.target.value)}
+              className={styles.input}
+              required
+            />
+          </div>
+                <div className={styles.formGroup}>
+            <label htmlFor="email" className={styles.label}>
+             به روزرسانی ایمیل
+            </label>
+            <input
+              type="text"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
             <label htmlFor="currentPassword" className={styles.label}>
               رمز عبور فعلی
             </label>
@@ -190,6 +242,7 @@ const Update = () => {
                 onClick={togglePasswordVisibility}
               />
             </div>
+            
           </div>
           <div className={styles.formGroup}>
             <label htmlFor="newPassword" className={styles.label}>
@@ -231,11 +284,12 @@ const Update = () => {
               />
             </div>
           </div>
-          <button type="submit" className={styles.button}>
+          <button type="submit" className={styles.submit}>
             ارسال
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

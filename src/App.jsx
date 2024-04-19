@@ -14,7 +14,7 @@ import WeeklyMenu from './components/weeklymenu'
 import CustomSidebar from './components/Sidebar'
 import PageNotFound from './components/pagenotfound'
 import Navbar from './components/Navbar'
-import Updateorg from './components/updateorg'
+
 import ReservationCalendar from './components/lastreservation'
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
       <Route path="/Register" element={<Register />} />
       <Route path="/sidebar" element={<CustomSidebar />} />
       <Route path="/navbar" element={<Navbar />} />
-      <Route path="/org" element={<Updateorg />} /> 
+     
        <Route path="/menu" element={<WeeklyMenu />} />
        <Route path="/lastreservation" element={<ReservationCalendar />} />
        <Route path="/input" element={<InputField/>} />

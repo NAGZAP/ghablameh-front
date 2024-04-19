@@ -125,6 +125,45 @@ const Register = () => {
             />
           </div>
           <div className={styles.formGroup}>
+            <label htmlFor="organizationName" className={styles.label}>
+              شماره تلفن
+            </label>
+            <input
+              type="text"
+              id="organizationName"
+              value={organizationName}
+              onChange={handleOrganizationNameChange}
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="organizationName" className={styles.label}>
+              نام ادمین
+            </label>
+            <input
+              type="text"
+              id="organizationName"
+              value={organizationName}
+              onChange={handleOrganizationNameChange}
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="organizationName" className={styles.label}>
+               نام خانوادکی ادمین
+            </label>
+            <input
+              type="text"
+              id="organizationName"
+              value={organizationName}
+              onChange={handleOrganizationNameChange}
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
             <label htmlFor="currentPassword" className={styles.label}>
               رمز عبور
             </label>
@@ -143,47 +182,11 @@ const Register = () => {
                 onClick={togglePasswordVisibility}
               />
             </div>
-    
-          <div className={styles.formGroup}>
-            <label htmlFor="firstName" className={styles.label}>
-             نام ادمین
-            </label>
-            <input
-              type="text"
-              id="firstName"
-              value={firstName}
-              onChange={handleFirstNameChange}
-              className={styles.input}
-            />
-          </div>
-     
-          <div className={styles.formGroup}>
-            <label htmlFor="lastName" className={styles.label}>
-              نام خانوادگی ادمین 
-            </label>
-            <input
-              type="text"
-              id="lastName"
-              value={lastName}
-              onChange={handleLastNameChange}
-              className={styles.input}
-            />
-            <div className={styles.formGroup}>
-              <label htmlFor="phoneNumber" className={styles.label}>
-                شماره تلفن ادمین
-              </label>
-              <input
-                type="text"
-                id="phoneNumber"
-                value={phoneNumber}
-                onChange={handlePhoneNumberChange}
-                className={styles.input}
-              />
-            </div>
-            <button type="submit" className={styles.button}>
+        
+            <button type="submit" className={styles.submit}>
               ثبت نام
             </button>
-            </div>
+      
             </div>
           </form>
         </div>
