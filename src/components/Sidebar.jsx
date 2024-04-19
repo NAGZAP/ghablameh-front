@@ -1,37 +1,39 @@
-import React from "react";
-import { Link } from "react-router-dom";
 import { Sidebar } from "flowbite-react";
 import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser, HiViewBoards } from "react-icons/hi";
-const CustomSidebar = () => {
-return (<>
-   <Sidebar aria-label="Default sidebar example">
-      <Sidebar.Items>
-        <Sidebar.ItemGroup>
+
+const customTheme = {
+    color: {
+      primary: "bg-red-500 hover:bg-red-600",
+    },
+}; //  aria-label="Sidebar with content separator example"
+export default function CustomSidebar() {
+  return (<div className="bg-gray-600">
+    <Sidebar style={{zIndex:1}} className="bg-gray-500">
+      <Sidebar.Items >
+        <Sidebar.ItemGroup >
           <Sidebar.Item href="#" icon={HiChartPie}>
-            داشبورد
+            Dashboard
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={HiViewBoards} label="Pro" labelColor="dark">
-            تست
+          <Sidebar.Item href="#" icon={HiViewBoards}>
+            Kanban
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={HiInbox} label="3">
-            تست
+          <Sidebar.Item href="#" icon={HiInbox}>
+            Inbox
           </Sidebar.Item>
           <Sidebar.Item href="#" icon={HiUser}>
-          تست
+            Users
           </Sidebar.Item>
           <Sidebar.Item href="#" icon={HiShoppingBag}>
-          تست
+            Products
           </Sidebar.Item>
           <Sidebar.Item href="#" icon={HiArrowSmRight}>
-            <Link to="/Login">ورود</Link>
+            Sign In
           </Sidebar.Item>
           <Sidebar.Item href="#" icon={HiTable}>
-          <Link to="/Signup">ثبت نام</Link>
+            Sign Up
           </Sidebar.Item>
         </Sidebar.ItemGroup>
       </Sidebar.Items>
-    </Sidebar>
-</>)
+    </Sidebar></div>
+  );
 }
-
-export default CustomSidebar;

@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import styles from "../SignUp/SignUp.module.css";
 import { Link, redirect } from "react-router-dom";
-import LoginRequest from "../APIs/AuthManager";
+import requests from "../APIs/AuthManager";
 
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
@@ -30,7 +30,7 @@ function Login() {
   });
 
   const onSubmit = async (data) => {
-    let responsedata = LoginRequest(data.username , data.password);
+    let responsedata = await requests.LoginRequest(data.username , data.password);
     localStorage.setItem("token" , responsedata.data.tokens.access);
   };
   return (
@@ -95,9 +95,9 @@ function Login() {
             </div>
           </p>
           <p>
-            <a className={styles.link_to_signin} href="#">
+            <Link to="/signup">
               اکانت ندارید؟ ثبت نام کنید ...
-            </a>
+            </Link>
           </p>
         </form>
       </div>
