@@ -43,17 +43,26 @@ function ListOfJoinRequests() {
   // };
 
   //fetch list of requests
+
+  // Retrieve token
+  const token = 'JWT ' + localStorage.getItem("token");
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/clients/join-requests/');
+        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/clients/join-requests/', {
+          headers: {
+            'Authorization': token
+          }
+        });
         setRequests(response.data);
       } catch (error) {
         console.error('Error fetching user data: ', error);
       }
     };
     fetchUserData();
-  }, []);
+  }, [token]);
+
 
   //patch requests
   const handleaccept = (user) => {
