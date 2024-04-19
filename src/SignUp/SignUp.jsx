@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import styles from './SignUp.module.css' 
 import { Link, redirect } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
 const validationSchema = Yup.object({
@@ -23,6 +23,7 @@ const validationSchema = Yup.object({
 });
 
 function SignUp() {
+  const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(validationSchema),
   });
@@ -46,7 +47,9 @@ function SignUp() {
 /*       console.log(accessToken);
  */       console.log('Data sent successfully!');
 /*       return redirect("/")
- */    } catch (error) {
+*/
+          navigate("/");
+    } catch (error) {
       console.error('Error sending data:', error);
     }
   };
