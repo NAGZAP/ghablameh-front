@@ -15,7 +15,6 @@ function Boofeh({ searchTerm, onSearchChange }) {
   };
 
   //data for backend
-  const [name, setName] = useState('');
   const [buffetData, setBuffetData] = useState({
     name: '',
   });
@@ -26,18 +25,19 @@ function Boofeh({ searchTerm, onSearchChange }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Retrieve token
-    const token = 'JWT ' + localStorage.getItem("token");
+    // const token = 'JWT ' + localStorage.getItem("token");
+    const token='JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTMzOTk0LCJpYXQiOjE3MTM1NDE5OTQsImp0aSI6ImRlZGQ3NWUyYzVkNDRjNjI5NjA2MTVmZjE3MjUzOWI3IiwidXNlcl9pZCI6MzF9.wozhtNVQ1Q_hW3YfRGCrOfHI5lqmAYjwBhB6WoTIjmo'
 
     // Send form data
     try {
       const response = await axios.post('https://ghablameh.fiust.ir/api/v1/buffets/', buffetData, {
         headers: {
-          Authorization: `JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDUxMzk4LCJpYXQiOjE3MTM0NTkzOTgsImp0aSI6IjBkYzBhMGFhN2VmNzQwMWE4ZjQzNzZjZmMyZDQzZmY1IiwidXNlcl9pZCI6MTh9.dF5OAekvQhkmz1fVPx7ZXJURXnpX70jk_woW33QH24U`,
+          Authorization: token,
         }
       });
-
-      if (response.status === 200) {
-        console.log('Form submitted successfully');
+      // console.log(response.status)
+      if (response.status === 201) {
+        // console.log('Form submitted successfully');
         setShowModel(false);
       } else {
         const errorData = response.data;

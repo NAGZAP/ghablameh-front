@@ -98,8 +98,12 @@ function DataFromApiList() {
               <p>تغییر نام بوفه</p>
               <div className="w-72 mt-10 mb-1 mr-20 ml-20">
                 <div className="relative">
-                <input name="name"  className="text-gray-900 rounded-md block w-full p-2.5" style={{ border: '1px solid #000000' }} />
-                </div>
+                <input
+  name="name"
+  className="text-gray-900 rounded-md block w-full p-2.5"
+  style={{ border: '1px solid #000000' }}
+  onClick={(e) => e.stopPropagation()} // Stop click event propagation
+/></div>
               </div>
             </TEModalBody>
             <TEModalFooter>
