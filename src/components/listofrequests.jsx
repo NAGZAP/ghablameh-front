@@ -19,17 +19,17 @@ function ListOfJoinRequests() {
     { buffet: 'buffet1', id: 4, firstName: 'John', lastName: 'smith', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
     { buffet: 'buffet2', id: 5, firstName: 'Jane', lastName: 'Smith', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
     { buffet: 'buffet3', id: 6, firstName: 'loralie', lastName: 'eliise', avatar: '' },
-  
-  ]);
-// model
-const [showMyModel, setShowMyModel] = useState(false);
 
-const onClose = () => {
+  ]);
+  // model
+  const [showMyModel, setShowMyModel] = useState(false);
+
+  const onClose = () => {
     setShowMyModel(false);
-};
-const handleOnClose = (e) => {
+  };
+  const handleOnClose = (e) => {
     if (e.target.id === "close") onClose();
-};
+  };
   const handleCheckClick = (user) => {
     setApproved([...approved, user]);
     setRequests(requests.filter((request) => request.id !== user.id));
@@ -42,11 +42,14 @@ const handleOnClose = (e) => {
     toast.dismiss()
   };
 
-  const crossModal = (user) => {
-    setShowMyModel(true);
-    <div>
-      
-    </div>
+  function crossModal(user) {
+    // setShowMyModel(true);
+    handleCrossClick(user)
+    return (
+      <div>
+        <h3>hi</h3>
+      </div>
+    );
   };
 
   const checkToast = (user) => {
@@ -66,7 +69,7 @@ const handleOnClose = (e) => {
         draggable: false,
         progress: undefined,
         closeButton: true,
-        icon: false
+        icon: false,
       }
     );
   };
@@ -87,7 +90,7 @@ const handleOnClose = (e) => {
                   {user.avatar ? (
                     <img src={user.avatar} alt={`${user.firstName} ${user.lastName}`} className="h-10 w-10 rounded-full" />
                   ) : (
-                    <Avatar name={`${user.firstName} ${user.lastName}`} size={40} round={true} maxInitials={1}  />
+                    <Avatar name={`${user.firstName} ${user.lastName}`} size={40} round={true} maxInitials={1} />
                   )}
                   <div className="ml-2 text-base">
                     <div style={{ fontSize: '1.2rem' }}>{user.firstName} {user.lastName}</div>
@@ -97,12 +100,27 @@ const handleOnClose = (e) => {
                   {user.buffet}
                 </div>
                 <div className="flex items-center">
-                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => crossModal(user)} />
+                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => showMyModel(true)} />
                   <CheckIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => checkToast(user)} />
                 </div>
               </div>
             </li>
-          ))}
+          )
+          
+          )}
+{showMyModel && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+              <div id="close" onClick={handleOnClose} className={`${styles['modal-me']} bg-white rounded p-2`} style={{ position: 'absolute' }}>
+                <div className="flex flex-col items-center">
+                  <div className="text-center mb-4">آیا از قبول کردن این درخواست مطمئن هستید؟</div>
+                  <div className="flex justify-center space-x-4">
+                    <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handleCrossClick(user)}>بله</button>
+                    <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowMyModel(false)}>خیر</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </ul>
       )}
 
@@ -113,19 +131,7 @@ const handleOnClose = (e) => {
         </ul>
       )}
 
-{showMyModel && (
-                <div id='close' onClick={handleOnClose} className={`${styles['modal-me']} fixed `} style={{position:'absolute'}}>
-                    <div className={`bg-white rounded p-2 ${styles['modal-content']}`}>
-                    <div className="flex flex-col items-center">
-        <div className="text-center mb-4"> آیا از قبول کردن این درخواست مطمئن هستید؟</div>
-        <div className="flex justify-center space-x-4">
-          <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handleCrossClick(user)}> بله </button>
-          <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowMyModel(false)}> خیر </button>
-        </div>
-      </div>
-                    </div>
-                </div>
-            )}
+
     </div>
   );
 
@@ -139,7 +145,7 @@ const handleOnClose = (e) => {
         </div>
       </div>
       <Footer />
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }
