@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+
 const Update = () => {
   const [name, setName] = useState('');
   const [admin_first_name, setAdmin_first_name] = useState('');
@@ -76,8 +77,8 @@ const Update = () => {
     };
 
     // Retrieve token
-    // const token = 'JWT ' + localStorage.getItem("token");
-    const token= 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDY4MDYzLCJpYXQiOjE3MTM0NzYwNjMsImp0aSI6IjYwMzhiNWE4MWMxMzRiYTNiMDJiMjU4YTliZDk5MThjIiwidXNlcl9pZCI6MTZ9.t1L6HviyFnEFxCgfNEK6teJmv2KLkYMCBb_HH_jhlwg'
+    const token = 'JWT ' + localStorage.getItem("token");
+    // const token= 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTE0NzcwLCJpYXQiOjE3MTM1MjI3NzAsImp0aSI6Ijk1ZTQ0OTA1Nzc4YjQ3NGFhMTUyNDRmY2Y2MWQ3NmU3IiwidXNlcl9pZCI6Mjl9.qw4BApww-lyBvNYVhBBJUaHLBo6M0snIdCLqRe5q3rU'
 
     //send form data
     try {
@@ -106,8 +107,7 @@ const Update = () => {
     
     //send pass data
     try {
-      const token = "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDM4NzM2LCJpYXQiOjE3MTM0NDY3MzYsImp0aSI6IjJkZWQ1ODc0MjNiNTQ1NmQ5MDY1NjMzOTk4YjRhNWU5IiwidXNlcl9pZCI6MTZ9.jXuXBTYVkUKpBGmWAewzl0zeF9WewM2tQM19gFZpS10";
-
+      
       const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/password/', passData, {
         headers: {
           'Authorization': token
