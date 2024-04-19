@@ -13,12 +13,12 @@ function ListOfJoinRequests() {
   const [approved, setApproved] = useState([]);
   const [rejected, setRejected] = useState([]);
   const [requests, setRequests] = useState([
-    { buffet: 'buffet1', id: 1, firstName: 'John', lastName: 'smith', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-    { buffet: 'buffet2', id: 2, firstName: 'Jane', lastName: 'Smith', avatar: 'https://p1.hiclipart.com/preview/743/500/3/circle-silhouette-logo-user-user-profile-green-facial-expression-nose-cartoon-png-clipart.jpg' },
-    { buffet: 'buffet3', id: 3, firstName: 'jacob', lastName: 'eliise', avatar: '' },
-    { buffet: 'buffet1', id: 4, firstName: 'John', lastName: 'smith', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-    { buffet: 'buffet2', id: 5, firstName: 'Jane', lastName: 'Smith', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-    { buffet: 'buffet3', id: 6, firstName: 'loralie', lastName: 'eliise', avatar: '' },
+    { buffet: 'buffet1', id: 1, firstName: 'John', lastName: 'smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
+    { buffet: 'buffet2', id: 2, firstName: 'Jane', lastName: 'Smith', status: 'p', avatar: 'https://p1.hiclipart.com/preview/743/500/3/circle-silhouette-logo-user-user-profile-green-facial-expression-nose-cartoon-png-clipart.jpg' },
+    { buffet: 'buffet3', id: 3, firstName: 'jacob', lastName: 'eliise', status: 'p', avatar: '' },
+    { buffet: 'buffet1', id: 4, firstName: 'John', lastName: 'smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
+    { buffet: 'buffet2', id: 5, firstName: 'Jane', lastName: 'Smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
+    { buffet: 'buffet3', id: 6, firstName: 'loralie', lastName: 'eliise', status: 'p', avatar: '' },
 
   ]);
 
@@ -46,11 +46,12 @@ function ListOfJoinRequests() {
 
   // Retrieve token
   const token = 'JWT ' + localStorage.getItem("token");
+  // const token='JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTI5NDU4LCJpYXQiOjE3MTM1Mzc0NTgsImp0aSI6IjM5ZGQ3ZWZhZGIyNzRhZDZhN2RlY2I4ZTNjNGQwNmU4IiwidXNlcl9pZCI6MzF9.vaM70ID3rWsWzmYSRt6aNT48cqK9iTt5wLLMAQNWzYk'
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/clients/join-requests/', {
+        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/organizations/join-requests/', {
           headers: {
             'Authorization': token
           }
@@ -66,14 +67,59 @@ function ListOfJoinRequests() {
 
   //patch requests
   const handleaccept = (user) => {
-    setApproved([...approved, user]);
+
+    const updatedUser = { ...user, status: 'A' };
+
     setRequests(requests.filter((request) => request.id !== user.id));
+    setApproved([...approved, updatedUser]);
+    const token = 'JWT ' + localStorage.getItem("token");
+    // const token='JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTI5NDU4LCJpYXQiOjE3MTM1Mzc0NTgsImp0aSI6IjM5ZGQ3ZWZhZGIyNzRhZDZhN2RlY2I4ZTNjNGQwNmU4IiwidXNlcl9pZCI6MzF9.vaM70ID3rWsWzmYSRt6aNT48cqK9iTt5wLLMAQNWzYk'
+
+    const url = 'https://ghablameh.fiust.ir/api/v1/organizations/join-requests/' + user.id + '/'
+    
+    try {
+      const response = axios.patch(url, { status: 'A' }, {
+        headers: {
+          'Authorization': token
+        }
+      });
+      if (response.status === 200) {
+        console.log('formData submitted successfully');
+      } else {
+        const errorData = response.json();
+        console.log('formData submission failed:', errorData);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
     toast.dismiss()
   };
 
   const handlereject = (user) => {
-    setRejected([...rejected, user]);
+
+    const updatedUser = { ...user, status: 'R' };
+
+    setRejected([...rejected, updatedUser]);
     setRequests(requests.filter((request) => request.id !== user.id));
+
+    const token = 'JWT ' + localStorage.getItem("token");
+    const url = 'https://ghablameh.fiust.ir/api/v1/organizations/join-requests/' + user.id + '/'
+    
+    try {
+      const response = axios.patch(url, { status: 'R' }, {
+        headers: {
+          'Authorization': token
+        }
+      });
+      if (response.status === 200) {
+        console.log('formData submitted successfully');
+      } else {
+        const errorData = response.json();
+        console.log('formData submission failed:', errorData);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
     toast.dismiss()
   };
 
