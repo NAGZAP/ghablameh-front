@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { XIcon, CheckIcon } from '@heroicons/react/solid';
 import Avatar from 'react-avatar';
 import CustomSidebar from './Sidebar';
@@ -9,15 +9,27 @@ import styles from '../styles/listofrequests.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function JoinRequestsList() {
+function ListOfJoinRequests() {
   const [approved, setApproved] = useState([]);
   const [rejected, setRejected] = useState([]);
   const [requests, setRequests] = useState([
     { buffet: 'buffet1', id: 1, firstName: 'John', lastName: 'smith', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-    // { buffet: 'buffet2', id: 2, firstName: 'Jane', lastName: 'Smith', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-    // { buffet: 'buffet3', id: 3, firstName: 'Jake', lastName: 'eliise', avatar: '' },
+    { buffet: 'buffet2', id: 2, firstName: 'Jane', lastName: 'Smith', avatar: 'https://p1.hiclipart.com/preview/743/500/3/circle-silhouette-logo-user-user-profile-green-facial-expression-nose-cartoon-png-clipart.jpg' },
+    { buffet: 'buffet3', id: 3, firstName: 'jacob', lastName: 'eliise', avatar: '' },
+    { buffet: 'buffet1', id: 4, firstName: 'John', lastName: 'smith', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
+    { buffet: 'buffet2', id: 5, firstName: 'Jane', lastName: 'Smith', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
+    { buffet: 'buffet3', id: 6, firstName: 'loralie', lastName: 'eliise', avatar: '' },
+  
   ]);
+// model
+const [showMyModel, setShowMyModel] = useState(false);
 
+const onClose = () => {
+    setShowMyModel(false);
+};
+const handleOnClose = (e) => {
+    if (e.target.id === "close") onClose();
+};
   const handleCheckClick = (user) => {
     setApproved([...approved, user]);
     setRequests(requests.filter((request) => request.id !== user.id));
@@ -30,26 +42,31 @@ function JoinRequestsList() {
     toast.dismiss()
   };
 
-  const crossToast = (user) => {
-    toast.info(
-      <div className="flex flex-col items-center">
-        <div className="text-center mb-4"> آیا از رد کردن این درخواست  مطمئن هستید؟</div>
-        <div className="flex justify-center space-x-4">
-          <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handleCrossClick(user)}> بله </button>
-          <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => toast.dismiss()}> خیر </button>
-        </div>
-      </div>,
-      {
-        position: 'top-center',
-        autoClose: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-        closeButton: true,
-        icon: false
-      }
-    );
+  const crossModal = (user) => {
+    setShowMyModel(true);
+    <div>
+      {showMyModel && (
+                <div id='close' onClick={handleOnClose} className={`${styles['modal-me']} fixed `}>
+                    <div className={`bg-white rounded p-2 ${styles['modal-content']}`}>
+                        <div className='flex flex-row justify-end'>
+                            <button onClick={onClose} className={`${styles['close-button-me']} text-sm`}>X</button>
+                        </div>
+
+                        <div style={{ height: "600px", overflowY: "scroll" }}>
+                            <div className="max-w-2xl px-4 py-8 lg:py-16">
+                                <h2 className="mb-2 text-xl font-bold text-gray-900 text-center">ویرایش اطلاعات</h2>
+                                <form onSubmit={handleSubmit} className={`${styles['border-t']}`}>
+                                    
+                                    <div className="flex items-center justify-center space-x-4">
+                                        <button type="submit" className={`${styles['submit-button-me']} text-white text-center`}>ذخیره</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+    </div>
   };
 
   const checkToast = (user) => {
@@ -74,23 +91,13 @@ function JoinRequestsList() {
     );
   };
 
-  const send = () => {
-    if (requests.length === 0) {
-      console.log('Approved List:', approved);
-      console.log('Rejected List:', rejected);
-    }
-  };
-
   const listofuserrequests = () => (
     <div style={{
       border: '1px solid rgb(38, 87, 124)',
       borderRadius: '8px',
-      width: '24rem',
-      position: 'absolute',
-      top: 200,
-      right: 0
-    }} className="w-64 text-sm font-medium text-gray-900 bg-white rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white m-2 ml-auto">
-      <h2 className="text-xl font-semibold text-gray-800  text-right pt-3 pb-2 pr-3" style={{ borderBottom : '1px solid rgb(38, 87, 124)' }}> لیست درخواست ها </h2>
+      width: '50vw',
+    }} className="w-64  font-medium text-gray-900 bg-white rounded-lg">
+      <h2 className="text-xl font-semibold text-gray-800  text-center pt-3 pb-2 pr-3" style={{ borderBottom: '1px solid rgb(38, 87, 124)' }}> لیست درخواست ها </h2>
       {requests.length > 0 && (
         <ul className="w-full">
           {requests.map((user, index) => (
@@ -98,20 +105,20 @@ function JoinRequestsList() {
               <div className="flex items-center p-2 flex-row justify-between">
                 <div className="flex items-center">
                   {user.avatar ? (
-                    <img src={user.avatar} alt={`${user.firstName} ${user.lastName}`} className="h-8 w-8 rounded-full" />
+                    <img src={user.avatar} alt={`${user.firstName} ${user.lastName}`} className="h-10 w-10 rounded-full" />
                   ) : (
-                    <Avatar name={`${user.firstName} ${user.lastName}`} size={32} round={true} maxInitials={1} />
+                    <Avatar name={`${user.firstName} ${user.lastName}`} size={40} round={true} maxInitials={1}  />
                   )}
                   <div className="ml-2 text-base">
-                    <div>{user.firstName} {user.lastName}</div>
+                    <div style={{ fontSize: '1.2rem' }}>{user.firstName} {user.lastName}</div>
                   </div>
                 </div>
-                <div style={{ backgroundColor: 'rgb(38, 87, 124)', color: 'white', borderRadius: '5px', height: '30px', width: '60px' }} className="rounded p-1 mx-5 flex items-center justify-center">
+                <div style={{ backgroundColor: 'rgb(38, 87, 124)', color: 'white', borderRadius: '5px', height: '35px', width: '65px' }} className="rounded p-1 mx-5 flex  items-center justify-center">
                   {user.buffet}
                 </div>
                 <div className="flex items-center">
-                  <XIcon className="h-6 w-6 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => crossToast(user)} />
-                  <CheckIcon className="h-6 w-6 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => checkToast(user)} />
+                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => crossModal(user)} />
+                  <CheckIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => checkToast(user)} />
                 </div>
               </div>
             </li>
@@ -119,24 +126,28 @@ function JoinRequestsList() {
         </ul>
       )}
 
-{requests.length == 0 && (
+      {requests.length == 0 && (
         <ul className="w-full">
-          <h3 className="text-xl font-light text-gray-800 pt-3 pb-2 pr-3 text-right p-6">درخواستی برای اضافه شدن به بوفه</h3>
-          <h3 className="text-xl font-light text-gray-800  pt-3 pb-2 pr-3 text-right p-6"> .وجود ندارد</h3>
+          <h3 className="text-xl font-light text-gray-800 pt-3 pb-2 pr-3 text-right p-6 m-2">.درخواستی برای اضافه شدن به بوفه وجود ندارد</h3>
+
         </ul>
       )}
     </div>
   );
 
   return (
-    <div className={`${styles['main-content']}`}>
+    <div className={`${styles['main-content']} flex flex-col`}>
       <Navbar />
-      <CustomSidebar />
-      {listofuserrequests()}
+      <div className='flex flex-row'>
+        <CustomSidebar />
+        <div className='flex flex-grow justify-center items-center'>
+          {listofuserrequests()}
+        </div>
+      </div>
       <Footer />
-      <ToastContainer />
+      <ToastContainer/>
     </div>
   );
 }
 
-export default JoinRequestsList;
+export default ListOfJoinRequests;

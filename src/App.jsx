@@ -14,7 +14,7 @@ import PageNotFound from './components/pagenotfound'
 import Navbar from './components/Navbar'
 import Updateorg from './components/updateorg'
 import Login from './components/login';
-import JoinRequestsList from './components/listofrequests';
+import ListOfJoinRequests from './components/listofrequests';
 import Boofeh from "./BoofehsOfOrganization/Boofeh"
 import Cards from "./BoofehsOfOrganization/Cards"
 import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList"
@@ -31,7 +31,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/DataFromApiList" element={<DataFromApiList />} />
-        <Route path="/JoinRequestsList" element={<JoinRequestsList />} />
+        <Route path="/ListOfJoinRequests" element={<ListOfJoinRequests />} />
         <Route path="*" element={<PageNotFound />} />
 
       </Routes>
