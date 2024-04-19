@@ -5,11 +5,21 @@ import Boofeh from './Boofeh';
 import styles from './Cards.module.css';
 import Footer from '../components/footer';
 import Navbar from '../components/Navbar.jsx';
+import {
+  TERipple,
+  TEModal,
+  TEModalDialog,
+  TEModalContent,
+  TEModalBody,
+  TEModalFooter,
+} from "tw-elements-react";
 
 function DataFromApiList() {
   const [cards, setCards] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [deletedCards, setDeletedCards] = useState([]); // Add deletedCards state variable
+  const [deletedCards, setDeletedCards] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,6 +59,19 @@ function DataFromApiList() {
     setSearchTerm(event.target.value);
   };
 
+  const handleEditClick = () => {
+    setShowModal(true);
+  };
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleSaveChanges = () => {
+    // Add logic to save changes
+    setShowModal(false); // Close the modal after saving changes
+  };
+
   return (
     <>
       <div className={styles.containment_boof}>
@@ -62,11 +85,33 @@ function DataFromApiList() {
               counter_organ={card.counter_organ}
               onDelete={() => handleDeleteCard(card)}
               isDeleted={deletedCards.includes(card.id)}
+              onEdit={handleEditClick}
             />
           ))}
         </div>
         <Footer />
       </div>
+      <TEModal show={showModal} setShow={setShowModal}>
+        <TEModalDialog>
+          <TEModalContent>
+            <TEModalBody>
+              <p>تغییر نام بوفه</p>
+              <div className="w-72 mt-10 mb-1 mr-20 ml-20">
+                <div className="relative">
+                <input name="name"  className="text-gray-900 rounded-md block w-full p-2.5" style={{ border: '1px solid #000000' }} />
+                </div>
+              </div>
+            </TEModalBody>
+            <TEModalFooter>
+              <TERipple rippleColor="light">
+              <div className="flex items-center justify-center space-x-4">
+                  <button type="submit" className={styles.button}>ذخیره</button>
+              </div>
+              </TERipple>
+            </TEModalFooter>
+          </TEModalContent>
+        </TEModalDialog>
+      </TEModal>
     </>
   );
 }
