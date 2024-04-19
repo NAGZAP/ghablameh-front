@@ -16,8 +16,8 @@ function Cards(props) {
 
   return (
     <div className={styles.card}>
-      <img className={styles.card_image} src={defaultpic} alt="عکس شرکت" />
-      <h2 className={styles.card_orgName}>{props.name}</h2>
+{/*       <img className={styles.card_image} src={defaultpic} alt="عکس شرکت" />
+ */}      <h2 className={styles.card_orgName}>{props.name}</h2>
       <h3 className={styles.card_orgNum}>{props.counter_organ}</h3>
       <button className={styles.button} type="button"><a href='#'>ویرایش</a></button> 
       <button onClick={handleClickDelete} className={styles.button} type="button">پاک کردن</button> 
