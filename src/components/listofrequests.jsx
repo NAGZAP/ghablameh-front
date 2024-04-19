@@ -45,27 +45,7 @@ const handleOnClose = (e) => {
   const crossModal = (user) => {
     setShowMyModel(true);
     <div>
-      {showMyModel && (
-                <div id='close' onClick={handleOnClose} className={`${styles['modal-me']} fixed `}>
-                    <div className={`bg-white rounded p-2 ${styles['modal-content']}`}>
-                        <div className='flex flex-row justify-end'>
-                            <button onClick={onClose} className={`${styles['close-button-me']} text-sm`}>X</button>
-                        </div>
-
-                        <div style={{ height: "600px", overflowY: "scroll" }}>
-                            <div className="max-w-2xl px-4 py-8 lg:py-16">
-                                <h2 className="mb-2 text-xl font-bold text-gray-900 text-center">ویرایش اطلاعات</h2>
-                                <form onSubmit={handleSubmit} className={`${styles['border-t']}`}>
-                                    
-                                    <div className="flex items-center justify-center space-x-4">
-                                        <button type="submit" className={`${styles['submit-button-me']} text-white text-center`}>ذخیره</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+      
     </div>
   };
 
@@ -132,6 +112,20 @@ const handleOnClose = (e) => {
 
         </ul>
       )}
+
+{showMyModel && (
+                <div id='close' onClick={handleOnClose} className={`${styles['modal-me']} fixed `} style={{position:'absolute'}}>
+                    <div className={`bg-white rounded p-2 ${styles['modal-content']}`}>
+                    <div className="flex flex-col items-center">
+        <div className="text-center mb-4"> آیا از قبول کردن این درخواست مطمئن هستید؟</div>
+        <div className="flex justify-center space-x-4">
+          <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handleCrossClick(user)}> بله </button>
+          <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowMyModel(false)}> خیر </button>
+        </div>
+      </div>
+                    </div>
+                </div>
+            )}
     </div>
   );
 
