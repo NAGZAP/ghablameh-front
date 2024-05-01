@@ -15,7 +15,7 @@
   padding: 0;
 /*   height: 100vh;
  */}
-@media only screen and (max-width: 600px) {
+/* @media only screen and (max-width: 600px) {
   @media (max-width: 768px) {
   .containment_boof {
     text-align: center;
@@ -23,7 +23,7 @@
     justify-content: center;
   }
   }
-}
+} */
 .itemscenter{
   text-align: center;
   justify-content: center;
@@ -69,4 +69,15 @@
   }
 .rtl{
   direction: rtl;
+}
+.transform{
+  @media (max-width: 464px) {
+      transform: scale(0.8);
+    }
+    @media (max-width: 446px) {      
+      transform: scale(0.7);
+    }
+    @media (max-width: 367px) {      
+      transform: scale(0.4);
+    }
 }
