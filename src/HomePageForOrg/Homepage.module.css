@@ -1,12 +1,31 @@
-.footer{
-    position:absolute;
-    bottom:0;
-}
-.Boofehs_slide_card{
-    background-color: rgba(0, 0, 0, 0.145);
-    border: 2px solid rgba(0, 0, 0, 0.298);
-    border-radius: 10px;
-    padding: 20px;
-    margin: 15px;
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap');
+.containment_OrgHome {
+  background-color: #ffffff;
+  font-family: "Vazir", "Vazirmatn", "Arabic Typesetting", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+  font-size: 9pt;
+  background-image: url('../assets/colorkit1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+/*   height: 100vh;
+ */}
+@media only screen and (max-width: 600px) {
+  @media (max-width: 768px) {
+  .containment_boof {
     text-align: center;
+    background-size: 100% 100%;
+    justify-content: center;
+  }
+  }
 }
+.itemscenter{
+    text-align: center;
+    justify-content: center;
+    background-position: center;
+    align-items: center;
+  }
