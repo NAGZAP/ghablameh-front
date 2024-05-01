@@ -19,6 +19,7 @@ import Boofeh from "./BoofehsOfOrganization/Boofeh"
 import Cards from "./BoofehsOfOrganization/Cards"
 import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList"
 import OrgPage from "./OrgPage/OrgPage"
+import HomeOrgPage from "./HomePageForOrg/HomePage";
 function App() {
 
   return (
@@ -32,10 +33,12 @@ function App() {
         <Route path="/" element={<Updateorg />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/DataFromApiList" element={<DataFromApiList />} />
+{/*         <Route path="/DataFromApiList" element={<DataFromApiList />} />
+ */}    
+        <Route path="/HomeOrgPage" element={<HomeOrgPage />} />
         <Route path="/ListOfJoinRequests" element={<ListOfJoinRequests />} />
         <Route path="*" element={<PageNotFound />} />
-      <Route path="/OrgPage" element={<OrgPage/>}/>
+        <Route path="/OrgPage" element={<OrgPage/>}/>
 
       </Routes>
     </BrowserRouter>
