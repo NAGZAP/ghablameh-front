@@ -19,6 +19,8 @@ import Boofeh from "./BoofehsOfOrganization/Boofeh"
 import Cards from "./BoofehsOfOrganization/Cards"
 import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList"
 import OrgPage from "./OrgPage/OrgPage"
+import ChooseOrganizationPage from './pages/ChooseOrganizationPage'
+import Myorgs from './pages/Myorgs';
 function App() {
 
   return (
@@ -36,6 +38,8 @@ function App() {
         <Route path="/ListOfJoinRequests" element={<ListOfJoinRequests />} />
         <Route path="*" element={<PageNotFound />} />
       <Route path="/OrgPage" element={<OrgPage/>}/>
+      <Route path="chooseorg" element={<ChooseOrganizationPage/>}/>
+      <Route path='/Myorgs' element={<Myorgs/>}/>
 
       </Routes>
     </BrowserRouter>

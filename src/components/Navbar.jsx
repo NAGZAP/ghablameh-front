@@ -5,12 +5,14 @@ import isLoggedIn from '../APIs/AuthManager'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import CustomSidebar from './Sidebar';
 function Navbar() {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [userData, setUserData] = useState(null);
   const isBigScreen = useMediaQuery('(min-width: 600px)');
+  const sideBar = useRef();
 
   const navigate = useNavigate();
 
@@ -32,8 +34,10 @@ function Navbar() {
   //dropdown
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
+    // document.addEventListener('click', handleClickOutsideSidebar);
     return () => {
       document.removeEventListener('click', handleClickOutside);
+      // document.removeEventListener('click', handleClickOutsideSidebar);
     };
   }, []);
 
@@ -46,6 +50,9 @@ function Navbar() {
       setIsDropdownOpen(false);
     }
   };
+  const handleClickOutsideSidebar = (e) => {
+    sideBar.current.style.display = 'none';
+  };
 
   //log out
   async function handleLogout() {
@@ -56,6 +63,14 @@ function Navbar() {
     localStorage.removeItem('refresh-token');
 
     navigate('/');
+  }
+
+  const handleOpenSidebar = () => {
+    let displayStatus = sideBar.current.style.display;
+    if(displayStatus !== 'block')
+      sideBar.current.style.display = 'block';
+    else 
+      sideBar.current.style.display = 'none';
   }
 
 
@@ -94,7 +109,8 @@ function Navbar() {
   }
 
   return (
-    <nav style={{ backgroundColor: 'rgb(38, 87, 124)' }}>
+    <>
+    <nav style={{ backgroundColor: 'rgb(38, 87, 124)' }} className={styles.navPos}>
       <div className={`px-3`}>
         <div className={`flex justify-between m-2 items-center`}>
           <div className={`flex items-center`}>
@@ -133,13 +149,18 @@ function Navbar() {
               </div>
             )}
             <div className={`flex justify-end`}>
-              <Link to='/' className={`items-center text-white`} style={{ fontSize: '35px', fontFamily: 'vazir' }} >قابلمه</Link>
+              {/* <Link to='/' className={`items-center text-white`} style={{ fontSize: '35px', fontFamily: 'vazir' }} >قابلمه</Link> */}
+              <p style={{ fontSize: '35px', fontFamily: 'vazir',color:"white",cursor:"pointer" }} onClick={handleOpenSidebar}>قابلمه</p>
             </div>
           </div>
 
         </div>
       </div>
     </nav>
+    <div style={{display:'none'}} ref={sideBar}>
+      <CustomSidebar />
+    </div>
+    </>
   );
 }
 

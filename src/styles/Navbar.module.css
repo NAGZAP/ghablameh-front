@@ -19,3 +19,9 @@
 .elements-me{
   padding-right: 50px;
 }
+
+.navPos{
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
