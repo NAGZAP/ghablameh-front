@@ -30,7 +30,6 @@ function Navbar() {
     };
     fetchUserData();
   }, []);
-  console.log(isLoggedIn)
   //dropdown
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);

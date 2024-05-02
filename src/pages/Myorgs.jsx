@@ -2,13 +2,14 @@ import React, { useRef, useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import styles from "../styles/updateinfo.module.css";
-import requests from "../APIs/AuthManager";
+import organizationsRequest from '../APIs/Organizations';
 
 const Myorgs = () => {
   const [orgs, setOrgs] = useState([{name : "test"}]);
   const [filteredOrgs, setFilteredOrgs] = useState([ {name : "test"}]);
   const searchdata = useRef(null);
-
+  let gottenOrgs = organizationsRequest.GetMyOrganizations();
+  setOrgs(gottenOrgs);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,7 +39,7 @@ const Myorgs = () => {
   return (
     <>
       <Navbar />
-      <div className="border border-sky-800 mx-2 my-5 p-2 mt-32">
+      <div className="border border-sky-800 mx-2 my-5 p-2 ">
         <div className="grid grid-cols-12">
           <div className="col-span-10">
             <input

@@ -21,7 +21,8 @@
 }
 
 .navPos{
-  position: absolute;
+  /* position: absolute;
   top: 0;
   width: 100%;
+  padding: 0 !important; */
 }
