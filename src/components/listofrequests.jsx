@@ -22,32 +22,8 @@ function ListOfJoinRequests() {
 
   ]);
 
-  // model
-  // const [showMyModel, setShowMyModel] = useState(false);
-
-  // const onClose = () => {
-  //   setShowMyModel(false);
-  // };
-  // const handleOnClose = (e) => {
-  //   if (e.target.id === "close") onClose();
-  // };
-
-  // function crossModal(user) {
-  //   // setShowMyModel(true);
-  //   handleCrossClick(user)
-  //   return (
-  //     <div>
-  //       <h3>hi</h3>
-  //     </div>
-  //   );
-  // };
-
   //fetch list of requests
-
-  // Retrieve token
   const token = 'JWT ' + localStorage.getItem("token");
-  // const token='JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTI5NDU4LCJpYXQiOjE3MTM1Mzc0NTgsImp0aSI6IjM5ZGQ3ZWZhZGIyNzRhZDZhN2RlY2I4ZTNjNGQwNmU4IiwidXNlcl9pZCI6MzF9.vaM70ID3rWsWzmYSRt6aNT48cqK9iTt5wLLMAQNWzYk'
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -76,7 +52,7 @@ function ListOfJoinRequests() {
     // const token='JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTI5NDU4LCJpYXQiOjE3MTM1Mzc0NTgsImp0aSI6IjM5ZGQ3ZWZhZGIyNzRhZDZhN2RlY2I4ZTNjNGQwNmU4IiwidXNlcl9pZCI6MzF9.vaM70ID3rWsWzmYSRt6aNT48cqK9iTt5wLLMAQNWzYk'
 
     const url = 'https://ghablameh.fiust.ir/api/v1/organizations/join-requests/' + user.id + '/'
-    
+
     try {
       const response = axios.patch(url, { status: 'A' }, {
         headers: {
@@ -104,7 +80,7 @@ function ListOfJoinRequests() {
 
     const token = 'JWT ' + localStorage.getItem("token");
     const url = 'https://ghablameh.fiust.ir/api/v1/organizations/join-requests/' + user.id + '/'
-    
+
     try {
       const response = axios.patch(url, { status: 'R' }, {
         headers: {
@@ -120,31 +96,11 @@ function ListOfJoinRequests() {
     } catch (error) {
       console.error('An error occurred:', error);
     }
-    toast.dismiss()
+    // toast.dismiss()
+    setShowMyModel(false);
   };
 
-  const crossToast = (user) => {
-    toast.info(
-      <div className="flex flex-col items-center">
-        <div className="text-center mb-4"> آیا از رد کردن این درخواست مطمئن هستید؟</div>
-        <div className="flex justify-center space-x-4">
-          <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handlereject(user)}> بله </button>
-          <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => toast.dismiss()}> خیر </button>
-        </div>
-      </div>,
-      {
-        position: 'top-center',
-        autoClose: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-        closeButton: true,
-        icon: false,
-      }
-    );
-  };
-
+  // yes toast
   const checkToast = (user) => {
     toast.info(
       <div className="flex flex-col items-center">
@@ -167,12 +123,18 @@ function ListOfJoinRequests() {
     );
   };
 
-  const listofuserrequests = () => (
-    <div style={{
-      border: '1px solid rgb(38, 87, 124)',
-      borderRadius: '8px',
-      width: '50vw',
-    }} className="w-64  font-medium text-gray-900 bg-white rounded-lg">
+  //no model
+  const [showMyModel, setShowMyModel] = useState(false);
+
+  const onClose = () => {
+    setShowMyModel(false);
+  };
+  const handleOnClose = (e) => {
+    if (e.target.id === "close") onClose();
+  };
+
+  const ListOfUserRequests = () => (
+    <div style={{ border: '1px solid rgb(38, 87, 124)', borderRadius: '8px', width: '50vw', }} className="w-64  font-medium text-gray-900 bg-white rounded-lg">
       <h2 className="text-xl font-semibold text-gray-800  text-center pt-3 pb-2 pr-3" style={{ borderBottom: '1px solid rgb(38, 87, 124)' }}> لیست درخواست ها </h2>
       {requests.length > 0 && (
         <ul className="w-full">
@@ -193,27 +155,13 @@ function ListOfJoinRequests() {
                   {user.buffet}
                 </div>
                 <div className="flex items-center">
-                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => crossToast(user)} />
+                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => setShowMyModel(true)} />
                   <CheckIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => checkToast(user)} />
                 </div>
               </div>
             </li>
           )
-
           )}
-          {/* {showMyModel && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-              <div id="close" onClick={handleOnClose} className={`${styles['modal-me']} bg-white rounded p-2`} style={{ position: 'absolute' }}>
-                <div className="flex flex-col items-center">
-                  <div className="text-center mb-4">آیا از قبول کردن این درخواست مطمئن هستید؟</div>
-                  <div className="flex justify-center space-x-4">
-                    <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handlereject(user)}>بله</button>
-                    <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowMyModel(false)}>خیر</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )} */}
         </ul>
       )}
 
@@ -224,7 +172,19 @@ function ListOfJoinRequests() {
         </ul>
       )}
 
-
+      {showMyModel && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div id="close" onClick={handleOnClose} className={`${styles['modal-me']} bg-white rounded p-2`} style={{ position: 'absolute' }}>
+            <div className="flex flex-col items-center">
+              <div className="text-center mb-4">آیا از قبول کردن این درخواست مطمئن هستید؟</div>
+              <div className="flex justify-center space-x-4">
+                <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handlereject(user)}>بله</button>
+                <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowMyModel(false)}>خیر</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 
@@ -234,7 +194,7 @@ function ListOfJoinRequests() {
       <div className='flex flex-row'>
         <CustomSidebar />
         <div className='flex flex-grow justify-center items-center'>
-          {listofuserrequests()}
+          {ListOfUserRequests()}
         </div>
       </div>
       <Footer />
