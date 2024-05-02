@@ -29,3 +29,7 @@
     background-position: center;
     align-items: center;
   }
+.app{
+  text-align: center;
+  min-height: 100vh;
+}
