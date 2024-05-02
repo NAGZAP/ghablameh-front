@@ -134,6 +134,7 @@ function OrgPage() {
     <div className=''>
       <div className=''>
         <div className={styles.containment_boof}>
+        <div className={styles.app}>
           <Navbar />
           <div className={styles.itemscenter}>
             {showModal && (
@@ -237,6 +238,7 @@ function OrgPage() {
                 </div>
               </div>
             </div>
+          </div>
           </div>
           <Footer />
         </div>
