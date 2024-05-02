@@ -13,7 +13,7 @@ import { faTelegram} from '@fortawesome/free-brands-svg-icons';
 const Footer = () => {
   return (
    
-   
+    <div className={styles.app}>
     <footer className={styles.footersection}>
       <div className={`${styles.container} mx-auto`}>
         <div className={`${styles['footer-content']} pt-5 pb-5`}>
@@ -130,7 +130,7 @@ const Footer = () => {
       </div>
     </div>
     </footer>
-
+    </div>
   );
 };
 

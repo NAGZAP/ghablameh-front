@@ -99,8 +99,9 @@ const WeeklyMenu = () => {
     </table>
   </div>
   {renderPagination()}
+  </div>
   <Footer></Footer>
-</div>
+
    
     </>
   );

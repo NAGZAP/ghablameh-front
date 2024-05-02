@@ -7,8 +7,9 @@
 
 }
 .app {
-  overflow-y: auto;
-
+  text-align: center;
+   min-height: 100vh;
+ 
 }
 .page-link
 {
