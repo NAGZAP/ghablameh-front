@@ -33,3 +33,11 @@
   text-align: center;
   min-height: 100vh;
 }
+.link_to_Panelorg{
+  color: #26577C;
+  text-decoration: none;
+}
+.link_to_Panelorg:hover{
+color: #E55604;
+text-decoration: none;
+}
