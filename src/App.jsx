@@ -19,6 +19,7 @@ import ChooseOrganizationPage from "./pages/ChooseOrganizationPage";
 import Myorgs from "./pages/Myorgs";
 import UserSlider from "./components/UserSlider";
 import HomeOrgPage from "./HomePageForOrg/HomePage";
+import Response from "./Response/Response";
 function App() {
   return (
     <BrowserRouter>
@@ -39,6 +40,7 @@ function App() {
         <Route path="chooseorg" element={<ChooseOrganizationPage />} />
         <Route path="/Myorgs" element={<Myorgs />} />
         <Route path="/slider" element={<UserSlider />} />
+        <Route path="/Response" element={<Response />} />
       </Routes>
     </BrowserRouter>
   );
