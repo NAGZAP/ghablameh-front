@@ -130,16 +130,54 @@
     transform: translateY(-50%);
     cursor: pointer;
   }
+
   
-/* Responsive Styles */
-@media (max-width: 768px) {
-  .card {
-    width: 90%;
-    margin-top: 20px;
-  }
 }
 
-@media (max-width: 576px) {
+.fileinput:hover {
+  background-color: #ffffff;
+}
+
+.button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #26577C;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #26577C;
+}
+
+.passwordInputContainer {
+  display: flex;
+  align-items: center;
+}
+
+.passwordInputContainer {
+  position: relative;
+}
+
+.passwordIcon {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+.card {
+  width: 90%;
+  margin-top: 20px;
+}
+}
+
   .card {
     padding: 10px;
   }
@@ -165,4 +203,30 @@
   .submit {
     font-size: 12px;
   }
+=======
+.card {
+  padding: 10px;
+}
+
+.title {
+  font-size: 20px;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-width: 3px;
+}
+
+.fileinput {
+  height: 40px;
+}
+
+.input {
+  font-size: 12px;
+}
+
+.button {
+  font-size: 12px;
+}
 }

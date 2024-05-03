@@ -171,7 +171,7 @@ function Updateorg() {
         return (
             <div className='flex justify-center flex-col'>
                 <div className='flex justify-center'>
-                    <h3 className={`${styles.changepassbutton} flex justify-center p2 mb-1 text-base`}>تغییر رمز عبور</h3>
+                    <h3 className={`${styles.changepassbutton} ${styles['h3-me']} flex justify-center p2 mb-1 text-base`}>تغییر رمز عبور</h3>
                 </div>
                 
                 <div className={`${styles['border-t']} my-4`}></div>
@@ -268,7 +268,7 @@ function Updateorg() {
 
             {/* Main modal */}
             {showMyModel && (
-                <div id='close' onClick={handleOnClose} className={`${styles['modal-me']} fixed bg-black`}>
+                <div id='close' onClick={handleOnClose} className={`${styles['modal-me']} fixed `}>
                     <div className={`bg-white rounded p-2 ${styles['modal-content']}`}>
                         <div className='flex flex-row justify-end'>
                             <button onClick={onClose} className={`${styles['close-button-me']} text-sm`}>X</button>
