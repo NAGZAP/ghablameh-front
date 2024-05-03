@@ -1,23 +1,18 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
-import { Grid } from "@mui/material";
-import  CustomSidebar from '../components/Sidebar';
+import ChooseOrganization from "../components/ChooseOrganization";
+import CustomSidebar from "../components/Sidebar";
 const ChooseOrganizationPage = () => {
 
     return (
-        <>
-        <Navbar/>
-        <Grid container>
-            <Grid item>
-                <CustomSidebar/>
-            </Grid>
-            <Grid item>
-                <ChooseOrganizationPage/>
-            </Grid>
-        </Grid>
-        <Footer/>
-        </>
+      <div dir="rtl">
+        <Navbar />
+          <div className="px-5 pt-5">
+            <ChooseOrganization/>
+          </div>
+        <Footer />
+      </div>
     );
 }
 

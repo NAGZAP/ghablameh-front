@@ -5,10 +5,13 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import styles from './SignUp.module.css' 
 import { Link, redirect } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Tab, initTWE } from 'tw-elements';
+import Register from '../components/org'
+initTWE({ Tab });
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
-
 const validationSchema = Yup.object({
   Firstname: Yup.string().required('نام خود را به شکل درست وارد کنید!'),
   Lastname: Yup.string().required('نام خانوادگی خود را به شکل درست وارد کنید!'),
@@ -24,7 +27,13 @@ const validationSchema = Yup.object({
 });
 
 function SignUp() {
+  const [activeTab, setActiveTab] = useState('tabs-Persons');
 
+  const handleTabClick = (tabId) => {
+    setActiveTab(tabId);
+  };
+
+  const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(validationSchema),
   });
@@ -42,23 +51,63 @@ function SignUp() {
         gender: "M",
         birthdate: "2024-04-04"
       };
-      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/client/register/', formattedData);
+      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/clients/register/', formattedData);
       const accessToken = response.data.tokens.access;
       localStorage.setItem('token', accessToken);
-      console.log(accessToken);
-       console.log('Data sent successfully!');
-      return redirect("/")
+/*       console.log(accessToken);
+ */       console.log('Data sent successfully!');
+/*       return redirect("/")
+*/
+          navigate("/");
     } catch (error) {
       console.error('Error sending data:', error);
     }
   };
   return (
     <div className={styles.container}>
-      <div className={styles.signup}>
+    <div className={styles.signup}>
+    <p className="max font-semibold text-template-custom-blue text-4xl dark:text-template-custom-blue text-center mt-5">ثبت نام</p>
+    <ul className="flex list-none flex-row flex-wrap border-b-0 ps-0" role="tablist">
+        <li role="presentation" className="flex-grow basis-0 text-center">
+          <a
+            href="#tabs-Persons"
+            className={`mb-0 mt-3 w-40 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-xs font-medium uppercase leading-tight text-neutral-500 hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent ${
+              activeTab === 'tabs-Persons' ? 'border-primary text-primary dark:text-white/50' : ''
+            }`}
+            data-twe-toggle="pill"
+            data-twe-target="#tabs-Persons"
+            role="tab"
+            aria-controls="tabs-Persons"
+            aria-selected={activeTab === 'tabs-Persons'}
+            onClick={() => handleTabClick('tabs-Persons')}
+          >
+            ثبت نام عادی
+          </a>
+        </li>
+        <li role="presentation" className="flex-grow basis-0 text-center">
+          <a
+            href="#tabs-Organization"
+            className={`mb-0 mt-3 w-40 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-xs font-medium uppercase leading-tight text-neutral-500 hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent ${
+              activeTab === 'tabs-Organization' ? 'border-primary text-primary dark:text-white/50' : ''
+            }`}
+            data-twe-toggle="pill"
+            data-twe-target="#tabs-Organization"
+            role="tab"
+            aria-controls="tabs-Organization"
+            aria-selected={activeTab === 'tabs-Organization'}
+            onClick={() => handleTabClick('tabs-Organization')}
+          >
+            ثبت نام ارگان 
+          </a>
+        </li>
+      </ul>
+
+      <div className="">
+      {activeTab === 'tabs-Persons' && (
+        <div className="opacity-100 transition-opacity duration-150 ease-linear" id="tabs-Persons" role="tabpanel" aria-labelledby="tabs-home-tab02">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <p className="max font-semibold text-template-custom-blue text-4xl dark:text-template-custom-blue text-center mt-5">ثبت نام</p>
           {/* FName */}
-          <div className="w-72 mt-10 mb-1 mr-20 ml-20">
+          <div className="w-72 mt-5 mb-1 mr-20 ml-20">
             <div className="relative w-full min-w-[200px] h-10">
               <input 
               className="peer w-full h-full bg-transparent text-template-custom-blue                      
@@ -75,7 +124,7 @@ function SignUp() {
         {/* ========================================================= */}
         <br />
         {/* LName */}
-        <div className="w-72 mt-1 mb-1 mr-20 ml-20">
+        <div className="w-72 mb-1 mr-20 ml-20">
           <div className="relative w-full min-w-[200px] h-10">
             <input 
             className="peer w-full h-full bg-transparent text-template-custom-blue                      
@@ -180,14 +229,20 @@ function SignUp() {
           <input className={styles.button_sign +" "+"peer w-full h-[40px] bg-template-custom-blue text-white outline-none focus:outline-none disabled:bg-template-custom-orange disabled:border-0 transition-all rounded-full cursor-pointer"} type="submit" value="ثبت نام" />
         </div>
         </p>
-{/*         <link path="/login">        </link> */}
           <p>
-            <a className={styles.link_to_signin} href="#">
+            <Link to="/login" className={styles.link_to_signin}>
               قبلا ثبت نام کرده اید؟
-            </a>
+            </Link>
           </p>
-
       </form>
+        </div>
+      )}
+        {activeTab === 'tabs-Organization' && (
+          <div className="opacity-100 transition-opacity duration-150 ease-linear" id="tabs-Organization" role="tabpanel" aria-labelledby="tabs-profile-tab02">
+{/*             <Register/>
+ */}          </div>
+        )}
+      </div>
     </div>
     </div>
   );

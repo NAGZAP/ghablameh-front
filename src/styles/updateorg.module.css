@@ -1,151 +1,165 @@
-body{
+@font-face {
     font-family: 'vazir';
-}
-/* button */
-.h3-me{
-    font-weight: 600;
-}
-.update-button-me , .submit-button-me , .button-pass-me {
-    width: 110px;
-    margin: 20px;
-    padding: 5px;
-    color: white;
-    background-color: rgb(38, 87, 124);
-    font-weight: 500;
-}
-
-.close-button-me {
-    width: 30px;
-    margin-top: 0.25px;
-    margin-bottom: 7px;
-    padding: 2px;
-    padding-top: 4px;
-    color: white;
-    color: rgba(38, 87, 124, 0.8);
-}
-
-.close-button-me:hover,
-.update-button-me:hover,
-.submit-button-me:hover {
-    background-color: rgb(14, 64, 101);
-    color: white;
-}
-
-.changepassbutton{
-    width: 120px;
-    font-weight: 700;
-}
-.changepassbutton:hover{
-    background-color: rgb(255, 255, 255);
-}
-/* esentials */
-.bg-white-me {
-    background-color: rgb(255, 255, 255);
-}
-.bg-opacity-30 {
-    background-color: rgba(0, 0, 0, 0.4);
-}
-.full-screen {
-    position: fixed;
-    inset: 0;
-}
-.text-right {
-    text-align: right;
+    src: url('../assets/fonts/vazir/Vazir.ttf');
   }
-.underline-text {
-    text-decoration: underline;
-  text-decoration-skip-ink: auto;
-  }  
-
-/* input */
-/* input{
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: white;
-    border: 1px solid rgb(38, 87, 124);
-    margin: 2px;
-    text-align: right;
-    font-family: 'vazir';
-    outline: none;
-}
-
-input:placeholder-shown {
-    background-color: white;
-    border: 1px solid rgb(38, 87, 124);
-    margin: 2px;
-    text-align: right;
-    font-family: 'vazir';
+    height: 130vh;
+    position: relative;
   }
-
-input::placeholder {
-    font: 0.9rem/0.9 'vazir'; 
-}
-
-input:focus{
-    background-color: white;
-    border: 1px solid rgb(38, 87, 124);
-}
-
-input:hover{
-    background-color: white;
-    /* border: 1px solid rgb(38, 87, 124);      
-}
-input[type="password"] {
-    border-radius: 0.375rem
-} */
-
-/* other */
-.modal-me {
+  
+  .pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 350px;
+    background-image: linear-gradient(315deg, #E55604 0%, #26577C 74%);
+  }
+  
+  .pattern:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: url(https://media.geeksforgeeks.org/wp-content/uploads/20200326181026/wave3.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 500px;
+    background-color: #ffffff;
+    text-align: right;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: calc(23vh - 100px);
+    margin-bottom: calc(30vh - 100px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .formGroup {
+    margin-bottom: 20px;
+  }
+  
+  .label {
+    font-weight: bold;
+  }
+  
+  .avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid #26577C;
+    text-align: center;
+  }
+  
+  .avatarimg {
     display: flex;
     justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.4);
-    position: fixed;
-    inset: 0;
-    
-}
-.modal-content {
-    max-width: 500vw; /* Set the maximum width of the modal content */
-}
-
-.border-t {
-    border-top: 1px solid; /* Adjust the width as needed */
-    border-color: rgb(38, 87, 124);
-    
   }
-
-/* lable */
-label{
-    font-family: 'vazir', sans-serif;
-    font-weight: bold; /* Bold font weight */
+  
+  .fileinput {
+    height: 50px;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 8px;
+    text-align: right;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .input:hover {
+    background-color: #ffffff;
+  }
+  
+.input::placeholder {
+    font: 0.9rem/0.9 'vazir'; 
 }
-
-/* profile pic */
-.margine-me{
-    margin-top: 50px;
-}
-
-/* Define the styles for the scrollbar track */
-::-webkit-scrollbar {
-    width: 6px; /* 1px thinner than the default width */
-}
-
-/* Define the styles for the scrollbar thumb */
-::-webkit-scrollbar-thumb {
-    background-color: #dadada; /* light grey color */
-    border-radius: 5px; /* border radius of the thumb */
-}
-
-/* Define the styles for the scrollbar track */
-::-webkit-scrollbar-track {
-    background: #f1f1f1; /* color of the track */
-}
-
-/* validation */
-.not-valid{
+  .fileinput:hover {
+    background-color: #ffffff;
+  }
+  
+  .button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #26577C;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #26577C;
+  }
+  
+  .passwordInputContainer {
     display: flex;
-    justify-content: end;
-    font-weight: 100;
-    font-size: x-small;
-    color: red;
-    margin: 5px;
-
-}
+    align-items: center;
+  }
+  
+  .passwordInputContainer {
+    position: relative;
+  }
+  
+  .passwordIcon {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .card {
+      width: 90%;
+      margin-top: 20px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .card {
+      padding: 10px;
+    }
+    
+    .title {
+      font-size: 20px;
+    }
+    
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-width: 3px;
+    }
+    
+    .fileinput {
+      height: 40px;
+    }
+    
+    .input {
+      font-size: 12px;
+    }
+    
+    .button {
+      font-size: 12px;
+    }
+  }
