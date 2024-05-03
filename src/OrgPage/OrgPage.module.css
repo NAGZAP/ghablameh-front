@@ -81,3 +81,7 @@
       transform: scale(0.4);
     }
 }
+.app{
+  text-align: center;
+  min-height: 100vh;
+}
