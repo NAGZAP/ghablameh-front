@@ -422,21 +422,21 @@ function Response() {
   </div>
             <br />
             <br />
-            <div className="flex justify-end mt-4">
-              <button
-                type="button"
-                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-100 border border-gray-300 rounded-md"
-                onClick={closeModal}
-              >
-                خروج
-              </button>
-              <button
-                type="button"
-                className="px-4 py-2 text-sm ml-4 font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md"
-              >
-                ثبت نهایی
-              </button>
-            </div>
+            <div className="flex justify-center mt-4">
+        <button
+            type="button"
+            className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-100 border border-gray-300 rounded-md"
+            onClick={closeModal}
+        >
+            خروج
+        </button>
+        <button
+            type="button"
+            className="mr-2 px-4 py-2 text-sm ml-4 font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md"
+        >
+            ثبت نهایی
+        </button>
+        </div>
           </div>
         </div>
       )}
