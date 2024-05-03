@@ -17,18 +17,17 @@ function Navbar() {
   //fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
-      try { //https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi/me
-
-        const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
+      try { 
+        // https://jsonplaceholder.typicode.com/users/1
+        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/clients/me/');
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data: ', error);
-
       }
     };
     fetchUserData();
   }, []);
-  console.log(isLoggedIn)
+  
   //dropdown
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
@@ -60,7 +59,7 @@ function Navbar() {
 
 
   function UserAvatar() {
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       return (
         <div className={`flex items-center p-1`}>
           {userData && userData.profilePicture ? (
@@ -74,7 +73,7 @@ function Navbar() {
   }
 
   function Username() {
-    if (isLoggedIn && userData) {
+    if (!isLoggedIn && userData) {
       return (
         <h6 className={`${styles['vazir']} text-white`} style={{ marginLeft: '15px', fontSize: '20px' }}>{userData.name}</h6>
       );
@@ -82,7 +81,7 @@ function Navbar() {
   }
 
   function LogInButton() {
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
       return (
         <div className={`flex justify-between items-center`}>
           <div style={{ marginRight: '10px' }}><Link to="/login" className={`text-white`} style={{ fontSize: '18px', fontFamily: 'vazir' }}>وارد شوید</Link></div>
