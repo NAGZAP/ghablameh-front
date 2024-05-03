@@ -12,15 +12,17 @@ import 'react-toastify/dist/ReactToastify.css';
 function ListOfJoinRequests() {
   const [approved, setApproved] = useState([]);
   const [rejected, setRejected] = useState([]);
-  const [requests, setRequests] = useState([
-    { buffet: 'buffet1', id: 1, firstName: 'John', lastName: 'smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-    { buffet: 'buffet2', id: 2, firstName: 'Jane', lastName: 'Smith', status: 'p', avatar: 'https://p1.hiclipart.com/preview/743/500/3/circle-silhouette-logo-user-user-profile-green-facial-expression-nose-cartoon-png-clipart.jpg' },
-    { buffet: 'buffet3', id: 3, firstName: 'jacob', lastName: 'eliise', status: 'p', avatar: '' },
-    { buffet: 'buffet1', id: 4, firstName: 'John', lastName: 'smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-    { buffet: 'buffet2', id: 5, firstName: 'Jane', lastName: 'Smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-    { buffet: 'buffet3', id: 6, firstName: 'loralie', lastName: 'eliise', status: 'p', avatar: '' },
+  const [IsSelectedUser, setIsSelectedUser] = useState(false)
+  const [requests, setRequests] = useState([]);
+  // const [requests, setRequests] = useState([
+  //   { buffet: 'buffet1', id: 1, firstName: 'John', lastName: 'smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
+  //   { buffet: 'buffet2', id: 2, firstName: 'Jane', lastName: 'Smith', status: 'p', avatar: 'https://p1.hiclipart.com/preview/743/500/3/circle-silhouette-logo-user-user-profile-green-facial-expression-nose-cartoon-png-clipart.jpg' },
+  //   { buffet: 'buffet3', id: 3, firstName: 'jacob', lastName: 'eliise', status: 'p', avatar: '' },
+  //   { buffet: 'buffet1', id: 4, firstName: 'John', lastName: 'smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
+  //   { buffet: 'buffet2', id: 5, firstName: 'Jane', lastName: 'Smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
+  //   { buffet: 'buffet3', id: 6, firstName: 'loralie', lastName: 'eliise', status: 'p', avatar: '' },
 
-  ]);
+  // ]);
 
   //fetch list of requests
   const token = 'JWT ' + localStorage.getItem("token");
@@ -39,7 +41,6 @@ function ListOfJoinRequests() {
     };
     fetchUserData();
   }, [token]);
-
 
   //patch requests
   const handleaccept = (user) => {
@@ -71,15 +72,16 @@ function ListOfJoinRequests() {
     toast.dismiss()
   };
 
-  const handlereject = (user) => {
+  const handlereject = () => {
+    console.log(IsSelectedUser)
+    const updatedUser = { ...IsSelectedUser, status: 'R' };
 
-    const updatedUser = { ...user, status: 'R' };
-
+    console.log(IsSelectedUser)
     setRejected([...rejected, updatedUser]);
-    setRequests(requests.filter((request) => request.id !== user.id));
+    setRequests(requests.filter((request) => request.id !== IsSelectedUser.id));
 
     const token = 'JWT ' + localStorage.getItem("token");
-    const url = 'https://ghablameh.fiust.ir/api/v1/organizations/join-requests/' + user.id + '/'
+    const url = 'https://ghablameh.fiust.ir/api/v1/organizations/join-requests/' + IsSelectedUser.id + '/'
 
     try {
       const response = axios.patch(url, { status: 'R' }, {
@@ -87,16 +89,16 @@ function ListOfJoinRequests() {
           'Authorization': token
         }
       });
+
       if (response.status === 200) {
         console.log('formData submitted successfully');
       } else {
-        const errorData = response.json();
-        console.log('formData submission failed:', errorData);
+        console.log('formData submission failed:', response.data);
       }
     } catch (error) {
       console.error('An error occurred:', error);
     }
-    // toast.dismiss()
+
     setShowMyModel(false);
   };
 
@@ -133,6 +135,12 @@ function ListOfJoinRequests() {
     if (e.target.id === "close") onClose();
   };
 
+  const handleOpenModal = (user) => {
+    console.log(user)
+    setShowMyModel(true)
+    setIsSelectedUser(user)
+  }
+
   const ListOfUserRequests = () => (
     <div style={{ border: '1px solid rgb(38, 87, 124)', borderRadius: '8px', width: '50vw', }} className="w-64  font-medium text-gray-900 bg-white rounded-lg">
       <h2 className="text-xl font-semibold text-gray-800  text-center pt-3 pb-2 pr-3" style={{ borderBottom: '1px solid rgb(38, 87, 124)' }}> لیست درخواست ها </h2>
@@ -155,7 +163,7 @@ function ListOfJoinRequests() {
                   {user.buffet}
                 </div>
                 <div className="flex items-center">
-                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => setShowMyModel(true)} />
+                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleOpenModal(user)} />
                   <CheckIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => checkToast(user)} />
                 </div>
               </div>
@@ -178,7 +186,7 @@ function ListOfJoinRequests() {
             <div className="flex flex-col items-center">
               <div className="text-center mb-4">آیا از قبول کردن این درخواست مطمئن هستید؟</div>
               <div className="flex justify-center space-x-4">
-                <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handlereject(user)}>بله</button>
+                <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handlereject()}>بله</button>
                 <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowMyModel(false)}>خیر</button>
               </div>
             </div>
