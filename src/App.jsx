@@ -33,8 +33,7 @@ function App() {
         <Route path="/" element={<Updateorg />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-{/*         <Route path="/DataFromApiList" element={<DataFromApiList />} />
- */}    
+{/*         <Route path="/DataFromApiList" element={<DataFromApiList />} />*/}    
         <Route path="/HomeOrgPage" element={<HomeOrgPage />} />
         <Route path="/ListOfJoinRequests" element={<ListOfJoinRequests />} />
         <Route path="*" element={<PageNotFound />} />
