@@ -95,7 +95,7 @@ function HomeOrgPage() {
 
                                     <button
                                         type="button"
-                                        className="hs-carousel-prev hs-carousel:disabled:opacity-50 disabled:pointer-events-none absolute inset-y-0 start-0 inline-flex justify-center items-center w-[46px] h-full text-gray-800 hover:bg-gray-800/10 rounded-s-lg"
+                                        className="right-auto left-0 lehs-carousel-prev hs-carousel:disabled:opacity-50 disabled:pointer-events-none absolute inset-y-0 start-0 inline-flex justify-center items-center w-[46px] h-full text-gray-800 hover:bg-gray-800/10 rounded-s-lg"
                                         onClick={handlePrevSlide}
                                         >
                                         <span className="text-2xl" aria-hidden="true">
@@ -107,7 +107,7 @@ function HomeOrgPage() {
                                     </button>
                                     <button
                                         type="button"
-                                        className="hs-carousel-next hs-carousel:disabled:opacity-50 disabled:pointer-events-none absolute inset-y-0 end-0 inline-flex justify-center items-center w-[46px] h-full text-gray-800 hover:bg-gray-800/10 rounded-e-lg"
+                                        className="hs-carousel-next right-0 left-auto hs-carousel:disabled:opacity-50 disabled:pointer-events-none absolute inset-y-0 end-0 inline-flex justify-center items-center w-[46px] h-full text-gray-800 hover:bg-gray-800/10 rounded-e-lg"
                                         onClick={handleNextSlide}
                                         >
                                         <span className="sr-only">Next</span>
@@ -118,16 +118,17 @@ function HomeOrgPage() {
                                         </span>
                                     </button>
 
-                                    <div className="hs-carousel-pagination flex justify-center absolute bottom-3 start-0 end-0 space-x-2">
-                                        {slides.map((slide, index) => (
-                                            <span
-                                            key={index}
-                                            className={`hs-carousel-active:bg-blue-700 hs-carousel-active:border-blue-700 w-3 h-3 rounded-full cursor-pointer ${
-                                                index === activeSlide ? 'bg-blue-700 border-blue-700' : 'bg-orange-400'
-                                            }`}
-                                            onClick={() => setActiveSlide(index)}
-                                            ></span>
-                                        ))}
+                                    <div className="hs-carousel-pagination flex justify-center absolute bottom-3 right-0 left-0">
+                                    {slides.slice().reverse().map((slide, index) => (
+                                        <span
+                                        key={index}
+                                        className={`hs-carousel-active:bg-blue-700 hs-carousel-active:border-blue-700 w-3 h-3 rounded-full cursor-pointer ${
+                                            slides.length - 1 - index === activeSlide ? 'bg-blue-700 border-blue-700' : 'bg-orange-400'
+                                        }`}
+                                        onClick={() => setActiveSlide(slides.length - 1 - index)}
+                                        style={{ marginRight: '10px' }}
+                                        ></span>
+                                    ))}
                                         </div>
                                     </div>
                                     </div>
