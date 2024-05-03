@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { XIcon, CheckIcon } from '@heroicons/react/solid';
 import Avatar from 'react-avatar';
-import CustomSidebar from './Sidebar';
 import Navbar from './Navbar';
 import Footer from './footer';
 import styles from '../styles/listofrequests.module.css';
@@ -149,23 +148,26 @@ function ListOfJoinRequests() {
           {requests.map((user, index) => (
             <li key={index} style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }} className="px-4 py-2">
               <div className="flex items-center p-2 flex-row justify-between">
-                <div className="flex items-center">
-                  {user.avatar ? (
-                    <img src={user.avatar} alt={`${user.firstName} ${user.lastName}`} className="h-10 w-10 rounded-full" />
-                  ) : (
-                    <Avatar name={`${user.firstName} ${user.lastName}`} size={40} round={true} maxInitials={1} />
-                  )}
-                  <div className="ml-2 text-base">
-                    <div style={{ fontSize: '1.2rem' }}>{user.firstName} {user.lastName}</div>
-                  </div>
+              <div className="flex items-center">
+                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleOpenModal(user)} />
+                  <CheckIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => checkToast(user)} />
                 </div>
                 <div style={{ backgroundColor: 'rgb(38, 87, 124)', color: 'white', borderRadius: '5px', height: '35px', width: '65px' }} className="rounded p-1 mx-5 flex  items-center justify-center">
                   {user.buffet}
                 </div>
                 <div className="flex items-center">
-                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleOpenModal(user)} />
-                  <CheckIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => checkToast(user)} />
+                <div className="ml-2 text-base">
+                    <div style={{ fontSize: '1.2rem' }}>{user.firstName} {user.lastName}</div>
+                  </div>
+                  {user.avatar ? (
+                    <img src={user.avatar} alt={`${user.firstName} ${user.lastName}`} className="h-10 w-10 rounded-full" />
+                  ) : (
+                    <Avatar name={`${user.firstName} ${user.lastName}`} size={40} round={true} maxInitials={1} />
+                  )}
+                  
                 </div>
+                
+                
               </div>
             </li>
           )
@@ -175,8 +177,7 @@ function ListOfJoinRequests() {
 
       {requests.length == 0 && (
         <ul className="w-full">
-          <h3 className="text-xl font-light text-gray-800 pt-3 pb-2 pr-3 text-right p-6 m-2">.درخواستی برای اضافه شدن به بوفه وجود ندارد</h3>
-
+          <h3 className="text-xl font-light text-gray-800 pt-3 pb-2 pr-3 text-right p-6 m-2">درخواستی برای اضافه شدن به بوفه وجود ندارد</h3>
         </ul>
       )}
 
@@ -185,10 +186,12 @@ function ListOfJoinRequests() {
           <div id="close" onClick={handleOnClose} className={`${styles['modal-me']} bg-white rounded p-2`} style={{ position: 'absolute' }}>
             <div className="flex flex-col items-center">
               <div className="text-center mb-4">آیا از قبول کردن این درخواست مطمئن هستید؟</div>
-              <div className="flex justify-center space-x-4">
-                <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handlereject()}>بله</button>
+              <div className="flex justify-center space-x-3">
+                <div className='mx-2'>
                 <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowMyModel(false)}>خیر</button>
-              </div>
+                </div>
+                <div className='mx-2'><button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handlereject()}>بله</button>
+              </div></div>
             </div>
           </div>
         </div>
@@ -197,16 +200,15 @@ function ListOfJoinRequests() {
   );
 
   return (
+    <div>
     <div className={`${styles['main-content']} flex flex-col`}>
       <Navbar />
-      <div className='flex flex-row'>
-        <CustomSidebar />
         <div className='flex flex-grow justify-center items-center'>
           {ListOfUserRequests()}
-        </div>
-      </div>
-      <Footer />
+        </div>   
       <ToastContainer />
+    </div>
+    <Footer />
     </div>
   );
 }

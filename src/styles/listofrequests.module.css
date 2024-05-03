@@ -1,5 +1,4 @@
 .main-content {
-  padding-bottom: 60px; /* Adjust the value to match the height of your footer */
-  min-height: calc(100vh - 60px); /* Subtract the footer height from the viewport height */
-  position: relative;
+  text-align: center;
+  min-height: 70vh;
 }
