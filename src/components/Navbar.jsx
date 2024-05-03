@@ -95,21 +95,31 @@ function Navbar() {
 
   return (
     <nav style={{ backgroundColor: 'rgb(38, 87, 124)' }}>
-      <div className={`px-3`}>
-        <div className={`flex justify-between m-2 items-center`}>
-          <div className={`flex items-center`}>
+          <div className={`flex justify-between m-2 items-center px-2`}>
 
+            {/* Elements - Logo */}
+            <div className={`flex items-center justify-end`}>
+              <div className={`flex`}>
+                <Link to='/' className={`items-center text-white`} style={{ fontSize: '35px', fontFamily: 'vazir' }} >قابلمه</Link>
+              </div>
+              {isBigScreen && (
+                <div className={`flex items-center justify-end space-x-3`} style={{ paddingRight: '1.5vw' }}>
+                  <Link to='/' className={`text-white`} style={{ fontSize: '1.3rem', margin: '0.7vw' }}>element1</Link>
+                  <Link to='/' className={`text-white`} style={{ fontSize: '1.3rem', marginLeft: '0.5vw' }}>element2</Link>
+                </div>
+              )}
+
+            </div>
+
+            {/* Avatar, username and Login button */}
             <div ref={dropdownRef}>
-              {/* Avatar, username and Login button */}
               <div className={`flex justify-between items-center`}>
                 {userData && (
                   <>
-                    {UserAvatar()}
                     {Username(userData.username)}
-
+                    {UserAvatar()}
                   </>
                 )}
-
                 {LogInButton()}
               </div>
 
@@ -121,24 +131,9 @@ function Navbar() {
                 </ul>
               </div>
             </div>
+            
           </div>
 
-          {/* Elements - Logo */}
-
-          <div className={`flex items-center justify-end`}>
-            {isBigScreen && (
-              <div className={`flex items-center justify-end space-x-3`} style={{ paddingRight: '2vw' }}>
-                <Link to='/' className={`text-white`} style={{ fontSize: '1.3rem' }}>element1</Link>
-                <Link to='/' className={`text-white`} style={{ fontSize: '1.3rem' }}>element2</Link>
-              </div>
-            )}
-            <div className={`flex justify-end`}>
-              <Link to='/' className={`items-center text-white`} style={{ fontSize: '35px', fontFamily: 'vazir' }} >قابلمه</Link>
-            </div>
-          </div>
-
-        </div>
-      </div>
     </nav>
   );
 }
