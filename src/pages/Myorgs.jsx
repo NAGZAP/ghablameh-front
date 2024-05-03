@@ -3,31 +3,11 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import styles from "../styles/updateinfo.module.css";
 import organizationsRequest from '../APIs/Organizations';
-
+let gottenOrgs = organizationsRequest.GetMyOrganizations();
 const Myorgs = () => {
-  const [orgs, setOrgs] = useState([{name : "test"}]);
+  const [orgs, setOrgs] = useState(gottenOrgs);
   const [filteredOrgs, setFilteredOrgs] = useState([ {name : "test"}]);
   const searchdata = useRef(null);
-  let gottenOrgs = organizationsRequest.GetMyOrganizations();
-  setOrgs(gottenOrgs);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // const response = await requests.GetOrganizations(); // Assuming GetOrganizations() returns a promise
-        // if (response.data === null || response.data.length === 0)
-        // {
-        //   setOrgs([ {} ]);
-        //   setFilteredOrgs(response.data);
-        // } 
-        // setOrgs(response.data);
-        // setFilteredOrgs(response.data);
-      } catch (error) {
-        console.error("Error fetching organizations:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const handleSearch = () => {
     const filtered = orgs.filter((item) =>
@@ -60,7 +40,7 @@ const Myorgs = () => {
         </div>
         <div className="grid grid-cols-3 gap-1">
           {filteredOrgs.map((item) => (
-            <div className="border border-sky-800 rounded p-2 my-2">
+            <div key={filteredOrgs.indexOf(item)} className="border border-sky-800 rounded p-2 my-2">
               <div className="grid grid-cols-2">
                 <div>
                   <p>{item.name}</p>

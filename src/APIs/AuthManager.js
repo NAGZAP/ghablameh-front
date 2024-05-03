@@ -5,10 +5,7 @@ const isLoggedIn = () => {
   if (tkoen === null) {
     return false;
   } else {
-    return {
-      token: token,
-      isLoggedin: true,
-    };
+    return true;
   }
 };
 

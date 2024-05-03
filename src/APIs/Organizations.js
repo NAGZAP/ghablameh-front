@@ -4,7 +4,7 @@ import requests from './AuthManager';
 const GetMyOrganizations = () => {
     const baseUrl = "https://ghablameh.fiust.ir/api/v1/";
     let data = null;
-    let token = getToken();
+    let token = requests.getToken();
     axios.get(baseUrl + "organizations/join-requests/",{headers: {Authorization : `JWT ${token}`}}).then(resp => data = resp.data);
     if(data == null) 
         data = [ {id:0}]

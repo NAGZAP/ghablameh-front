@@ -18,6 +18,7 @@ import OrgPage from "./OrgPage/OrgPage";
 import ChooseOrganizationPage from "./pages/ChooseOrganizationPage";
 import Myorgs from "./pages/Myorgs";
 import UserSlider from "./components/UserSlider";
+import WeeklyMenuPage from "./pages/WeeklyMenu";
 function App() {
   return (
     <BrowserRouter>
@@ -37,6 +38,7 @@ function App() {
         <Route path="chooseorg" element={<ChooseOrganizationPage />} />
         <Route path="/Myorgs" element={<Myorgs />} />
         <Route path="/slider" element={<UserSlider />} />
+        <Route path="/WeeklyMenu" element={<WeeklyMenuPage/>}/>
       </Routes>
     </BrowserRouter>
   );
