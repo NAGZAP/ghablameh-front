@@ -14,7 +14,7 @@ import WeeklyMenu from './components/weeklymenu'
 import CustomSidebar from './components/Sidebar'
 import PageNotFound from './components/pagenotfound'
 import Navbar from './components/Navbar'
-
+import  MyComponent from './components/listorg/listorg';
 import ReservationCalendar from './components/lastreservation'
 function App() {
   return (
@@ -29,6 +29,7 @@ function App() {
        <Route path="/menu" element={<WeeklyMenu />} />
        <Route path="/lastreservation" element={<ReservationCalendar />} />
        <Route path="/input" element={<InputField/>} />
+       <Route path="/listorg" element={<MyComponent/>} />
       <Route path="/" element={<SignUp/>} />
       <Route path="*" element={<PageNotFound />} />
       

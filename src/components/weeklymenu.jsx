@@ -88,9 +88,9 @@ const WeeklyMenu = () => {
   return (
     <>
      <div className={styles.app}>
-  <Navbar></Navbar>
-  <p id={styles.title}>منوی هفتگی</p>
-  <div className={styles.menu}>
+      <Navbar></Navbar>
+    <p id={styles.title}>منوی هفتگی</p>
+      <div className={styles.menu}>
     <table id={styles.employee}>
       <thead>
         <tr>{renderHeader()}</tr>
