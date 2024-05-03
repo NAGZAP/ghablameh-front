@@ -5,38 +5,34 @@ import isLoggedIn from '../APIs/AuthManager'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import CustomSidebar from './Sidebar';
 function Navbar() {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [userData, setUserData] = useState(null);
   const isBigScreen = useMediaQuery('(min-width: 600px)');
-  const sideBar = useRef();
 
   const navigate = useNavigate();
 
   //fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
-      try { //https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi/me
-
-        const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
+      try { 
+        // https://jsonplaceholder.typicode.com/users/1
+        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/clients/me/');
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data: ', error);
-
       }
     };
     fetchUserData();
   }, []);
+  
   //dropdown
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
-    // document.addEventListener('click', handleClickOutsideSidebar);
     return () => {
       document.removeEventListener('click', handleClickOutside);
-      // document.removeEventListener('click', handleClickOutsideSidebar);
     };
   }, []);
 
@@ -48,9 +44,6 @@ function Navbar() {
     if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
       setIsDropdownOpen(false);
     }
-  };
-  const handleClickOutsideSidebar = (e) => {
-    sideBar.current.style.display = 'none';
   };
 
   //log out
@@ -64,17 +57,9 @@ function Navbar() {
     navigate('/');
   }
 
-  const handleOpenSidebar = () => {
-    let displayStatus = sideBar.current.style.display;
-    if(displayStatus !== 'block')
-      sideBar.current.style.display = 'block';
-    else 
-      sideBar.current.style.display = 'none';
-  }
-
 
   function UserAvatar() {
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       return (
         <div className={`flex items-center p-1`}>
           {userData && userData.profilePicture ? (
@@ -88,7 +73,7 @@ function Navbar() {
   }
 
   function Username() {
-    if (isLoggedIn && userData) {
+    if (!isLoggedIn && userData) {
       return (
         <h6 className={`${styles['vazir']} text-white`} style={{ marginLeft: '15px', fontSize: '20px' }}>{userData.name}</h6>
       );
@@ -96,7 +81,7 @@ function Navbar() {
   }
 
   function LogInButton() {
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
       return (
         <div className={`flex justify-between items-center`}>
           <div style={{ marginRight: '10px' }}><Link to="/login" className={`text-white`} style={{ fontSize: '18px', fontFamily: 'vazir' }}>وارد شوید</Link></div>
@@ -108,23 +93,32 @@ function Navbar() {
   }
 
   return (
-    <>
-    <nav style={{ backgroundColor: 'rgb(38, 87, 124)' }} className={styles.navPos}>
-      <div className={`px-3`}>
-        <div className={`flex justify-between m-2 items-center`}>
-          <div className={`flex items-center`}>
+    <nav style={{ backgroundColor: 'rgb(38, 87, 124)' }}>
+          <div className={`flex justify-between m-2 items-center px-2`}>
 
+            {/* Elements - Logo */}
+            <div className={`flex items-center justify-end`}>
+              <div className={`flex`}>
+                <Link to='/' className={`items-center text-white`} style={{ fontSize: '35px', fontFamily: 'vazir' }} >قابلمه</Link>
+              </div>
+              {isBigScreen && (
+                <div className={`flex items-center justify-end space-x-3`} style={{ paddingRight: '1.5vw' }}>
+                  <Link to='/' className={`text-white`} style={{ fontSize: '1.3rem', margin: '0.7vw' }}>element1</Link>
+                  <Link to='/' className={`text-white`} style={{ fontSize: '1.3rem', marginLeft: '0.5vw' }}>element2</Link>
+                </div>
+              )}
+
+            </div>
+
+            {/* Avatar, username and Login button */}
             <div ref={dropdownRef}>
-              {/* Avatar, username and Login button */}
               <div className={`flex justify-between items-center`}>
                 {userData && (
                   <>
-                    {UserAvatar()}
                     {Username(userData.username)}
-
+                    {UserAvatar()}
                   </>
                 )}
-
                 {LogInButton()}
               </div>
 
@@ -136,30 +130,10 @@ function Navbar() {
                 </ul>
               </div>
             </div>
+            
           </div>
 
-          {/* Elements - Logo */}
-
-          <div className={`flex items-center justify-end`}>
-            {isBigScreen && (
-              <div className={`flex items-center justify-end space-x-3`} style={{ paddingRight: '2vw' }}>
-                <Link to='/' className={`text-white`} style={{ fontSize: '1.3rem' }}>element1</Link>
-                <Link to='/' className={`text-white`} style={{ fontSize: '1.3rem' }}>element2</Link>
-              </div>
-            )}
-            <div className={`flex justify-end`}>
-              {/* <Link to='/' className={`items-center text-white`} style={{ fontSize: '35px', fontFamily: 'vazir' }} >قابلمه</Link> */}
-              <p style={{ fontSize: '35px', fontFamily: 'vazir',color:"white",cursor:"pointer" }} onClick={handleOpenSidebar}>قابلمه</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
     </nav>
-    <div style={{display:'none'}} ref={sideBar}>
-      <CustomSidebar />
-    </div>
-    </>
   );
 }
 

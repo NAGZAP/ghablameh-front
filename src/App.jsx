@@ -19,6 +19,8 @@ import ChooseOrganizationPage from "./pages/ChooseOrganizationPage";
 import Myorgs from "./pages/Myorgs";
 import UserSlider from "./components/UserSlider";
 import WeeklyMenuPage from "./pages/WeeklyMenu";
+import HomeOrgPage from "./HomePageForOrg/HomePage";
+import Response from "./Response/Response";
 function App() {
   return (
     <BrowserRouter>
@@ -31,14 +33,16 @@ function App() {
         <Route path="/" element={<Updateorg />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/DataFromApiList" element={<DataFromApiList />} />
+{/*         <Route path="/DataFromApiList" element={<DataFromApiList />} />*/}    
+        <Route path="/HomeOrgPage" element={<HomeOrgPage />} />
         <Route path="/ListOfJoinRequests" element={<ListOfJoinRequests />} />
         <Route path="*" element={<PageNotFound />} />
-        <Route path="/OrgPage" element={<OrgPage />} />
+          <Route path="/OrgPage" element={<OrgPage />} />
         <Route path="chooseorg" element={<ChooseOrganizationPage />} />
         <Route path="/Myorgs" element={<Myorgs />} />
         <Route path="/slider" element={<UserSlider />} />
         <Route path="/WeeklyMenu" element={<WeeklyMenuPage/>}/>
+        <Route path="/Response" element={<Response />} />
       </Routes>
     </BrowserRouter>
   );
