@@ -7,11 +7,12 @@ import styles from '../styles/listofrequests.module.css';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import useMediaQuery from '@mui/material/useMediaQuery';
 function ListOfJoinRequests() {
   const [approved, setApproved] = useState([]);
   const [rejected, setRejected] = useState([]);
   const [IsSelectedUser, setIsSelectedUser] = useState(false)
+  const isBigScreen = useMediaQuery('(min-width: 600px)')
   const [requests, setRequests] = useState([]);
   // const [requests, setRequests] = useState([
   //   { buffet: 'buffet1', id: 1, firstName: 'John', lastName: 'smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
@@ -143,20 +144,24 @@ function ListOfJoinRequests() {
   const ListOfUserRequests = () => (
     <div style={{ border: '1px solid rgb(38, 87, 124)', borderRadius: '8px', width: '50vw', }} className="w-64  font-medium text-gray-900 bg-white rounded-lg">
       <h2 className="text-xl font-semibold text-gray-800  text-center pt-3 pb-2 pr-3" style={{ borderBottom: '1px solid rgb(38, 87, 124)' }}> لیست درخواست ها </h2>
-      {requests.length > 0 && (
+
+
+
+      {isBigScreen && requests.length > 0 && (
         <ul className="w-full">
           {requests.map((user, index) => (
             <li key={index} style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }} className="px-4 py-2">
               <div className="flex items-center p-2 flex-row justify-between">
-              <div className="flex items-center">
-                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleOpenModal(user)} />
+                <div className="flex items-center">
                   <CheckIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => checkToast(user)} />
+                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleOpenModal(user)} />
+
                 </div>
                 <div style={{ backgroundColor: 'rgb(38, 87, 124)', color: 'white', borderRadius: '5px', height: '35px', width: '65px' }} className="rounded p-1 mx-5 flex  items-center justify-center">
                   {user.buffet}
                 </div>
                 <div className="flex items-center">
-                <div className="ml-2 text-base">
+                  <div className="ml-2 text-base">
                     <div style={{ fontSize: '1.2rem' }}>{user.firstName} {user.lastName}</div>
                   </div>
                   {user.avatar ? (
@@ -164,10 +169,37 @@ function ListOfJoinRequests() {
                   ) : (
                     <Avatar name={`${user.firstName} ${user.lastName}`} size={40} round={true} maxInitials={1} />
                   )}
-                  
+
                 </div>
-                
-                
+
+
+              </div>
+            </li>
+          )
+          )}
+        </ul>
+      )}
+      {!isBigScreen && requests.length > 0 && (
+        <ul className="w-full">
+          {requests.map((user, index) => (
+            <li key={index} style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }} className="px-4 py-2">
+              <div className="flex items-center p-2 flex-row justify-between">
+                <div className="flex items-center">
+                  <CheckIcon className="h-6 w-6 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => checkToast(user)} />
+                  <XIcon className="h-6 w-6 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleOpenModal(user)} />
+
+                </div>
+                <div style={{ backgroundColor: 'rgb(38, 87, 124)', color: 'white', borderRadius: '5px', height: '35px', width: '65px' }} className="rounded p-1 mx-5 flex  items-center justify-center">
+                  {user.buffet}
+                </div>
+                <div className="flex items-center">
+                  <div className="ml-2 text-base">
+                    <div style={{ fontSize: '1.2rem' }}>{user.firstName} {user.lastName}</div>
+                  </div>
+
+                </div>
+
+
               </div>
             </li>
           )
@@ -188,10 +220,10 @@ function ListOfJoinRequests() {
               <div className="text-center mb-4">آیا از قبول کردن این درخواست مطمئن هستید؟</div>
               <div className="flex justify-center space-x-3">
                 <div className='mx-2'>
-                <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowMyModel(false)}>خیر</button>
+                  <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowMyModel(false)}>خیر</button>
                 </div>
                 <div className='mx-2'><button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handlereject()}>بله</button>
-              </div></div>
+                </div></div>
             </div>
           </div>
         </div>
@@ -201,14 +233,14 @@ function ListOfJoinRequests() {
 
   return (
     <div>
-    <div className={`${styles['main-content']} flex flex-col`}>
-      <Navbar />
-        <div className='flex flex-grow justify-center items-center'>
+      <div className={`${styles['main-content']} flex flex-col`}>
+        <Navbar />
+        <div className='flex flex-grow justify-center items-center m-3'>
           {ListOfUserRequests()}
-        </div>   
-      <ToastContainer />
-    </div>
-    <Footer />
+        </div>
+        <ToastContainer />
+      </div>
+      <Footer />
     </div>
   );
 }
