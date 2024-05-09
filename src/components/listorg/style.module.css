@@ -403,3 +403,12 @@ margin-bottom: 80px;
   margin-left: 140px;
   margin-bottom: 80px;
 }
+
+.text-wrapper {
+  flex: 1;
+}
+
+.select .li
+{
+  font-size: 50px;
+}

@@ -6,7 +6,7 @@ import img3 from "./assets/img/main/c10.jpeg"
 import img4 from "./assets/img/main/c4.png"
 import img5 from "./assets/img/main/c5.png"
 import img6 from "./assets/img/main/c7.svg"
-import './style.css'
+import './FlexLayout.css'
 export default class AutoPlayMethods extends Component {
   constructor(props) {
     super(props);

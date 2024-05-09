@@ -1,6 +1,5 @@
 import React from 'react';
-import './FlexLayout.css';
-import './style.css'
+
 import Navbar from '../Navbar';
 import Footer from '../footer';
 import img1 from "./assets/img/main/c1.png"
@@ -15,21 +14,14 @@ import img3 from "./assets/img/main/c3.png"
 import main from "./assets/img/main/h1.png"
 import main1 from "./assets/img/main/main1.jpeg"
 import main2 from "./assets/img/main/main2.jpeg"
-import about1 from"./assets/img/about/about-left-shape.svg" ;
-import about12 from "./assets/img/about/left-dots.svg"
-import about2 from"./assets/img/about/about-right-shape.svg" ;
-import about21 from "./assets/img/about/right-dots.svg"
+
 import SliderPage from "./arrow";
 import Select from "react-select";
 import { Link } from 'react-router-dom';
-import landing  from  './assets/img/hero/hero-img.png'
-import footer from './assets/img/footer.png';
-import main5 from './assets/img/landing.jpeg'
 
-import logo from './assets/img/logo/logo.svg'
 import Slider from 'react-slick';
 import  { useEffect , useState ,useRef} from 'react';
-
+import styles from './style.module.css';
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
 const colors = ["#0088FE", "#00C49F", "#FFBB28"];
@@ -105,236 +97,120 @@ function MyComponent() {
 
 
   return (
-     
-    <div class= "land">
-       <Navbar></Navbar>
-        <body>
-    <div>
-      <SliderPage />
-     </div>
-   <div className="menu">
-
-  <ul className="m-navbar">
-
-
-    <li
-      className={`m-navbar-item ${selectedItem === 'تمام بوفه ها' ? 'active' : ''}`}
-      onClick={() => handleItemClick('تمام بوفه ها')}
-    >
-       تمام بوفه ها
-    </li>
-    <li
-      className={`m-navbar-item ${selectedItem === 'Item 2' ? 'active' : ''}`}
-      onClick={() => handleItemClick('Item 2')}
-    >
-     نام
-    </li>
-    <li
-      className={`m-navbar-item ${selectedItem === 'Item 3' ? 'active' : ''}`}
-      onClick={() => handleItemClick('Item 3')}
-    >
-     تاریخ تشکیل شده
-    </li>
-  
-    <li>
-   
-    <div className="select">
-            <Select options={options} onChange={handleSelectChange} />
+    <div className={styles.land}>
+      <Navbar></Navbar>
+      <body>
+        <div>
+          <SliderPage />
+        </div>
+        <div className={styles.menu}>
+          <ul className={styles['m-navbar']}>
+            <li
+              className={`${styles['m-navbar-item']} ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}
+              onClick={() => handleItemClick('تمام بوفه ها')}
+            >
+              تمام بوفه ها
+            </li>
+            <li
+              className={`${styles['m-navbar-item']} ${selectedItem === 'Item 2' ? styles.active : ''}`}
+              onClick={() => handleItemClick('Item 2')}
+            >
+              نام
+            </li>
+            <li
+              className={`${styles['m-navbar-item']} ${selectedItem === 'Item 3' ? styles.active : ''}`}
+              onClick={() => handleItemClick('Item 3')}
+            >
+              تاریخ تشکیل شده
+            </li>
+            <li>
+              <div className={styles.select}>
+                <Select options={options} onChange={handleSelectChange} />
+              </div>
+            </li>
+            <li>
+              <h4 className={`${styles['text-2xl']} ${styles['font-bold']} ${styles['mr-8']} ${styles['mt-4']} ${styles['text-right']} ${styles['right-250']}`}>بوفه های سازمان</h4>
+            </li>
+          </ul>
+          <div className={styles.content}>
+            <div className={`${styles['content-item']} ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}>
+              <a href="#">
+                <div className={styles['flex-item']}>
+                  <img src={img1} alt="Image 1" />
+                  <h4>بوفه شماره ۱</h4>
+                </div>
+              </a>
+              <a href="#">
+                <div className={styles['flex-item']}>
+                  <img src={img2} alt="Image 2" />
+                  <h4>بوفه شماره ۲</h4>
+                </div>
+              </a>
+              <a href="#">
+                <div className={styles['flex-item']}>
+                  <img src={img3} alt="Image 3" />
+                  <h4>بوفه شماره ۳</h4>
+                </div>
+              </a>
+              <div className={styles['flex-item']}>
+                <img src={img4} alt="Image 4" />
+                <h4>بوفه شماره ۴</h4>
+              </div>
+            </div>
+            <div className={`${styles['content-item']} ${selectedItem === 'Item 2' ? styles.active : ''}`}>
+              <a href="#">
+                <div className={styles['flex-item']}>
+                  <img src={img5} alt="Image 5" />
+                  <h4>بوفه شماره ۱</h4>
+                </div>
+              </a>
+              <a href="#">
+                <div className={styles['flex-item']}>
+                  <img src={img3} alt="Image 6" />
+                  <h4>بوفه شماره ۲</h4>
+                </div>
+              </a>
+              <a href="#">
+                <div className={styles['flex-item']}>
+                  <img src={img2} alt="Image 7" />
+                  <h4>بوفه شماره ۳</h4>
+                </div>
+              </a>
+              <a href="#">
+                <div className={styles['flex-item']}>
+                  <img src={img1} alt="Image 8" />
+                  <h4>بوفه شماره ۴</h4>
+                </div>
+              </a>
+            </div>
+            <div className={`${styles['content-item']} ${selectedItem === 'Item 3' ? styles.active : ''}`}>
+              <a href="#">
+                <div className={styles['flex-item']}>
+                  <img src={img4} alt="Image 9" />
+                  <h4>بوفه شماره ۱</h4>
+                </div>
+              </a>
+              <a href="#">
+                <div className={styles['flex-item']}>
+                  <img src={img2} alt="Image 10" />
+                  <h4>بوفه شماره۲</h4>
+                </div>
+              </a>
+              <a href="#">
+                <div className={styles['flex-item']}>
+                  <img src={img5} alt="Image 11" />
+                  <h4>بوفه شماره ۳</h4>
+                </div>
+              </a>
+              <a href="#">
+                <div className={styles['flex-item']}>
+                  <img src={img3} alt="Image 12" />
+                  <h4>بوفه شماره ۴</h4>
+                </div>
+              </a>
+            </div>
           </div>
-      </li>
-  
-      <li
-      >
-   <h4 className="text-2xl font-bold mr-8 mt-4 text-right right-250">بوفه های سازمان</h4>
-    </li>
-
-  </ul>
-  <div className="content">
-    <div className={`content-item ${selectedItem === 'تمام بوفه ها' ? 'active' : ''}`}>
-    <a href="#">
-      <div className="flex-item">
-        <img src={img1} alt="Image 1" />
-        <h4>بوفه شماره ۱</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img2} alt="Image 2" />
-        <h4>بوفه شماره ۲</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img3} alt="Image 3" />
-        <h4>بوفه شماره ۳</h4>
-      </div>
-      <div className="flex-item">
-        <img src={img4} alt="Image 4" />
-        <h4>بوفه شماره ۴</h4>
-      </div>
-      </a>
-    </div>
-    <div className={`content-item ${selectedItem === 'Item 2' ? 'active' : ''}`}>
-    <a href="#">
-      <div className="flex-item">
-        <img src={img5} alt="Image 5" />
-        <h4>بوفه شماره ۱</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img3} alt="Image 6" />
-        <h4>بوفه شماره ۲</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img2} alt="Image 7" />
-        <h4>بوفه شماره ۳</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img1} alt="Image 8" />
-        <h4>بوفه شماره ۴</h4>
-      </div>
-      </a>
-    </div>
-    <div className={`content-item ${selectedItem === 'Item 3' ? 'active' : ''}`}>
-    <a href="#">
-      <div className="flex-item">
-        <img src={img4} alt="Image 9" />
-        <h4>بوفه شماره ۱</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img2} alt="Image 10" />
-        <h4>بوفه شماره ۲</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img1} alt="Image 11" />
-        <h4>بوفه شماره ۳</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img3}alt="Image 12" />
-        <h4>بوفه شماره ۴</h4>
-      </div>
-      </a>
-    </div>
-  </div>
-  <div className="content">
-    <div className={`content-item ${selectedItem === 'option1' ? 'active' : ''}`}>
-    <a href="#">
-    <div className="flex-item">
-        <img src={img1} alt="Image 1" />
-        <h4>بوفه شماره ۱</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img2} alt="Image 2" />
-        <h4>بوفه شماره ۲</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img3} alt="Image 3" />
-        <h4>بوفه شماره ۳</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img4} alt="Image 4" />
-        <h4>بوفه شماره ۴</h4>
-      </div>
-      </a>
-    </div>
-    <div className={`content-item ${selectedItem === 'option2' ? 'active' : ''}`}>
-    <a href="#">
-    <div className="flex-item">
-        <img src={img5} alt="Image 5" />
-        <h4>بوفه شماره ۱</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img4} alt="Image 6" />
-        <h4>بوفه شماره ۲</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img2} alt="Image 7" />
-        <h4>بوفه شماره ۳</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img1} alt="Image 8" />
-        <h4>بوفه شماره ۴</h4>
-      </div>
-      </a>
-    </div>
-    
-    <div className={`content-item ${selectedItem === 'option3' ? 'active' : ''}`}>
-    <a href="#">
-    <div className="flex-item">
-        <img src={img4} alt="Image 9" />
-        <h4>بوفه شماره ۱</h4>
-      </div>
-      </a>
-      <div className="flex-item">
-        <img src={img2} alt="Image 10" />
-        <h4>بوفه شماره ۲</h4>
-      </div>
-      <a href="#">
-      <div className="flex-item">
-
-        <img src={img1} alt="Image 11" />
-        <h4>بوفه شماره ۳</h4>
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img5}alt="Image 12" />
-        <h4>بوفه شماره ۴</h4>
-      </div>
-      </a>
-    </div>
-  </div>
-</div>
-<h4 className="text-2xl font-bold mr-8 mt-4 text-right right-250">محبوب ترین سازمان ها</h4>
-<div className="content">
-
-<a href="#">
-      <div className="flex-item">
-        <img src={img1} alt="Image 1" />
-       
-      </div>
-      </a>
-      <a href="#">
-      <div className="flex-item">
-        <img src={img2} alt="Image 2" />
-      
-      </div>
-      </a>
-      <a href="#" >
-      <div className="flex-item">
-  
-        <img src={img3} alt="Image 3" />
-        
-      </div>
-      </a>
-    </div>
-
-    
-    
-
+        </div>
       </body>
       <Footer></Footer>
     </div>
