@@ -61,6 +61,7 @@ function SignUp() {
           navigate("/");
     } catch (error) {
 /*       console.error('Error sending data:', error); */
+         alert("اکانتی با اطلاعاتی مشابه استفاده شده است.")
     }
   };
   return (
@@ -71,7 +72,7 @@ function SignUp() {
         <li role="presentation" className="flex-grow basis-0 text-center">
           <a
             href="#tabs-Persons"
-            className={`inline-block rounded-lg transform lg:scale-90 md:scale-90 scale-75 bg-template-custom-blue mb-0 mt-5 w-40 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-xs font-medium uppercase leading-tight text-template-custom-white hover:isolate hover:border-transparent hover:bg-template-custom-orange focus:isolate focus:border-transparent ${
+            className={`inline-block rounded-lg transform lg:scale-90 md:scale-90 scale-75 bg-template-custom-blue mb-0 mt-5 w-40  border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-xs font-medium uppercase leading-tight text-template-custom-white hover:isolate hover:border-transparent hover:bg-template-custom-orange focus:isolate focus:border-transparent ${
               activeTab === 'tabs-Persons' ? 'border-primary text-primary dark:text-white/50' : ''
             }`}
             data-twe-toggle="pill"
@@ -87,7 +88,7 @@ function SignUp() {
         <li role="presentation" className="flex-grow basis-0 text-center">
           <a
             href="#tabs-Organization"
-            className={`rounded-lg transform lg:scale-90 md:scale-90 scale-75 inline-block bg-template-custom-blue br mb-0 mt-5 w-40 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-xs font-medium uppercase leading-tight text-template-custom-white hover:isolate hover:border-transparent hover:bg-template-custom-orange focus:isolate focus:border-transparent ${
+            className={`rounded-lg transform lg:scale-90 md:scale-90 scale-75 inline-block bg-template-custom-blue br mb-0 mt-5 w-40  border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-xs font-medium uppercase leading-tight text-template-custom-white hover:isolate hover:border-transparent hover:bg-template-custom-orange focus:isolate focus:border-transparent ${
               activeTab === 'tabs-Organization' ? 'border-primary text-primary dark:text-white/50' : ''
             }`}
             data-twe-toggle="pill"
@@ -151,7 +152,7 @@ function SignUp() {
             />
             <label
               className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">
-              اکانت
+             نام اکانت
             </label>
             {errors.Account && <label className={styles.Errors}> {"*"+errors.Account.message}</label>}
           </div>
