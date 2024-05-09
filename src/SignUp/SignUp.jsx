@@ -55,12 +55,12 @@ function SignUp() {
       const accessToken = response.data.tokens.access;
       localStorage.setItem('token', accessToken);
 /*       console.log(accessToken);
- */       console.log('Data sent successfully!');
+ */       /* console.log('Data sent successfully!'); */
 /*       return redirect("/")
 */
           navigate("/");
     } catch (error) {
-      console.error('Error sending data:', error);
+/*       console.error('Error sending data:', error); */
     }
   };
   return (
@@ -71,7 +71,7 @@ function SignUp() {
         <li role="presentation" className="flex-grow basis-0 text-center">
           <a
             href="#tabs-Persons"
-            className={`mb-0 mt-3 w-40 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-xs font-medium uppercase leading-tight text-neutral-500 hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent ${
+            className={`inline-block rounded-lg transform lg:scale-90 md:scale-90 scale-75 bg-template-custom-blue mb-0 mt-5 w-40 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-xs font-medium uppercase leading-tight text-template-custom-white hover:isolate hover:border-transparent hover:bg-template-custom-orange focus:isolate focus:border-transparent ${
               activeTab === 'tabs-Persons' ? 'border-primary text-primary dark:text-white/50' : ''
             }`}
             data-twe-toggle="pill"
@@ -87,7 +87,7 @@ function SignUp() {
         <li role="presentation" className="flex-grow basis-0 text-center">
           <a
             href="#tabs-Organization"
-            className={`mb-0 mt-3 w-40 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-xs font-medium uppercase leading-tight text-neutral-500 hover:isolate hover:border-transparent hover:bg-neutral-100 focus:isolate focus:border-transparent ${
+            className={`rounded-lg transform lg:scale-90 md:scale-90 scale-75 inline-block bg-template-custom-blue br mb-0 mt-5 w-40 block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-xs font-medium uppercase leading-tight text-template-custom-white hover:isolate hover:border-transparent hover:bg-template-custom-orange focus:isolate focus:border-transparent ${
               activeTab === 'tabs-Organization' ? 'border-primary text-primary dark:text-white/50' : ''
             }`}
             data-twe-toggle="pill"
