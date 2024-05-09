@@ -55,14 +55,14 @@ function SignUp() {
       const accessToken = response.data.tokens.access;
       localStorage.setItem('token', accessToken);
 /*       console.log(accessToken);
- */       /* console.log('Data sent successfully!'); */
+ */       /* console.log('Data sent successfully!');  */
 /*       return redirect("/")
 */
           navigate("/");
     } catch (error) {
 /*       console.error('Error sending data:', error); */
-         alert("اکانتی با اطلاعاتی مشابه استفاده شده است.")
-    }
+          alert("اکانتی با اطلاعاتی مشابه استفاده شده است.")
+     }
   };
   return (
     <div className={styles.container}>
