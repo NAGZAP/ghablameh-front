@@ -82,6 +82,7 @@ import {
   ListItemSuffix,
   Chip,
 } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 // import {
 //   PresentationChartBarIcon,
 //   ShoppingBagIcon,
@@ -95,48 +96,37 @@ export default function DefaultSidebar() {
     <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
       <div className="mb-2 p-4">
         <Typography variant="h5" color="blue-gray">
-          Sidebar
+          داشبورد
         </Typography>
       </div>
       <List>
         <ListItem>
           <ListItemPrefix>
-            {/* <PresentationChartBarIcon className="h-5 w-5" /> */}
+            <Link to='/Update'>تغییر اطلاعات کاربری</Link>
           </ListItemPrefix>
-          Dashboard
         </ListItem>
         <ListItem>
           <ListItemPrefix>
-            {/* <ShoppingBagIcon className="h-5 w-5" /> */}
+            <Link to='/weeklymenu2'>منو هفتگی بوفه</Link>
           </ListItemPrefix>
-          E-Commerce
         </ListItem>
         <ListItem>
           <ListItemPrefix>
-            {/* <InboxIcon className="h-5 w-5" /> */}
+            <Link to='/weeklymenu'>برنامه هفتگی سازمانی</Link>
           </ListItemPrefix>
-          Inbox
           <ListItemSuffix>
-            {/* <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" /> */}
+            <Link to='/last'>رزروها</Link>
           </ListItemSuffix>
         </ListItem>
         <ListItem>
           <ListItemPrefix>
-            {/* <UserCircleIcon className="h-5 w-5" /> */}
+          <Link to='/myorgs'>درخواست های عضویت</Link>
           </ListItemPrefix>
-          Profile
         </ListItem>
         <ListItem>
           <ListItemPrefix>
-            {/* <Cog6ToothIcon className="h-5 w-5" /> */}
+          <Link to='/chooseOrg'>درخواست عضویت</Link>
           </ListItemPrefix>
-          Settings
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            {/* <PowerIcon className="h-5 w-5" /> */}
-          </ListItemPrefix>
-          Log Out
         </ListItem>
       </List>
     </Card>

@@ -13,15 +13,15 @@ import {
   HiTable,
   HiUser,
   HiViewBoards,
-
 } from "react-icons/hi";
+import DefaultSidebar from "./Sidebar";
 function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [userData, setUserData] = useState(null);
   const isBigScreen = useMediaQuery("(min-width: 600px)");
   const navigate = useNavigate();
-
+  const sideBar = useRef(null);
   //fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
@@ -65,11 +65,11 @@ function Navbar() {
   //   sideBar.current.style.display = "none";
   // };
 
-  // const handleOpenSidebar = () => {
-  //   let displayStatus = sideBar.current.style.display;
-  //   if (displayStatus !== "block") sideBar.current.style.display = "block";
-  //   else sideBar.current.style.display = "none";
-  // };
+  const handleOpenSidebar = () => {
+    let displayStatus = sideBar.current.style.display;
+    if (displayStatus !== "block") sideBar.current.style.display = "block";
+    else sideBar.current.style.display = "none";
+  };
 
   //log out
   async function handleLogout() {
@@ -177,6 +177,7 @@ function Navbar() {
                 data-twe-ripple-init
                 data-twe-ripple-color="light"
                 style={{ fontSize: "35px", fontFamily: "vazir" }}
+                onClick={handleOpenSidebar}
               >
                 قابلمه
               </button>
@@ -206,7 +207,7 @@ function Navbar() {
                   className={`text-white`}
                   style={{ fontSize: "1.3rem", marginLeft: "0.5vw" }}
                 >
-                  لیست رزروها 
+                  لیست رزروها
                 </Link>
               </div>
             )}
@@ -252,66 +253,8 @@ function Navbar() {
           </div>
         </div>
       </nav>
-      {/* <div style={{display:'none'}} ref={sideBar}>
-    <CustomSidebar />
-  </div> */}
-      <div
-        className="invisible fixed bottom-0 right-0 top-0 z-[1045] flex w-60 max-w-full translate-x-full flex-col border-none  bg-clip-padding text-neutral-700 shadow-sm outline-none transition duration-300 ease-in-out data-[twe-offcanvas-show]:transform-none dark:bg-body-dark dark:text-white bg-sky-800"
-        tabIndex="-1"
-        id="offcanvasRight"
-        aria-labelledby="offcanvasRightLabel"
-        data-twe-offcanvas-init
-      >
-        <div className="flex items-center justify-between p-4 bg-stone-200">
-          <h5
-            className="mb-0 font-semibold leading-normal"
-            id="offcanvasRightLabel"
-          >
-          </h5>
-          <button
-            type="button"
-            className="box-content rounded-none border-none text-neutral-500 hover:text-neutral-800 hover:no-underline focus:text-neutral-800 focus:opacity-100 focus:shadow-none focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-300 dark:focus:text-neutral-300"
-            data-twe-offcanvas-dismiss
-            aria-label="Close"
-          >
-            <span className="[&>svg]:h-6 [&>svg]:w-6">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </span>
-          </button>
-          <div className="w-96 bg-black-400"></div>
-        </div>
-        <div className="flex flex-col offcanvas-body flex-grow overflow-y-auto p-4 bg-gray-700 bg-opacity-30 ">
-
-        {/* <Link to="/Update" style={{fontSize:"23px"}} className="m-2 my-2"><HiUser size='30px' style={{display:"inline", color:'rgb(38, 87, 124)'}}/>تغییر اطلاعات</Link><br/>
-
-        <Link to="/WeeklyMenu" style={{fontSize:"23px"}} className="m-2 my-2"><HiTable size='30px' style={{display:"inline",color:'rgb(38, 87, 124)'}}/>  برنامه غذایی </Link><br/>
-        
-        <Link to="/weeklymenu2" style={{fontSize:"23px"}} className="m-2 my-2"><HiTable size='30px' style={{display:"inline",color:'rgb(38, 87, 124)'}}/>  2برنامه غذایی </Link><br/>
-        <Link to="/last" style={{fontSize:"23px"}} className="m-2 my-2"><HiTable size='30px' style={{display:"inline",color:'rgb(38, 87, 124)'}}/> لیست رزروها </Link><br/>
-         */}
-
-
-        
-        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiTable style={{display:"inline"}}/>  تست</Link><br/>
-
-        {/* <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiShoppingBag style={{display:"inline"}}/>  تست</Link><br/> */}
-        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiChartPie style={{display:"inline"}}/>  تست</Link><br/>
-        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiViewBoards style={{display:"inline"}}/>  تست</Link><br/>
-        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiArrowSmRight style={{display:"inline"}}/>  تست</Link><br/>
-        
-        </div>
+      <div style={{ display: "none" ,position:"absolute",top:'14%',right:"0" , maxHeight:'300px'}} ref={sideBar}>
+        <DefaultSidebar />
       </div>
     </>
   );
