@@ -4,6 +4,7 @@ import styles from '../styles/Navbar.module.css';
 import isLoggedIn from '../APIs/AuthManager'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import AuthManager from '../APIs/AuthManager';
 import useMediaQuery from '@mui/material/useMediaQuery';
 function Navbar() {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -19,7 +20,9 @@ function Navbar() {
     const fetchUserData = async () => {
       try { 
         // https://jsonplaceholder.typicode.com/users/1
-        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/clients/me/');
+        const token = AuthManager.getToken();
+       
+        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/clients/me/', {headers:{'Authorization':"JWT "+ token}});
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data: ', error);
@@ -51,21 +54,21 @@ function Navbar() {
     setIsDropdownOpen(false); // Close the dropdown menu on logout
 
     setUserData(null); // Clear user data
-    localStorage.removeItem('access-token');
+    localStorage.removeItem('token');
     localStorage.removeItem('refresh-token');
-
+    console.log(AuthManager.isLoggedIn());
     navigate('/');
   }
 
 
   function UserAvatar() {
-    if (!isLoggedIn) {
+    if (AuthManager.isLoggedIn()) {
       return (
         <div className={`flex items-center p-1`}>
           {userData && userData.profilePicture ? (
             <img src={userData.profilePicture} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
           ) : (
-            <Avatar onClick={toggleDropdown} name={userData.name} size="60" round={true} maxInitials={1} />
+            <Avatar onClick={toggleDropdown} name={userData.first_name} size="60" round={true} maxInitials={1} />
           )}
         </div>
       );
@@ -73,15 +76,16 @@ function Navbar() {
   }
 
   function Username() {
-    if (!isLoggedIn && userData) {
+    if (AuthManager.isLoggedIn() && userData) {
       return (
-        <h6 className={`${styles['vazir']} text-white`} style={{ marginLeft: '15px', fontSize: '20px' }}>{userData.name}</h6>
+        <h6 className={`${styles['vazir']} text-white`} style={{ marginLeft: '15px', fontSize: '20px' }}>{userData.first_name}</h6>
       );
     }
   }
 
   function LogInButton() {
-    if (isLoggedIn) {
+
+    if (!AuthManager.isLoggedIn() ) {
       return (
         <div className={`flex justify-between items-center`}>
           <div style={{ marginRight: '10px' }}><Link to="/login" className={`text-white`} style={{ fontSize: '18px', fontFamily: 'vazir' }}>وارد شوید</Link></div>

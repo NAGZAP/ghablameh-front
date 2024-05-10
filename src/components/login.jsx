@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import styles from "../SignUp/SignUp.module.css";
 import { Link, redirect } from "react-router-dom";
-import LoginRequest from "../APIs/AuthManager";
+import AuthManager from "../APIs/AuthManager";
 
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
@@ -30,7 +30,7 @@ function Login() {
   });
 
   const onSubmit = async (data) => {
-    let responsedata = LoginRequest(data.username , data.password);
+    let responsedata = await AuthManager.LoginRequest(data.username , data.password);
     localStorage.setItem("token" , responsedata.data.tokens.access);
   };
   return (

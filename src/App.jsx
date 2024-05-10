@@ -21,10 +21,12 @@ import UserSlider from "./components/UserSlider";
 import WeeklyMenuPage from "./pages/WeeklyMenu";
 import HomeOrgPage from "./HomePageForOrg/HomePage";
 import Response from "./Response/Response";
+import Home from "./components/homepage";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="/" element={<Home />} />
         <Route path="/footer" element={<Footer />} />
         <Route path="/Update" element={<Update />} />
         <Route path="/Register" element={<Register />} />
