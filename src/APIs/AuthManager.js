@@ -44,7 +44,7 @@ const GetOrganizations = async () => {
   let data = []; //data =
   await axios
     .get(baseurl + "/organizations", {
-      headers: { Authorization: "jwt " + token },
+      headers: { Authorization: "JWT " + token },
     })
     .then((resp) => (data = resp.data))
     .catch(function (error) {
