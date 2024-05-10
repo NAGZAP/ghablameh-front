@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import axios from "axios";
 import styles from "../SignUp/SignUp.module.css";
-import { Link, redirect } from "react-router-dom";
+import { Link, Navigate, redirect } from "react-router-dom";
 import AuthManager from "../APIs/AuthManager";
 
 /* SignUpTailwind.module.css */
@@ -32,6 +32,7 @@ function Login() {
   const onSubmit = async (data) => {
     let responsedata = await AuthManager.LoginRequest(data.username , data.password);
     localStorage.setItem("token" , responsedata.data.tokens.access);
+    redirect('/');
   };
   return (
     <div className={styles.container}>
