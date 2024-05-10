@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/footer";
@@ -11,9 +10,6 @@ import Navbar from "./components/Navbar";
 import Updateorg from "./components/updateorg";
 import Login from "./components/login";
 import ListOfJoinRequests from "./components/listofrequests";
-import Boofeh from "./BoofehsOfOrganization/Boofeh";
-import Cards from "./BoofehsOfOrganization/Cards";
-import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList";
 import OrgPage from "./OrgPage/OrgPage";
 import ChooseOrganizationPage from "./pages/ChooseOrganizationPage";
 import Myorgs from "./pages/Myorgs";
@@ -33,10 +29,9 @@ function App() {
         <Route path="/Register" element={<Register />} />
         <Route path="/sidebar" element={<CustomSidebar />} />
         <Route path="/navbar" element={<Navbar />} />
-        <Route path="/" element={<Updateorg />} />
+        <Route path="/Updateorg" element={<Updateorg />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-{/*         <Route path="/DataFromApiList" element={<DataFromApiList />} />*/}    
         <Route path="/HomeOrgPage" element={<HomeOrgPage />} />
         <Route path="/ListOfJoinRequests" element={<ListOfJoinRequests />} />
         <Route path="/OrgPage" element={<OrgPage />} />
