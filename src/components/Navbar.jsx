@@ -6,6 +6,15 @@ import axios from "axios";
 import AuthManager from "../APIs/AuthManager";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CustomSidebar from "./Sidebar";
+import {
+  HiArrowSmRight,
+  HiChartPie,
+  HiInbox,
+  HiShoppingBag,
+  HiTable,
+  HiUser,
+  HiViewBoards,
+} from "react-icons/hi";
 function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -286,7 +295,18 @@ function Navbar() {
         </div>
         <div className="offcanvas-body flex-grow overflow-y-auto p-4 bg-stone-200">
 
-          <Link to="/UpdateOrg">تست</Link>
+        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiUser style={{display:"inline"}}/>  تست</Link><br/>
+        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiInbox style={{display:"inline"}}/>  تست</Link><br/>
+        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiTable style={{display:"inline"}}/>  تست</Link><br/>
+
+        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiShoppingBag style={{display:"inline"}}/>  تست</Link><br/>
+        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiChartPie style={{display:"inline"}}/>  تست</Link><br/>
+        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiViewBoards style={{display:"inline"}}/>  تست</Link><br/>
+        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiArrowSmRight style={{display:"inline"}}/>  تست</Link><br/>
+        
+        </div>
+        <div style={{position:'relative',bottom:"0",padding:"10%",direction:"ltr",borderTop:"1px solid black",}} className="bg-stone-200">
+          &copy; Ghablameh, All rights Reserved
         </div>
       </div>
     </>
