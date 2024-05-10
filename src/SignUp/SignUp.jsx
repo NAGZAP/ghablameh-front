@@ -33,36 +33,62 @@ function SignUp() {
   };
 
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(validationSchema),
-  });
+  // const { register, handleSubmit, formState: { errors } } = useForm({
+  //   resolver: yupResolver(validationSchema),
+  // });
+  const [userEmail, setUserEmail] = useState('');
+  const [userUsername, setUserUsername] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [userFirstName, setUserFirstName] = useState('');
+  const [userLastName, setUserLastName] = useState('');
+  const [userPhoneNumber, setUserPhoneNumber] = useState('');
 
-  const onSubmit = async (data) => {
-    console.log('formattedPhoneNumber')
+  const handleUserEmailChange = (e) => {
+    setUserEmail(e.target.value);
+  };
+
+  const handleUserUsernameChange = (e) => {
+    setUserUsername(e.target.value);
+  };
+
+  const handleUserPasswordChange = (e) => {
+    setUserPassword(e.target.value);
+  };
+
+  const handleUserFirstNameChange = (e) => {
+    setUserFirstName(e.target.value);
+  };
+
+  const handleUserLastNameChange = (e) => {
+    setUserLastName(e.target.value);
+  };
+
+  const handleUserPhoneNumberChange = (e) => {
+    setUserPhoneNumber(e.target.value);
+  };
+  
+  const SubmitForm = async (e) => {
+    e.preventDefault()
     try {
       
-      const formattedPhoneNumber = '+98' + data.phonenumber.slice(1);
+      const formattedPhoneNumber = '+98' + userPhoneNumber.slice(1);
       
       const formattedData = {
-        username: data.Account,
-        first_name: data.Firstname,
-        last_name: data.Lastname,
-        email: data.email,
+        username: userUsername,
+        first_name: userFirstName,
+        last_name: userLastName,
+        email: userEmail,
         phone_number: formattedPhoneNumber,
-        password: data.password,
+        password: userPassword,
         gender: "M",
         birthdate: "2024-04-04"
       };
+      console.log(formattedData)
       const response = await axios.post('https://ghablameh.fiust.ir/api/v1/clients/register/', formattedData);
       const accessToken = response.data.tokens.access;
       localStorage.setItem('token', accessToken);
-      /*       console.log(accessToken);
-       */       /* console.log('Data sent successfully!');  */
-      /*       return redirect("/")
-      */
       navigate("/");
     } catch (error) {
-      /*       console.error('Error sending data:', error); */
       alert("اکانتی با اطلاعاتی مشابه استفاده شده است.")
     }
   };
@@ -166,7 +192,7 @@ function SignUp() {
         <div className="">
           {activeTab === 'tabs-Persons' && (
             <div className="opacity-100 transition-opacity duration-150 ease-linear" id="tabs-Persons" role="tabpanel" aria-labelledby="tabs-home-tab02">
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={SubmitForm}>
                 {/* FName */}
                 <div className="w-72 mt-5 mb-1 mr-20 ml-20">
                   <div className="relative w-full min-w-[200px] h-10">
@@ -174,12 +200,13 @@ function SignUp() {
                       className="peer w-full h-full bg-transparent text-template-custom-blue                      
               font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"
                       placeholder=" "
-                      {...register('Firstname')}
+                      onChange={handleUserFirstNameChange}
+                      required
                     />
                     <label
                       className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">نام
                     </label>
-                    {errors.Firstname && <label className={styles.Errors}> {"*" + errors.Firstname.message}</label>}
+                    {/* {errors.Firstname && <label className={styles.Errors}> {"*" + errors.Firstname.message}</label>} */}
                   </div>
                 </div>
                 {/* ========================================================= */}
@@ -191,13 +218,14 @@ function SignUp() {
                       className="peer w-full h-full bg-transparent text-template-custom-blue                      
             font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"
                       placeholder=" "
-                      {...register('Lastname')}
+                      onChange={handleUserLastNameChange}
+                      required
                     />
                     <label
                       className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">
                       نام خانوادگی
                     </label>
-                    {errors.Lastname && <label className={styles.Errors}> {"*" + errors.Lastname.message}</label>}
+                    {/* {errors.Lastname && <label className={styles.Errors}> {"*" + errors.Lastname.message}</label>} */}
                   </div>
                 </div>
                 <br />
@@ -208,48 +236,54 @@ function SignUp() {
                       className="peer w-full h-full bg-transparent text-template-custom-blue                      
             font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"
                       placeholder=" "
-                      {...register('Account')}
+                      onChange={handleUserUsernameChange}
                     />
                     <label
                       className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">
                       نام اکانت
                     </label>
-                    {errors.Account && <label className={styles.Errors}> {"*" + errors.Account.message}</label>}
+                    {/* {errors.Account && <label className={styles.Errors}> {"*" + errors.Account.message}</label>} */}
                   </div>
                 </div>
                 <br />
+                {/* email */}
                 <div className="w-72 mt-1 mb-1 mr-20 ml-20">
                   <div className="relative w-full min-w-[200px] h-10">
                     <input
                       className="peer w-full h-full bg-transparent text-template-custom-blue                      
             font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"
                       placeholder=" "
-                      {...register('email')}
+                      onChange={handleUserEmailChange}
+                      required
                     />
                     <label
                       className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">
                       ایمیل
                     </label>
-                    {errors.email && <label className={styles.Errors}> {"*" + errors.email.message}</label>}
+                    {/* {errors.email && <label className={styles.Errors}> {"*" + errors.email.message}</label>} */}
                   </div>
                 </div>
                 <br />
+                {/* phone number */}
                 <div className="w-72 mt-1 mb-1 mr-20 ml-20">
                   <div className="relative w-full min-w-[200px] h-10">
                     <input
                       className="peer w-full h-full bg-transparent text-template-custom-blue                      
               font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"
                       placeholder=" "
-                      {...register('phonenumber')}
+                      required
+                      
+                      onChange={handleUserPhoneNumberChange}
                     />
                     <label
                       className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">
                       شماره تلفن
                     </label>
-                    {errors.phonenumber && <label className={styles.Errors}> {"*" + errors.phonenumber.message}</label>}
+                    {/* {errors.phonenumber && <label className={styles.Errors}> {"*" + errors.phonenumber.message}</label>} */}
                   </div>
                 </div>
                 <br />
+                {/* password */}
                 <div className="w-72 mt-1 mb-1 mr-20 ml-20">
                   <div className="relative w-full min-w-[200px] h-10">
                     <input
@@ -257,16 +291,18 @@ function SignUp() {
               font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"
                       placeholder=" "
                       type='password'
-                      {...register('password')}
+                      required
+                      onChange={handleUserPasswordChange}
                     />
                     <label
                       className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">
                       رمز عبور
                     </label>
-                    {errors.password && <label className={styles.Errors}> {"*" + errors.password.message}</label>}
+                    {/* {errors.password && <label className={styles.Errors}> {"*" + errors.password.message}</label>} */}
                   </div>
                 </div>
                 <br />
+                {/* confirm password */}
                 <div className="w-72 mt-1 mb-1 mr-20 ml-20 ">
                   <div className="relative w-full min-w-[200px] h-10">
                     <input
@@ -274,13 +310,13 @@ function SignUp() {
                   font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"
                       placeholder=" "
                       type="password"
-                      {...register('confirmPassword')}
+                      required
                     />
                     <label
                       className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">
                       تکرار رمز عبور
                     </label>
-                    {errors.confirmPassword && <label className={styles.Errors}>{"*" + errors.confirmPassword.message}</label>}
+                    {/* {errors.confirmPassword && <label className={styles.Errors}>{"*" + errors.confirmPassword.message}</label>} */}
                   </div>
                 </div>
                 <br />
