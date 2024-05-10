@@ -5,13 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthManager from "../APIs/AuthManager";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import CustomSidebar from './Sidebar';
+import CustomSidebar from "./Sidebar";
 function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [userData, setUserData] = useState(null);
   const isBigScreen = useMediaQuery("(min-width: 600px)");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   //fetch user data
   useEffect(() => {
@@ -22,7 +22,7 @@ function Navbar() {
 
         const response = await axios.get(
           "https://ghablameh.fiust.ir/api/v1/clients/me/",
-          { headers: { 'Authorization': "JWT " + token } }
+          { headers: { Authorization: "JWT " + token } }
         );
         setUserData(response.data);
       } catch (error) {
@@ -53,16 +53,14 @@ function Navbar() {
   //sidebar
   const sideBar = useRef();
   const handleClickOutsideSidebar = (e) => {
-    sideBar.current.style.display = 'none';
+    sideBar.current.style.display = "none";
   };
 
   const handleOpenSidebar = () => {
     let displayStatus = sideBar.current.style.display;
-    if(displayStatus !== 'block')
-      sideBar.current.style.display = 'block';
-    else 
-      sideBar.current.style.display = 'none';
-  }
+    if (displayStatus !== "block") sideBar.current.style.display = "block";
+    else sideBar.current.style.display = "none";
+  };
 
   //log out
   async function handleLogout() {
@@ -153,86 +151,145 @@ function Navbar() {
 
   return (
     <>
-    <nav style={{ backgroundColor: "rgb(38, 87, 124)" }} className={styles.navPos}>
-      <div className={`flex justify-between m-2 items-center px-2`}>
-        {/* Elements - Logo */}
-        <div className={`flex items-center justify-end`}>
-          <div className={`flex`}>
-            <p
+      <nav
+        style={{ backgroundColor: "rgb(38, 87, 124)" }}
+        className={styles.navPos}
+      >
+        <div className={`flex justify-between m-2 items-center px-2`}>
+          {/* Elements - Logo */}
+          <div className={`flex items-center justify-end`}>
+            <div className={`flex`}>
+              <button
+                class="me-1.5 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                type="button"
+                data-twe-offcanvas-toggle
+                data-twe-target="#offcanvasRight"
+                aria-controls="offcanvasRight"
+                data-twe-ripple-init
+                data-twe-ripple-color="light"
+                className={`items-center text-white`}
+                style={{ fontSize: "35px", fontFamily: "vazir" }}
+              >
+                قابلمه
+              </button>
+              {/* <p
               
               className={`items-center text-white`}
               style={{ fontSize: "35px", fontFamily: "vazir" }}
               onClick={handleOpenSidebar}
             >
               قابلمه
-            </p>
-          </div>
-          {isBigScreen && (
-            <div
-              className={`flex items-center justify-end space-x-3`}
-              style={{ paddingRight: "1.5vw" }}
-            >
-              <Link
-                to="/"
-                className={`text-white`}
-                style={{ fontSize: "1.3rem", margin: "0.7vw" }}
-              >
-                element1
-              </Link>
-              <Link
-                to="/"
-                className={`text-white`}
-                style={{ fontSize: "1.3rem", marginLeft: "0.5vw" }}
-              >
-                element2
-              </Link>
+            </p> */}
             </div>
-          )}
-        </div>
-
-        {/* Avatar, username and Login button */}
-        <div ref={dropdownRef}>
-          <div className={`flex justify-between items-center`}>
-            {userData && (
-              <>
-                {Username(userData.username)}
-                {UserAvatar()}
-              </>
+            {isBigScreen && (
+              <div
+                className={`flex items-center justify-end space-x-3`}
+                style={{ paddingRight: "1.5vw" }}
+              >
+                <Link
+                  to="/"
+                  className={`text-white`}
+                  style={{ fontSize: "1.3rem", margin: "0.7vw" }}
+                >
+                  element1
+                </Link>
+                <Link
+                  to="/"
+                  className={`text-white`}
+                  style={{ fontSize: "1.3rem", marginLeft: "0.5vw" }}
+                >
+                  element2
+                </Link>
+              </div>
             )}
-            {LogInButton()}
           </div>
 
-          {/* Dropdown */}
-          <div
-            className={`absolute z-10 ${isDropdownOpen ? "" : "hidden"
+          {/* Avatar, username and Login button */}
+          <div ref={dropdownRef}>
+            <div className={`flex justify-between items-center`}>
+              {userData && (
+                <>
+                  {Username(userData.username)}
+                  {UserAvatar()}
+                </>
+              )}
+              {LogInButton()}
+            </div>
+
+            {/* Dropdown */}
+            <div
+              className={`absolute z-10 ${
+                isDropdownOpen ? "" : "hidden"
               } rounded-lg shadow`}
-            style={{ backgroundColor: "rgb(38, 87, 124)", margin: "0.3vw" }}
-          >
-            <ul className={`py-1 text-sm text-white`}>
-              <li>
-                <a
-                  className={`block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600`}
-                >
-                  userpanel
-                </a>
-              </li>
-              <li>
-                <a
-                  onClick={handleLogout}
-                  className={`block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600`}
-                >
-                  Logout
-                </a>
-              </li>
-            </ul>
+              style={{ backgroundColor: "rgb(38, 87, 124)", margin: "0.3vw" }}
+            >
+              <ul className={`py-1 text-sm text-white`}>
+                <li>
+                  <a
+                    className={`block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600`}
+                  >
+                    userpanel
+                  </a>
+                </li>
+                <li>
+                  <a
+                    onClick={handleLogout}
+                    className={`block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600`}
+                  >
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
+        </div>
+      </nav>
+      {/* <div style={{display:'none'}} ref={sideBar}>
+    <CustomSidebar />
+  </div> */}
+      <div
+        className="invisible fixed bottom-0 right-0 top-0 z-[1045] flex w-60 max-w-full translate-x-full flex-col border-none bg-white bg-clip-padding text-neutral-700 shadow-sm outline-none transition duration-300 ease-in-out data-[twe-offcanvas-show]:transform-none dark:bg-body-dark dark:text-white bg-sky-800"
+        tabindex="-1"
+        id="offcanvasRight"
+        aria-labelledby="offcanvasRightLabel"
+        data-twe-offcanvas-init
+      >
+        <div className="flex items-center justify-between p-4 bg-stone-200">
+          <h5
+            className="mb-0 font-semibold leading-normal"
+            id="offcanvasRightLabel"
+          >
+          </h5>
+          <button
+            type="button"
+            className="box-content rounded-none border-none text-neutral-500 hover:text-neutral-800 hover:no-underline focus:text-neutral-800 focus:opacity-100 focus:shadow-none focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-300 dark:focus:text-neutral-300"
+            data-twe-offcanvas-dismiss
+            aria-label="Close"
+          >
+            <span className="[&>svg]:h-6 [&>svg]:w-6">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </span>
+          </button>
+          <div className="w-96 bg-black-400"></div>
+        </div>
+        <div className="offcanvas-body flex-grow overflow-y-auto p-4 bg-stone-200">
+
+          <Link to="/UpdateOrg">تست</Link>
         </div>
       </div>
-    </nav>
-    <div style={{display:'none'}} ref={sideBar}>
-    <CustomSidebar />
-  </div>
-      </>
+    </>
   );
 }
 
