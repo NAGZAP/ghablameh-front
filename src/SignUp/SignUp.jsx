@@ -33,11 +33,18 @@ function SignUp() {
   };
 
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(validationSchema),
-  });
+  // const { register, handleSubmit, formState: { errors } } = useForm({
+  //   resolver: yupResolver(validationSchema),
+  // });
+  const [userEmail, setUserEmail] = useState('');
+  const [userUsername, setUserUsername] = useState('');
+  const [userOrganization_name, setUserOrganizationName] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [userFirstName, setUserFirstName] = useState('');
+  const [userLastName, setUserLastName] = useState('');
+  const [userPhoneNumber, setUserPhoneNumber] = useState('');
 
-  const onSubmit = async (data) => {
+  const SubmitForm = async (data) => {
     console.log('formattedPhoneNumber')
     try {
       
@@ -166,7 +173,7 @@ function SignUp() {
         <div className="">
           {activeTab === 'tabs-Persons' && (
             <div className="opacity-100 transition-opacity duration-150 ease-linear" id="tabs-Persons" role="tabpanel" aria-labelledby="tabs-home-tab02">
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={SubmitForm}>
                 {/* FName */}
                 <div className="w-72 mt-5 mb-1 mr-20 ml-20">
                   <div className="relative w-full min-w-[200px] h-10">

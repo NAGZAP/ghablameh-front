@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthManager from "../APIs/AuthManager";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import CustomSidebar from "./Sidebar";
 import {
   HiArrowSmRight,
   HiChartPie,
@@ -14,6 +13,7 @@ import {
   HiTable,
   HiUser,
   HiViewBoards,
+
 } from "react-icons/hi";
 function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -60,16 +60,16 @@ function Navbar() {
   };
 
   //sidebar
-  const sideBar = useRef();
-  const handleClickOutsideSidebar = (e) => {
-    sideBar.current.style.display = "none";
-  };
+  // const sideBar = useRef();
+  // const handleClickOutsideSidebar = (e) => {
+  //   sideBar.current.style.display = "none";
+  // };
 
-  const handleOpenSidebar = () => {
-    let displayStatus = sideBar.current.style.display;
-    if (displayStatus !== "block") sideBar.current.style.display = "block";
-    else sideBar.current.style.display = "none";
-  };
+  // const handleOpenSidebar = () => {
+  //   let displayStatus = sideBar.current.style.display;
+  //   if (displayStatus !== "block") sideBar.current.style.display = "block";
+  //   else sideBar.current.style.display = "none";
+  // };
 
   //log out
   async function handleLogout() {
@@ -169,14 +169,13 @@ function Navbar() {
           <div className={`flex items-center justify-end`}>
             <div className={`flex`}>
               <button
-                class="me-1.5 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                className="me-1.5 items-center text-white inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
                 type="button"
                 data-twe-offcanvas-toggle
                 data-twe-target="#offcanvasRight"
                 aria-controls="offcanvasRight"
                 data-twe-ripple-init
                 data-twe-ripple-color="light"
-                className={`items-center text-white`}
                 style={{ fontSize: "35px", fontFamily: "vazir" }}
               >
                 قابلمه
@@ -203,11 +202,11 @@ function Navbar() {
                   element1
                 </Link>
                 <Link
-                  to="/"
+                  to="/last"
                   className={`text-white`}
                   style={{ fontSize: "1.3rem", marginLeft: "0.5vw" }}
                 >
-                  element2
+                  لیست رزروها 
                 </Link>
               </div>
             )}
@@ -257,7 +256,7 @@ function Navbar() {
     <CustomSidebar />
   </div> */}
       <div
-        className="invisible fixed bottom-0 right-0 top-0 z-[1045] flex w-60 max-w-full translate-x-full flex-col border-none bg-white bg-clip-padding text-neutral-700 shadow-sm outline-none transition duration-300 ease-in-out data-[twe-offcanvas-show]:transform-none dark:bg-body-dark dark:text-white bg-sky-800"
+        className="invisible fixed bottom-0 right-0 top-0 z-[1045] flex w-60 max-w-full translate-x-full flex-col border-none  bg-clip-padding text-neutral-700 shadow-sm outline-none transition duration-300 ease-in-out data-[twe-offcanvas-show]:transform-none dark:bg-body-dark dark:text-white bg-sky-800"
         tabIndex="-1"
         id="offcanvasRight"
         aria-labelledby="offcanvasRightLabel"
@@ -293,20 +292,25 @@ function Navbar() {
           </button>
           <div className="w-96 bg-black-400"></div>
         </div>
-        <div className="offcanvas-body flex-grow overflow-y-auto p-4 bg-stone-200">
+        <div className="flex flex-col offcanvas-body flex-grow overflow-y-auto p-4 bg-gray-700 bg-opacity-30 ">
 
-        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiUser style={{display:"inline"}}/>  تست</Link><br/>
-        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiInbox style={{display:"inline"}}/>  تست</Link><br/>
+        {/* <Link to="/Update" style={{fontSize:"23px"}} className="m-2 my-2"><HiUser size='30px' style={{display:"inline", color:'rgb(38, 87, 124)'}}/>تغییر اطلاعات</Link><br/>
+
+        <Link to="/WeeklyMenu" style={{fontSize:"23px"}} className="m-2 my-2"><HiTable size='30px' style={{display:"inline",color:'rgb(38, 87, 124)'}}/>  برنامه غذایی </Link><br/>
+        
+        <Link to="/weeklymenu2" style={{fontSize:"23px"}} className="m-2 my-2"><HiTable size='30px' style={{display:"inline",color:'rgb(38, 87, 124)'}}/>  2برنامه غذایی </Link><br/>
+        <Link to="/last" style={{fontSize:"23px"}} className="m-2 my-2"><HiTable size='30px' style={{display:"inline",color:'rgb(38, 87, 124)'}}/> لیست رزروها </Link><br/>
+         */}
+
+
+        
         <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiTable style={{display:"inline"}}/>  تست</Link><br/>
 
-        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiShoppingBag style={{display:"inline"}}/>  تست</Link><br/>
+        {/* <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiShoppingBag style={{display:"inline"}}/>  تست</Link><br/> */}
         <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiChartPie style={{display:"inline"}}/>  تست</Link><br/>
         <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiViewBoards style={{display:"inline"}}/>  تست</Link><br/>
         <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiArrowSmRight style={{display:"inline"}}/>  تست</Link><br/>
         
-        </div>
-        <div style={{position:'relative',bottom:"0",padding:"10%",direction:"ltr",borderTop:"1px solid black",}} className="bg-stone-200">
-          &copy; Ghablameh, All rights Reserved
         </div>
       </div>
     </>

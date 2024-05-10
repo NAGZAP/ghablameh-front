@@ -18,7 +18,10 @@ import WeeklyMenuPage from "./pages/WeeklyMenu";
 import HomeOrgPage from "./HomePageForOrg/HomePage";
 import Response from "./Response/Response";
 import Home from "./components/homepage";
-import Panel from "./components/panel"
+import Panel from "./components/panel";
+import WeeklyMenu from "./components/weeklymenu";
+import ReservationCalendar from "./components/lastreservation";
+
 function App() {
   return (
     <BrowserRouter>
@@ -41,6 +44,9 @@ function App() {
         <Route path="/WeeklyMenu" element={<WeeklyMenuPage/>}/>
         <Route path="/Response" element={<Response />} />
         <Route path="/panel" element={<Panel />} />
+        <Route path="/weeklymenu2" element={<WeeklyMenu />} />
+        <Route path="/last" element={<ReservationCalendar />} />
+        
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
