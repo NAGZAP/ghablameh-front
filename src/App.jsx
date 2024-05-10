@@ -45,6 +45,7 @@ function App() {
         <Route path="/slider" element={<UserSlider />} />
         <Route path="/WeeklyMenu" element={<WeeklyMenuPage/>}/>
         <Route path="/Response" element={<Response />} />
+        
       </Routes>
     </BrowserRouter>
   );
