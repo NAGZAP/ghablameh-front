@@ -3,21 +3,24 @@ import axios from 'axios';
 import styles from '../styles/org.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
-  const [organizationName, setOrganizationName] = useState('');
+  const [organization_name, setOrganizationName] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
+  const [phone_number, setPhoneNumber] = useState('');
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/OrganizationAdminCreate');
         console.log(response.data);
+        
       } catch (error) {
         console.log('Error while fetching data:', error);
       }
@@ -61,26 +64,31 @@ const Register = () => {
   e.preventDefault();
 
   const userData = {
-    organization_name: organizationName,
+    organization_name,
     username,
     password,
     email,
-    first_name: firstName || undefined,
-    last_name: lastName || undefined,
-    phone_number: phoneNumber || undefined,
+    first_name,
+    last_name,
+    phone_number,
   };
 
   try {
-    const response = await axios.post(
-      'https://ghablameh.fiust.ir/api/v1/organizations/register/',
-      userData,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': '4IqnkAsVtRhkrwE8YiGnyiQFkbvCrIJRrFjxMcqXAmLBESd8MCuulfCFSHFSTpIr',
-        },
-      }
-    );
+    // const response = await axios.post(
+    //   'https://ghablameh.fiust.ir/api/v1/organizations/register/',
+    //   userData,
+    //   {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'X-CSRFToken': '4IqnkAsVtRhkrwE8YiGnyiQFkbvCrIJRrFjxMcqXAmLBESd8MCuulfCFSHFSTpIr',
+    //     },
+    //   }
+    //   userData
+    // );
+    const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/register/', userData);
+      const accessToken = response.data.tokens.access;
+      localStorage.setItem('token', accessToken);
+      navigate('/')
     console.log('Registration successful');
     setEmail('');
     setUsername('');
@@ -132,7 +140,7 @@ const Register = () => {
             <input
               type="text"
               id="organizationName"
-              value={organizationName}
+              value={organization_name}
               onChange={handleOrganizationNameChange}
               className={styles.input}
               required
@@ -165,7 +173,7 @@ const Register = () => {
             <input
               type="text"
               id="firstName"
-              value={firstName}
+              value={first_name}
               onChange={handleFirstNameChange}
               className={styles.input}
             />
@@ -178,7 +186,7 @@ const Register = () => {
             <input
               type="text"
               id="lastName"
-              value={lastName}
+              value={last_name}
               onChange={handleLastNameChange}
               className={styles.input}
             />
@@ -189,7 +197,7 @@ const Register = () => {
               <input
                 type="text"
                 id="phoneNumber"
-                value={phoneNumber}
+                value={phone_number}
                 onChange={handlePhoneNumberChange}
                 className={styles.input}
               />

@@ -6,7 +6,7 @@ import organizationsRequest from '../APIs/Organizations';
 let gottenOrgs = organizationsRequest.GetMyOrganizations();
 const Myorgs = () => {
   const [orgs, setOrgs] = useState(gottenOrgs);
-  const [filteredOrgs, setFilteredOrgs] = useState([ {name : "test"}]);
+  const [filteredOrgs, setFilteredOrgs] = useState([]);
   const searchdata = useRef(null);
 
   const handleSearch = () => {
@@ -15,7 +15,8 @@ const Myorgs = () => {
     );
     setFilteredOrgs(filtered);
   };
-
+  setFilteredOrgs(gottenOrgs);
+  const renderedData = ('');
   return (
     <>
       <Navbar />
@@ -43,19 +44,18 @@ const Myorgs = () => {
             <div key={filteredOrgs.indexOf(item)} className="border border-sky-800 rounded p-2 my-2">
               <div className="grid grid-cols-2">
                 <div>
-                  <p>{item.name}</p>
+                  <p>نام سازمان : {item.organization_name}</p>
                 </div>
-                <div>
-                  <span className="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
-                    تاییده شده
+                <div>وضعیت : 
+                  <span className={(item.status == 'P' ? 'bg-yellow-100' : item.status == 'A' ? 'bg-green-200' : 'bg-red-400')+" text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300"}>
+                  {item.status == 'P' ? 'درحال بررسی' : item.status == 'A' ? 'تایید شده' : 'رد شده'}
                   </span>
                 </div>
               </div>
-              <div className="grid grid-cols-2">
+              <div className="text-cnter my-2 mt-5">
                 <div>
-                  <p>تاریخ درخواست : 2020/1/1</p>
+                  <p style={{direction:"ltr"}}>تاریخ درخواست : {item.created_at.slice(0,10)}</p>
                 </div>
-                <div>وضعیت : در حال بررسی</div>
               </div>
             </div>
           ))}
