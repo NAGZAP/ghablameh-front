@@ -12,16 +12,16 @@ function ListOfJoinRequests() {
   const [approved, setApproved] = useState([]);
   const [rejected, setRejected] = useState([]);
   const [IsSelectedUser, setIsSelectedUser] = useState(false)
-  const [requests, setRequests] = useState([]);
-  // const [requests, setRequests] = useState([
-  //   { buffet: 'buffet1', id: 1, firstName: 'John', lastName: 'smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-  //   { buffet: 'buffet2', id: 2, firstName: 'Jane', lastName: 'Smith', status: 'p', avatar: 'https://p1.hiclipart.com/preview/743/500/3/circle-silhouette-logo-user-user-profile-green-facial-expression-nose-cartoon-png-clipart.jpg' },
-  //   { buffet: 'buffet3', id: 3, firstName: 'jacob', lastName: 'eliise', status: 'p', avatar: '' },
-  //   { buffet: 'buffet1', id: 4, firstName: 'John', lastName: 'smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-  //   { buffet: 'buffet2', id: 5, firstName: 'Jane', lastName: 'Smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-  //   { buffet: 'buffet3', id: 6, firstName: 'loralie', lastName: 'eliise', status: 'p', avatar: '' },
+  // const [requests, setRequests] = useState([]);
+  const [requests, setRequests] = useState([
+    { buffet: 'buffet1', id: 1, firstName: 'John', lastName: 'smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
+    { buffet: 'buffet2', id: 2, firstName: 'Jane', lastName: 'Smith', status: 'p', avatar: 'https://p1.hiclipart.com/preview/743/500/3/circle-silhouette-logo-user-user-profile-green-facial-expression-nose-cartoon-png-clipart.jpg' },
+    { buffet: 'buffet3', id: 3, firstName: 'jacob', lastName: 'eliise', status: 'p', avatar: '' },
+    { buffet: 'buffet1', id: 4, firstName: 'John', lastName: 'smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
+    { buffet: 'buffet2', id: 5, firstName: 'Jane', lastName: 'Smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
+    { buffet: 'buffet3', id: 6, firstName: 'loralie', lastName: 'eliise', status: 'p', avatar: '' },
 
-  // ]);
+  ]);
 
   //fetch list of requests
   const token = 'JWT ' + localStorage.getItem("token");
