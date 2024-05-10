@@ -4,11 +4,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import axios from "axios";
 import styles from "../SignUp/SignUp.module.css";
-import { Link, Navigate, redirect } from "react-router-dom";
+import { Link, useNavigate, redirect } from "react-router-dom";
 import AuthManager from "../APIs/AuthManager";
 
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
+
 
 const validationSchema = Yup.object({
   username: Yup.string(),
@@ -21,6 +22,7 @@ const validationSchema = Yup.object({
 });
 
 function Login() {
+  const navigate=useNavigate()
   const {
     register,
     handleSubmit,
@@ -32,7 +34,7 @@ function Login() {
   const onSubmit = async (data) => {
     let responsedata = await AuthManager.LoginRequest(data.username , data.password);
     localStorage.setItem("token" , responsedata.data.tokens.access);
-    redirect('/');
+    navigate("/");
   };
   return (
     <div className={styles.container}>

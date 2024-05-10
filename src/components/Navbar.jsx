@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import Avatar from "react-avatar";
 import styles from "../styles/Navbar.module.css";
-import isLoggedIn from "../APIs/AuthManager";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthManager from "../APIs/AuthManager";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import CustomSidebar from './Sidebar';
 function Navbar() {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [userData, setUserData] = useState(null);
   const isBigScreen = useMediaQuery("(min-width: 600px)");
+  const navigate = useNavigate()
 
   //fetch user data
   useEffect(() => {
@@ -22,7 +22,7 @@ function Navbar() {
 
         const response = await axios.get(
           "https://ghablameh.fiust.ir/api/v1/clients/me/",
-          { headers: { 'Authorization' : "JWT " + token } }
+          { headers: { 'Authorization': "JWT " + token } }
         );
         setUserData(response.data);
       } catch (error) {
@@ -49,6 +49,20 @@ function Navbar() {
       setIsDropdownOpen(false);
     }
   };
+
+  //sidebar
+  const sideBar = useRef();
+  const handleClickOutsideSidebar = (e) => {
+    sideBar.current.style.display = 'none';
+  };
+
+  const handleOpenSidebar = () => {
+    let displayStatus = sideBar.current.style.display;
+    if(displayStatus !== 'block')
+      sideBar.current.style.display = 'block';
+    else 
+      sideBar.current.style.display = 'none';
+  }
 
   //log out
   async function handleLogout() {
@@ -138,18 +152,20 @@ function Navbar() {
   }
 
   return (
-    <nav style={{ backgroundColor: "rgb(38, 87, 124)" }}>
+    <>
+    <nav style={{ backgroundColor: "rgb(38, 87, 124)" }} className={styles.navPos}>
       <div className={`flex justify-between m-2 items-center px-2`}>
         {/* Elements - Logo */}
         <div className={`flex items-center justify-end`}>
           <div className={`flex`}>
-            <Link
-              to="/"
+            <p
+              
               className={`items-center text-white`}
               style={{ fontSize: "35px", fontFamily: "vazir" }}
+              onClick={handleOpenSidebar}
             >
               قابلمه
-            </Link>
+            </p>
           </div>
           {isBigScreen && (
             <div
@@ -188,9 +204,8 @@ function Navbar() {
 
           {/* Dropdown */}
           <div
-            className={`absolute z-10 ${
-              isDropdownOpen ? "" : "hidden"
-            } rounded-lg shadow`}
+            className={`absolute z-10 ${isDropdownOpen ? "" : "hidden"
+              } rounded-lg shadow`}
             style={{ backgroundColor: "rgb(38, 87, 124)", margin: "0.3vw" }}
           >
             <ul className={`py-1 text-sm text-white`}>
@@ -214,6 +229,10 @@ function Navbar() {
         </div>
       </div>
     </nav>
+    <div style={{display:'none'}} ref={sideBar}>
+    <CustomSidebar />
+  </div>
+      </>
   );
 }
 

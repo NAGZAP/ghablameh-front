@@ -22,6 +22,7 @@ import WeeklyMenuPage from "./pages/WeeklyMenu";
 import HomeOrgPage from "./HomePageForOrg/HomePage";
 import Response from "./Response/Response";
 import Home from "./components/homepage";
+import Panel from "./components/panel"
 function App() {
   return (
     <BrowserRouter>
@@ -38,13 +39,14 @@ function App() {
 {/*         <Route path="/DataFromApiList" element={<DataFromApiList />} />*/}    
         <Route path="/HomeOrgPage" element={<HomeOrgPage />} />
         <Route path="/ListOfJoinRequests" element={<ListOfJoinRequests />} />
-        <Route path="*" element={<PageNotFound />} />
-          <Route path="/OrgPage" element={<OrgPage />} />
+        <Route path="/OrgPage" element={<OrgPage />} />
         <Route path="chooseorg" element={<ChooseOrganizationPage />} />
         <Route path="/Myorgs" element={<Myorgs />} />
         <Route path="/slider" element={<UserSlider />} />
         <Route path="/WeeklyMenu" element={<WeeklyMenuPage/>}/>
         <Route path="/Response" element={<Response />} />
+        <Route path="/panel" element={<Panel />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );
