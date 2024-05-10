@@ -194,13 +194,13 @@ function Navbar() {
                 className={`flex items-center justify-end space-x-3`}
                 style={{ paddingRight: "1.5vw" }}
               >
-                <Link
+                {/* <Link
                   to="/"
                   className={`text-white`}
                   style={{ fontSize: "1.3rem", margin: "0.7vw" }}
                 >
                   element1
-                </Link>
+                </Link> */}
                 <Link
                   to="/last"
                   className={`text-white`}
