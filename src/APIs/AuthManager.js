@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import organizations from "./Organizations";
 const isLoggedIn = () => {
   let tkoen = localStorage.getItem("token");
   if (tkoen === null) {
@@ -8,7 +9,28 @@ const isLoggedIn = () => {
     return true;
   }
 };
-
+ 
+const orguser = () =>
+  {
+      const token = getToken ();
+      const baseurl = "https://ghablameh.fiust.ir/api/v1";
+      let user = true ;
+      let organization = true;
+      axios.get(baseurl + "/clients/me" , {headers: {Authorization:"JWT "+token}}).then(response => console.log(response)).catch(error => { if(error.status===401){user=false}});
+      axios.get(baseurl + "/organizations/me" , {headers: {Authorization:"JWT "+token}}).then(response => console.log(response)).catch(error => { if(error.status===401){organization=false}});
+      if (user===false && organization===true )
+        {
+           return 1 ;// 1 is equal to oraganization
+        }
+        else if (user===true && organization===false)
+        {
+           return 2 ; // 2 is equal to user
+        }
+        else
+        {
+          return 3; 
+        }
+  }
 const LoginRequest = async (username, password) => {
   const baseurl = "https://ghablameh.fiust.ir/api/v1";
   const body = { username: username, password: password };
@@ -54,4 +76,5 @@ export default {
   GetOrganizations,
   setToken,
   getToken,
+  orguser,
 };
