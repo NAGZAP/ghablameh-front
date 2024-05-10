@@ -32,7 +32,7 @@ function App() {
         <Route path="/Register" element={<Register />} />
         <Route path="/sidebar" element={<CustomSidebar />} />
         <Route path="/navbar" element={<Navbar />} />
-        <Route path="/" element={<Updateorg />} />
+        <Route path="/Updateorg" element={<Updateorg />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
 {/*         <Route path="/DataFromApiList" element={<DataFromApiList />} />*/}    
