@@ -128,9 +128,9 @@ function ListOrg() {
                 <Select options={options} onChange={handleSelectChange} />
               </div>
             </li>
-            <li>
+            {/* <li>
               <h4 className={`${styles['text-2xl']} ${styles['font-bold']} ${styles['mr-8']} ${styles['mt-4']} ${styles['text-right']} ${styles['right-250']}`}>بوفه های سازمان</h4>
-            </li>
+            </li> */}
           </ul>
           <div className={styles.content}>
             <div className={`${styles['content-item']} ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}>
