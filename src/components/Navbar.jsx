@@ -22,7 +22,8 @@ function Navbar() {
         // https://jsonplaceholder.typicode.com/users/1
         const token = AuthManager.getToken();
        
-        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/clients/me/', {headers:{'Authorization':"JWT "+ token}});
+        const response = 
+        await axios.get('https://ghablameh.fiust.ir/api/v1/clients/me/', {headers:{'Authorization':"JWT "+ token}});
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data: ', error);
