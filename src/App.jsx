@@ -21,6 +21,8 @@ import UserSlider from "./components/UserSlider";
 import WeeklyMenuPage from "./pages/WeeklyMenu";
 import HomeOrgPage from "./HomePageForOrg/HomePage";
 import Response from "./Response/Response";
+import UserWallet from "./components/wallet";
+
 function App() {
   return (
     <BrowserRouter>
@@ -43,6 +45,7 @@ function App() {
         <Route path="/slider" element={<UserSlider />} />
         <Route path="/WeeklyMenu" element={<WeeklyMenuPage/>}/>
         <Route path="/Response" element={<Response />} />
+        <Route path="/UserWallet" element={<UserWallet />} />
       </Routes>
     </BrowserRouter>
   );
