@@ -31,7 +31,7 @@ const CustomSidebar = () => {
 
       <div
         class="invisible fixed bottom-0 right-0 top-0 z-[1045] flex w-96 max-w-full translate-x-full flex-col border-none bg-white bg-clip-padding text-neutral-700 shadow-sm outline-none transition duration-300 ease-in-out data-[twe-offcanvas-show]:transform-none dark:bg-body-dark dark:text-white"
-        tabindex="-1"
+        tabIndex="-1"
         id="offcanvasRight"
         aria-labelledby="offcanvasRightLabel"
         data-twe-offcanvas-init
