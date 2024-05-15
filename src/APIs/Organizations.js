@@ -5,9 +5,9 @@ const GetMyOrganizations = () => {
     const baseUrl = "https://ghablameh.fiust.ir/api/v1/";
     let data = null;
     let token = requests.getToken();
-    axios.get(baseUrl + "organizations/join-requests/",{headers: {Authorization : `JWT ${token}`}}).then(resp => data = resp.data);
+    axios.get(baseUrl + "clients/join-requests/",{headers: {'Authorization' : `JWT ${token}`}}).then(resp => data = resp.data);
     if(data == null) 
-        data = [ {id:0}]
+        data = [ {id:0,organization_name: '',created_at:'',status:''}]
     return data;
 };
 
