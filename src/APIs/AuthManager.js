@@ -16,8 +16,8 @@ const orguser = () =>
       const baseurl = "https://ghablameh.fiust.ir/api/v1";
       let user = true ;
       let organization = true;
-      axios.get(baseurl + "/clients/me" , {headers: {Authorization:"JWT "+token}}).then(response => console.log(response)).catch(error => { if(error.status===401){user=false}});
-      axios.get(baseurl + "/organizations/me" , {headers: {Authorization:"JWT "+token}}).then(response => console.log(response)).catch(error => { if(error.status===401){organization=false}});
+      axios.get(baseurl + "/clients/me" , {headers: {'Authorization':"JWT "+token}}).then(response => console.log(response)).catch(error => { if(error.status===401){user=false}});
+      axios.get(baseurl + "/organizations/me" , {headers: {'Authorization':"JWT "+token}}).then(response => console.log(response)).catch(error => { if(error.status===401){organization=false}});
       if (user===false && organization===true )
         {
            return 1 ;// 1 is equal to oraganization

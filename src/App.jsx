@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/footer";
@@ -11,9 +10,6 @@ import Navbar from "./components/Navbar";
 import Updateorg from "./components/updateorg";
 import Login from "./components/login";
 import ListOfJoinRequests from "./components/listofrequests";
-import Boofeh from "./BoofehsOfOrganization/Boofeh";
-import Cards from "./BoofehsOfOrganization/Cards";
-import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList";
 import OrgPage from "./OrgPage/OrgPage";
 import ChooseOrganizationPage from "./pages/ChooseOrganizationPage";
 import Myorgs from "./pages/Myorgs";
@@ -22,7 +18,10 @@ import WeeklyMenuPage from "./pages/WeeklyMenu";
 import HomeOrgPage from "./HomePageForOrg/HomePage";
 import Response from "./Response/Response";
 import Home from "./components/homepage";
-import Panel from "./components/panel"
+import Panel from "./components/panel";
+import WeeklyMenu from "./components/weeklymenu";
+import ReservationCalendar from "./components/lastreservation";
+
 function App() {
   return (
     <BrowserRouter>
@@ -33,10 +32,9 @@ function App() {
         <Route path="/Register" element={<Register />} />
         <Route path="/sidebar" element={<CustomSidebar />} />
         <Route path="/navbar" element={<Navbar />} />
-        <Route path="/" element={<Updateorg />} />
+        <Route path="/Updateorg" element={<Updateorg />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-{/*         <Route path="/DataFromApiList" element={<DataFromApiList />} />*/}    
         <Route path="/HomeOrgPage" element={<HomeOrgPage />} />
         <Route path="/ListOfJoinRequests" element={<ListOfJoinRequests />} />
         <Route path="/OrgPage" element={<OrgPage />} />
@@ -46,6 +44,9 @@ function App() {
         <Route path="/WeeklyMenu" element={<WeeklyMenuPage/>}/>
         <Route path="/Response" element={<Response />} />
         <Route path="/panel" element={<Panel />} />
+        <Route path="/weeklymenu2" element={<WeeklyMenu />} />
+        <Route path="/last" element={<ReservationCalendar />} />
+        
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
