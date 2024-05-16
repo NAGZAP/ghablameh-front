@@ -13,47 +13,46 @@ const UserWallet = ({ open, setOpen }) => {
     const [error, setError] = useState('');
 
 
-    //fetch data
-    // useEffect(() => {
-    //     const fetchUserData = async () => {
-    //         try {
-    //             // https://jsonplaceholder.typicode.com/users/1
-    //             const token = AuthManager.getToken();
+    // fetch data
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const token = AuthManager.getToken();
 
-    //             const response = await axios.get("https://ghablameh.fiust.ir/api/v1/clients/me/",
-    //                 { headers: { Authorization: "JWT " + token } }
-    //             );
-    //             setFetchedAmount(response.data);
-    //         } catch (error) {
-    //             console.error("Error fetching user data: ", error);
-    //         }
-    //     };
-    //     if (AuthManager.isLoggedIn()) fetchUserData();
-    // }, []);
+                const response = await axios.get("https://ghablameh.fiust.ir/api/v1/wallets/me/",
+                    { headers: { Authorization: "JWT " + token } }
+                );
+                setFetchedAmount(response.data.balance);
+            } catch (error) {
+                console.error("Error fetching user data: ", error);
+            }
+        };
+        if (AuthManager.isLoggedIn()) fetchUserData();
+    }, []);
 
 
     //send data
     const handleTopUp = (user) => {
 
-        const token = 'JWT ' + localStorage.getItem("token");
+        // const token = 'JWT ' + localStorage.getItem("token");
 
-        const url = 'https://ghablameh.fiust.ir/api/v1/organizations/join-requests/' + user.id + '/'
+        // const url = 'https://ghablameh.fiust.ir/api/v1/wallets/me/' + user.id + '/'
 
-        try {
-            const response = axios.patch(url, amount, {
-                headers: {
-                    'Authorization': token
-                }
-            });
-            if (response.status === 200) {
-                console.log('formData submitted successfully');
-            } else {
-                const errorData = response.json();
-                console.log('formData submission failed:', errorData);
-            }
-        } catch (error) {
-            console.error('An error occurred:', error);
-        }
+        // try {
+        //     const response = axios.patch(url, amount, {
+        //         headers: {
+        //             'Authorization': token
+        //         }
+        //     });
+        //     if (response.status === 200) {
+        //         console.log('formData submitted successfully');
+        //     } else {
+        //         const errorData = response.json();
+        //         console.log('formData submission failed:', errorData);
+        //     }
+        // } catch (error) {
+        //     console.error('An error occurred:', error);
+        // }
         setOpen(false);
     };
 
@@ -73,7 +72,7 @@ const UserWallet = ({ open, setOpen }) => {
     };
 
     const walletModal = () => (
-        <div className="p-4">
+        <div className="p-4 inset-0 z-50">
            
         {AuthManager.isLoggedIn() && open && 
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
