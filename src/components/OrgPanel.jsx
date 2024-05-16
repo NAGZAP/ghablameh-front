@@ -1,10 +1,10 @@
-import Navbar from "./Navbar";
 import DefaultSidebar from "./orgPanelSidebar"
 import Footer from "./footer"
+import Navbarparent from "./navbarparent";
 function OrgPanenl() {
     return (
         <>
-            <Navbar />
+            <Navbarparent />
             <DefaultSidebar/>
             <Footer/>
         </>
