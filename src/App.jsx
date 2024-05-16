@@ -23,7 +23,7 @@ import Panel from "./components/panel";
 import WeeklyMenu from "./components/weeklymenu";
 import ReservationCalendar from "./components/lastreservation";
 import UserWallet from "./components/wallet";
-import ParentComponent from "./components/navbarparent";
+import Navbarparent from "./components/navbarparent";
 
 function App() {
   return (
@@ -34,7 +34,7 @@ function App() {
         <Route path="/Update" element={<Update />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/sidebar" element={<CustomSidebar />} />
-        <Route path="/navbar" element={<Navbar />} />
+        <Route path="/navbar" element={<Navbarparent />} />
         <Route path="/Updateorg" element={<Updateorg />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />

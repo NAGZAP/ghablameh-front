@@ -277,7 +277,7 @@ import DefaultSidebar from "./Sidebar";
       <div style={{ display: "none", position: "absolute", top: '14%', right: "0", maxHeight: '300px' }} ref={sideBar}>
         <DefaultSidebar />
       </div>
-      {/* {openWallet && <UserWallet open={openWallet} setOpen={setOpenWallet} />} */}
+      {openWallet && <UserWallet open={openWallet} setOpen={setOpenWallet} />}
     </>
   );
 }

@@ -60,55 +60,72 @@ const UserWallet = ({ open, setOpen }) => {
     //error
     const handleAmountChange = (e) => {
         const value = e.target.value;
-        if (!Number.isInteger(Number(value))) {
-          setError('مقدار دلخواه خود را به عدد وارد کنید');
+        if (!/^\d+$/.test(value)) {
+            setError('مقدار دلخواه خود را به عدد وارد کنید');
         } else {
-          setError('');
+            setError('');
+            setAmount(value);
         }
-        setAmount(value);
-      };
+    };
+
+    const handlePresetAmount = (presetAmount) => {
+        setAmount(presetAmount);
+    };
+
     const walletModal = () => (
         <div className="p-4">
-            {/* {open && ( */}
-            <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-                <div className="bg-white p-10 px-14 rounded-lg shadow-lg items-center justify-center">
-                    <div className=' mb-9 mt-4'>
-                        <h1 className="flex text-lg font-bold justify-center" style={{ fontSize: '1.6rem' }}>
-                            کیف پول
-                        </h1>
-                        <hr style={{ margin: '8px 0', border: '0.5px solid rgb(38, 87, 124)' }} />
+            {open && (
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                    <div className="bg-white p-10 px-14 rounded-lg shadow-lg items-center justify-center">
+                        <div className=' mb-9 mt-4'>
+                            <h1 className="flex text-lg font-bold justify-center" style={{ fontSize: '1.6rem' }}>
+                                کیف پول
+                            </h1>
+                            <hr style={{ margin: '8px 0', border: '0.5px solid rgb(38, 87, 124)' }} />
 
-                    </div>
-                    <div className={`${styles.bgme} text-white p-2 rounded-lg`}>
-                        <h3 className="flex mb-4 justify-center">موجودی: </h3>
-                        <h1 className="flex text-lg font-bold mb-4 justify-center" style={{ fontSize: '2.2rem' }}>
-                            {fetchedAmount} تومان
-                        </h1>
-                    </div>
-                    <div className='flex justify-center flex-col mb-5'>
-                        <label htmlFor="confirmPassword" className={`${styles.label} mt-6 mb-2 `}>
-                            افزایش اعتبار
-                        </label>
-                        <input
-                            placeholder="مقدار دلخواه خود را وارد کنید"
-                            // value={amount}
-                            // type="text"
-                            onChange={handleAmountChange}
-                            className={`${styles.input} mb-2`}
-                        />
-                        {error && <span className='text-sm' style={{ color: 'red' }}>{error}</span>}
-                    </div>
-                    <div className='flex flex-row justify-center'>
-                        <button onClick={handleTopUp} className={`${styles.button1} mx-2 text-white py-2 px-4 rounded mr-2`}>
-                            افزایش موجودی
-                        </button>
-                        <button onClick={() => setOpen(false)} className={`${styles.button2} bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded`}>
-                            انصراف
-                        </button>
+                        </div>
+                        <div className='flex flex-row w-full items-center justify-between'>
+                            <h3 className="px-3">موجودی فعلی :</h3>
+                            <div className={`${styles.bgmee} text-white py-1 px-3 rounded-lg`} style={{ fontSize: '1rem' }}>
+                                {fetchedAmount} تومان
+                            </div>
+                        </div>
+                        <div className='flex justify-center flex-col mb-9 mt-4'>
+                            <label className={`${styles.label} mt-6 mb-2`} style={{ fontSize: '1.6rem' }}>
+                                افزایش اعتبار
+                            </label>
+                            <hr style={{ margin: '8px 0', border: '0.5px solid #ccc' }} />
+
+                        </div>
+
+                        <div className='flex flex-row justify-center mb-7'>
+                            <div className='px-1' onClick={() => handlePresetAmount('20000')}><div className={`${styles.bgme} text-white py-2 px-3 rounded-lg flex flex-col justify-center items-center`}> 20,000 تومان </div></div>
+                            <div className='px-1' onClick={() => handlePresetAmount('40000')}><div className={`${styles.bgme} text-white py-2 px-3 rounded-lg flex flex-col justify-center items-center`}> 40,000 تومان </div></div>
+                            <div className='px-1' onClick={() => handlePresetAmount('60000')}><div className={`${styles.bgme} text-white py-2 px-3 rounded-lg flex flex-col justify-center items-center`}> 60,000 تومان </div></div>
+                        </div>
+
+                        <div className='flex justify-center flex-col mt-8 mb-12 items-center'>
+                            <input
+                                placeholder=' مبلغ دلخواه '
+                                value={amount !== '0' ? amount : ''}
+                                // type="text"
+                                onChange={handleAmountChange}
+                                className={`${styles.input} mb-1`}
+                                style={{ width: '17vw', textAlign: 'center' }} // Adjust the width as needed, 'auto' or specific value
+                            />
+                            {error && <span className='text-sm' style={{ color: 'red' }}>{error}</span>}
+                        </div>
+                        <div className='flex flex-row justify-center'>
+                            <button onClick={handleTopUp} className={`${styles.button1} mx-2 text-white py-2 px-4 rounded mr-2`}>
+                                افزایش موجودی
+                            </button>
+                            <button onClick={() => setOpen(false)} className={`${styles.button2} bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded`}>
+                                انصراف
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            {/* )} */}
+            )}
         </div>
     );
 
