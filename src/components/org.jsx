@@ -204,7 +204,7 @@ const Register = () => {
                 onClick={togglePasswordVisibility}
               />
             </div>
-    
+    </div>
           <div className={styles.formGroup}>
             <label htmlFor="firstName" className={styles.label}>
              نام ادمین

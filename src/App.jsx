@@ -24,7 +24,8 @@ import WeeklyMenu from "./components/weeklymenu";
 import ReservationCalendar from "./components/lastreservation";
 import UserWallet from "./components/wallet";
 import Navbarparent from "./components/navbarparent";
-
+import OrgPanel from "./components/OrgPanel"
+import Boofeh from "./BoofehsOfOrganization/Boofeh";
 function App() {
   return (
     <BrowserRouter>
@@ -50,6 +51,8 @@ function App() {
         <Route path="/weeklymenu2" element={<WeeklyMenu />} />
         <Route path="/last" element={<ReservationCalendar />} />
         <Route path="/UserWallet" element={<UserWallet />} />
+        <Route path="/orgpanel" element={<OrgPanel/>} />
+        <Route path="/boofeh" element={<Boofeh/>} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>

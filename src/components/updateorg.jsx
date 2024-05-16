@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-
+imp
 const Update = () => {
   const [name, setName] = useState('');
   const [admin_first_name, setAdmin_first_name] = useState('');
@@ -261,6 +261,7 @@ const Update = () => {
           </button>
         </form>
       </div>
+      <Footer/>
     </div>
   );
 };

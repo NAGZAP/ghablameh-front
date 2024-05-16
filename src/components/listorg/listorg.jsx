@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import './FlexLayout.css';
 import './style.css'
@@ -106,7 +107,7 @@ function MyComponent() {
 
   return (
      
-    <div class= "land">
+    <div className= "land">
        <Navbar></Navbar>
         <body>
     <div>
