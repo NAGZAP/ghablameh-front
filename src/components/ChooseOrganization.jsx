@@ -1,9 +1,11 @@
 import React from "react";
 import requests from "../APIs/AuthManager";
 import orgrequests from "../APIs/Organizations";
+import Swal from "sweetalert2";
 let organizations = await requests.GetOrganizations();
 const ChooseOrganization = () => {
-  const handleJoin = () => {
+
+  const handleJoin = async () => {
     let orgs = document.querySelectorAll(".organizationCheckbox");
     let choosedOrgs = [];
     for (let i = 0; i < orgs.length; i++) {
@@ -12,12 +14,20 @@ const ChooseOrganization = () => {
       }
     }
     for (let i = 0; i < choosedOrgs.length; i++) {
-      let success = orgrequests.JoinOrganization(choosedOrgs[i].id);
+      let success = await orgrequests.JoinOrganization(choosedOrgs[i].id);
       if (!success) {
-        alert("ارسال درخواست بامشکل مواجه شد")
+        Swal.fire({
+          title: "خطا",
+          text: "ارسال در خواست با شکست مواجه شد!",
+          icon: "error"
+        });
         return;
       }
-      alert("درخواست با موفقیت ارسال شد")
+      Swal.fire({
+        title: "درخواست موفق",
+        text: "درخواست عضویت شما با موفقیت ارسال شد!",
+        icon: "success"
+      });
     }
   };
   return (
@@ -61,6 +71,7 @@ const ChooseOrganization = () => {
                   <input
                     key={item.id}
                     type="checkbox"
+                    id={item.id}
                     value="true"
                     className="organizationCheckbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 my-1"
                     style={{ float: "left" }}

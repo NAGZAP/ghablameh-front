@@ -24,6 +24,8 @@ import WeeklyMenu from "./components/weeklymenu";
 import ReservationCalendar from "./components/lastreservation";
 import UserWallet from "./components/wallet";
 import Navbarparent from "./components/navbarparent";
+import Notificationbox from "./components/Notificationbox";
+
 import OrgPanel from "./components/OrgPanel"
 import Boofeh from "./BoofehsOfOrganization/Boofeh";
 function App() {
@@ -54,6 +56,7 @@ function App() {
         <Route path="/orgpanel" element={<OrgPanel/>} />
         <Route path="/boofeh" element={<Boofeh/>} />
         <Route path="*" element={<PageNotFound />} />
+        <Route path="/Notif" element={<Notificationbox/>}/>
       </Routes>
     </BrowserRouter>
   );

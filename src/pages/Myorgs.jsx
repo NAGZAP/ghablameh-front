@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import styles from "../styles/updateinfo.module.css";
 import organizationsRequest from '../APIs/Organizations';
-let gottenOrgs = organizationsRequest.GetMyOrganizations();
+let gottenOrgs = await organizationsRequest.GetMyOrganizations();
 // console.log(gottenOrgs);
 const Myorgs = () => {
   const [orgs, setOrgs] = useState(gottenOrgs);
