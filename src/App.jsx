@@ -24,6 +24,7 @@ import WeeklyMenu from "./components/weeklymenu";
 import ReservationCalendar from "./components/lastreservation";
 import UserWallet from "./components/wallet";
 import Navbarparent from "./components/navbarparent";
+import Notificationbox from "./components/Notificationbox";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
         <Route path="/last" element={<ReservationCalendar />} />
         <Route path="/UserWallet" element={<UserWallet />} />
         <Route path="*" element={<PageNotFound />} />
+        <Route path="/Notif" element={<Notificationbox/>}/>
       </Routes>
     </BrowserRouter>
   );
