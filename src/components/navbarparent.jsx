@@ -7,7 +7,8 @@ const Navbarparent = () => {
 
   return (
     <div>
-    <Navbar openWallet={openWallet} setOpenWallet={setOpenWallet} />
+      <div>
+    <Navbar openWallet={openWallet} setOpenWallet={setOpenWallet} /></div>
       <UserWallet open={openWallet} setOpen={setOpenWallet} />
     </div>
   );

@@ -94,7 +94,7 @@ import { Link } from "react-router-dom";
 export default function DefaultSidebar() {
   return (
     <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-      <div className="mb-2 p-4">
+      <div className="mb-2 p-4 flex justify-center">
         <Typography variant="h5" color="blue-gray">
           داشبورد
         </Typography>
@@ -115,7 +115,7 @@ export default function DefaultSidebar() {
 
         <ListItem>
           <ListItemPrefix>
-            <Link to='/boofeh'> مدیریت بوفه ها </Link>
+            <Link to='/orgpage'> مدیریت بوفه ها </Link>
           </ListItemPrefix>
         </ListItem>
         

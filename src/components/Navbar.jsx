@@ -167,7 +167,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
   return (
     <>
       <nav
-        style={{ backgroundColor: "rgb(38, 87, 124)" }}
+        style={{ backgroundColor: "rgb(38, 87, 124)", paddingTop:'0.07rem'،paddingBottom:'0.07rem' }}
         className={styles.navPos}
       >
         <div className={`flex justify-between m-2 items-center px-2`}>
