@@ -84,10 +84,10 @@ function SignUp() {
         birthdate: "2024-04-04"
       };
       console.log(formattedData)
-      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/clients/register/', formattedData);
+/*       const response = await axios.post('https://ghablameh.fiust.ir/api/v1/clients/register/', formattedData);
       const accessToken = response.data.tokens.access;
-      localStorage.setItem('token', accessToken);
-      navigate("/");
+      localStorage.setItem('token', accessToken); */
+      navigate("/EmailVerify");
     } catch (error) {
       alert("اکانتی با اطلاعاتی مشابه استفاده شده است.")
     }
@@ -142,10 +142,10 @@ function SignUp() {
     };
 
     try {
-      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/register/', userData);
+/*       const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/register/', userData);
       const accessToken = response.data.tokens.access;
-      localStorage.setItem('token', accessToken);
-      navigate("/");
+      localStorage.setItem('token', accessToken); */
+      navigate("/EmailVerify");
     } catch (error) {
       alert("اکانتی با اطلاعاتی مشابه استفاده شده است.")
     }
