@@ -19,7 +19,7 @@ const Notificationbox = () => {
   };
 
   return (
-    <div className="border border-sky-800 rounded" style={{ width: "20%" }}>
+    <div className="border border-sky-800 rounded" style={{ width: "100%" }}>
       <div className="grid grid-cols-2">
         <div
           ref={Reads}
