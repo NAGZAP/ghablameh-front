@@ -25,7 +25,10 @@ import ReservationCalendar from "./components/lastreservation";
 import EmailVerify from "./EmailVerify/EmailVerify";
 import UserWallet from "./components/wallet";
 import Navbarparent from "./components/navbarparent";
+import Notificationbox from "./components/Notificationbox";
 
+import OrgPanel from "./components/OrgPanel"
+import Boofeh from "./BoofehsOfOrganization/Boofeh";
 function App() {
   return (
     <BrowserRouter>
@@ -52,7 +55,10 @@ function App() {
         <Route path="/last" element={<ReservationCalendar />} />
         <Route path="/EmailVerify" element={<EmailVerify/>} />
         <Route path="/UserWallet" element={<UserWallet />} />
+        <Route path="/orgpanel" element={<OrgPanel/>} />
+        <Route path="/boofeh" element={<Boofeh/>} />
         <Route path="*" element={<PageNotFound />} />
+        <Route path="/Notif" element={<Notificationbox/>}/>
       </Routes>
     </BrowserRouter>
   );
