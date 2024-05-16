@@ -241,27 +241,12 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
                 </>
               )}
 
-              {/* <p
-              
-              className={`items-center text-white`}
-              style={{ fontSize: "35px", fontFamily: "vazir" }}
-              onClick={handleOpenSidebar}
-            >
-              قابلمه
-            </p> */}
             </div>
-            {isBigScreen && (
+            {AuthManager.isLoggedIn() &&  ( isBigScreen&&(
               <div
                 className={`flex items-center justify-end space-x-3`}
                 style={{ paddingRight: "1.5vw" }}
               >
-                {/* <Link
-                  to="/"
-                  className={`text-white`}
-                  style={{ fontSize: "1.3rem", margin: "0.7vw" }}
-                >
-                  element1
-                </Link> */}
                 <Link
                   to="/last"
                   className={`text-white`}
@@ -270,7 +255,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
                   لیست رزروها
                 </Link>
               </div>
-            )}
+            ))}
           </div>
 
           {/* Avatar, username and Login button */}
