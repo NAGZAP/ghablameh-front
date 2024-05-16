@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import Footer from '../components/footer';
-import Navbar from '../components/Navbar.jsx';
+import Navbarparent from '../components/navbarparent'
+import Navbar from '../components/Navbar';
 import styles from './Homepage.module.css';
 import { Link, redirect } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -67,7 +69,8 @@ function HomeOrgPage() {
                 <div className={styles.app}>
                     <div className='grid grid-rows-12 grid-cols-5'>
                         <div className='row-start-1 col-start-1 col-span-6'>
-                        <Navbar></Navbar>
+                        {/* <Navbar></Navbar> */}
+                        <Navbarparent/>
                         </div>
                         <div className='lg:col-start-1 lg:col-span-2 lg:row-start-2 lg:row-span-7 md:col-start-1 md:col-span-5 md:row-start-2 md:row-span-4 sm:col-start-1 sm:col-span-5 sm:row-start-2 sm:row-span-4 col-start-1 col-span-5 row-start-2 row-span-4'>
                             <div className='bg-white bg-opacity-60 h-full rounded-lg m-5 grid grid-rows-5 grid-cols-5'>
@@ -148,5 +151,5 @@ function HomeOrgPage() {
         </div>
         </div>
     );
-};
+}
 export default HomeOrgPage;

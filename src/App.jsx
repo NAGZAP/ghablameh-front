@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/footer";
@@ -22,6 +23,7 @@ import Panel from "./components/panel";
 import WeeklyMenu from "./components/weeklymenu";
 import ReservationCalendar from "./components/lastreservation";
 import UserWallet from "./components/wallet";
+import ParentComponent from "./components/navbarparent";
 
 function App() {
   return (
@@ -47,7 +49,7 @@ function App() {
         <Route path="/panel" element={<Panel />} />
         <Route path="/weeklymenu2" element={<WeeklyMenu />} />
         <Route path="/last" element={<ReservationCalendar />} />
-        
+        <Route path="/UserWallet" element={<UserWallet />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
