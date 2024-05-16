@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './OrgPage.module.css';
 import Footer from '../components/footer';
-import Navbar from '../components/Navbar.jsx';
 import { Link } from 'react-router-dom';
 import DefaultSidebar from '../components/orgPanelSidebar.jsx';
+import Navbarparent from '../components/navbarparent.jsx';
 
 function OrgPage() {
   const [peopleData, setPeopleData] = useState([]);
@@ -139,7 +139,7 @@ function OrgPage() {
       <div className=''>
         <div className={styles.containment_boof}>
         <div className={styles.app}>
-          <Navbar />
+          <Navbarparent />
           <div className='flex flex-row justify-between items-center'>
           <DefaultSidebar/>
           <div className={`${styles.itemscenter} flex-grow`}>

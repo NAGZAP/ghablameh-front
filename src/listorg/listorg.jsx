@@ -24,6 +24,7 @@ import  { useEffect , useState ,useRef} from 'react';
 import styles from './style.module.css';
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
+import Navbarparent from '../components/navbarparent';
 const colors = ["#0088FE", "#00C49F", "#FFBB28"];
 const delay = 2500;
 
@@ -98,7 +99,7 @@ function ListOrg() {
 
   return (
     <div className={styles.land}>
-      <Navbar></Navbar>
+      <Navbarparent></Navbarparent>
       <body>
         <div>
           <SliderPage />
