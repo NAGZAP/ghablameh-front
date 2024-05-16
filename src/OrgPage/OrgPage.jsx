@@ -3,6 +3,7 @@ import axios from 'axios';
 import styles from './OrgPage.module.css';
 import Footer from '../components/footer';
 import Navbar from '../components/Navbar.jsx';
+import { Link } from 'react-router-dom';
 
 function OrgPage() {
   const [peopleData, setPeopleData] = useState([]);
@@ -129,7 +130,9 @@ function OrgPage() {
         console.error('Error editing buffet:', error);
       });
   };
-
+  const hanleclickjadval = (person) => {
+    localStorage.setItem("Boofeh" , person.name);
+  };
   return (
     <div className=''>
       <div className=''>
@@ -226,8 +229,9 @@ function OrgPage() {
                             <button onClick={() => { setEditBuffet(person); setEditBuffetName(person.name); setShowModal(true); }} className="px-2 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out">ویرایش</button>
 
                             {/* Table Button */}
-                            <button onClick={() => {}} className="ml-2 mr-2 px-2 py-2 font-medium text-white bg-gray-600 rounded-md hover:bg-gray-500 focus:outline-none focus:shadow-outline-blue active:bg-gray-600 transition duration-150 ease-in-out">جدول</button>
-
+                            <Link to="/weeklymenu2">
+                            <button onClick={() => {hanleclickjadval(person)}} className="ml-2 mr-2 px-2 py-2 font-medium text-white bg-gray-600 rounded-md hover:bg-gray-500 focus:outline-none focus:shadow-outline-blue active:bg-gray-600 transition duration-150 ease-in-out">جدول</button>
+                            </Link>
                             {/* Delete Button */}
                             <button onClick={() => handleDeleteConfirmation(person.id)} className="ml-2 px-2 py-2 font-medium text-white bg-orange-600 rounded-md hover:bg-orange-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">حذف</button>
                           </td>
