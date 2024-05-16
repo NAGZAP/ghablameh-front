@@ -264,7 +264,7 @@ const UserSlider = () => {
       {data.map((item) => ( // "src\assets\images.jpeg"
         <div
           
-          className="border border-sky-800 rounded p-2 mx-2 rounded text-center"
+          className="border border-sky-800 rounded p-2 mx-2  text-center"
         >
           <img
             src={item.image}
