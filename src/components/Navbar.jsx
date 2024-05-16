@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
 import Avatar from "react-avatar";
 import styles from "../styles/Navbar.module.css";
@@ -5,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthManager from "../APIs/AuthManager";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import UserWallet from "./wallet";
+import PropTypes from 'prop-types';
 import {
   HiArrowSmRight,
   HiChartPie,
@@ -15,13 +18,16 @@ import {
   HiViewBoards,
 } from "react-icons/hi";
 import DefaultSidebar from "./Sidebar";
-function Navbar() {
+// function Navbar() {
+const Navbar = ({ openWallet, setOpenWallet }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [userData, setUserData] = useState(null);
   const isBigScreen = useMediaQuery("(min-width: 600px)");
   const navigate = useNavigate();
   const sideBar = useRef(null);
+  // const [openWallet, setOpenWallet] = useState(false);
+
   //fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
@@ -167,7 +173,7 @@ function Navbar() {
         <div className={`flex justify-between m-2 items-center px-2`}>
           {/* Elements - Logo */}
           <div className={`flex items-center justify-end`}>
-            <div className={`flex`}>
+            <div className={`flex items-center justify-end`}>
               <button
                 className="me-1.5 items-center text-white inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
                 type="button"
@@ -181,6 +187,27 @@ function Navbar() {
               >
                 قابلمه
               </button>
+
+              {/* wallet icon */}
+              {AuthManager.isLoggedIn() && (
+                <svg
+                  onClick={() => setOpenWallet(prevState => !prevState)}
+                  style={{ height: '2rem', width: '2rem' }}
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="white"
+                  className="w-6 h-6 flex"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"
+                  />
+                </svg>
+              )}
+
               {/* <p
               
               className={`items-center text-white`}
@@ -227,9 +254,8 @@ function Navbar() {
 
             {/* Dropdown */}
             <div
-              className={`absolute z-10 ${
-                isDropdownOpen ? "" : "hidden"
-              } rounded-lg shadow`}
+              className={`absolute z-10 ${isDropdownOpen ? "" : "hidden"
+                } rounded-lg shadow`}
               style={{ backgroundColor: "rgb(38, 87, 124)", margin: "0.3vw" }}
             >
               <ul className={`py-1 text-sm text-white`}>
@@ -253,11 +279,16 @@ function Navbar() {
           </div>
         </div>
       </nav>
-      <div style={{ display: "none" ,position:"absolute",top:'14%',right:"0" , maxHeight:'300px'}} ref={sideBar}>
+      <div style={{ display: "none", position: "absolute", top: '14%', right: "0", maxHeight: '300px' }} ref={sideBar}>
         <DefaultSidebar />
       </div>
+      {openWallet && <UserWallet open={openWallet} setOpen={setOpenWallet} />}
     </>
   );
 }
+Navbar.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+};
 
 export default Navbar;
