@@ -74,7 +74,8 @@ const UserWallet = ({ open, setOpen }) => {
 
     const walletModal = () => (
         <div className="p-4">
-            {open && (
+           
+        {AuthManager.isLoggedIn() && open && 
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
                     <div className="bg-white p-10 px-14 rounded-lg shadow-lg items-center justify-center">
                         <div className=' mb-9 mt-4'>
@@ -125,7 +126,7 @@ const UserWallet = ({ open, setOpen }) => {
                         </div>
                     </div>
                 </div>
-            )}
+            }
         </div>
     );
 
