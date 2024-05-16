@@ -66,3 +66,6 @@ text-decoration: none;
 .card_content {
   margin-bottom: 10px;
 }
+.button_pre_nex{
+  direction: ltr;
+}

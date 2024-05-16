@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{ useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -6,6 +6,7 @@ import axios from "axios";
 import styles from "../SignUp/SignUp.module.css";
 import { Link, useNavigate, redirect } from "react-router-dom";
 import AuthManager from "../APIs/AuthManager";
+import  ForgetPasswordWindow from "./ForgetPasswordWindow"
 
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
@@ -23,6 +24,15 @@ const validationSchema = Yup.object({
 
 function Login() {
   const navigate=useNavigate()
+  const [isForgetPasswordOpen, setIsForgetPasswordOpen] = useState(false);
+  const openForgetPasswordWindow = () => {
+    setIsForgetPasswordOpen(true);
+  };
+
+  const closeForgetPasswordWindow = () => {
+    setIsForgetPasswordOpen(false);
+  };
+
   const {
     register,
     handleSubmit,
@@ -101,6 +111,14 @@ function Login() {
             <a className={styles.link_to_signin} href="#">
               اکانت ندارید؟ ثبت نام کنید ...
             </a>
+        <br/>
+        <button onClick={openForgetPasswordWindow}>
+             
+              <p  className={styles.link_to_signin} >آیا رمز عبور خود را فراموش کردید ؟</p>
+            </button>
+            {isForgetPasswordOpen && (
+              <ForgetPasswordWindow onClose={closeForgetPasswordWindow} />
+            )}
           </p>
         </form>
       </div>

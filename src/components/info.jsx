@@ -4,23 +4,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
+import Navbar from './Navbar';
+import Footer from './footer';
 import 'react-toastify/dist/ReactToastify.css';
-
+import axios from 'axios';
 const Update = () => {
   const [birthdate, setBirthdate] = useState('');
-  const [gender, setGender] = useState('');
-  const [username, setUsername] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [avatar, setAvatar] = useState('');
-  const [formErrors, setFormErrors] = useState([]);
-  const [token, setToken] = useState('');
+const [gender, setGender] = useState('');
+const [username, setUsername] = useState('');
+const [currentPassword, setCurrentPassword] = useState('');
+const [newPassword, setNewPassword] = useState('');
+const [confirmPassword, setConfirmPassword] = useState('');
+const [showPassword, setShowPassword] = useState('');
+const [avatar, setAvatar] = useState('');
+const [formErrors, setFormErrors] = useState([]);
+const [token, setToken] = useState('');
+const [phoneNumber, setPhoneNumber] = useState('');
+const [firstName, setFirstName] = useState('');
+const [lastName, setLastName] = useState('');
+const [email, setEmail] = useState('');
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
+ 
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -61,34 +68,22 @@ const Update = () => {
     }
 
     const formData = {
-      birthdate,
-      gender,
-      username,
-      currentPassword,
-      newPassword,
-      confirmPassword,
-      avatar,
+      image_base64: avatar,
+      gender: gender,
+      birthdate: birthdate,
+      first_name: firstName,
+      last_name: lastName,
+      username: username,
+      email: email,
+      phone_number: phoneNumber,
     };
-
+  
     try {
-      const token = await getToken();
-      const response = await fetch('https://ghablameh.fiust.ir/api/v1/client/me/', {
-        method: 'PUT',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-          'X-CSRFToken': '4IqnkAsVtRhkrwE8YiGnyiQFkbvCrIJRrFjxMcqXAmLBESd8MCuulfCFSHFSTpIr',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        console.log('Form submitted successfully');
-      } else {
-        const errorData = await response.json();
-        console.log('Form submission failed:', errorData);
-      }
+      const response = await axios.put('https://ghablameh.fiust.ir/api/v1/client/me/', formData);
+      const accessToken = response.data.tokens.access;
+      localStorage.setItem('token', accessToken);
+      navigate('/')
+    console.log('Registration successful');
     } catch (error) {
       console.error('An error occurred:', error);
     }
@@ -103,23 +98,12 @@ const Update = () => {
     };
   };
 
-  const getToken = async () => {
-    try {
-      const response = await fetch('YOUR_TOKEN_ENDPOINT_URL');
-      const data = await response.json();
-      const token = data.token; // Replace "token" with your actual token property name
-      setToken(token);
-      return token;
-    } catch (error) {
-      console.error('Failed to fetch token:', error);
-    }
-  };
-
-  useEffect(() => {
-    getToken();
-  }, []);
   return (
+   <div>
+       
+
     <div className={styles.container}>
+   
       <div className={styles.pattern}></div>
       <div className={styles.card}>
         <h2 className={styles.title}>به‌روزرسانی اطلاعات کاربر</h2>
@@ -164,8 +148,8 @@ const Update = () => {
               required
             >
               <option value="">انتخاب جنسیت</option>
-              <option value="مرد">مرد</option>
-              <option value="زن">زن</option>
+              <option value="M">مرد</option>
+              <option value="F">زن</option>
               <option value="سایر">سایر</option>
             </select>
           </div>
@@ -182,6 +166,59 @@ const Update = () => {
               required
             />
           </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="firstName" className={styles.label}>
+              به‌روزرسانی نام 
+            </label>
+            <input
+              type="text"
+              id="firstName"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="lastName" className={styles.label}>
+              به‌روزرسانی نام 
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+  <label htmlFor="email" className={styles.label}>
+    به‌روزرسانی ایمیل
+  </label>
+  <input
+    type="email"
+    id="email"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+    className={styles.input}
+    required
+  />
+</div>
+
+<div className={styles.formGroup}>
+  <label htmlFor="phoneNumber" className={styles.label}>
+    به‌روزرسانی شماره تلفن
+  </label>
+  <input
+    type="tel"
+    id="phoneNumber"
+    value={phoneNumber}
+    onChange={(e) => setPhoneNumber(e.target.value)}
+    className={styles.input}
+    required
+  />
+</div>
           <div className={styles.formGroup}>
             <label htmlFor="currentPassword" className={styles.label}>
               رمز عبور فعلی
@@ -246,6 +283,7 @@ const Update = () => {
             ارسال
           </button>
         </form>
+      </div>
       </div>
     </div>
   );

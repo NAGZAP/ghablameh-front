@@ -92,10 +92,10 @@ function HomeOrgPage() {
                                         ))}
                                         </div>
                                                 </div>
-
+                                    <div className={styles.button_pre_nex}>
                                     <button
                                         type="button"
-                                        className="right-auto left-0 lehs-carousel-prev hs-carousel:disabled:opacity-50 disabled:pointer-events-none absolute inset-y-0 start-0 inline-flex justify-center items-center w-[46px] h-full text-gray-800 hover:bg-gray-800/10 rounded-s-lg"
+                                        className="hs-carousel-prev hs-carousel:disabled:opacity-50 disabled:pointer-events-none absolute inset-y-0 start-0 inline-flex justify-center items-center w-[46px] h-full text-gray-800 hover:bg-gray-800/10 rounded-s-lg"
                                         onClick={handlePrevSlide}
                                         >
                                         <span className="text-2xl" aria-hidden="true">
@@ -117,7 +117,7 @@ function HomeOrgPage() {
                                         </svg>
                                         </span>
                                     </button>
-
+                                    </div>
                                     <div className="hs-carousel-pagination flex justify-center absolute bottom-3 right-0 left-0">
                                     {slides.slice().reverse().map((slide, index) => (
                                         <span

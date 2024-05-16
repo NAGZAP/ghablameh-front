@@ -74,17 +74,7 @@ const Register = () => {
   };
 
   try {
-    // const response = await axios.post(
-    //   'https://ghablameh.fiust.ir/api/v1/organizations/register/',
-    //   userData,
-    //   {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'X-CSRFToken': '4IqnkAsVtRhkrwE8YiGnyiQFkbvCrIJRrFjxMcqXAmLBESd8MCuulfCFSHFSTpIr',
-    //     },
-    //   }
-    //   userData
-    // );
+  
     const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/register/', userData);
       const accessToken = response.data.tokens.access;
       localStorage.setItem('token', accessToken);

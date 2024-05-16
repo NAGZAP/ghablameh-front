@@ -1,30 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 import styles from '../styles/lastreservation.module.css';
-const localizer = momentLocalizer(moment);
+import axios from 'axios';
 import Navbar from './Navbar';
 import Footer from './footer';
-const events = [
-  {
-    title: 'قرمه سبزی',
-    start: new Date(2024, 3, 15, 10, 0), 
-    end: new Date(2024, 3, 15, 12, 0), 
-  },
-  {
-    title: 'فسنجون',
-    start: new Date(2024, 3, 17, 14, 0), 
-    end: new Date(2024, 3, 17, 16, 0),
-  },
-
-];
+const localizer = momentLocalizer(moment);
 
 const ReservationCalendar = () => {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchReservations = async () => {
+      try {
+        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/reservs/next');
+        const reservations = response.data;
+        
+        const formattedEvents = reservations.map((reservation) => ({
+          title: reservation.meal.name,
+          start: new Date(reservation.meal.time),
+          end: new Date(reservation.meal.time),
+        }));
+
+        setEvents(formattedEvents);
+      } catch (error) {
+        console.error('An error occurred while fetching reservations:', error);
+      }
+    };
+
+    fetchReservations();
+  }, []);
+
   return (
     <div className={styles.app}>
-      <Navbar></Navbar>
-      <div className= {styles.calendarcontainer}>
+     <Navbar></Navbar>
+      <div className={styles.calendarcontainer}>
         <Calendar
           localizer={localizer}
           events={events}
@@ -32,11 +43,11 @@ const ReservationCalendar = () => {
           endAccessor="end"
           defaultView="week"
           views={['week']}
-          min={new Date(2024, 3, 15, 8, 0)} 
-          max={new Date(2024, 12, 15, 23, 0)} 
-          step={120} 
+          min={new Date(2024, 3, 15, 8, 0)}
+          max={new Date(2024, 12, 15, 23, 0)}
+          step={120}
           timeslots={1}
-          defaultDate={new Date()} 
+          defaultDate={new Date()}
         />
       </div>
       <Footer></Footer>
