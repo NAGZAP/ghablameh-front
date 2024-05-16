@@ -33,6 +33,8 @@ import  { useEffect , useState ,useRef} from 'react';
 
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
+import OrganizationList from '../organizationlist';
+
 const colors = ["#0088FE", "#00C49F", "#FFBB28"];
 const delay = 2500;
 
@@ -337,6 +339,7 @@ function MyComponent() {
     
 
       </body>
+      <OrganizationList/>
       <Footer></Footer>
     </div>
   );
