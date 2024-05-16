@@ -1,6 +1,18 @@
+.page-not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-me{
+  margin-top: 0;
+  padding-top: 0;
+}
+
 .size-me {
-  margin-top: 23vh;
-  margin-bottom: 15vh;
+  margin-top: 9vh;
+  margin-bottom: 9vh;
   transform: scale(1.5);
 }
 
@@ -12,8 +24,20 @@
   margin-top: 1rem;
 }
 
+.text-me{
+  color:rgb(38, 87, 124) ;
+  font-family: 'vazir';
+  font-weight: 550;
+}
+
 .home-link:hover {
   background-color: #9c4316;
+}
+
+.flex{
+  display: flex;
+  justify-items: center;
+  justify-content: center;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
@@ -106,7 +130,7 @@
   height: 70px;
   left: 43px;
   bottom: 43px;
-  background: rgb(38, 87, 124);
+  background: rgb(255, 255, 255);
   ;
   box-shadow: -2px 2px 2px 0px rgba(0, 0, 0, 0.1);
 }
@@ -141,7 +165,6 @@
   box-sizing: border-box;
 }
 
-
 @media screen and (max-width: 688px) {
   .size-me {
     margin: 18vw 9vw;
@@ -152,7 +175,6 @@
     font-size: 10vw;
   }
 }
-
 
 @media screen and (max-width: 584px) {
   .size-me {
@@ -203,11 +225,4 @@
     margin: 0rem;
     margin-top: 0rem;
   }
-}
-
-
-.flex{
-  display: flex;
-  justify-items: center;
-  justify-content: center;
 }

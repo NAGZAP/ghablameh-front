@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    direction: rtl;
+    background-color: #ffffff;
+    font-family: "Vazir", "Vazirmatn", "Arabic Typesetting", sans-serif;
+}

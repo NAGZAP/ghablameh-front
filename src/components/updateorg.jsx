@@ -1,297 +1,268 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import styles from '../styles/updateorg.module.css';
-import Avatar from 'react-avatar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-// import isLoggedIn from '../APIs/AuthManager.js';
-function Updateorg() {
 
-    // fetch org data
-    const [fetchedOrgData, setFetchedOrgData] = useState(null);
-    useEffect(() => {
-        const fetchOrgData = async () => {
-            try { //https://ghablameh.fiust.ir/api/v1/organizations/me/
-                const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
-                setFetchedOrgData(response.data);
+const Update = () => {
+  const [name, setName] = useState('');
+  const [admin_first_name, setAdmin_first_name] = useState('');
+  const [admin_last_name, setAdmin_last_name] = useState('');
+  const [admin_username, SetAdmin_username] = useState('');
+  const [admin_email, setAdmin_email] = useState('');
+  const [admin_phone_number, setAdmin_phone_number] = useState('');
 
-            } catch (error) {
-                console.error('Error fetching user data: ', error);
-            }
-        };
-        fetchOrgData();
-    }, []);
+  const [old_password, setOld_password] = useState('');
+  const [new_password, setNew_password] = useState('');
+  const [confirm_new_password, setConfirm_new_password] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
-    // fetch org password ???
-    // const [fetchedorgPassData, setFetchedorgPassData] = useState(null);
-    // useEffect(() => {
-    //     const fetchorgPassData = async () => {
-    //         try { //https://ghablameh.fiust.ir/api/v1/swagger/?format=openapi#/definitions/OrganizationChangePassword
-    //             const response = await axios.get('https://jsonplaceholder.typicode.com/users/1');
-    //             setFetchedorgPassData(response.data);
-    //         } catch (error) {
-    //             console.error('Error fetching user data: ', error);
-    //         }
-    //     };
-    //     fetchorgPassData();
-    // }, []);
+  const [avatar, setAvatar] = useState('');
+  const [formErrors, setFormErrors] = useState([]);
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
     // model
     const [showMyModel, setShowMyModel] = useState(false);
 
-    const onClose = () => {
-        setShowMyModel(false);
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    const errors = [];
+    if (!name) {
+      errors.push('نام سازمان را وارد کنید');
+    }
+    if (!admin_first_name) {
+      errors.push('نام مدیر را وارد کنید');
+    }
+    if (!admin_last_name) {
+      errors.push('نام خانودگی مدیر را وارد کنید');
+    }
+    if (!admin_username) {
+      errors.push('نام کاربری مدیر را وارد کنید');
+    }
+    if (!admin_email) {
+      errors.push(' ایمیل مدیر را وارد کنید');
+    }
+    if (!admin_phone_number) {
+      errors.push('شماره مدیر را وارد کنید');
+    }
+    if (!new_password) {
+      errors.push('رمز عبور جدید را وارد کنید');
+    }
+    if (!old_password) {
+      errors.push('رمز عبور جدید را وارد کنید');
+    }
+    if (!confirm_new_password) {
+      errors.push('تأیید رمز عبور جدید را وارد کنید');
+    }
+    if (new_password !== confirm_new_password) {
+      errors.push('رمز عبور جدید و تأیید رمز عبور مطابقت ندارند');
+    }
+    if (errors.length > 0) {
+      alert(errors.join('\n')); // Display error messages in an alert
+      return;
+    }
+
+    // Submit the form with all the data
+    const formData = {
+      avatar,
+      name,
+      admin_first_name,
+      admin_last_name,
+      admin_username,
+      admin_email,
+      admin_phone_number
     };
-    const handleOnClose = (e) => {
-        if (e.target.id === "close") onClose();
+
+    // Retrieve token
+    const token = 'JWT ' + localStorage.getItem("token");
+    // const token= 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTE0NzcwLCJpYXQiOjE3MTM1MjI3NzAsImp0aSI6Ijk1ZTQ0OTA1Nzc4YjQ3NGFhMTUyNDRmY2Y2MWQ3NmU3IiwidXNlcl9pZCI6Mjl9.qw4BApww-lyBvNYVhBBJUaHLBo6M0snIdCLqRe5q3rU'
+
+    //send form data
+    try {
+      const response = await axios.put('https://ghablameh.fiust.ir/api/v1/organizations/me/', formData, {
+        headers: {
+          'Authorization': token
+        }
+      });
+
+      if (response.status === 200) {
+        console.log('formData submitted successfully');
+      } else {
+        const errorData = await response.json();
+        console.log('formData submission failed:', errorData);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+
+    // Pass data for password update
+    const passData = {
+      old_password: old_password,
+      new_password: new_password,
+      confirmPassword: confirm_new_password
     };
-
-    //read and save image
-    const [imagePreview, setImagePreview] = useState('');
-    const fileInputRef = useRef(null);
-
-    const handleImage = (event) => {
-        const file = event.target.files[0];
-        if (!file) {
-            return;
+    
+    //send pass data
+    try {
+      
+      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/password/', passData, {
+        headers: {
+          'Authorization': token
         }
+      });
 
-        let reader = new FileReader();
+      if (response.status === 200) {
+        console.log('PassData submitted successfully');
+      } else {
+        const errorData = await response.json();
+        console.log('PassData submission failed:', errorData);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+    // Close the form after submission
+  };
 
-        reader.onload = (e) => {
-            setImagePreview(e.target.result);
-            setOrgData({ ...orgData, [event.target.name]: event.target.value })
-        };
-
-        reader.readAsDataURL(file);
+  //image
+  const handleChange = (event) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (e) => {
+      let img = e.target.result;
+      setAvatar(img);
     };
-
-    //show image
-    function userPicuter() {
-        return (
-            <div className="flex justify-center mt-4">
-                <label htmlFor="fileInput" className="relative w-20 h-20 overflow-hidden bg-gray-100 rounded-full flex items-center justify-center">
-                    <input name='image_base64' type="file" id="fileInput" ref={fileInputRef} className="hidden" onChange={handleImage} accept="image/*" />
-                    {imagePreview ? (
-                        <div className="w-full h-full" style={{ backgroundImage: `url(${imagePreview})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
-                    ) : (fetchedOrgData.image ? (
-                        <div className="w-full h-full" style={{ backgroundImage: `url(${orgData.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
-                    ) : (
-                        <div className="user-profile flex items-center">
-                            <Avatar name={orgData.name} size="80" round={true} maxInitials={1} />
-                        </div>
-                    )
-                    )}
-                </label>
-            </div>
-        );
-    }
-
-
-    //information
-    const [orgData, setOrgData] = useState({
-        name: fetchedOrgData && fetchedOrgData.name !== null ? fetchedOrgData.name : "",
-        image_base64: fetchedOrgData && fetchedOrgData.image_base64 !== null ? fetchedOrgData.image_base64 : "",
-        admin_username: fetchedOrgData && fetchedOrgData.admin_username !== null ? fetchedOrgData.admin_username : "",
-        admin_first_name: fetchedOrgData && fetchedOrgData.admin_first_name !== null ? fetchedOrgData.admin_first_name : "",
-        admin_last_name: fetchedOrgData && fetchedOrgData.admin_last_name !== null ? fetchedOrgData.admin_last_name : "",
-        admin_phone_number: fetchedOrgData && fetchedOrgData.admin_phone_number !== null ? fetchedOrgData.admin_phone_number : "",
-        admin_email: fetchedOrgData && fetchedOrgData.admin_email !== null ? fetchedOrgData.admin_email : ""
-    });
-
-
-    const handleOrgInput = (event) => {
-        setOrgData({ ...orgData, [event.target.name]: event.target.value })
-    }
-
-    function organizationInfo() {
-        return (
-            <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5 p2">
-
-                <div className="sm:col-span-2">
-                    <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}> نام سازمان </label>
-                    <input name="name" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام سازمان " />
-                    <span className={`${styles['not-valid']}`}>{formError.name} </span>
-                </div>
-
-                <div className="sm:col-span-2">
-                    <div className='mb-4'>
-                    <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}>نام مدیر سازمان</label>
-                    <input name="admin_first_name" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام " />
-                    </div>
-                    <span className={`${styles['not-valid']}`}> {formError.admin_first_name} </span>
-                    <input name="admin_last_name" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="نام خانوادگی" />
-                    <span className={`${styles['not-valid']}`}> {formError.admin_last_name} </span>
-                </div>
-
-                <div className="sm:col-span-2">
-                    <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}> نام کاربری مدیر سازمان </label>
-                    <input name="admin_username" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" نام کاربری مدیر سازمان " />
-                    <span className={`${styles['not-valid']}`}> {formError.admin_username} </span>
-                </div>
-
-                <div className="sm:col-span-2">
-                    <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}> ایمیل مدیر سازمان</label>
-                    <input name="admin_email" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" ایمیل مدیر سازمان" />
-                    <span className={`${styles['not-valid']}`}> {formError.admin_email} </span>
-                </div>
-
-                <div className="sm:col-span-2">
-                    <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}> شماره تماس مدیر سازمان</label>
-                    <input name="admin_phone_number" onChange={handleOrgInput} className="text-gray-900 rounded-md block w-full p-2.5" placeholder=" شماره تماس مدیر سازمان" />
-                    <span className={`${styles['not-valid']}`}> {formError.admin_phone_number} </span>
-                </div>
-
-            </div>
-        );
-    }
-
-    //password
-    const inputRef = useRef(null);
-    const [orgPassData, setOrgPassData] = useState({
-        old_password: "",
-        new_password: "",
-        confirm_new_password:""
-    })
-
-    // const handleOrgPass = (event) => {
-    //     // console.log(event.target.value)
-    //     setOrgPassData({
-    //         ...orgPassData
-    //         ,[event.target.name]: event.target.value
-    //     })
-    // }
-    
-    const handleOrgPass = (event) => {
-        const { name, value } = event.target;
-        setOrgPassData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-    function PasswordFields() {
-        return (
-            <div className='flex justify-center flex-col'>
-                <div className='flex justify-center'>
-                    <h3 className={`${styles.changepassbutton} flex justify-center p2 mb-1 text-base`}>تغییر رمز عبور</h3>
-                </div>
-                
-                <div className={`${styles['border-t']} my-4`}></div>
-                <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5 p-2">
-                    <div className="sm:col-span-2">
-                        <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}>رمز عبور فعلی</label>
-                        <input ref={inputRef} type="password" name="old_password" value={orgPassData.old_password} onChange={(e) => handleOrgPass(e)}className="text-gray-900 rounded-md block w-full p-2.5" placeholder="رمز عبور فعلی"/>
-                    </div>
-                    <div className="sm:col-span-2">
-                        <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}>رمز عبور جدید</label>
-                        <input type="password" name="new_password" value={orgPassData.new_password} onChange={(e) => handleOrgPass(e)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="رمز عبور جدید" />
-                    </div>
-                    <div className="sm:col-span-2">
-                        <label className={`${styles['text-right']} block mb-2 text-sm text-gray-90`}>تکرار رمز عبور جدید</label>
-                        <input type="password" name="confirm_new_password" onChange={(e) => handleOrgPass(e)} className="text-gray-900 rounded-md block w-full p-2.5" placeholder="تکرار رمز عبور جدید" />
-                    </div>
-                    <span className={`${styles['not-valid']}`}>{formError.passwordsDonotMatch} </span>
-                </div>
-            </div>
-        );
-    }
-
-    //handle errors
-    const [formError, setFormError] = useState({})
-
-    const validateForm = () => {
-        let err = {}
-
-        if (typeof orgData.name !== 'string' || orgData.name.length < 1 || orgData.name.length > 127) {
-            err.name = '.نام سازمان نمی تواند خالی یا کمتر از یک حرف باشد';
-        }
-        
-        if (typeof orgPassData.admin_username !== 'string' || orgPassData.admin_username.length < 1) {
-            err.admin_username = '.نام کاربری مدیر نمی تواند خالی یا کمتر از یک حرف باشد';
-        }
-        
-        if (typeof orgPassData.admin_first_name !== 'string' || orgPassData.admin_first_name.length < 1) {
-            err.admin_first_name = '.نام مدیر نمی تواند خالی یا کمتر از یک حرف باشد';
-        }
-        
-        if (typeof orgPassData.admin_last_name !== 'string' || orgPassData.admin_last_name.length < 1) {
-            err.admin_last_name = '.نام خانوادگی مدیر نمی تواند خالی یا کمتر از یک حرف باشد';
-        }
-        
-        const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (typeof orgPassData.admin_email !== 'string' || !emailPattern.test(orgPassData.admin_email)) {
-            err.admin_email = '.یک آدرس ایمیل معتبر وارد کنید';
-        }
-
-        if (typeof orgPassData.admin_phone_number !== 'string' || orgPassData.admin_phone_number.length < 1 || !/^09|98/.test(orgPassData.admin_phone_number)) {
-            err.admin_phone_number = '.یک شماره تماس معتبر وارد کنید';
-        }
-        
-        if (orgPassData.new_password !== orgPassData.confirm_new_password) {
-            err.passwordsDonotMatch = '.رمز عبور جدید و تکرار آن مطابقت ندارند ';
-        }
-        setFormError({ ...err })
-
-        return false;
-    }
-
-    //submit form
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // console.log(orgData);
-        
-        let isValid = validateForm();
-        // console.log(isValid);
-    
-        if (isValid) {
-            //org
-            //https://jsonplaceholder.typicode.com/users/1
-            axios.put('https://ghablameh.fiust.ir/api/v1/organizations/me/', { orgData })
-                .then(response => console.log(response))
-                .catch(error => console.log(error));
-    
-            //pass
-            //https://jsonplaceholder.typicode.com/posts
-            axios.post('https://ghablameh.fiust.ir/api/v1/organizations/password/', { orgPassData })
-                .then(response => console.log(response))
-                .catch(error => console.log(error));
-    
-            setShowMyModel(false);
-        }
-    }
-// <footer className={styles.footersection}>
-    //   <div className={`${styles.changepassbutton} flex justify-center p2 mb-1 text-base`}>
-    //     <div className={`${styles['submit-button-me']} text-white text-center`}></div>
-    //     </footer>
+  };
+  //passwords
+  function PasswordFields() {
     return (
-        <div>
-            {/* Modal toggle button */}
-            <button onClick={() => setShowMyModel(true)} className={`${styles['update-button-me']} text-white rounded text-sm text-center`} type="button">ویرایش اطلاعات</button>
-
-            {/* Main modal */}
-            {showMyModel && (
-                <div id='close' onClick={handleOnClose} className={`${styles['modal-me']} fixed bg-black`}>
-                    <div className={`bg-white rounded p-2 ${styles['modal-content']}`}>
-                        <div className='flex flex-row justify-end'>
-                            <button onClick={onClose} className={`${styles['close-button-me']} text-sm`}>X</button>
-                        </div>
-
-                        <div style={{ height: "600px", overflowY: "scroll" }}>
-                            <div className="max-w-2xl px-4 py-8 lg:py-16">
-                                <h2 className="mb-2 text-xl font-bold text-gray-900 text-center">ویرایش اطلاعات</h2>
-                                <form onSubmit={handleSubmit} className={`${styles['border-t']}`}>
-                                    {userPicuter()}
-                                    {organizationInfo()}
-                                    <PasswordFields />
-                                    <div className="flex items-center justify-center space-x-4">
-                                        <button type="submit" className={`${styles['submit-button-me']} text-white text-center`}>ذخیره</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+      <div>
+        <div className={styles.formGroup}>
+          <label htmlFor="currentPassword" className={styles.label}>
+            رمز عبور فعلی
+          </label>
+          <div className={styles.passwordInputContainer}>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              id="old_password"
+              value={old_password}
+              onChange={(e) => setOld_password(e.target.value)}
+              className={styles.input}
+              required
+            />
+            <FontAwesomeIcon
+              icon={showPassword ? faEyeSlash : faEye}
+              className={styles.passwordIcon}
+              onClick={togglePasswordVisibility}
+            />
+          </div>
         </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="newPassword" className={styles.label}>
+            رمز عبور جدید
+          </label>
+          <div className={styles.passwordInputContainer}>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              id="new_password"
+              value={new_password}
+              onChange={(e) => setNew_password(e.target.value)}
+              className={styles.input}
+              required
+            />
+            <FontAwesomeIcon
+              icon={showPassword ? faEyeSlash : faEye}
+              className={styles.passwordIcon}
+              onClick={togglePasswordVisibility}
+            />
+          </div>
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="confirmPassword" className={styles.label}>
+            تأیید رمز عبور جدید
+          </label>
+          <div className={styles.passwordInputContainer}>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              id="confirm_new_password"
+              value={confirm_new_password}
+              onChange={(e) => setConfirm_new_password(e.target.value)}
+              className={styles.input}
+              required
+            />
+            <FontAwesomeIcon
+              icon={showPassword ? faEyeSlash : faEye}
+              className={styles.passwordIcon}
+              onClick={togglePasswordVisibility}
+            />
+          </div>
+        </div>
+      </div>
     );
-}
+  }
 
-export default Updateorg;
+  return (
+    <div className={styles.container}>
+      <div className={styles.pattern}></div>
+      <div className={styles.card}>
+        <h2 className={styles.title}>به‌روزرسانی اطلاعات کاربر</h2>
+        <form onSubmit={handleFormSubmit} className={styles.form}>
+          {formErrors.length > 0 && (
+            <div className={styles.errorContainer}>
+              <ul className={styles.errorList}>
+                {formErrors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <div className={styles.formGroup}>
+            <div className={styles.avatarimg}>
+              <img src={avatar} className={styles.avatar} alt="" />
+            </div>
+          </div>
+          <input type="file" onChange={handleChange} className={styles.fileinput} />
+
+          <div className={styles.formGroup}>
+            <label htmlFor="name" className={styles.label}> نام سازمان  </label>
+            <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} className={styles.input} required placeholder='نام سازمان' />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="admin_username" className={styles.label}> نام کاربری مدیر سازمان  </label>
+            <input type="text" id="admin_username" value={admin_username} onChange={(e) => SetAdmin_username(e.target.value)} className={styles.input} required placeholder=' نام کاربری مدیر سازمان  ' />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label className={styles.label}>نام مدیر سازمان</label>
+            <div className='flex'>
+              <input type="text" id="admin_first_name" value={admin_first_name} onChange={(e) => setAdmin_first_name(e.target.value)} className={styles.input} required placeholder='نام' />
+              <div style={{ marginLeft: '10px' }}></div> {/* Add some space */}
+              <input type="text" id="admin_last_name" value={admin_last_name} onChange={(e) => setAdmin_last_name(e.target.value)} className={styles.input} required placeholder='نام خانوادگی' />
+            </div>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="admin_email" className={styles.label}> ایمیل مدیر سازمان </label>
+            <input type="text" id="admin_email" value={admin_email} onChange={(e) => setAdmin_email(e.target.value)} className={styles.input} required placeholder='  ایمیل مدیر سازمان  ' />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="admin_phone_number" className={styles.label}> شماره تماس مدیر سازمان </label>
+            <input type="text" id="admin_phone_number" value={admin_phone_number} onChange={(e) => setAdmin_phone_number(e.target.value)} className={styles.input} required placeholder=' شماره تماس مدیر سازمان ' />
+          </div>
+
+          <PasswordFields />
+          <button type="submit" className={styles.button}>
+            ارسال
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Update;

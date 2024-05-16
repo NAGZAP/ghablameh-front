@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from  '../styles/weeklymenu.module.css';
 import Navbar from './Navbar';
 import Footer from './footer';
