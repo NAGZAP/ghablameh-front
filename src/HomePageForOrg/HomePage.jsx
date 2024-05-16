@@ -22,12 +22,12 @@ function HomeOrgPage() {
                       Authorization: `JWT ${TOKEN}`,
                     },
                   });
-              
-              const slideData = response.data.map((item) => ({
+                  
+                const slideData = response.data.slice(0,5).map((item) => ({
                 text: item.name,
                 color: 'gray-400',
               }));
-              setSlides(slideData);
+                setSlides(slideData);
             } catch (error) {
               console.error('Error fetching slide data:', error);
               setSlides([]); // Set an empty array if an error occurs
@@ -67,12 +67,14 @@ function HomeOrgPage() {
         <div className={styles.containment_OrgHome}>
             <div className={styles.itemscenter}>   
                 <div className={styles.app}>
+                    <Navbar></Navbar>
                     <div className='grid grid-rows-12 grid-cols-5'>
                         <div className='row-start-1 col-start-1 col-span-6'>
-                        {/* <Navbar></Navbar> */}
+
                         <Navbarparent/>
+
                         </div>
-                        <div className='lg:col-start-1 lg:col-span-2 lg:row-start-2 lg:row-span-7 md:col-start-1 md:col-span-5 md:row-start-2 md:row-span-4 sm:col-start-1 sm:col-span-5 sm:row-start-2 sm:row-span-4 col-start-1 col-span-5 row-start-2 row-span-4'>
+                        <div className='lg:scale-75 md:scale-75 scale-75 lg:col-start-1 lg:col-span-6 lg:row-start-1 lg:row-span-3 md:col-start-1 md:col-span-7 md:row-start-1 md:row-span-3  col-start-1 col-span-5 row-start-1 row-span-3'>
                             <div className='bg-white bg-opacity-60 h-full rounded-lg m-5 grid grid-rows-5 grid-cols-5'>
                                 <div className='col-start-2 col-span-3 row-start-1'>
                                     <p className='max font-semibold text-template-custom-blue text-4xl dark:text-template-custom-blue text-center mt-5'>بوفه ها</p>
@@ -138,7 +140,7 @@ function HomeOrgPage() {
                                 <div className='col-start-2 col-span-3 row-start-5'>
                                     <div className='font-normal text-template-custom-blue textxl'>
                                         <Link to="/OrgPage" className={styles.link_to_Panelorg}>
-                                            <p>مدیریت بوفه ها</p>
+                                            <p className='text-lg'>مدیریت بوفه ها</p>
                                         </Link>
                                     </div>
                                 </div>
