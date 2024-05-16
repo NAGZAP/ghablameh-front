@@ -6,6 +6,7 @@ import styles from '../styles/lastreservation.module.css';
 const localizer = momentLocalizer(moment);
 import Navbar from './Navbar';
 import Footer from './footer';
+import Navbarparent from './navbarparent';
 const events = [
   {
     title: 'قرمه سبزی',
@@ -23,7 +24,7 @@ const events = [
 const ReservationCalendar = () => {
   return (
     <div className={styles.app}>
-      <Navbar></Navbar>
+      <Navbarparent/>
       <div className= {styles.calendarcontainer}>
         <Calendar
           localizer={localizer}
