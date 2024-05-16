@@ -26,7 +26,7 @@ import EmailVerify from "./EmailVerify/EmailVerify";
 import UserWallet from "./components/wallet";
 import Navbarparent from "./components/navbarparent";
 import Notificationbox from "./components/Notificationbox";
-
+import OrganizationList from "./components/organizationlist";
 import OrgPanel from "./components/OrgPanel"
 import Boofeh from "./BoofehsOfOrganization/Boofeh";
 function App() {
@@ -57,8 +57,10 @@ function App() {
         <Route path="/UserWallet" element={<UserWallet />} />
         <Route path="/orgpanel" element={<OrgPanel/>} />
         <Route path="/boofeh" element={<Boofeh/>} />
+        <Route path="/organizationList" element={<OrganizationList/>} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/Notif" element={<Notificationbox/>}/>
+        
       </Routes>
     </BrowserRouter>
   );
