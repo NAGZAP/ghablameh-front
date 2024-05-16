@@ -24,6 +24,7 @@ import  { useEffect , useState ,useRef} from 'react';
 import styles from './style.module.css';
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
+import Navbarparent from '../components/navbarparent';
 const colors = ["#0088FE", "#00C49F", "#FFBB28"];
 const delay = 2500;
 
@@ -98,7 +99,7 @@ function ListOrg() {
 
   return (
     <div className={styles.land}>
-      <Navbar></Navbar>
+      <Navbarparent></Navbarparent>
       <body>
         <div>
           <SliderPage />
@@ -128,9 +129,9 @@ function ListOrg() {
                 <Select options={options} onChange={handleSelectChange} />
               </div>
             </li>
-            <li>
+            {/* <li>
               <h4 className={`${styles['text-2xl']} ${styles['font-bold']} ${styles['mr-8']} ${styles['mt-4']} ${styles['text-right']} ${styles['right-250']}`}>بوفه های سازمان</h4>
-            </li>
+            </li> */}
           </ul>
           <div className={styles.content}>
             <div className={`${styles['content-item']} ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}>

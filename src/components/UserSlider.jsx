@@ -141,6 +141,7 @@
 // export default Slider;
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import Organizations from "../APIs/Organizations";
 
 const responsive = {
   desktop: {
@@ -159,43 +160,45 @@ const responsive = {
     slidesToSlide: 1, // optional, default to 1.
   },
 };
-const data = [
-  {
-    name: "بوفه تست",
-    usercount: 25,
-    rate: 5,
-    image:
-    "src\\assets\\images.jpeg",
-  },
-  {
-    name: "1بوفه تست",
-    usercount: 25,
-    rate: 3,
-    image:
-    "src\\assets\\images.jpeg",
-  },
-  {
-    name: "2بوفه تست",
-    usercount: 25,
-    rate: 4.5,
-    image:
-    "src\\assets\\images.jpeg",
-  },
-  {
-    name: "2بوفه تست",
-    usercount: 25,
-    rate: 4.5,
-    image:
-    "src\\assets\\images.jpeg",
-  },
-  {
-    name: "2بوفه تست",
-    usercount: 25,
-    rate: 4.5,
-    image:
-    "src\\assets\\images.jpeg",
-  },
-];
+const data = await Organizations.Top5Buffets();
+
+// const data = [
+//   {
+//     name: "بوفه تست",
+//     usercount: 25,
+//     rate: 5,
+//     image:
+//     "src\\assets\\images.jpeg",
+//   },
+//   {
+//     name: "1بوفه تست",
+//     usercount: 25,
+//     rate: 3,
+//     image:
+//     "src\\assets\\images.jpeg",
+//   },
+//   {
+//     name: "2بوفه تست",
+//     usercount: 25,
+//     rate: 4.5,
+//     image:
+//     "src\\assets\\images.jpeg",
+//   },
+//   {
+//     name: "2بوفه تست",
+//     usercount: 25,
+//     rate: 4.5,
+//     image:
+//     "src\\assets\\images.jpeg",
+//   },
+//   {
+//     name: "2بوفه تست",
+//     usercount: 25,
+//     rate: 4.5,
+//     image:
+//     "src\\assets\\images.jpeg",
+//   },
+// ];
 const star = (
   <svg
     className="w-[16px] h-[16px] text-gray-800 dark:text-white"
@@ -264,7 +267,7 @@ const UserSlider = () => {
       {data.map((item) => ( // "src\assets\images.jpeg"
         <div
           
-          className="border border-sky-800 rounded p-2 mx-2 rounded text-center"
+          className="border border-sky-800 rounded p-2 mx-2  text-center"
         >
           <img
             src={item.image}

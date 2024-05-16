@@ -1,6 +1,6 @@
 import styles from "./Response.module.css";
 import { useState } from "react";
-
+import { Rating, step } from "@material-tailwind/react";
 function Response() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
@@ -16,8 +16,33 @@ function Response() {
   const closeModal = () => {
     setIsModalOpen(false);
     setIsSecondModalOpen(false);
-  };
-
+  };  
+  const emojis = ['😠','😦','😑','😀','😍'];
+  const [Emojichanger,setEmojichanger] = useState(emojis[2])
+  const [Emojichanger2,setEmojichanger2] = useState(emojis[2])
+  const [Emojichanger3,setEmojichanger3] = useState(emojis[2])
+  const [Emojichanger4,setEmojichanger4] = useState(emojis[2])
+  const [Emojichanger5,setEmojichanger5] = useState(emojis[2])
+  const ChangeEmoji = (e) => {
+    const value = e.target.value;
+    setEmojichanger(emojis[value])
+  }
+  const ChangeEmoji2 = (e) => {
+    const value2 = e.target.value
+    setEmojichanger2(emojis[value2])
+  }
+  const ChangeEmoji3 = (e) => {
+    const value3 = e.target.value
+    setEmojichanger3(emojis[value3])
+  }
+  const ChangeEmoji4 = (e) => {
+    const value4 = e.target.value
+    setEmojichanger4(emojis[value4])
+  }
+  const ChangeEmoji5 = (e) => {
+    const value5 = e.target.value
+    setEmojichanger5(emojis[value5])
+  }
   return (
     <div className={`${styles.containment_boof} ${styles.itemscenter}`}>
       <button type="button" className={styles.button} onClick={openModal}>
@@ -30,7 +55,7 @@ function Response() {
           onClick={closeModal}
         >
           <div
-            className={`relative bg-white rounded-md p-8 max-w-[500px] w-full`}
+            className={`scale-75 lg:scale-100 relative bg-white rounded-md p-8 max-w-[500px] w-full`}
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-2xl text-template-custom-blue font-bold mb-4">نظرسنجی غذا بوفه</h2>
@@ -69,360 +94,59 @@ function Response() {
           onClick={closeModal}
         >
           <div
-            className={`relative bg-white rounded-md p-8 max-w-[500px]`}
+            className={`relative scale-50 lg:scale-90 bg-white rounded-md p-8 max-w-[500px]`}
             onClick={(e) => e.stopPropagation()}
           >
             <h5 className="text-template-custom-blue text-xl font-bold leading-normal text-surface">
             نظرسنجی غذا بوفه
             </h5>
-            <p className="mt-7 font-semibold">
+            <p className="mt-7 font-semibold text-lg">
                 کیفیت:
             </p>
-            <div class="mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions"
-      id="inlineRadio1"
-      value="option1" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio1"
-      >1</label
-    >
-  </div>
-
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions"
-      id="inlineRadio2"
-      value="option2" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio2"
-      >2</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions"
-      id="inlineRadio3"
-      value="option3" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio3"
-      >3</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions"
-      id="inlineRadio4"
-      value="option4" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio4"
-      >4</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions"
-      id="inlineRadio5"
-      value="option5" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio5"
-      >5</label
-    >
-  </div>
-  <p className="mt-7 font-semibold">
+            <div className={styles.bodys}>
+                <div className={styles.rate}>
+                <div className={styles.emoji}>{Emojichanger}</div>
+                    <input className={styles.input} onChange={ChangeEmoji} type="range" min="0" max="4" step="1" defaultValue="2"/>
+                </div>
+              </div>
+            <p className="mt-7 font-semibold text-lg">
                 مقدار:
             </p>
-            <div class="mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions2"
-      id="inlineRadio1"
-      value="option1" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio1"
-      >1</label
-    >
-  </div>
-
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions2"
-      id="inlineRadio2"
-      value="option2" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio2"
-      >2</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions2"
-      id="inlineRadio3"
-      value="option3" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio3"
-      >3</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions2"
-      id="inlineRadio4"
-      value="option4" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio4"
-      >4</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions2"
-      id="inlineRadio5"
-      value="option5" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio5"
-      >5</label
-    >
-  </div>
-  <p className="mt-7 font-semibold">
+            <div className={styles.bodys}>
+                <div className={styles.rate}>
+                <div className={styles.emoji}>{Emojichanger2}</div>
+                    <input className={styles.input} onChange={ChangeEmoji2} type="range" min="0" max="4" step="1" defaultValue="2"/>
+                </div>
+              </div>
+              <p className="mt-7 font-semibold text-lg">
                 برخورد:
-            </p>
-            <div class="mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions3"
-      id="inlineRadio1"
-      value="option1" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio1"
-      >1</label
-    >
-  </div>
-
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions3"
-      id="inlineRadio2"
-      value="option2" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio2"
-      >2</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions3"
-      id="inlineRadio3"
-      value="option3" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio3"
-      >3</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions3"
-      id="inlineRadio4"
-      value="option4" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio4"
-      >4</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions3"
-      id="inlineRadio5"
-      value="option5" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio5"
-      >5</label
-    >
-  </div>
-  <p className="mt-7 font-semibold">
+              </p>
+              <div className={styles.bodys}>
+                <div className={styles.rate}>
+                <div className={styles.emoji}>{Emojichanger3}</div>
+                    <input className={styles.input} onChange={ChangeEmoji3} type="range" min="0" max="4" step="1" defaultValue="2"/>
+                </div>
+              </div>
+                <p className="mt-7 font-semibold text-lg">
                 نظافت:
-            </p>
-            <div class="mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions4"
-      id="inlineRadio1"
-      value="option1" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio1"
-      >1</label
-    >
-  </div>
-
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions4"
-      id="inlineRadio2"
-      value="option2" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio2"
-      >2</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions4"
-      id="inlineRadio3"
-      value="option3" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio3"
-      >3</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions4"
-      id="inlineRadio4"
-      value="option4" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio4"
-      >4</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions4"
-      id="inlineRadio5"
-      value="option5" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio5"
-      >5</label
-    >
-  </div>
-  <p className="mt-7 font-semibold">
+                </p>
+            <div className={styles.bodys}>
+                <div className={styles.rate}>
+                <div className={styles.emoji}>{Emojichanger4}</div>
+                    <input className={styles.input} onChange={ChangeEmoji4} type="range" min="0" max="4" step="1" defaultValue="2"/>
+                </div>
+              </div>
+                  <p className="mt-7 font-semibold text-lg">
                 سرعت و مقدار آمادگی :
-            </p>
-            <div class="mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions5"
-      id="inlineRadio1"
-      value="option1" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio1"
-      >1</label
-    >
-  </div>
+                  </p>
+                  <div className={styles.bodys}>
+                <div className={styles.rate}>
+                <div className={styles.emoji}>{Emojichanger5}</div>
+                    <input className={styles.input} onChange={ChangeEmoji5} type="range" min="0" max="4" step="1" defaultValue="2"/>
+                </div>
+              </div>
 
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions5"
-      id="inlineRadio2"
-      value="option2" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio2"
-      >2</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions5"
-      id="inlineRadio3"
-      value="option3" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio3"
-      >3</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions5"
-      id="inlineRadio4"
-      value="option4" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio4"
-      >4</label
-    >
-  </div>
-  <div class="mt-5 mb-[0.125rem] me-4 inline-block min-h-[1.5rem] ps-[1.5rem]">
-    <input
-      class="relative float-left -ms-[1.5rem] me-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-secondary-500 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] rtl:float-right dark:border-neutral-400 dark:checked:border-primary"
-      type="radio"
-      name="inlineRadioOptions5"
-      id="inlineRadio5"
-      value="option5" />
-    <label
-      class="mt-px inline-block ps-[0.15rem] hover:cursor-pointer"
-      for="inlineRadio5"
-      >5</label
-    >
-  </div>
-            <br />
-            <br />
-            <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-12">
         <button
             type="button"
             className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-100 border border-gray-300 rounded-md"

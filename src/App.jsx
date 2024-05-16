@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/footer";
@@ -21,7 +22,13 @@ import Home from "./components/homepage";
 import Panel from "./components/panel";
 import WeeklyMenu from "./components/weeklymenu";
 import ReservationCalendar from "./components/lastreservation";
+import EmailVerify from "./EmailVerify/EmailVerify";
+import UserWallet from "./components/wallet";
+import Navbarparent from "./components/navbarparent";
+import Notificationbox from "./components/Notificationbox";
 
+import OrgPanel from "./components/OrgPanel"
+import Boofeh from "./BoofehsOfOrganization/Boofeh";
 function App() {
   return (
     <BrowserRouter>
@@ -31,7 +38,7 @@ function App() {
         <Route path="/Update" element={<Update />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/sidebar" element={<CustomSidebar />} />
-        <Route path="/navbar" element={<Navbar />} />
+        <Route path="/navbar" element={<Navbarparent />} />
         <Route path="/Updateorg" element={<Updateorg />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
@@ -46,8 +53,12 @@ function App() {
         <Route path="/panel" element={<Panel />} />
         <Route path="/weeklymenu2" element={<WeeklyMenu />} />
         <Route path="/last" element={<ReservationCalendar />} />
-        
+        <Route path="/EmailVerify" element={<EmailVerify/>} />
+        <Route path="/UserWallet" element={<UserWallet />} />
+        <Route path="/orgpanel" element={<OrgPanel/>} />
+        <Route path="/boofeh" element={<Boofeh/>} />
         <Route path="*" element={<PageNotFound />} />
+        <Route path="/Notif" element={<Notificationbox/>}/>
       </Routes>
     </BrowserRouter>
   );

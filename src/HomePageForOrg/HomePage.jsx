@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import Footer from '../components/footer';
-import Navbar from '../components/Navbar.jsx';
+import Navbarparent from '../components/navbarparent'
+import Navbar from '../components/Navbar';
 import styles from './Homepage.module.css';
 import { Link, redirect } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -20,12 +22,12 @@ function HomeOrgPage() {
                       Authorization: `JWT ${TOKEN}`,
                     },
                   });
-              
-              const slideData = response.data.map((item) => ({
+                  
+                const slideData = response.data.slice(0,5).map((item) => ({
                 text: item.name,
                 color: 'gray-400',
               }));
-              setSlides(slideData);
+                setSlides(slideData);
             } catch (error) {
               console.error('Error fetching slide data:', error);
               setSlides([]); // Set an empty array if an error occurs
@@ -65,11 +67,11 @@ function HomeOrgPage() {
         <div className={styles.containment_OrgHome}>
             <div className={styles.itemscenter}>   
                 <div className={styles.app}>
+                <Navbarparent/>
                     <div className='grid grid-rows-12 grid-cols-5'>
                         <div className='row-start-1 col-start-1 col-span-6'>
-                        <Navbar></Navbar>
                         </div>
-                        <div className='lg:col-start-1 lg:col-span-2 lg:row-start-2 lg:row-span-7 md:col-start-1 md:col-span-5 md:row-start-2 md:row-span-4 sm:col-start-1 sm:col-span-5 sm:row-start-2 sm:row-span-4 col-start-1 col-span-5 row-start-2 row-span-4'>
+                        <div className='lg:scale-75 md:scale-75 scale-75 lg:col-start-1 lg:col-span-6 lg:row-start-1 lg:row-span-3 md:col-start-1 md:col-span-7 md:row-start-1 md:row-span-3  col-start-1 col-span-5 row-start-1 row-span-3'>
                             <div className='bg-white bg-opacity-60 h-full rounded-lg m-5 grid grid-rows-5 grid-cols-5'>
                                 <div className='col-start-2 col-span-3 row-start-1'>
                                     <p className='max font-semibold text-template-custom-blue text-4xl dark:text-template-custom-blue text-center mt-5'>بوفه ها</p>
@@ -92,10 +94,10 @@ function HomeOrgPage() {
                                         ))}
                                         </div>
                                                 </div>
-
+                                    <div className={styles.button_pre_nex}>
                                     <button
                                         type="button"
-                                        className="right-auto left-0 lehs-carousel-prev hs-carousel:disabled:opacity-50 disabled:pointer-events-none absolute inset-y-0 start-0 inline-flex justify-center items-center w-[46px] h-full text-gray-800 hover:bg-gray-800/10 rounded-s-lg"
+                                        className="hs-carousel-prev hs-carousel:disabled:opacity-50 disabled:pointer-events-none absolute inset-y-0 start-0 inline-flex justify-center items-center w-[46px] h-full text-gray-800 hover:bg-gray-800/10 rounded-s-lg"
                                         onClick={handlePrevSlide}
                                         >
                                         <span className="text-2xl" aria-hidden="true">
@@ -117,7 +119,7 @@ function HomeOrgPage() {
                                         </svg>
                                         </span>
                                     </button>
-
+                                    </div>
                                     <div className="hs-carousel-pagination flex justify-center absolute bottom-3 right-0 left-0">
                                     {slides.slice().reverse().map((slide, index) => (
                                         <span
@@ -135,7 +137,7 @@ function HomeOrgPage() {
                                 <div className='col-start-2 col-span-3 row-start-5'>
                                     <div className='font-normal text-template-custom-blue textxl'>
                                         <Link to="/OrgPage" className={styles.link_to_Panelorg}>
-                                            <p>مدیریت بوفه ها</p>
+                                            <p className='text-lg'>مدیریت بوفه ها</p>
                                         </Link>
                                     </div>
                                 </div>
@@ -148,5 +150,5 @@ function HomeOrgPage() {
         </div>
         </div>
     );
-};
+}
 export default HomeOrgPage;

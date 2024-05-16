@@ -8,6 +8,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import DefaultSidebar from './orgPanelSidebar'
+import Navbarparent from './navbarparent';
 function ListOfJoinRequests() {
   const [approved, setApproved] = useState([]);
   const [rejected, setRejected] = useState([]);
@@ -234,9 +236,13 @@ function ListOfJoinRequests() {
   return (
     <div>
       <div className={`${styles['main-content']} flex flex-col`}>
-        <Navbar />
-        <div className='flex flex-grow justify-center items-center m-3'>
-          {ListOfUserRequests()}
+        <Navbarparent />
+        <div className='flex flex-row'>
+
+          <DefaultSidebar />
+          <div className='flex flex-grow justify-center items-center m-3'>
+            {ListOfUserRequests()}
+          </div>
         </div>
         <ToastContainer />
       </div>

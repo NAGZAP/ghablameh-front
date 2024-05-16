@@ -9,9 +9,9 @@ const WeeklyMenuPage = () => {
       <div className=""></div>
       <div style={{ width: "100%" }} className="px-5 py-3">
         <div className="grid grid-cols-3 my-4 text-center">
-          <button>
+          <button className="scale-90 bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 rounded-2xl ml-20 border-none cursor-pointer mt-1 mb-1">
             <svg
-              className="w-6 h-6 text-gray-800 dark:text-white"
+              className="w-6 h-6 text-white dark:text-white"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -30,7 +30,7 @@ const WeeklyMenuPage = () => {
             </svg>
             قبلی
           </button>
-          <div className="border border-sky-800 px-5 py-3">
+          <div className="border border-sky-800 rounded-lg px-5 py-3">
             <svg
               className="w-6 h-6 text-gray-800 dark:text-white"
               aria-hidden="true"
@@ -51,10 +51,10 @@ const WeeklyMenuPage = () => {
             </svg>
             هفته جاری
           </div>
-          <button style={{ direction: "ltr" }}>
+          <button className="scale-90 bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 rounded-2xl mr-20 border-none cursor-pointer mt-1 mb-1" style={{ direction: "ltr" }}>
             
             <svg
-              className="w-6 h-6 text-gray-800 dark:text-white"
+              className="w-6 h-6 text-white dark:text-white"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="24"

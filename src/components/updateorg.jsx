@@ -4,7 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-
+import Footer from './footer'
+import DefaultSidebar from './orgPanelSidebar';
+import Navbar from './Navbar';
+import Navbarparent from './navbarparent';
 const Update = () => {
   const [name, setName] = useState('');
   const [admin_first_name, setAdmin_first_name] = useState('');
@@ -205,9 +208,10 @@ const Update = () => {
     );
   }
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.pattern}></div>
+  function myForm(){
+    return(
+      <div className={styles.container}>
+      <div className='flex justify-center items-center'>
       <div className={styles.card}>
         <h2 className={styles.title}>به‌روزرسانی اطلاعات کاربر</h2>
         <form onSubmit={handleFormSubmit} className={styles.form}>
@@ -261,7 +265,21 @@ const Update = () => {
           </button>
         </form>
       </div>
+      </div>
     </div>
+    );
+  }
+  return (
+    <div className={`${styles.bg} min-h-screen flex flex-col`}>
+  <Navbarparent/>
+  <div className='flex flex-grow'> 
+    <DefaultSidebar />
+    <div className='flex flex-grow justify-center items-center'>
+      {myForm()}
+    </div>
+  </div>
+  <Footer/>
+</div>
   );
 };
 

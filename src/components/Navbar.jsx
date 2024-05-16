@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
 import Avatar from "react-avatar";
 import styles from "../styles/Navbar.module.css";
@@ -5,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthManager from "../APIs/AuthManager";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import UserWallet from "./wallet";
+import PropTypes from "prop-types";
 import {
   HiArrowSmRight,
   HiChartPie,
@@ -13,14 +16,19 @@ import {
   HiTable,
   HiUser,
   HiViewBoards,
-
 } from "react-icons/hi";
-function Navbar() {
+import DefaultSidebar from "./Sidebar";
+import Notificationbox from "./Notificationbox";
+// function Navbar() {
+const Navbar = ({ openWallet, setOpenWallet }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [userData, setUserData] = useState(null);
   const isBigScreen = useMediaQuery("(min-width: 600px)");
   const navigate = useNavigate();
+  const sideBar = useRef(null);
+  const notification = useRef(null);
+  // const [openWallet, setOpenWallet] = useState(false);
 
   //fetch user data
   useEffect(() => {
@@ -65,11 +73,17 @@ function Navbar() {
   //   sideBar.current.style.display = "none";
   // };
 
-  // const handleOpenSidebar = () => {
-  //   let displayStatus = sideBar.current.style.display;
-  //   if (displayStatus !== "block") sideBar.current.style.display = "block";
-  //   else sideBar.current.style.display = "none";
-  // };
+  const handleOpenSidebar = () => {
+    console.log(sideBar.current);
+    let displayStatus = sideBar.current.style.display;
+    if (displayStatus !== "block") sideBar.current.style.display = "block";
+    else sideBar.current.style.display = "none";
+  };
+  const hanldeOpenNotifications = () => {
+    let displayStatus = notification.current.style.display;
+    if (displayStatus !== "block") notification.current.style.display = "block";
+    else notification.current.style.display = "none";
+  };
 
   //log out
   async function handleLogout() {
@@ -161,13 +175,17 @@ function Navbar() {
   return (
     <>
       <nav
-        style={{ backgroundColor: "rgb(38, 87, 124)" }}
+        style={{
+          backgroundColor: "rgb(38, 87, 124)",
+          paddingTop: "0.07rem",
+          paddingBottom: "0.07rem",
+        }}
         className={styles.navPos}
       >
         <div className={`flex justify-between m-2 items-center px-2`}>
           {/* Elements - Logo */}
           <div className={`flex items-center justify-end`}>
-            <div className={`flex`}>
+            <div className={`flex items-center justify-end`}>
               <button
                 className="me-1.5 items-center text-white inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
                 type="button"
@@ -177,9 +195,52 @@ function Navbar() {
                 data-twe-ripple-init
                 data-twe-ripple-color="light"
                 style={{ fontSize: "35px", fontFamily: "vazir" }}
+                onClick={handleOpenSidebar}
               >
                 قابلمه
               </button>
+
+              {/* wallet icon */}
+              {AuthManager.isLoggedIn() && (
+                <>
+                  <svg
+                    onClick={() => setOpenWallet((prevState) => !prevState)}
+                    style={{ height: "2rem", width: "2rem" }}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="white"
+                    className="w-6 h-6 flex"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"
+                    />
+                  </svg>
+                  {/* Notifications */}
+                  <svg
+                    className="w-6 h-6 text-gray-100 dark:text-white m-5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    onClick={hanldeOpenNotifications}
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 5.365V3m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175 0 .593 0 1.292-.538 1.292H5.538C5 18 5 17.301 5 16.708c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 12 5.365ZM8.733 18c.094.852.306 1.54.944 2.112a3.48 3.48 0 0 0 4.646 0c.638-.572 1.236-1.26 1.33-2.112h-6.92Z"
+                    />
+                  </svg>
+                </>
+              )}
+
               {/* <p
               
               className={`items-center text-white`}
@@ -194,19 +255,19 @@ function Navbar() {
                 className={`flex items-center justify-end space-x-3`}
                 style={{ paddingRight: "1.5vw" }}
               >
-                <Link
+                {/* <Link
                   to="/"
                   className={`text-white`}
                   style={{ fontSize: "1.3rem", margin: "0.7vw" }}
                 >
                   element1
-                </Link>
+                </Link> */}
                 <Link
                   to="/last"
                   className={`text-white`}
                   style={{ fontSize: "1.3rem", marginLeft: "0.5vw" }}
                 >
-                  لیست رزروها 
+                  لیست رزروها
                 </Link>
               </div>
             )}
@@ -252,68 +313,40 @@ function Navbar() {
           </div>
         </div>
       </nav>
-      {/* <div style={{display:'none'}} ref={sideBar}>
-    <CustomSidebar />
-  </div> */}
       <div
-        className="invisible fixed bottom-0 right-0 top-0 z-[1045] flex w-60 max-w-full translate-x-full flex-col border-none  bg-clip-padding text-neutral-700 shadow-sm outline-none transition duration-300 ease-in-out data-[twe-offcanvas-show]:transform-none dark:bg-body-dark dark:text-white bg-sky-800"
-        tabIndex="-1"
-        id="offcanvasRight"
-        aria-labelledby="offcanvasRightLabel"
-        data-twe-offcanvas-init
+        style={{
+          display: "none",
+          position: "absolute",
+          top: "14%",
+          right: "0",
+          maxHeight: "300px",
+        }}
+        ref={sideBar}
       >
-        <div className="flex items-center justify-between p-4 bg-stone-200">
-          <h5
-            className="mb-0 font-semibold leading-normal"
-            id="offcanvasRightLabel"
-          >
-          </h5>
-          <button
-            type="button"
-            className="box-content rounded-none border-none text-neutral-500 hover:text-neutral-800 hover:no-underline focus:text-neutral-800 focus:opacity-100 focus:shadow-none focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-300 dark:focus:text-neutral-300"
-            data-twe-offcanvas-dismiss
-            aria-label="Close"
-          >
-            <span className="[&>svg]:h-6 [&>svg]:w-6">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </span>
-          </button>
-          <div className="w-96 bg-black-400"></div>
-        </div>
-        <div className="flex flex-col offcanvas-body flex-grow overflow-y-auto p-4 bg-gray-700 bg-opacity-30 ">
-
-        {/* <Link to="/Update" style={{fontSize:"23px"}} className="m-2 my-2"><HiUser size='30px' style={{display:"inline", color:'rgb(38, 87, 124)'}}/>تغییر اطلاعات</Link><br/>
-
-        <Link to="/WeeklyMenu" style={{fontSize:"23px"}} className="m-2 my-2"><HiTable size='30px' style={{display:"inline",color:'rgb(38, 87, 124)'}}/>  برنامه غذایی </Link><br/>
-        
-        <Link to="/weeklymenu2" style={{fontSize:"23px"}} className="m-2 my-2"><HiTable size='30px' style={{display:"inline",color:'rgb(38, 87, 124)'}}/>  2برنامه غذایی </Link><br/>
-        <Link to="/last" style={{fontSize:"23px"}} className="m-2 my-2"><HiTable size='30px' style={{display:"inline",color:'rgb(38, 87, 124)'}}/> لیست رزروها </Link><br/>
-         */}
-
-
-        
-        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiTable style={{display:"inline"}}/>  تست</Link><br/>
-
-        {/* <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiShoppingBag style={{display:"inline"}}/>  تست</Link><br/> */}
-        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiChartPie style={{display:"inline"}}/>  تست</Link><br/>
-        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiViewBoards style={{display:"inline"}}/>  تست</Link><br/>
-        <Link to="/UpdateOrg" style={{fontSize:"20px"}}><HiArrowSmRight style={{display:"inline"}}/>  تست</Link><br/>
-        
-        </div>
+        <DefaultSidebar />
       </div>
+      <div
+        style={{
+          display: "none",
+          position: "absolute",
+          top: "14%",
+          right: "12%",
+          maxHeight: "300px",
+          width:"20%",
+          zIndex:"2",
+          backgroundColor:"white"
+        }}
+        ref={notification}
+      >
+        <Notificationbox />
+      </div>
+      {openWallet && <UserWallet open={openWallet} setOpen={setOpenWallet} />}
     </>
   );
-}
+};
+Navbar.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+};
+
 export default Navbar;
