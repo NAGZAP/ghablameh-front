@@ -147,6 +147,45 @@ const Register = () => {
             />
           </div>
           <div className={styles.formGroup}>
+            <label htmlFor="organizationName" className={styles.label}>
+              شماره تلفن
+            </label>
+            <input
+              type="text"
+              id="organizationName"
+              value={organizationName}
+              onChange={handleOrganizationNameChange}
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="organizationName" className={styles.label}>
+              نام ادمین
+            </label>
+            <input
+              type="text"
+              id="organizationName"
+              value={organizationName}
+              onChange={handleOrganizationNameChange}
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="organizationName" className={styles.label}>
+               نام خانوادکی ادمین
+            </label>
+            <input
+              type="text"
+              id="organizationName"
+              value={organization_name}
+              onChange={handleOrganizationNameChange}
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
             <label htmlFor="currentPassword" className={styles.label}>
               رمز عبور
             </label>
@@ -165,7 +204,7 @@ const Register = () => {
                 onClick={togglePasswordVisibility}
               />
             </div>
-    
+    </div>
           <div className={styles.formGroup}>
             <label htmlFor="firstName" className={styles.label}>
              نام ادمین
@@ -205,7 +244,7 @@ const Register = () => {
             <button type="submit" className={styles.button}>
               ثبت نام
             </button>
-            </div>
+      
             </div>
           </form>
         </div>

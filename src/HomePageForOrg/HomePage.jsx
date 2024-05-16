@@ -67,12 +67,9 @@ function HomeOrgPage() {
         <div className={styles.containment_OrgHome}>
             <div className={styles.itemscenter}>   
                 <div className={styles.app}>
-                    <Navbar></Navbar>
+                <Navbarparent/>
                     <div className='grid grid-rows-12 grid-cols-5'>
                         <div className='row-start-1 col-start-1 col-span-6'>
-
-                        <Navbarparent/>
-
                         </div>
                         <div className='lg:scale-75 md:scale-75 scale-75 lg:col-start-1 lg:col-span-6 lg:row-start-1 lg:row-span-3 md:col-start-1 md:col-span-7 md:row-start-1 md:row-span-3  col-start-1 col-span-5 row-start-1 row-span-3'>
                             <div className='bg-white bg-opacity-60 h-full rounded-lg m-5 grid grid-rows-5 grid-cols-5'>

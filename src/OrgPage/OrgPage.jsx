@@ -4,6 +4,7 @@ import styles from './OrgPage.module.css';
 import Footer from '../components/footer';
 import Navbar from '../components/Navbar.jsx';
 import { Link } from 'react-router-dom';
+import DefaultSidebar from '../components/orgPanelSidebar.jsx';
 
 function OrgPage() {
   const [peopleData, setPeopleData] = useState([]);
@@ -139,7 +140,9 @@ function OrgPage() {
         <div className={styles.containment_boof}>
         <div className={styles.app}>
           <Navbar />
-          <div className={styles.itemscenter}>
+          <div className='flex flex-row justify-between items-center'>
+          <DefaultSidebar/>
+          <div className={`${styles.itemscenter} flex-grow`}>
             {showModal && (
               <div className="fixed z-10 inset-0 overflow-y-auto">
                 <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -241,6 +244,7 @@ function OrgPage() {
                   </table>
                 </div>
               </div>
+            </div>
             </div>
           </div>
           </div>
