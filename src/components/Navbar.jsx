@@ -7,7 +7,7 @@ import axios from "axios";
 import AuthManager from "../APIs/AuthManager";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import UserWallet from "./wallet";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import {
   HiArrowSmRight,
   HiChartPie,
@@ -18,6 +18,7 @@ import {
   HiViewBoards,
 } from "react-icons/hi";
 import DefaultSidebar from "./Sidebar";
+import Notificationbox from "./Notificationbox";
 // function Navbar() {
 const Navbar = ({ openWallet, setOpenWallet }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -26,6 +27,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
   const isBigScreen = useMediaQuery("(min-width: 600px)");
   const navigate = useNavigate();
   const sideBar = useRef(null);
+  const notification = useRef(null);
   // const [openWallet, setOpenWallet] = useState(false);
 
   //fetch user data
@@ -72,9 +74,15 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
   // };
 
   const handleOpenSidebar = () => {
+    console.log(sideBar.current);
     let displayStatus = sideBar.current.style.display;
     if (displayStatus !== "block") sideBar.current.style.display = "block";
     else sideBar.current.style.display = "none";
+  };
+  const hanldeOpenNotifications = () => {
+    let displayStatus = notification.current.style.display;
+    if (displayStatus !== "block") notification.current.style.display = "block";
+    else notification.current.style.display = "none";
   };
 
   //log out
@@ -167,7 +175,11 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
   return (
     <>
       <nav
-        style={{ backgroundColor: "rgb(38, 87, 124)", paddingTop:'0.07rem',paddingBottom:'0.07rem' }}
+        style={{
+          backgroundColor: "rgb(38, 87, 124)",
+          paddingTop: "0.07rem",
+          paddingBottom: "0.07rem",
+        }}
         className={styles.navPos}
       >
         <div className={`flex justify-between m-2 items-center px-2`}>
@@ -190,22 +202,43 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
 
               {/* wallet icon */}
               {AuthManager.isLoggedIn() && (
-                <svg
-                  onClick={() => setOpenWallet(prevState => !prevState)}
-                  style={{ height: '2rem', width: '2rem' }}
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="white"
-                  className="w-6 h-6 flex"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"
-                  />
-                </svg>
+                <>
+                  <svg
+                    onClick={() => setOpenWallet((prevState) => !prevState)}
+                    style={{ height: "2rem", width: "2rem" }}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="white"
+                    className="w-6 h-6 flex"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"
+                    />
+                  </svg>
+                  {/* Notifications */}
+                  <svg
+                    className="w-6 h-6 text-gray-100 dark:text-white m-5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    onClick={hanldeOpenNotifications}
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 5.365V3m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175 0 .593 0 1.292-.538 1.292H5.538C5 18 5 17.301 5 16.708c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 12 5.365ZM8.733 18c.094.852.306 1.54.944 2.112a3.48 3.48 0 0 0 4.646 0c.638-.572 1.236-1.26 1.33-2.112h-6.92Z"
+                    />
+                  </svg>
+                </>
               )}
 
               {/* <p
@@ -254,8 +287,9 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
 
             {/* Dropdown */}
             <div
-              className={`absolute z-10 ${isDropdownOpen ? "" : "hidden"
-                } rounded-lg shadow`}
+              className={`absolute z-10 ${
+                isDropdownOpen ? "" : "hidden"
+              } rounded-lg shadow`}
               style={{ backgroundColor: "rgb(38, 87, 124)", margin: "0.3vw" }}
             >
               <ul className={`py-1 text-sm text-white`}>
@@ -279,13 +313,37 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
           </div>
         </div>
       </nav>
-      <div style={{ display: "none", position: "absolute", top: '14%', right: "0", maxHeight: '300px' }} ref={sideBar}>
+      <div
+        style={{
+          display: "none",
+          position: "absolute",
+          top: "14%",
+          right: "0",
+          maxHeight: "300px",
+        }}
+        ref={sideBar}
+      >
         <DefaultSidebar />
+      </div>
+      <div
+        style={{
+          display: "none",
+          position: "absolute",
+          top: "14%",
+          right: "12%",
+          maxHeight: "300px",
+          width:"20%",
+          zIndex:"2",
+          backgroundColor:"white"
+        }}
+        ref={notification}
+      >
+        <Notificationbox />
       </div>
       {openWallet && <UserWallet open={openWallet} setOpen={setOpenWallet} />}
     </>
   );
-}
+};
 Navbar.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,

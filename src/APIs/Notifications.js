@@ -9,11 +9,11 @@ const GetAll = async () => {
     headers: { Authorization: `JWT ${token}` },
   });
   if (data === null || data.data.length == 0 || data.data == undefined) {
-    data.data = [{id : 0 , title:'' , message: '' , created_at:'' , read:false , user:''}]
+    data.data = [{id : 0 , title:'' , message: '' , created_at:'' , read:true , user:''}]
   }
   console.log("SUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU")
   console.log(data.data)
-  return data.data;
+  return {data : data.data , count : data.data.filter(m=>m.read == false).length};
 };
 
 export default { GetAll };
