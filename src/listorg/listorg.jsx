@@ -25,6 +25,7 @@ import styles from './style.module.css';
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
 import Navbarparent from '../components/navbarparent';
+import OrganizationList from '../components/organizationlist';
 const colors = ["#0088FE", "#00C49F", "#FFBB28"];
 const delay = 2500;
 
@@ -213,6 +214,7 @@ function ListOrg() {
           </div>
         </div>
       </body>
+      <OrganizationList/>
       <Footer></Footer>
     </div>
   );
