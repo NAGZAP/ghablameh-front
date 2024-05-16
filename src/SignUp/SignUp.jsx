@@ -51,14 +51,14 @@ function SignUp() {
         gender: "M",
         birthdate: "2024-04-04"
       };
-      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/clients/register/', formattedData);
+/*       const response = await axios.post('https://ghablameh.fiust.ir/api/v1/clients/register/', formattedData);
       const accessToken = response.data.tokens.access;
-      localStorage.setItem('token', accessToken);
+      localStorage.setItem('token', accessToken); */
 /*       console.log(accessToken);
  */       /* console.log('Data sent successfully!');  */
 /*       return redirect("/")
 */
-          navigate("/");
+          navigate("/EmailVerify");
     } catch (error) {
 /*       console.error('Error sending data:', error); */
           alert("اکانتی با اطلاعاتی مشابه استفاده شده است.")
