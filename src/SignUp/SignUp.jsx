@@ -25,7 +25,20 @@ const validationSchema = Yup.object({
     .required('لطفا رمز خود را تکرار کنید!'),
   Account: Yup.string().required("لطفا اسمی برای اکانت خود قرار دهید!"),
 });
-
+// ORG
+const validationSchema2 = Yup.object({
+  Firstname: Yup.string().required(' خود را به شکل درست وارد کنید!'),
+  Lastname: Yup.string().required('نام خانوادگی خود را به شکل درست وارد کنید!'),
+  email: Yup.string().email('فرم نادرست برای ایمیل').required('ایمیل خود را به شکل درست وارد کنید!'),
+  phonenumber: Yup.string().matches(/^\d{11}$/,"فرم شماره تلفن باید به شکل درست باشد!").required(),
+  password: Yup.string()
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 'رمز کوتاه تر از ۸ حرف نمی تواند باشد!')
+    .required(),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password')], 'رمز ها باید با هم برابر باشند!')
+    .required('لطفا رمز خود را تکرار کنید!'),
+  Account: Yup.string().required("لطفا اسمی برای اکانت خود قرار دهید!"),
+});
 function SignUp() {
   const [activeTab, setActiveTab] = useState('tabs-Persons');
 
@@ -37,7 +50,9 @@ function SignUp() {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(validationSchema),
   });
-
+  const { register: register2, handleSubmit: handleSubmit2, formState: { errors: errors2 } } = useForm({
+    resolver: yupResolver(validationSchema2),
+  });
   const onSubmit = async (data) => {
     try {
       const formattedPhoneNumber = '+98' + data.phonenumber.slice(1); 
@@ -51,14 +66,37 @@ function SignUp() {
         gender: "M",
         birthdate: "2024-04-04"
       };
-/*       const response = await axios.post('https://ghablameh.fiust.ir/api/v1/clients/register/', formattedData);
-      const accessToken = response.data.tokens.access;
-      localStorage.setItem('token', accessToken); */
+/*       console.log('Normal Person')
+ */     await axios.post('https://ghablameh.fiust.ir/api/v1/clients/register/', formattedData);
+      //const accessToken = response.data.tokens.access;
+      //localStorage.setItem('token', accessToken); 
 /*       console.log(accessToken);
- */       /* console.log('Data sent successfully!');  */
+ */        /* console.log('Data sent successfully! User');   */
 /*       return redirect("/")
 */
           navigate("/EmailVerify");
+    } catch (error) {
+/*       console.error('Error sending data:', error); */
+          alert("اکانتی با اطلاعاتی مشابه استفاده شده است.")
+     }
+  };
+  const onSubmit2 = async (data) => {
+    try {
+      const formattedPhoneNumber = '+98' + data.phonenumber.slice(1); 
+      const formattedData2 = {
+        organization_name : data.organization_name,
+        username: data.Account,
+        first_name: data.Firstname,
+        last_name: data.Lastname,
+        email: data.email,
+        phone_number: formattedPhoneNumber, 
+        password: data.password,
+        gender: "M",
+        birthdate: "2024-04-04"
+      };
+      await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/register/', formattedData2);
+/*       console.log('Data sent successfully! Org');
+ */      navigate("/EmailVerify");
     } catch (error) {
 /*       console.error('Error sending data:', error); */
           alert("اکانتی با اطلاعاتی مشابه استفاده شده است.")
@@ -240,8 +278,153 @@ function SignUp() {
       )}
         {activeTab === 'tabs-Organization' && (
           <div className="opacity-100 transition-opacity duration-150 ease-linear" id="tabs-Organization" role="tabpanel" aria-labelledby="tabs-profile-tab02">
-{/*             <Register/>
- */}          </div>
+                    <div className="opacity-100 transition-opacity duration-150 ease-linear" id="tabs-Persons" role="tabpanel" aria-labelledby="tabs-home-tab02">
+        <form onSubmit={handleSubmit2(onSubmit2)}>
+        <div className="w-72 mt-5 mb-1 mr-20 ml-20">
+            <div className="relative w-full min-w-[200px] h-10">
+              <input 
+              className="peer w-full h-full bg-transparent text-template-custom-blue                      
+              font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"
+              placeholder=" "
+              {...register2('organization_name')} 
+              />
+              <label
+              className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">نام ارگان
+              </label>
+              {errors2.Firstname && <label className={styles.Errors}> {"* نام ارگان "+errors2.Firstname.message}</label>}
+          </div>
+        </div>
+          {/* FName */}
+          <div className="w-72 mt-5 mb-1 mr-20 ml-20">
+            <div className="relative w-full min-w-[200px] h-10">
+              <input 
+              className="peer w-full h-full bg-transparent text-template-custom-blue                      
+              font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"
+              placeholder=" "
+              {...register2('Firstname')} 
+              />
+              <label
+              className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">نام
+              </label>
+              {errors2.Firstname && <label className={styles.Errors}> {"* نام "+errors2.Firstname.message}</label>}
+          </div>
+        </div>
+        {/* ========================================================= */}
+        <br />
+        {/* LName */}
+        <div className="w-72 mb-1 mr-20 ml-20">
+          <div className="relative w-full min-w-[200px] h-10">
+            <input 
+            className="peer w-full h-full bg-transparent text-template-custom-blue                      
+            font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"
+            placeholder=" " 
+            {...register2('Lastname')} 
+            />
+            <label
+              className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">
+              نام خانوادگی
+            </label>
+            {errors2.Lastname && <label className={styles.Errors}> {"*"+errors2.Lastname.message}</label>}
+          </div>
+        </div>
+        <br/>
+        {/* Account */}
+        <div className="w-72 mt-1 mb-1 mr-20 ml-20">
+          <div className="relative w-full min-w-[200px] h-10">
+            <input 
+            className="peer w-full h-full bg-transparent text-template-custom-blue                      
+            font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"
+            placeholder=" " 
+            {...register2('Account')} 
+            />
+            <label
+              className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">
+             نام اکانت
+            </label>
+            {errors2.Account && <label className={styles.Errors}> {"*"+errors2.Account.message}</label>}
+          </div>
+        </div>
+        <br />
+        <div className="w-72 mt-1 mb-1 mr-20 ml-20">
+          <div className="relative w-full min-w-[200px] h-10">
+            <input
+            className="peer w-full h-full bg-transparent text-template-custom-blue                      
+            font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100" 
+              placeholder=" "
+              {...register2('email')}
+            />
+            <label
+              className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">
+              ایمیل
+            </label>
+            {errors2.email && <label className={styles.Errors}> {"*"+errors2.email.message}</label>}
+          </div>
+        </div>
+        <br />
+        <div className="w-72 mt-1 mb-1 mr-20 ml-20">
+          <div className="relative w-full min-w-[200px] h-10">
+            <input
+              className="peer w-full h-full bg-transparent text-template-custom-blue                      
+              font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"             
+              placeholder=" "
+              {...register2('phonenumber')}
+            />
+            <label
+              className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">
+              شماره تلفن
+            </label>
+            {errors2.phonenumber && <label className={styles.Errors}> {"*"+errors2.phonenumber.message}</label>}
+          </div>
+        </div>
+        <br />
+        <div className="w-72 mt-1 mb-1 mr-20 ml-20">
+          <div className="relative w-full min-w-[200px] h-10">
+            <input
+              className="focus:ring-0 peer w-full h-full bg-transparent text-template-custom-blue                      
+              font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"             
+              placeholder=" "
+              type='password'
+              {...register2('password')}
+            />
+            <label
+              className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">
+              رمز عبور
+            </label>
+            {errors2.password && <label className={styles.Errors}> {"*"+errors2.password.message}</label>}
+          </div>
+        </div>            
+            <br />
+          <div className="w-72 mt-1 mb-1 mr-20 ml-20 ">
+            <div className="relative w-full min-w-[200px] h-10">
+                <input
+                  className="peer focus:ring-0 w-full h-full bg-transparent text-template-custom-blue                      
+                  font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-template-custom-orange disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-template-custom-blue placeholder-shown:border-t-template-custom-blue border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[6px] border-template-custom-orange focus:border-template-custom-orange bg-gray-100"                             
+                  placeholder=" "
+                  type="password"
+                  {...register2('confirmPassword')}
+                />
+              <label
+                className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-3.5 before:h-1.5 before:mt-[6px] before:mr-[0px] peer-placeholder-shown:before:border-transparent before:rounded-tr-md before:border-t peer-focus:before:border-t-4 before:border-r peer-focus:before:border-r-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-2 after:mt-[6px] after:ml-[0px] peer-placeholder-shown:after:border-transparent after:rounded-tl-md after:border-t peer-focus:after:border-t-4 after:border-l peer-focus:after:border-l-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-template-custom-gray peer-focus:text-template-custom-orange before:border-template-custom-orange peer-focus:before:!border-template-custom-orange after:border-template-custom-orange peer-focus:after:!border-template-custom-orange">
+                تکرار رمز عبور
+              </label>
+              {errors2.confirmPassword && <label className={styles.Errors}>{"*"+errors2.confirmPassword.message}</label>}
+              </div>
+            </div>
+        <br />
+        <br/>
+        <p>
+        <div className="w-72 mb-1 mr-20 ml-20">
+          <input className={styles.button_sign +" "+"peer w-full h-[40px] bg-template-custom-blue text-white outline-none focus:outline-none disabled:bg-template-custom-orange disabled:border-0 transition-all rounded-full cursor-pointer"} type="submit" value="ثبت نام" />
+        </div>
+        </p>
+          <p>
+            <Link to="/login" className={styles.link_to_signin}>
+              قبلا ثبت نام کرده اید؟
+            </Link>
+          </p>
+      </form>
+        </div>
+         </div>
         )}
       </div>
     </div>
