@@ -160,7 +160,7 @@ const responsive = {
     slidesToSlide: 1, // optional, default to 1.
   },
 };
-const data = await Organizations.Top5Buffets();
+
 
 // const data = [
 //   {
@@ -244,7 +244,8 @@ const Stars = (index) => {
 function hasDecimal(number) {
   return !Number.isInteger(number);
 }
-const UserSlider = () => {
+const UserSlider = async () => {
+  const data = await Organizations.Top5Buffets();
   return (
     <Carousel
       swipeable={false}
