@@ -1,11 +1,16 @@
 import React from "react";
-import Navbar from "../components/Navbar";
+import Navbarparent from "../components/navbarparent";
 import Footer from "../components/footer";
 import WeeklyMenuTable from "../components/WeeklyMenuTable";
 const WeeklyMenuPage = () => {
+
+  // const handleSubmit(e)=>{
+    
+  // }
+
   return (
     <>
-      <Navbar />
+      <Navbarparent />
       <div className=""></div>
       <div style={{ width: "100%" }} className="px-5 py-3">
         <div className="grid grid-cols-3 my-4 text-center">
@@ -18,7 +23,7 @@ const WeeklyMenuPage = () => {
               height="24"
               fill="none"
               viewBox="0 0 24 24"
-              style={{display:"inline"}}
+              style={{ display: "inline" }}
             >
               <path
                 stroke="currentColor"
@@ -39,7 +44,7 @@ const WeeklyMenuPage = () => {
               height="24"
               fill="none"
               viewBox="0 0 24 24"
-              style={{display:"inline"}}
+              style={{ display: "inline" }}
             >
               <path
                 stroke="currentColor"
@@ -51,8 +56,9 @@ const WeeklyMenuPage = () => {
             </svg>
             هفته جاری
           </div>
+
           <button className="scale-90 bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 rounded-2xl mr-20 border-none cursor-pointer mt-1 mb-1" style={{ direction: "ltr" }}>
-            
+
             <svg
               className="w-6 h-6 text-white dark:text-white"
               aria-hidden="true"
@@ -61,7 +67,7 @@ const WeeklyMenuPage = () => {
               height="24"
               fill="none"
               viewBox="0 0 24 24"
-              style={{display:"inline"}}
+              style={{ display: "inline" }}
             >
               <path
                 stroke="currentColor"
@@ -72,6 +78,11 @@ const WeeklyMenuPage = () => {
               />
             </svg>
             بعدی
+          </button>
+        </div>
+        <div className="flex justify-center">
+          <button  className="bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 rounded-2xl mr-10 border-none cursor-pointer mt-1 mb-1" style={{ direction: "ltr", width: "10rem" }}>
+            ثبت رزرو
           </button>
         </div>
         <WeeklyMenuTable />
