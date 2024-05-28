@@ -80,11 +80,6 @@ const WeeklyMenuPage = () => {
             بعدی
           </button>
         </div>
-        <div className="flex justify-center">
-          <button  className="bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 rounded-2xl mr-10 border-none cursor-pointer mt-1 mb-1" style={{ direction: "ltr", width: "10rem" }}>
-            ثبت رزرو
-          </button>
-        </div>
         <WeeklyMenuTable />
       </div>
       <Footer />

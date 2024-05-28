@@ -1,8 +1,61 @@
 import React from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import axios from "axios";
+
+ //post reserve
+ const reserve = (user) => {
+
+  const token = 'JWT ' + localStorage.getItem("token");
+  // const token='JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTI5NDU4LCJpYXQiOjE3MTM1Mzc0NTgsImp0aSI6IjM5ZGQ3ZWZhZGIyNzRhZDZhN2RlY2I4ZTNjNGQwNmU4IiwidXNlcl9pZCI6MzF9.vaM70ID3rWsWzmYSRt6aNT48cqK9iTt5wLLMAQNWzYk'
+
+  const url = 'https://ghablameh.fiust.ir/api/v1/organizations/join-requests/' + user.id + '/'
+
+  try {
+    const response = axios.patch(url, { status: 'A' }, {
+      headers: {
+        'Authorization': token
+      }
+    });
+    if (response.status === 201) {
+      console.log('food reserved successfully');
+      checkToast()
+    } else {
+      const errorData = response.json();
+      console.log('food reservation failed:', errorData);
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+};
+  //toast
+  const checkToast = () => {
+    toast.info(
+      <div className="flex flex-col items-center">
+        <div className="text-center mb-4"> رزرو با موفقیت ثبت شد </div>
+      </div>,
+      {
+        position: 'top-center',
+        autoClose: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        closeButton: true,
+        icon: false,
+      }
+    );
+  };
+
+
 
 const WeeklyMenuTable = () => {
   return (
     <div>
+      {/* <div className="flex justify-center">
+          <button  className="bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 rounded-2xl mr-10 border-none cursor-pointer mt-1 mb-1" style={{ direction: "ltr", width: "10rem" }}>
+            ثبت رزرو
+          </button>
+        </div> */}
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
       <div className="container mx-auto mt-10">
@@ -53,22 +106,20 @@ const WeeklyMenuTable = () => {
                       <span className="text-black">1</span>
                     </div>
                     <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer">
+                      {/* meeeeeeee */}
                       <div className="event bg-purple-400 text-white rounded p-1 text-sm mb-1">
-                        <span className="event-name">
-                          Meeting
-                        </span>
+                        <div className="flex flex-row justify-center items-center">
+
+                          <span className="event-name">
+                            meeting
+                          </span>
+                          <input type="checkbox" onclick={reserve()} className="m-2"></input>
+                        </div>
                         <span className="time">
-                          12:00~14:00
+                          22:00~18:00
                         </span>
                       </div>
-                      <div className="event bg-purple-400 text-white rounded p-1 text-sm mb-1">
-                        <span className="event-name">
-                          Meeting
-                        </span>
-                        <span className="time">
-                          18:00~20:00
-                        </span>
-                      </div>
+{/* meeeeeeee */}
                     </div>
                   </div>
                 </td>
