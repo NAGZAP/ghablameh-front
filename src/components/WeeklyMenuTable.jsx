@@ -8,7 +8,7 @@ import axios from "axios";
   const token = 'JWT ' + localStorage.getItem("token");
   // const token='JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTI5NDU4LCJpYXQiOjE3MTM1Mzc0NTgsImp0aSI6IjM5ZGQ3ZWZhZGIyNzRhZDZhN2RlY2I4ZTNjNGQwNmU4IiwidXNlcl9pZCI6MzF9.vaM70ID3rWsWzmYSRt6aNT48cqK9iTt5wLLMAQNWzYk'
 
-  const url = 'https://ghablameh.fiust.ir/api/v1/organizations/join-requests/' + user.id + '/'
+  const url = 'https://ghablameh.fiust.ir/api/v1/organizations/join-requests/'  + '/'
 
   try {
     const response = axios.patch(url, { status: 'A' }, {
@@ -46,7 +46,13 @@ import axios from "axios";
     );
   };
 
-
+  const handleCheckboxChange = (event) => {
+    // Check if the checkbox is checked
+    if (event.target.checked) {
+      // Call your toast function here
+      checkToast();
+    }
+  };
 
 const WeeklyMenuTable = () => {
   return (
@@ -113,7 +119,7 @@ const WeeklyMenuTable = () => {
                           <span className="event-name">
                             meeting
                           </span>
-                          <input type="checkbox" onclick={reserve()} className="m-2"></input>
+                          <input type="checkbox" onChange={handleCheckboxChange} className="m-2"></input>
                         </div>
                         <span className="time">
                           22:00~18:00
