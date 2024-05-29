@@ -7,39 +7,40 @@ import Navbarparent from './navbarparent';
 
 const Menu = () => {
     const [reservedfoods, setReservedFoods] = useState([]);
-
+    const [fetchedAmount, setFetchedAmount] = useState();
     const [foods, setFoods] = useState([
         {
             "id": 11,
             "client": 1,
             "meal": {
-              "id": 3,
-              "name": "ناهار",
-              "time": "13:00:00"
+                "id": 3,
+                "name": "ناهار",
+                "time": "13:00:00"
             },
             "buffet": {
-              "id": 42,
-              "name": "sfsfs",
-              "created_at": "2024-05-15T20:57:23.718005+03:30",
-              "updated_at": "2024-05-15T20:57:23.718017+03:30",
-              "organization_name": "Amir",
-              "average_rate": 2,
-              "number_of_rates": 2,
-              "image": null
+                "id": 42,
+                "name": "sfsfs",
+                "created_at": "2024-05-15T20:57:23.718005+03:30",
+                "updated_at": "2024-05-15T20:57:23.718017+03:30",
+                "organization_name": "Amir",
+                "average_rate": 2,
+                "number_of_rates": 2,
+                "image": null
             },
             "food": {
-              "id": 6,
-              "name": "ناگت مرغ",
-              "description": "ناگت مرغ"
+                "id": 6,
+                "name": "ناگت مرغ",
+                "description": "ناگت مرغ",
+                "price":40000
             },
             "created_at": "2024-05-29T18:06:34.179119+03:30",
             "updated_at": "2024-05-29T18:06:34.179130+03:30"
-          },
+        },
         {
             id: 6,
             client: 2,
             buffet: { id: 43, name: "Buffet B" },
-            food: { id: 7, name: "پیتزا مارگاریتا", description: "Classic Margherita Pizza" },
+            food: { id: 7, name: "پیتزا مارگاریتا", description: "Classic Margherita Pizza", price:50000 },
             meal: { id: 5, name: "ناهار", time: "13:00:00" },
             created_at: "2024-05-30T12:30:00.000000+03:30",
             updated_at: "2024-05-30T12:35:00.000000+03:30",
@@ -48,7 +49,7 @@ const Menu = () => {
             id: 4,
             client: 3,
             buffet: { id: 44, name: "Buffet C" },
-            food: { id: 8, name: "سالاد فصل", description: "Fresh seasonal salad" },
+            food: { id: 8, name: "سالاد فصل", description: "Fresh seasonal salad", price:50000 },
             meal: { id: 6, name: "صبحانه", time: "09:00:00" },
             created_at: "2024-06-01T08:50:00.000000+03:30",
             updated_at: "2024-06-01T08:55:00.000000+03:30",
@@ -73,13 +74,30 @@ const Menu = () => {
         if (AuthManager.isLoggedIn()) fetchReservations();
     }, []);
 
+    //fetch wallet data
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const token = AuthManager.getToken();
+
+                const response = await axios.get("https://ghablameh.fiust.ir/api/v1/wallets/me/",
+                    { headers: { Authorization: "JWT " + token } }
+                );
+                setFetchedAmount(response.data.balance);
+            } catch (error) {
+                console.error("Error fetching user data: ", error);
+            }
+        };
+        if (AuthManager.isLoggedIn()) fetchUserData();
+    }, []);
+
     //reserve
     const handlereserve = async (food) => {
         const token = 'JWT ' + localStorage.getItem("token");
         const url = 'https://ghablameh.fiust.ir/api/v1/reserve/' + food.id + '/';
-    
+
         const requestData = {
-            client: food.client, 
+            client: food.client,
             meal: {
                 name: food.meal.name,
                 time: food.meal.time,
@@ -92,14 +110,14 @@ const Menu = () => {
                 description: food.food.description,
             }
         };
-    
+
         try {
             const response = await axios.patch(url, requestData, {
                 headers: {
                     'Authorization': token,
                 }
             });
-    
+
             if (response.status === 200) {
                 setReservedFoods(prev => prev.some(item => item.id === food.id) ? prev : [...prev, food]);
                 checkToast(food);
@@ -117,14 +135,14 @@ const Menu = () => {
     const handleDeletereserve = async (food) => {
         const token = 'JWT ' + localStorage.getItem("token");
         const url = 'https://ghablameh.fiust.ir/api/v1/reserve/' + food.id + '/';
-    
+
         try {
             const response = await axios.delete(url, {
                 headers: {
                     'Authorization': token,
                 }
             });
-    
+
             if (response.status === 204) {
                 uncheckedToast(food);
                 setReservedFoods(prev => prev.filter(item => item.id !== food.id));
@@ -189,12 +207,34 @@ const Menu = () => {
         );
     };
 
+    // charge wallet toast
+    const chargeWalletToast = () => {
+        toast.info(
+            <div className="flex flex-col items-center">
+                <div className="text-center mb-4">{` ابتدا کیف پول خود را شارژ کنید `}</div>
+            </div>,
+            {
+                position: 'top-center',
+                autoClose: 3000,
+                closeButton: true,
+                hideProgressBar: false,
+                progress: undefined,
+                icon: false,
+            }
+        );
+    };
+
     // Checkbox change handler
     const handleCheckboxChange = (food, isChecked) => {
+        const amount = parseInt(fetchedAmount, 10);
         if (isChecked) {
-            handlereserve(food)
+            if (food.food.price > amount) {
+                chargeWalletToast();
+            } else {
+                handlereserve(food);
+            }
         } else {
-            handleDeletereserve(food)
+            handleDeletereserve(food);
         }
     };
 
@@ -202,7 +242,6 @@ const Menu = () => {
         <>
             <Navbarparent />
             <div className="container mx-auto p-4">
-
                 {foods.map((food) => (
                     <div key={food.id} className="bottom flex-grow h-30 py-1 cursor-pointer w-40 m-3">
                         <div className="event bg-black text-white rounded p-1 text-sm mb-1">
@@ -216,16 +255,16 @@ const Menu = () => {
                                 />
                             </div>
                             <div className="flex flex-col justify-center items-center">
-                                
+
                                 <span className="meal-name">{food.meal.name}</span>
-                                
+
                                 <span className="meal-time">{food.meal.time}</span>
-                                
-                                <span className="food-price">{food.food.price} تومان</span>
+
+                                <span className="food-price">{food.food.price} تومان</span> 
+                                {/*  Ensure `food.food.price` is the correct path */}
                             </div>
                         </div>
                     </div>
-                    // Ensure `food.food.price` is the correct path
                 ))}
                 <ToastContainer />
             </div>
