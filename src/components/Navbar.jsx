@@ -329,9 +329,9 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
     </>
   );
 };
-Navbar.propTypes = {
-  open: PropTypes.bool.isRequired,
-  setOpen: PropTypes.func.isRequired,
-};
+// Navbar.propTypes = {
+//   open: PropTypes.bool.isRequired,
+//   setOpen: PropTypes.func.isRequired,
+// };
 
 export default Navbar;
