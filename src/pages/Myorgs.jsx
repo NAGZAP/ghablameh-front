@@ -93,7 +93,7 @@ const Myorgs = () => {
 
   const handleSearch = () => {
     const filtered = orgs.filter((item) =>
-      item.name.toLowerCase().includes(searchData.current.value.toLowerCase())
+      item.organization_name.toLowerCase().includes(searchData.current.value.toLowerCase())
     );
     setFilteredOrgs(filtered);
   };
