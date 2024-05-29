@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthManager from './src/APIs/AuthManager';
+import AuthManager from '../APIs/AuthManager';
 import axios from 'axios';
-import Navbarparent from './src/components/navbarparent';
+import Navbarparent from './navbarparent';
 
 const Menu = () => {
     const [reservedfoods, setReservedFoods] = useState([]);

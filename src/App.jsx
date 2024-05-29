@@ -29,7 +29,7 @@ import Notificationbox from "./components/Notificationbox";
 import OrganizationList from "./components/organizationlist";
 import OrgPanel from "./components/OrgPanel"
 import Boofeh from "./BoofehsOfOrganization/Boofeh";
-import Menu from "../reservefood";
+import Menu from "./components/reservefood";
 function App() {
   return (
     <BrowserRouter>
