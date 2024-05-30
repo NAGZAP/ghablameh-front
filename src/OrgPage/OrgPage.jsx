@@ -17,7 +17,7 @@ function OrgPage() {
 
   // Define your API endpoint and token
   const API_ENDPOINT = 'https://ghablameh.fiust.ir/api/v1/buffets/';
-  const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MTYxODEzLCJpYXQiOjE3MTQ1Njk4MTMsImp0aSI6ImQxZTM5Y2I4Yzk3ODQxMGFiYjA0NTVkN2U2M2QwMWUwIiwidXNlcl9pZCI6Mn0.CUEgrbFFFKgk5sy7VfqlKaWVqqg5Gv6hSbDZdrIbetA';
+  const TOKEN = localStorage.getItem('token');
 
   useEffect(() => {
     // Axios request configuration
