@@ -109,75 +109,33 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
   function UserAvatar() {
     if (AuthManager.isLoggedIn()) {
       let displayName;
+      let image_src;
+  
       if (userType === 2 && userData) {
         displayName = userData.first_name;
+        image_src = userData.image_url ? "https://ghablameh.fiust.ir" + userData.image_url : null;
       } else if (userType === 1 && adminData) {
         displayName = adminData.admin_first_name;
+        image_src = adminData.image_url ? "https://ghablameh.fiust.ir" + adminData.image_url : null;
       }
-      if (displayName) {
-        return (
-          <div className={`flex items-center p-1`}>
-            {userData?.profilePicture ? (
-              <img
-                src={userData.profilePicture}
-                alt="Profile"
-                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-              />
-            ) : (
-              <Avatar
-                onClick={toggleDropdown}
-                // Using firstName safely obtained from optional chaining above
-                name={displayName}
-                size="60"
-                round={true}
-                maxInitials={1}
-              />
-            )}
-          </div>
-        );
-      }
+  
+      return (
+        <div className={`flex items-center p-1`}>
+          {image_src ? (
+            <img src={image_src} onClick={toggleDropdown} alt="Profile" style={{ width: "50px", height: "50px", borderRadius: "50%" }}/>
+          ) : (
+          <Avatar
+              onClick={toggleDropdown}
+              name={displayName}
+              size="60"
+              round={true}
+              maxInitials={1}
+            />
+          )}
+        </div>
+      );
     }
   }
-
-  // function UserAvatar() {
-  //   if (AuthManager.isLoggedIn()) {
-  //     let displayName;
-  //     let image_url;
-      
-  //     if (userType === 2 && userData) {
-  //       displayName = userData.first_name;
-  //       image_url = userData.image_url; // Assuming the correct property name is image_url
-  //     } else if (userType === 1 && adminData) {
-  //       displayName = adminData.admin_first_name;
-  //       image_url = adminData.image_url; // Assuming the correct property name is image_url
-  //     }
-  
-  //     if (displayName) {
-  //       return (
-  //         <div className={`flex items-center p-1`}>
-  //           {image_url ? (
-  //             <img
-  //               src={image_url}
-  //               alt="Profile"
-  //               style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-  //             />
-  //                           // <div className="bg-white shadow-md rounded-lg overflow-hidden" style={{ border: '1px solid rgb(38, 87, 124)',width: "50px", height: "50px", borderRadius: "50%"  }}>
-  //               //           <img src={image_url} className=" object-cover" />
-  //               //           </div>
-  //           ) : (
-  //             <Avatar
-  //               onClick={toggleDropdown}
-  //               name={displayName}
-  //               size="60"
-  //               round={true}
-  //               maxInitials={1}
-  //             />
-  //           )}
-  //         </div>
-  //       );
-  //     }
-  //   }
-  // }
 
   function Username() {
     if (AuthManager.isLoggedIn()) {
