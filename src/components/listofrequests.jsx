@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import OrgSidebar from './orgPanelSidebar'
 import Navbarparent from './navbarparent';
+import { red } from '@mui/material/colors';
 function ListOfJoinRequests() {
   const [approved, setApproved] = useState([]);
   const [rejected, setRejected] = useState([]);
@@ -144,7 +145,7 @@ function ListOfJoinRequests() {
   }
 
   const ListOfUserRequests = () => (
-    <div style={{ border: '1px solid rgb(38, 87, 124)', borderRadius: '8px', width: '50vw', }} className="w-64  font-medium text-gray-900 bg-white rounded-lg">
+    <div style={{ border: '1px solid rgb(38, 87, 124)', borderRadius: '8px', width: '40vw',backgroundColor:'rgba(255, 255, 255,0.6)' }} className="w-64  font-medium text-gray-900  rounded-lg">
       <h2 className="text-xl font-semibold text-gray-800  text-center pt-3 pb-2 pr-3" style={{ borderBottom: '1px solid rgb(38, 87, 124)' }}> لیست درخواست ها </h2>
 
 
@@ -159,19 +160,18 @@ function ListOfJoinRequests() {
                   <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleOpenModal(user)} />
 
                 </div>
-                <div style={{ backgroundColor: 'rgb(38, 87, 124)', color: 'white', borderRadius: '5px', height: '35px', width: '65px' }} className="rounded p-1 mx-5 flex  items-center justify-center">
-                  {user.buffet}
-                </div>
+                {/* <div style={{ backgroundColor: 'rgb(38, 87, 124)', color: 'white', borderRadius: '5px', height: '3vh', width: '5vw' }} className="rounded p-1 mx-5 flex  items-center justify-center">
+                  {user.organization_name}
+                </div> */}
                 <div className="flex items-center">
                   <div className="ml-2 text-base">
-                    <div style={{ fontSize: '1.2rem' }}>{user.firstName} {user.lastName}</div>
+                    <div style={{ fontSize: '1.2rem' }}>{user.client_name}</div>
                   </div>
-                  {user.avatar ? (
-                    <img src={user.avatar} alt={`${user.firstName} ${user.lastName}`} className="h-10 w-10 rounded-full" />
+                  {user.img_url ? (
+                    <img src={user.avatar} alt={`${user.client_name}`} className="h-10 w-10 rounded-full" />
                   ) : (
-                    <Avatar name={`${user.firstName} ${user.lastName}`} size={40} round={true} maxInitials={1} />
+                    <Avatar name={`${user.client_name}`} size={40} round={true} maxInitials={1} />
                   )}
-
                 </div>
 
 
@@ -181,26 +181,27 @@ function ListOfJoinRequests() {
           )}
         </ul>
       )}
+      
       {!isBigScreen && requests.length > 0 && (
-        <ul className="w-full">
+        <ul style={{ width: '50%'}}>
           {requests.map((user, index) => (
             <li key={index} style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }} className="px-4 py-2">
-              <div className="flex items-center p-2 flex-row justify-between">
+              <div className="flex justify-between "> 
+{/* justify-end */}
                 <div className="flex items-center">
                   <CheckIcon className="h-6 w-6 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => checkToast(user)} />
-                  <XIcon className="h-6 w-6 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleOpenModal(user)} />
+                  <XIcon className="h-6 w-6 cursor-pointer ml-6" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleOpenModal(user)} />
+                </div>
 
-                </div>
-                <div style={{ backgroundColor: 'rgb(38, 87, 124)', color: 'white', borderRadius: '5px', height: '35px', width: '65px' }} className="rounded p-1 mx-5 flex  items-center justify-center">
-                  {user.buffet}
-                </div>
-                <div className="flex items-center">
-                  <div className="ml-2 text-base">
-                    <div style={{ fontSize: '1.2rem' }}>{user.firstName} {user.lastName}</div>
+                <div className="flex items-center flex-row">
+                  <div className=" text-base">
+                    <div style={{ fontSize: '1.2rem' }}>{user.client_name}</div>
+                  </div>
+                  <div>
+                  <div style={{ fontSize: '1.2rem', marginRight:'2rem'  }}> -{index+1} </div>
                   </div>
 
                 </div>
-
 
               </div>
             </li>
