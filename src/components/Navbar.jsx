@@ -30,23 +30,73 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
   const notification = useRef(null);
   // const [openWallet, setOpenWallet] = useState(false);
 
-  //fetch user data
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        // https://jsonplaceholder.typicode.com/users/1
-        const token = AuthManager.getToken();
+  // //fetch user data
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       // https://jsonplaceholder.typicode.com/users/1
+  //       const token = AuthManager.getToken();
 
-        const response = await axios.get(
-          "https://ghablameh.fiust.ir/api/v1/clients/me/",
-          { headers: { Authorization: "JWT " + token } }
-        );
-        setUserData(response.data);
+  //       const response = await axios.get(
+  //         "https://ghablameh.fiust.ir/api/v1/clients/me/",
+  //         { headers: { Authorization: "JWT " + token } }
+  //       );
+  //       setUserData(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching user data: ", error);
+  //     }
+  //   };
+
+  //   const fetchOrgData = async () => {
+  //     try {
+  //       // https://jsonplaceholder.typicode.com/users/1
+  //       const token = AuthManager.getToken();
+
+  //       const response = await axios.get(
+  //         "https://ghablameh.fiust.ir/api/v1/organizations/me/",
+  //         { headers: { Authorization: "JWT " + token } }
+  //       );
+  //       setUserData(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching user data: ", error);
+  //     }
+  //   };
+
+  //   if (AuthManager.isLoggedIn() && AuthManager.orguser()==1 ) fetchOrgData();
+  //   else if (AuthManager.isLoggedIn() && AuthManager.orguser()==2 ) fetchUserData();
+  // }, []);
+
+  useEffect(() => {
+    const decideAndFetchData = async () => {
+      try {
+        
+        const token = AuthManager.getToken();
+        const userType = await AuthManager.orguser();
+        // alert(userType)
+        
+        if (userType === 1) {
+          const orgResponse = await axios.get(
+            "https://ghablameh.fiust.ir/api/v1/organizations/me/",
+            { headers: { Authorization: "JWT " + token } }
+          );
+          console.log(orgResponse.data)
+          setUserData(orgResponse.data);
+        } else if (userType === 2) {
+          const userResponse = await axios.get(
+            "https://ghablameh.fiust.ir/api/v1/clients/me/",
+            { headers: { Authorization: "JWT " + token } }
+          );
+          console.log(userResponse.data)
+          setUserData(userResponse.data);
+        }
       } catch (error) {
-        console.error("Error fetching user data: ", error);
+        console.error("Error: ", error);
       }
     };
-    if (AuthManager.isLoggedIn()) fetchUserData();
+  
+    if (AuthManager.isLoggedIn()) {
+      decideAndFetchData();
+    }
   }, []);
 
   //dropdown
