@@ -310,11 +310,11 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
                 style={{ paddingRight: "1.5vw" }}
               >
                 <Link
-                  to="/last"
+                  to="/"
                   className={`text-white`}
                   style={{ fontSize: "1.3rem", marginLeft: "0.5vw" }}
                 >
-                  لیست رزروها
+                  صفحه اصلی
                 </Link>
               </div>
             ))}
