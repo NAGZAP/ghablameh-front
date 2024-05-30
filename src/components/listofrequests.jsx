@@ -8,7 +8,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import DefaultSidebar from './orgPanelSidebar'
+import OrgSidebar from './orgPanelSidebar'
 import Navbarparent from './navbarparent';
 function ListOfJoinRequests() {
   const [approved, setApproved] = useState([]);
@@ -239,7 +239,7 @@ function ListOfJoinRequests() {
         <Navbarparent />
         <div className='flex flex-row'>
 
-          <DefaultSidebar />
+          <OrgSidebar />
           <div className='flex flex-grow justify-center items-center m-3'>
             {ListOfUserRequests()}
           </div>

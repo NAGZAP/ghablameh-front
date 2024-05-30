@@ -5,7 +5,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import Footer from './footer'
-import DefaultSidebar from './orgPanelSidebar';
+import OrgSidebar from './orgPanelSidebar';
 import Navbar from './Navbar';
 import Navbarparent from './navbarparent';
 const Update = () => {
@@ -273,7 +273,7 @@ const Update = () => {
     <div className={`${styles.bg} min-h-screen flex flex-col`}>
   <Navbarparent/>
   <div className='flex flex-grow'> 
-    <DefaultSidebar />
+    <OrgSidebar />
     <div className='flex flex-grow justify-center items-center'>
       {myForm()}
     </div>

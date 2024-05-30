@@ -3,7 +3,7 @@ import axios from 'axios';
 import styles from './OrgPage.module.css';
 import Footer from '../components/footer';
 import { Link } from 'react-router-dom';
-import DefaultSidebar from '../components/orgPanelSidebar.jsx';
+import OrgSidebar from '../components/orgPanelSidebar.jsx';
 import Navbarparent from '../components/navbarparent.jsx';
 
 function OrgPage() {
@@ -141,7 +141,7 @@ function OrgPage() {
         <div className={styles.app}>
           <Navbarparent />
           <div className='flex flex-row justify-between items-center'>
-          <DefaultSidebar/>
+          <OrgSidebar/>
           <div className={`${styles.itemscenter} flex-grow`}>
             {showModal && (
               <div className="fixed z-10 inset-0 overflow-y-auto">
