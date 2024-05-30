@@ -1,6 +1,46 @@
 import styles from "./EmailVerify.module.css"
+import axios from 'axios';
+import { Link, redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 function EmailVerify(){
+    const navigate = useNavigate();
+    const Resend = async() =>{
+        ///verification/resend/
+        try{
+        const formattedData = {
+            email: localStorage.getItem('emailtoverify'),
+        }
+        const response = await axios.post('https://ghablameh.fiust.ir/api/v1/verification/resend/', formattedData);
+        alert(' کد مجددا برای شما ارسال شد!')
+    
+    }     catch (error) {
+            // console.error('Error sending data:', error);
+           alert("اکانت درست نیست یا اکانت شما قبلا تایید شده!")
+      }
+    } 
+    const ChecVerfiCode = async(e) => {
+        //console.log(e)
+        try{
+        const formattedData = {
+            code: e,
+            email: localStorage.getItem('emailtoverify'),
+        }
+        //console.log(e)
+        //console.log(localStorage.getItem('emailtoverify'))
+         await axios.post('https://ghablameh.fiust.ir/api/v1/verification/verify_email/', formattedData);
+        localStorage.setItem('emailtoverify', '');
+        //const accessToken = response.data.tokens.access;
+        //localStorage.setItem('token', accessToken);
+        alert("اکانت شما با موفقیت ثبت شد!")
+        navigate("/");
+    } catch (error) {
+                    //console.error('Error sending data:', error);
+                  alert("کد تاییدی درست نیست یا اکانت شما قبلا تایید شده!")
+             }
+        
+          };
      return(
         <div className={styles.container +' '+ "grid grid-cols-7 grid-rows-7"}>
             <div className="col-start-2 col-span-5 row-start-2 row-span-5 bg-white h-full bg-opacity-60 rounded-lg m-5 grid grid-rows-5 grid-cols-5">
@@ -16,11 +56,11 @@ function EmailVerify(){
                         <input type="text" maxlength="1" class="lg:scale-100 md:scale-100 scale-75 lg:mr-2 md:mr-2  text-center py-2 lg:w-10 md:w-10 w-8 inline border-template-custom-blue rounded-lg text-sm focus:border-template-custom-orange focus:ring-template-custom-orange disabled:opacity-150 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"/>
                         <input type="text" maxlength="1" class="lg:scale-100 md:scale-100 scale-75 lg:mr-2 md:mr-2  text-center py-2 lg:w-10 md:w-10 w-8 inline border-template-custom-blue rounded-lg text-sm focus:border-template-custom-orange focus:ring-template-custom-orange disabled:opacity-150 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"/>
                          */}
-                        <input type="text" maxlength="5" class="lg:scale-100 md:scale-100 scale-75 text-center py-2 lg:w-48 md:w-48 w-32 inline border-template-custom-blue rounded-lg text-sm focus:border-template-custom-orange focus:ring-template-custom-orange disabled:opacity-150 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"/>
+                        <input type="text" id="Code" maxlength="5" class="lg:scale-100 md:scale-100 scale-75 text-center py-2 lg:w-48 md:w-48 w-32 inline border-template-custom-blue rounded-lg text-sm focus:border-template-custom-orange focus:ring-template-custom-orange disabled:opacity-150 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"/>
                          <br/>
-                        <button className={styles.button_sign+" "+"text-center  lg:scale-90 md:scale-90 scale-75"}>ثبت کد</button>
+                        <button onClick={() => ChecVerfiCode(document.getElementById('Code').value)}  className={styles.button_sign+" "+"text-center  lg:scale-90 md:scale-90 scale-75"}>ثبت کد</button>
                         <br/>
-                        <button className="dfad text-template-custom-blue hover:text-template-custom-orange">ارسال مجدد</button>
+                        <button onClick={() => Resend()}className="dfad text-template-custom-blue hover:text-template-custom-orange">ارسال مجدد</button>
                     </div>
                 </div>
             </div>
