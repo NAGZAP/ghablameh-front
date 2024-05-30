@@ -70,40 +70,16 @@ export default function DefaultSidebar() {
             },
           }}
         >
-          {/* <MenuItem component={<Link to="/Update" />}>
-            تغییر اطلاعات کاربری
-          </MenuItem> */}
-          <MenuItem component={<Link to="/weeklymenu2" />}>
-            منو هفتگی بوفه
+          <MenuItem component={<Link to='/Updateorg'/>}>
+        تغییر اطلاعات سازمان          
+        </MenuItem>
+          <MenuItem component={<Link to='/ListOfJoinRequests' />}>
+          درخواست های عضویت 
           </MenuItem>
-          <MenuItem component={<Link to="/weeklymenu" />}>
-            برنامه هفتگی سازمانی
+          <MenuItem component={<Link to='/orgpage' />}>
+          مدیریت بوفه ها 
           </MenuItem>
-          <MenuItem component={<Link to="/last" />}>رزروها</MenuItem>
-          <MenuItem component={<Link to="/myorgs" />}>درخواست های عضویت</MenuItem>
-          <MenuItem component={<Link to="/chooseOrg" />}>درخواست عضویت</MenuItem>
         </Menu>
-
-
-        {/* <ListItem>
-          <ListItemPrefix>
-            <Link to='/Updateorg'>تغییر اطلاعات سازمان</Link>
-          </ListItemPrefix>
-        </ListItem>
-
-        <ListItem>
-          <ListItemPrefix>
-            <Link to='/ListOfJoinRequests'> درخواست های عضویت </Link>
-          </ListItemPrefix>
-        </ListItem>
-
-        <ListItem>
-          <ListItemPrefix>
-            <Link to='/orgpage'> مدیریت بوفه ها </Link>
-          </ListItemPrefix>
-        </ListItem> */}
-
-
       </Sidebar>
       );
     }

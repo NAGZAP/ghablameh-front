@@ -238,8 +238,6 @@ function ListOfJoinRequests() {
       <div className={`${styles['main-content']} flex flex-col`}>
         <Navbarparent />
         <div className='flex flex-row'>
-
-          <OrgSidebar />
           <div className='flex flex-grow justify-center items-center m-3'>
             {ListOfUserRequests()}
           </div>

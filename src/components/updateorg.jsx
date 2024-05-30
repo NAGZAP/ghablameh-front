@@ -272,8 +272,7 @@ const Update = () => {
   return (
     <div className={`${styles.bg} min-h-screen flex flex-col`}>
   <Navbarparent/>
-  <div className='flex flex-grow'> 
-    <OrgSidebar />
+  <div className='flex flex-grow'>
     <div className='flex flex-grow justify-center items-center'>
       {myForm()}
     </div>

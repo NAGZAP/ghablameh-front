@@ -34,7 +34,6 @@ const GetOrganizationBuffets = async () => {
     const baseUrl = "https://ghablameh.fiust.ir/api/v1/";
     const token = requests.getToken();
     let data = null;
-    alert("TESSSSSSSSSSSSSSSSST");
     data = await axios.get(baseUrl + "buffets/" , {headers:{Authorization:`JWT ${token}`}});
     return data.data;
 }

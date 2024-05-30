@@ -141,7 +141,7 @@ function OrgPage() {
         <div className={styles.app}>
           <Navbarparent />
           <div className='flex flex-row justify-between items-center'>
-          <OrgSidebar/>
+
           <div className={`${styles.itemscenter} flex-grow`}>
             {showModal && (
               <div className="fixed z-10 inset-0 overflow-y-auto">

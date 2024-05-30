@@ -20,7 +20,7 @@ const Home = () => {
 
     return (
         <div>
-            {flag === 1 ? <HomeOrgPage /> : <ListOrg />}
+            {flag === 1 ? <ListOrg /> : <ListOrg />}
         </div>
     );
 };
