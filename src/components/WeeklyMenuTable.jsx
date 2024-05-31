@@ -3,7 +3,7 @@ import React from "react";
 const WeeklyMenuTable = () => {
   return (
     <div classNmae=''>
-    <table class="border-collapse border w-3/4  border-blue-500 max-w-xl m-10 mx-auto">
+    <table class="border-collapse border w-full  border-blue-500 m-10 mx-auto">
   <thead>
     <tr class="bg-blue-500 text-white ">
       <th class="py-2 px-4 text-right">روز</th>
