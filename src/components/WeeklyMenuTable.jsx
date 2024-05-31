@@ -14,7 +14,7 @@ const WeeklyMenuTable = () => {
   </thead>
   <tbody>
     <tr class="bg-white border-b border-blue-500">
-    <td class="py-2 px-4 text-center h-14">شنبه</td>
+      <td class="py-2 px-4 text-center h-14">شنبه</td>
       <td class="py-2 px-4 text-center	"></td>
       <td class="py-2 px-4 text-center	"></td>
     </tr>

@@ -16,11 +16,11 @@ const FoodTable = () => {
 
     const foodrow = useRef(null);
     const currentBuffet = useRef(null);
-
     const [mealsId, setMealsId] = useState([]);
     const [meals, setMeals] = useState([]);
     const [foodddd, setFoods] = useState([]);
     const [yaali, setYaali] = useState([]);
+    const [finalfoods , setFinalfoods] = useState([]);
     //fetch buffets
     useEffect(() => {
         const fetchData = async () => {
@@ -56,7 +56,7 @@ const FoodTable = () => {
             //     setFoods((await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/"+meal.id+"/meals/", { headers: { Authorization: `JWT ${token}`} })
             // ).data)))
 
-            let listt=[];
+            const listt=[];
             for(let meal of foods.data){
                 let gottendata=(await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/"+meal.id+"/meals/", { headers: { Authorization: `JWT ${token}`} })).data 
                 // console.log("gottendata: ", gottendata)
@@ -67,18 +67,17 @@ const FoodTable = () => {
 
             // console.log("foods", foodddd)
             
-
-            let listt2=[];
+            const listt2 = [];
             for(let meal of listt){
                 for(let meal1 of meal){
                 console.log(meal)
                 let gottendata2=(await axios.get("https://ghablameh.fiust.ir/api/v1/foods/" +  meal1.id  + "/", { headers: { Authorization: `JWT ${token}`} })).data 
-                console.log("gottendata2: ", gottendata2)
+                console.log("gottendata2: ", gottendata2);
                 listt2.push(gottendata2)
             }}
-            console.log("listt: ", listt2)
+            console.log("listt22: ", listt2)
             // setFoods(listt)
-
+            setFinalfoods(listt2);
 
             // foodddd.data.map(async meal=> (
             //     setFoods((await axios.get("https://ghablameh.fiust.ir/api/v1/foods/" +  meal.id  + "/", { headers: { Authorization: `JWT ${token}`} })
@@ -142,13 +141,13 @@ const FoodTable = () => {
                         {/* foods */}
                         <tbody>
                             <tr className="bg-white  " style={{ borderBottom: '1px solid rgb(38, 87, 124)' }}>
-
+{/* 
                                 <tr className="bg-white border-b flex flex-col ">
 
                                     {mealsId?.map((meal, index) => (
                                         <>
+                                        
                                             <th key={index} className="py-2 px-4">
-                                                {/* <div>{meal.name}{meal.id}{meal.date}</div> */}
 
                                                 <td className="py-2 px-4">{meal.date}</td>
                                                 <td className="py-2 px-4">{meal.date}</td>
@@ -160,7 +159,7 @@ const FoodTable = () => {
 
 
                                 </tr>
-                                <td className="py-2 px-4"></td>
+                                <td className="py-2 px-4"></td> */}
                             </tr>
 
                         </tbody>
