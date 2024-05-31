@@ -10,7 +10,7 @@ export default function DefaultSidebar() {
         const checkUserType = async () => {
             const userType = await AuthManager.orguser();
             setFlag(userType);
-            console.log(userType)
+            // console.log(userType)
         };
 
         checkUserType();

@@ -19,8 +19,8 @@ const FoodTable = () => {
 
     const [mealsId, setMealsId] = useState([]);
     const [meals, setMeals] = useState([]);
-    const [food, setFoods] = useState([]);
-    const [yaali,setyaali]= useState([]);
+    const [foodddd, setFoods] = useState([]);
+    const [yaali, setYaali] = useState([]);
     //fetch buffets
     useEffect(() => {
         const fetchData = async () => {
@@ -37,7 +37,7 @@ const FoodTable = () => {
         fetchData();
     }, []);
 
-    // buffet, meal
+    // buffet, meal, food
     const handleBuffetChange = async () => {
         let buffetId = currentBuffet.current.value;
         let data = [];
@@ -49,114 +49,127 @@ const FoodTable = () => {
 
             let foods = await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/", { headers: { Authorization: `JWT ${token}` } });
             setMeals(foods.data)
-            // console.log("meals", meals)
-
-            // meals.map(async (meal,index)=> (
-            //     // let food = await axios.get("https://ghablameh.fiust.ir/api/v1/foods/" + meal.id + "/")
-            //     setFoods((await axios.get("https://ghablameh.fiust.ir/api/v1/foods/" + "7" + "/")
-            // ).data)
-            // ))
+            // console.log(foods.data)
             // console.log("foods", foods)
-        }   
+
+            // foods.data.map(async meal=> (
+            //     setFoods((await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/"+meal.id+"/meals/", { headers: { Authorization: `JWT ${token}`} })
+            // ).data)))
+
+            let listt=[];
+            for(let meal of foods.data){
+                let gottendata=(await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/"+meal.id+"/meals/", { headers: { Authorization: `JWT ${token}`} })).data 
+                // console.log("gottendata: ", gottendata)
+                listt.push(gottendata)
+            }
+            console.log("listt: ", listt)
+            // setFoods(listt)
+
+            // console.log("foods", foodddd)
+            
+
+            let listt2=[];
+            for(let meal of listt){
+                for(let meal1 of meal){
+                console.log(meal)
+                let gottendata2=(await axios.get("https://ghablameh.fiust.ir/api/v1/foods/" +  meal1.id  + "/", { headers: { Authorization: `JWT ${token}`} })).data 
+                console.log("gottendata2: ", gottendata2)
+                listt2.push(gottendata2)
+            }}
+            console.log("listt: ", listt2)
+            // setFoods(listt)
+
+
+            // foodddd.data.map(async meal=> (
+            //     setFoods((await axios.get("https://ghablameh.fiust.ir/api/v1/foods/" +  meal.id  + "/", { headers: { Authorization: `JWT ${token}`} })
+            // ).data)
+        
+            // ))
+            // console.log("token: ",token)
+            // console.log("foods", foods)
+        }
     }
 
-    // fetch data
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const token = AuthManager.getToken();
-                const response = await axios.get("https://ghablameh.fiust.ir/api/v1/foods/7/",
-                    { headers: { Authorization: "JWT " + token } }
-                );
-                setyaali(response.data);
-                console.log("foods", yaali)
-            } catch (error) {
-                console.error("Error fetching foods: ", error);
-            }
-        };
-        if (AuthManager.isLoggedIn()) fetchUserData();
-    }, []);
+    return (
+        <>
+            <Navbar />
+            <div className=""></div>
+            <div style={{ width: "100%" }} className="px-5 py-3">
+                <div className="grid grid-cols-3 my-4 text-center"></div>
 
-
-
-return (
-    <>
-        <Navbar />
-        <div className=""></div>
-        <div style={{ width: "100%" }} className="px-5 py-3">
-            <div className="grid grid-cols-3 my-4 text-center"></div>
-
-            {/* buffets */}
-            <div className="grid grid-cols-3 w-full">
-                <div></div>
-                <div className="content-center w-full">
-                    <select className="rounded w-full" onChange={handleBuffetChange} ref={currentBuffet}>
-                        {loading ? (
-                            <option>Loading...</option>
-                        ) : (
-                            data.map((item) => (
-                                <option key={item.id} value={item.id}>
-                                    {item.name}
-                                </option>
-                            ))
-                        )}
-                    </select>
+                {/* buffets */}
+                <div className="grid grid-cols-3 w-full">
+                    <div></div>
+                    <div className="content-center w-full">
+                        <select className="rounded w-full" onChange={handleBuffetChange} ref={currentBuffet}>
+                            {loading ? (
+                                <option>Loading...</option>
+                            ) : (
+                                data.map((item) => (
+                                    <option key={item.id} value={item.id}>
+                                        {item.name}
+                                    </option>
+                                ))
+                            )}
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            {/* table */}
-            <div>
-                <table className="border-collapse border w-full  border-blue-500 m-10 mx-auto bg-op" style={{ border: '1px solid rgb(38, 87, 124)' }}>
-                    {/* meals */}
-                    <thead>
-                        <tr className=" text-white " style={{ backgroundColor: 'rgb(38, 87, 124)' }}>
-                            <th className="py-2 px-4 text-right">روز</th>
+                {/* table */}
+                <div>
+                    <table className="border-collapse border w-full  border-blue-500 m-10 mx-auto bg-op" style={{ border: '1px solid rgb(38, 87, 124)' }}>
+                        {/* meals */}
+                        <thead>
+                            <tr className=" text-white " style={{ backgroundColor: 'rgb(38, 87, 124)' }}>
+                                <th className="py-2 px-4 text-right">روز</th>
 
-                            {meals?.map((meal, index) => (
-                                <>
-                                    <th key={index} className="py-2 px-4">
-                                        <div>{meal.name}</div>
-                                        <div key={index} className="py-2 px-4 font-light text-sm">{meal.time}</div>
-                                    </th>
+                                {meals?.map((meal, index) => (
+                                    <>
+                                        <th key={index} className="py-2 px-4">
+                                            <div>{meal.name}</div>
+                                            <div key={index} className="py-2 px-4 font-light text-sm">{meal.time}</div>
+                                        </th>
 
-                                </>
-                            ))}
-
-
-                        </tr>
-                    </thead>
-                    {/* days */}
-
-
-                    {/* foods */}
-                    <tbody>
-                        <tr className="bg-white  " style={{ borderBottom: '1px solid rgb(38, 87, 124)' }}>
-
-                            <tr className="bg-white border-b flex flex-col ">
-
-                                {mealsId?.map((meal, index) => (
-                                <>
-                                    <th key={index} className="py-2 px-4">
-                                        {/* <div>{meal.name}{meal.id}{meal.date}</div> */}
-                                        
-                                        <td className="py-2 px-4">{meal.date}</td>
-                                    </th>
-
-                                </>
-                            ))}
+                                    </>
+                                ))}
 
 
                             </tr>
-                            <td className="py-2 px-4"></td>
-                        </tr>
+                        </thead>
+                        {/* days */}
 
-                    </tbody>
-                </table>
+
+                        {/* foods */}
+                        <tbody>
+                            <tr className="bg-white  " style={{ borderBottom: '1px solid rgb(38, 87, 124)' }}>
+
+                                <tr className="bg-white border-b flex flex-col ">
+
+                                    {mealsId?.map((meal, index) => (
+                                        <>
+                                            <th key={index} className="py-2 px-4">
+                                                {/* <div>{meal.name}{meal.id}{meal.date}</div> */}
+
+                                                <td className="py-2 px-4">{meal.date}</td>
+                                                <td className="py-2 px-4">{meal.date}</td>
+                                                listt2
+                                            </th>
+
+                                        </>
+                                    ))}
+
+
+                                </tr>
+                                <td className="py-2 px-4"></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <Footer />
-    </>
-);
+            <Footer />
+        </>
+    );
 };
 
 export default FoodTable;
