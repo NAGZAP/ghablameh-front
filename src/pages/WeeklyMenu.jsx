@@ -101,6 +101,7 @@ const WeeklyMenuPage = () => {
   let year = date.getFullYear();
   //alert(year)
   const foodrow = useRef(null);
+  const foodrow2 = useRef(null);
   const currentBuffet = useRef(null);
   const next = () => {
     date.setMonth(date.getMonth() + 1);
@@ -133,6 +134,7 @@ const WeeklyMenuPage = () => {
       let foods = await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/", { headers: { Authorization: `JWT ${token}` } });
       if (foods.data) {
         foodrow.current.innerText = foods.data[0].name;
+        foodrow2.current.innerText = foods.data[1].name;
       }
     }
   }
@@ -167,7 +169,6 @@ const WeeklyMenuPage = () => {
             className="scale-90 bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 rounded-2xl border-none cursor-pointer mt-1 mb-1"
             style={{ direction: "ltr" }}
           >
-<<<<<<< HEAD
             <div className="rounded-lgpy-3">
 
               <svg
@@ -190,30 +191,6 @@ const WeeklyMenuPage = () => {
               </svg>
               ماه فعلی
             </div>
-=======
-          <div className="rounded-lg px-5 py-3 text-center	items-center">
-
-            <svg
-              className="w-6 h-6 text-white dark:text-white "
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-              style={{ display: "inline" }}
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"
-              />
-            </svg>
-ماه فعلی    
-          </div>
->>>>>>> 7586d4d46272edb6c19ae6ff2269527a829ac068
           </button>
           <button onClick={next}
             className="scale-90 bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 rounded-2xl mr-20 border-none cursor-pointer mt-1 mb-1"
@@ -277,7 +254,7 @@ content-center w-full">
               </tr>
               <tr className="bg-white border-b border-blue-500">
                 <td className="py-2 px-4">یکشنبه</td>
-                <td className="py-2 px-4">30</td>
+                <td className="py-2 px-4" ref={foodrow2}>30</td>
                 <td className="py-2 px-4">Los Angeles</td>
               </tr>
               <tr className="bg-white border-b border-blue-500">
