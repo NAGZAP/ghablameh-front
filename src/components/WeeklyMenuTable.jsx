@@ -9,7 +9,7 @@ const WeeklyMenuTable = () => {
     <div className="wrapper bg-white rounded  shadow w-full ">
       <div className="header flex justify-center border-b p-2">
         <span className="text-lg font-bold">
-          تاریخ ماه
+          جدول غذایی
         </span>
       </div>
       <table className="w-full">

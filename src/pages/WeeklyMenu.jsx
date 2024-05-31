@@ -88,6 +88,18 @@ import Footer from "../components/footer";
 import WeeklyMenuTable from "../components/WeeklyMenuTable";
 import BuffetsDropdown from "../components/ChooseBuffet";
 const WeeklyMenuPage = () => {
+  const date = new Date();
+  let month = date.getMonth() + 1;	
+  //alert(month)
+  //alert(date)
+  let year = date.getFullYear();	
+  //alert(year)
+  const next = () => {
+    date.setMonth(date.getMonth() + 1);
+    month = date.getMonth();
+    year = date.getFullYear();
+    alert(month)
+  }
   return (
     <>
       <Navbar />
@@ -115,9 +127,14 @@ const WeeklyMenuPage = () => {
             </svg>
             قبلی
           </button>
-          <div className="border border-sky-800 rounded-lg px-5 py-3">
+          <button
+            className="scale-90 bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 rounded-2xl mr-20 border-none cursor-pointer mt-1 mb-1"
+            style={{ direction: "ltr" }}
+          >
+          <div className="rounded-lg px-5 py-3">
+
             <svg
-              className="w-6 h-6 text-gray-800 dark:text-white"
+              className="w-6 h-6 text-white dark:text-white"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -134,9 +151,10 @@ const WeeklyMenuPage = () => {
                 d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"
               />
             </svg>
-            هفته جاری
+ماه فعلی    
           </div>
-          <button
+          </button>
+          <button onClick= {next}
             className="scale-90 bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 rounded-2xl mr-20 border-none cursor-pointer mt-1 mb-1"
             style={{ direction: "ltr" }}
           >
@@ -162,6 +180,7 @@ const WeeklyMenuPage = () => {
           </button>
         </div>
         <BuffetsDropdown />
+        <p className="mt-5 mb-0">تاریخ ماه : {year}/{month}</p>
         <WeeklyMenuTable />
       </div>
       <Footer />

@@ -34,7 +34,7 @@ function EmailVerify(){
         //const accessToken = response.data.tokens.access;
         //localStorage.setItem('token', accessToken);
         alert("اکانت شما با موفقیت ثبت شد!")
-        navigate("/");
+        navigate("/login");
     } catch (error) {
                     //console.error('Error sending data:', error);
                   alert("کد تاییدی درست نیست یا اکانت شما قبلا تایید شده!")
