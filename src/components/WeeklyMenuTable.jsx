@@ -15,38 +15,38 @@ const WeeklyMenuTable = () => {
   <tbody>
     <tr class="bg-white border-b border-blue-500">
     <td class="py-2 px-4 text-center h-14">شنبه</td>
-      <td class="py-2 px-4 text-center	">25</td>
-      <td class="py-2 px-4 text-center	">New York</td>
+      <td class="py-2 px-4 text-center	"></td>
+      <td class="py-2 px-4 text-center	"></td>
     </tr>
     <tr class="bg-white border-b border-blue-500">
     <td class="py-2 px-4 text-center	h-14">یکشنبه</td>
-      <td class="py-2 px-4 text-center	">30</td>
-      <td class="py-2 px-4 text-center	">Los Angeles</td>
+      <td class="py-2 px-4 text-center	"></td>
+      <td class="py-2 px-4 text-center	"></td>
     </tr>
     <tr class="bg-white border-b border-blue-500">
       <td class="py-2 px-4 text-center	h-14">دوشنبه</td>
-      <td class="py-2 px-4 text-center	">40</td>
-      <td class="py-2 px-4 text-center	">Chicago</td>
+      <td class="py-2 px-4 text-center	"></td>
+      <td class="py-2 px-4 text-center	"></td>
     </tr>
     <tr class="bg-white border-b border-blue-500">
       <td class="py-2 px-4 text-center	h-14">سه شنبه</td>
-      <td class="py-2 px-4 text-center	">40</td>
-      <td class="py-2 px-4 text-center	">Chicago</td>
+      <td class="py-2 px-4 text-center	"></td>
+      <td class="py-2 px-4 text-center	"></td>
     </tr>
     <tr class="bg-white border-b border-blue-500">
-      <td class="py-2 px-4 text-center	h-14">چهار شنبه</td>
-      <td class="py-2 px-4 text-center	">40</td>
-      <td class="py-2 px-4 text-center	">Chicago</td>
+      <td class="py-2 px-4 text-center	h-14"></td>
+      <td class="py-2 px-4 text-center	"></td>
+      <td class="py-2 px-4 text-center	"></td>
     </tr>
     <tr class="bg-white border-b border-blue-500">
       <td class="py-2 px-4 text-center	h-14">پنج شنبه</td>
-      <td class="py-2 px-4 text-center	">40</td>
-      <td class="py-2 px-4 text-center	">Chicago</td>
+      <td class="py-2 px-4 text-center	"></td>
+      <td class="py-2 px-4 text-center	"></td>
     </tr>
     <tr class="bg-white border-b border-blue-500">
       <td class="py-2 px-4 text-center	h-14">جمعه</td>
-      <td class="py-2 px-4 text-center	">40</td>
-      <td class="py-2 px-4 text-center	">Chicago</td>
+      <td class="py-2 px-4 text-center	"></td>
+      <td class="py-2 px-4 text-center	"></td>
     </tr>
   </tbody>
 </table>
