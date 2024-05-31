@@ -1,52 +1,52 @@
 import React from "react";
-
+import styles from "./WeeklyMenuTable.module.css";
 const WeeklyMenuTable = () => {
   return (
-    <div classNmae=''>
+    <div className={styles.ltr}>
     <table class="border-collapse border w-full  border-blue-500 m-10 mx-auto">
   <thead>
     <tr class="bg-blue-500 text-white ">
-      <th class="py-2 px-4 text-right">روز</th>
-      <th class="py-2 px-4 text-right">صبحانه</th>
-      <th class="py-2 px-4 text-right">نهار</th>
-      <th class="py-2 px-4 text-right">شام</th>
+      <th class="py-2 px-4 text-center	">روز</th>
+      <th class="py-2 px-4 text-center	">صبحانه</th>
+      <th class="py-2 px-4 text-center	">نهار</th>
+      <th class="py-2 px-4 text-center	">شام</th>
     </tr>
   </thead>
   <tbody>
     <tr class="bg-white border-b border-blue-500">
-    <td class="py-2 px-4">شنبه</td>
-      <td class="py-2 px-4">25</td>
-      <td class="py-2 px-4">New York</td>
+    <td class="py-2 px-4 text-center h-14">شنبه</td>
+      <td class="py-2 px-4 text-center	">25</td>
+      <td class="py-2 px-4 text-center	">New York</td>
     </tr>
     <tr class="bg-white border-b border-blue-500">
-    <td class="py-2 px-4">یکشنبه</td>
-      <td class="py-2 px-4">30</td>
-      <td class="py-2 px-4">Los Angeles</td>
+    <td class="py-2 px-4 text-center	h-14">یکشنبه</td>
+      <td class="py-2 px-4 text-center	">30</td>
+      <td class="py-2 px-4 text-center	">Los Angeles</td>
     </tr>
     <tr class="bg-white border-b border-blue-500">
-      <td class="py-2 px-4">دوشنبه</td>
-      <td class="py-2 px-4">40</td>
-      <td class="py-2 px-4">Chicago</td>
+      <td class="py-2 px-4 text-center	h-14">دوشنبه</td>
+      <td class="py-2 px-4 text-center	">40</td>
+      <td class="py-2 px-4 text-center	">Chicago</td>
     </tr>
     <tr class="bg-white border-b border-blue-500">
-      <td class="py-2 px-4">سه شنبه</td>
-      <td class="py-2 px-4">40</td>
-      <td class="py-2 px-4">Chicago</td>
+      <td class="py-2 px-4 text-center	h-14">سه شنبه</td>
+      <td class="py-2 px-4 text-center	">40</td>
+      <td class="py-2 px-4 text-center	">Chicago</td>
     </tr>
     <tr class="bg-white border-b border-blue-500">
-      <td class="py-2 px-4">چهار شنبه</td>
-      <td class="py-2 px-4">40</td>
-      <td class="py-2 px-4">Chicago</td>
+      <td class="py-2 px-4 text-center	h-14">چهار شنبه</td>
+      <td class="py-2 px-4 text-center	">40</td>
+      <td class="py-2 px-4 text-center	">Chicago</td>
     </tr>
     <tr class="bg-white border-b border-blue-500">
-      <td class="py-2 px-4">پنج شنبه</td>
-      <td class="py-2 px-4">40</td>
-      <td class="py-2 px-4">Chicago</td>
+      <td class="py-2 px-4 text-center	h-14">پنج شنبه</td>
+      <td class="py-2 px-4 text-center	">40</td>
+      <td class="py-2 px-4 text-center	">Chicago</td>
     </tr>
     <tr class="bg-white border-b border-blue-500">
-      <td class="py-2 px-4">جمعه</td>
-      <td class="py-2 px-4">40</td>
-      <td class="py-2 px-4">Chicago</td>
+      <td class="py-2 px-4 text-center	h-14">جمعه</td>
+      <td class="py-2 px-4 text-center	">40</td>
+      <td class="py-2 px-4 text-center	">Chicago</td>
     </tr>
   </tbody>
 </table>

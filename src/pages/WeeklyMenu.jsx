@@ -128,13 +128,13 @@ const WeeklyMenuPage = () => {
             قبلی
           </button>
           <button
-            className="scale-90 bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 rounded-2xl mr-20 border-none cursor-pointer mt-1 mb-1"
+            className="scale-90 bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 rounded-2xl border-none cursor-pointer mt-1 mb-1"
             style={{ direction: "ltr" }}
           >
-          <div className="rounded-lg px-5 py-3">
+          <div className="rounded-lg px-5 py-3 text-center	items-center">
 
             <svg
-              className="w-6 h-6 text-white dark:text-white"
+              className="w-6 h-6 text-white dark:text-white "
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="24"
