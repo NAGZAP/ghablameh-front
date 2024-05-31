@@ -107,7 +107,7 @@ const WeeklyMenuPage = () => {
     date.setMonth(date.getMonth() + 1);
     month = date.getMonth();
     year = date.getFullYear();
-    alert(month)
+    //alert(month)
   }
   useEffect(() => {
     const fetchData = async () => {
@@ -125,7 +125,7 @@ const WeeklyMenuPage = () => {
   }, []);
   const handleBuffetChange = async () => {
     let buffetId = currentBuffet.current.value;
-    alert(buffetId);
+    //alert(buffetId);
     let data = [];
     const token = requests.getToken();
     data = await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/"+buffetId +"/menus/", { headers: { Authorization: `JWT ${token}` } });
@@ -250,7 +250,7 @@ content-center w-full">
               <tr className="bg-white border-b border-blue-500">
                 <td className="py-2 px-4">شنبه</td>
                 <td className="py-2 px-4" ref={foodrow}>25</td>
-                <td className="py-2 px-4">New York</td>
+                <td className="py-2 px-4"></td>
               </tr>
               <tr className="bg-white border-b border-blue-500">
                 <td className="py-2 px-4">یکشنبه</td>
@@ -259,28 +259,28 @@ content-center w-full">
               </tr>
               <tr className="bg-white border-b border-blue-500">
                 <td className="py-2 px-4">دوشنبه</td>
-                <td className="py-2 px-4">40</td>
-                <td className="py-2 px-4">Chicago</td>
+                <td className="py-2 px-4"></td>
+                <td className="py-2 px-4"></td>
               </tr>
               <tr className="bg-white border-b border-blue-500">
                 <td className="py-2 px-4">سه شنبه</td>
-                <td className="py-2 px-4">40</td>
-                <td className="py-2 px-4">Chicago</td>
+                <td className="py-2 px-4"></td>
+                <td className="py-2 px-4"></td>
               </tr>
               <tr className="bg-white border-b border-blue-500">
                 <td className="py-2 px-4">چهار شنبه</td>
-                <td className="py-2 px-4">40</td>
-                <td className="py-2 px-4">Chicago</td>
+                <td className="py-2 px-4"></td>
+                <td className="py-2 px-4"></td>
               </tr>
               <tr className="bg-white border-b border-blue-500">
                 <td className="py-2 px-4">پنج شنبه</td>
-                <td className="py-2 px-4">40</td>
-                <td className="py-2 px-4">Chicago</td>
+                <td className="py-2 px-4"></td>
+                <td className="py-2 px-4"></td>
               </tr>
               <tr className="bg-white border-b border-blue-500">
                 <td className="py-2 px-4">جمعه</td>
-                <td className="py-2 px-4">40</td>
-                <td className="py-2 px-4">Chicago</td>
+                <td className="py-2 px-4"></td>
+                <td className="py-2 px-4"></td>
               </tr>
             </tbody>
           </table>
