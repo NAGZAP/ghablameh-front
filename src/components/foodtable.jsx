@@ -1,26 +1,21 @@
 import { useRef } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
-// import WeeklyMenuTable from "../components/WeeklyMenuTable";
-// import BuffetsDropdown from "../components/ChooseBuffet";
 import axios from "axios";
 import requests from '../APIs/AuthManager';
 import { useState, useEffect } from "react";
 import Organizations from "../APIs/Organizations";
-import AuthManager from "../APIs/AuthManager";
 
 const FoodTable = () => {
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    const foodrow = useRef(null);
     const currentBuffet = useRef(null);
     const [mealsId, setMealsId] = useState([]);
     const [meals, setMeals] = useState([]);
-    const [foodddd, setFoods] = useState([]);
-    const [yaali, setYaali] = useState([]);
-    const [finalfoods , setFinalfoods] = useState([]);
+    const [foods, setFoods] = useState([]);
+
+
     //fetch buffets
     useEffect(() => {
         const fetchData = async () => {
@@ -37,57 +32,87 @@ const FoodTable = () => {
         fetchData();
     }, []);
 
-    // buffet, meal, food
+    //fetch buffet, meal, food
     const handleBuffetChange = async () => {
+
+        //buffetId
         let buffetId = currentBuffet.current.value;
         let data = [];
         const token = requests.getToken();
+
+        //mealsId
         data = await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/", { headers: { Authorization: `JWT ${token}` } });
         if (data.data.length !== 0) {
             let listPK = data.data[0].id;
             setMealsId(data.data);
 
-            let foods = await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/", { headers: { Authorization: `JWT ${token}` } });
-            setMeals(foods.data)
-            // console.log(foods.data)
-            // console.log("foods", foods)
+            //meals
+            let meals = (await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/", { headers: { Authorization: `JWT ${token}` } })).data
+            setMeals(meals)
 
-            // foods.data.map(async meal=> (
-            //     setFoods((await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/"+meal.id+"/meals/", { headers: { Authorization: `JWT ${token}`} })
-            // ).data)))
+            mealsId.map((meal, index) => {
+                console.log("meal dates: ", index, " ", meal.date)
+            })
 
-            const listt=[];
-            for(let meal of foods.data){
-                let gottendata=(await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/"+meal.id+"/meals/", { headers: { Authorization: `JWT ${token}`} })).data 
-                // console.log("gottendata: ", gottendata)
-                listt.push(gottendata)
+            //foodsId
+            const foodsList = [];
+            for (let meal of meals) {
+                let gottendata = (await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/" + meal.id + "/meals/", { headers: { Authorization: `JWT ${token}` } })).data
+                foodsList.push(gottendata)
             }
-            console.log("listt: ", listt)
-            // setFoods(listt)
 
-            // console.log("foods", foodddd)
-            
-            const listt2 = [];
-            for(let meal of listt){
-                for(let meal1 of meal){
-                console.log(meal)
-                let gottendata2=(await axios.get("https://ghablameh.fiust.ir/api/v1/foods/" +  meal1.id  + "/", { headers: { Authorization: `JWT ${token}`} })).data 
-                console.log("gottendata2: ", gottendata2);
-                listt2.push(gottendata2)
-            }}
-            console.log("listt22: ", listt2)
-            // setFoods(listt)
-            setFinalfoods(listt2);
-
-            // foodddd.data.map(async meal=> (
-            //     setFoods((await axios.get("https://ghablameh.fiust.ir/api/v1/foods/" +  meal.id  + "/", { headers: { Authorization: `JWT ${token}`} })
-            // ).data)
-        
-            // ))
-            // console.log("token: ",token)
-            // console.log("foods", foods)
+            //foods
+            const foods = [];
+            for (let foodArray of foodsList) {
+                for (let food of foodArray) {
+                    let gottendata2 = (await axios.get("https://ghablameh.fiust.ir/api/v1/foods/" + food.food + "/", { headers: { Authorization: `JWT ${token}` } })).data
+                    foods.push(gottendata2)
+                }
+            }
+            setFoods(foods)
+            console.log('foods: ', foods)
         }
     }
+
+
+
+    //dates
+    const renderDates = () => {
+        let dateList = [];
+        // console.log("dateList: ",dateList)
+        return mealsId.map((meal, index) => {
+            // if (!dateList.includes(meal.time)) {
+            dateList.push(meal.time);
+            return (
+                <>
+                    <th key={index} className="py-3 flex items-center">
+                        <td className="py-2 px-4 " style={{ borderBottom: '1px solid rgb(38, 87, 124)' }}>{meal.date}</td>
+                    </th>
+                </>
+            );
+            // }  
+            // return null;
+        });
+    };
+
+    //foods
+    const renderFoods = () => {
+        // let dateList = [];
+        return foods.map((food, index) => {
+            // if (!dateList.includes(meal.time)) {
+            // dateList.push(meal.time); 
+            return (
+                <>
+                    <th key={index} className="py-2 px-4">
+                        <td className="py-2 px-4">{food.name}</td>
+                        {/* <hr className="w-full" style={{ alignSelf: 'center', marginTop: '0.5rem', marginBottom: '0.5rem', backgroundColor: 'rgb(38, 87, 124)', height: '2px', border: 'none' }} /> */}
+                    </th>
+                </>
+            );
+            // }
+            // return null;
+        });
+    };
 
     return (
         <>
@@ -97,7 +122,7 @@ const FoodTable = () => {
                 <div className="grid grid-cols-3 my-4 text-center"></div>
 
                 {/* buffets */}
-                <div className="grid grid-cols-3 w-full">
+                <div className="grid grid-cols-3 w-full" >
                     <div></div>
                     <div className="content-center w-full">
                         <select className="rounded w-full" onChange={handleBuffetChange} ref={currentBuffet}>
@@ -116,50 +141,39 @@ const FoodTable = () => {
 
                 {/* table */}
                 <div>
-                    <table className="border-collapse border w-full  border-blue-500 m-10 mx-auto bg-op" style={{ border: '1px solid rgb(38, 87, 124)' }}>
+                    <table className="  w-full  m-10 mx-auto bg-op" >
+
                         {/* meals */}
                         <thead>
                             <tr className=" text-white " style={{ backgroundColor: 'rgb(38, 87, 124)' }}>
-                                <th className="py-2 px-4 text-right">روز</th>
+                                <th className="py-2 px-4 text-right text-2xl">روز</th>
 
-                                {meals?.map((meal, index) => (
+                                {meals.map((meal, index) => (
                                     <>
                                         <th key={index} className="py-2 px-4">
-                                            <div>{meal.name}</div>
-                                            <div key={index} className="py-2 px-4 font-light text-sm">{meal.time}</div>
+                                            <div className="flex flex-col items-center">
+                                                <div className="text-3xl">{meal.name}</div>
+                                                <hr className="text-sm opacity-20" style={{ width: '7vw', alignSelf: 'center', marginTop: ' 0.5rem', marginBottom: ' 0.5rem' }} /> {/* Use alignSelf to center the <hr> in the flex container */}
+                                                <div className="font-light text-sm">{meal.time}</div>
+                                            </div>
                                         </th>
-
                                     </>
                                 ))}
-
-
                             </tr>
                         </thead>
-                        {/* days */}
 
-
-                        {/* foods */}
-                        <tbody>
-                            <tr className="bg-white  " style={{ borderBottom: '1px solid rgb(38, 87, 124)' }}>
-{/* 
-                                <tr className="bg-white border-b flex flex-col ">
-
-                                    {mealsId?.map((meal, index) => (
-                                        <>
-                                        
-                                            <th key={index} className="py-2 px-4">
-
-                                                <td className="py-2 px-4">{meal.date}</td>
-                                                <td className="py-2 px-4">{meal.date}</td>
-                                                listt2
-                                            </th>
-
-                                        </>
-                                    ))}
-
-
+                        {/*/ dates */}
+                        <tbody style={{ border: '1px solid rgb(38, 87, 124)' }}>
+                            <tr className="bg-white">
+                                <tr className="bg-white flex flex-col " >
+                                <td className="py-2 px-4"> {renderDates()} </td>
                                 </tr>
-                                <td className="py-2 px-4"></td> */}
+                                <td className="py-2 px-4">{renderFoods()}</td>
+                            </tr>
+                            <tr className="bg-white">
+                                <td className="py-2 px-4">جمعه</td>
+                                <td className="py-2 px-4">i</td>
+                                <td className="py-2 px-4">ii</td>
                             </tr>
 
                         </tbody>
