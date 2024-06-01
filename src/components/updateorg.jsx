@@ -5,8 +5,6 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import Footer from './footer'
-import DefaultSidebar from './orgPanelSidebar';
-import Navbar from './Navbar';
 import Navbarparent from './navbarparent';
 const Update = () => {
   const [name, setName] = useState('');
@@ -27,8 +25,8 @@ const Update = () => {
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
-    // model
-    const [showMyModel, setShowMyModel] = useState(false);
+  // model
+  const [showMyModel, setShowMyModel] = useState(false);
 
 
   const handleFormSubmit = async (e) => {
@@ -109,10 +107,10 @@ const Update = () => {
       new_password: new_password,
       confirmPassword: confirm_new_password
     };
-    
+
     //send pass data
     try {
-      
+
       const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/password/', passData, {
         headers: {
           'Authorization': token
@@ -140,6 +138,7 @@ const Update = () => {
       setAvatar(img);
     };
   };
+  
   //passwords
   function PasswordFields() {
     return (
@@ -208,78 +207,78 @@ const Update = () => {
     );
   }
 
-  function myForm(){
-    return(
-      <div className={styles.container}>
-      <div className='flex justify-center items-center'>
-      <div className={styles.card}>
-        <h2 className={styles.title}>به‌روزرسانی اطلاعات کاربر</h2>
-        <form onSubmit={handleFormSubmit} className={styles.form}>
-          {formErrors.length > 0 && (
-            <div className={styles.errorContainer}>
-              <ul className={styles.errorList}>
-                {formErrors.map((error, index) => (
-                  <li key={index}>{error}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          <div className={styles.formGroup}>
-            <div className={styles.avatarimg}>
-              <img src={avatar} className={styles.avatar} alt="" />
-            </div>
-          </div>
-          <input type="file" onChange={handleChange} className={styles.fileinput} />
+  function myForm() {
+    return (
+      <div className={styles.container} >
+        <div className='flex justify-center items-center'>
+          <div className={styles.card}>
+            <h2 className={styles.title}>به‌روزرسانی اطلاعات سازمان </h2>
+            <form onSubmit={handleFormSubmit} className={`${styles.form} ${styles.formScrollable}`}>
+              {formErrors.length > 0 && (
+                <div className={styles.errorContainer}>
+                  <ul className={styles.errorList}>
+                    {formErrors.map((error, index) => (
+                      <li key={index}>{error}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <div className={styles.formGroup}>
+                <div className={styles.avatarimg}>
+                  <img src={avatar} className={styles.avatar} alt="" />
+                </div>
+              </div>
+              <input type="file" onChange={handleChange} className={styles.fileinput} />
 
-          <div className={styles.formGroup}>
-            <label htmlFor="name" className={styles.label}> نام سازمان  </label>
-            <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} className={styles.input} required placeholder='نام سازمان' />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="admin_username" className={styles.label}> نام کاربری مدیر سازمان  </label>
-            <input type="text" id="admin_username" value={admin_username} onChange={(e) => SetAdmin_username(e.target.value)} className={styles.input} required placeholder=' نام کاربری مدیر سازمان  ' />
-          </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="name" className={styles.label}> نام سازمان  </label>
+                <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} className={styles.input} required placeholder='نام سازمان' />
+              </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="admin_username" className={styles.label}> نام کاربری مدیر سازمان  </label>
+                <input type="text" id="admin_username" value={admin_username} onChange={(e) => SetAdmin_username(e.target.value)} className={styles.input} required placeholder=' نام کاربری مدیر سازمان  ' />
+              </div>
 
-          <div className={styles.formGroup}>
-            <label className={styles.label}>نام مدیر سازمان</label>
-            <div className='flex'>
-              <input type="text" id="admin_first_name" value={admin_first_name} onChange={(e) => setAdmin_first_name(e.target.value)} className={styles.input} required placeholder='نام' />
-              <div style={{ marginLeft: '10px' }}></div> {/* Add some space */}
-              <input type="text" id="admin_last_name" value={admin_last_name} onChange={(e) => setAdmin_last_name(e.target.value)} className={styles.input} required placeholder='نام خانوادگی' />
-            </div>
-          </div>
+              <div className={styles.formGroup}>
+                <label className={styles.label}>نام مدیر سازمان</label>
+                <div className='flex'>
+                  <input type="text" id="admin_first_name" value={admin_first_name} onChange={(e) => setAdmin_first_name(e.target.value)} className={styles.input} required placeholder='نام' />
+                  <div style={{ marginLeft: '10px' }}></div>
+                  <input type="text" id="admin_last_name" value={admin_last_name} onChange={(e) => setAdmin_last_name(e.target.value)} className={styles.input} required placeholder='نام خانوادگی' />
+                </div>
+              </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="admin_email" className={styles.label}> ایمیل مدیر سازمان </label>
-            <input type="text" id="admin_email" value={admin_email} onChange={(e) => setAdmin_email(e.target.value)} className={styles.input} required placeholder='  ایمیل مدیر سازمان  ' />
-          </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="admin_email" className={styles.label}> ایمیل مدیر سازمان </label>
+                <input type="text" id="admin_email" value={admin_email} onChange={(e) => setAdmin_email(e.target.value)} className={styles.input} required placeholder='  ایمیل مدیر سازمان  ' />
+              </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="admin_phone_number" className={styles.label}> شماره تماس مدیر سازمان </label>
-            <input type="text" id="admin_phone_number" value={admin_phone_number} onChange={(e) => setAdmin_phone_number(e.target.value)} className={styles.input} required placeholder=' شماره تماس مدیر سازمان ' />
-          </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="admin_phone_number" className={styles.label}> شماره تماس مدیر سازمان </label>
+                <input type="text" id="admin_phone_number" value={admin_phone_number} onChange={(e) => setAdmin_phone_number(e.target.value)} className={styles.input} required placeholder=' شماره تماس مدیر سازمان ' />
+              </div>
 
-          <PasswordFields />
-          <button type="submit" className={styles.button}>
-            ارسال
-          </button>
-        </form>
+              <PasswordFields />
+              <button type="submit" className={styles.button}>
+                ارسال
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
-      </div>
-    </div>
     );
   }
+
   return (
-    <div className={`${styles.bg} min-h-screen flex flex-col`}>
-  <Navbarparent/>
-  <div className='flex flex-grow'> 
-    <DefaultSidebar />
-    <div className='flex flex-grow justify-center items-center'>
-      {myForm()}
+    <div className={`${styles.bg} flex flex-col`} >
+      <Navbarparent />
+      <div className='flex' >
+        <div className='flex flex-grow justify-center items-center z-10'>
+          {myForm()}
+        </div>
+      </div>
+      <Footer />
     </div>
-  </div>
-  <Footer/>
-</div>
   );
 };
 

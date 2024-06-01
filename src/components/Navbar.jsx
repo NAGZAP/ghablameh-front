@@ -19,34 +19,49 @@ import {
 } from "react-icons/hi";
 import DefaultSidebar from "./Sidebar";
 import Notificationbox from "./Notificationbox";
+
 // function Navbar() {
 const Navbar = ({ openWallet, setOpenWallet }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [userData, setUserData] = useState(null);
+  const [adminData, setAdminData] = useState(null);
   const isBigScreen = useMediaQuery("(min-width: 600px)");
   const navigate = useNavigate();
   const sideBar = useRef(null);
   const notification = useRef(null);
-  // const [openWallet, setOpenWallet] = useState(false);
+  const [userType, setUserType] = useState(null);
 
   //fetch user data
   useEffect(() => {
-    const fetchUserData = async () => {
+    const decideAndFetchData = async () => {
       try {
-        // https://jsonplaceholder.typicode.com/users/1
-        const token = AuthManager.getToken();
+        if (AuthManager.isLoggedIn()) {
+          const token = AuthManager.getToken();
+          const userTypeResult = await AuthManager.orguser();
+          setUserType(userTypeResult);
 
-        const response = await axios.get(
-          "https://ghablameh.fiust.ir/api/v1/clients/me/",
-          { headers: { Authorization: "JWT " + token } }
-        );
-        setUserData(response.data);
+          if (userTypeResult === 1) {
+            const orgResponse = await axios.get(
+              "https://ghablameh.fiust.ir/api/v1/organizations/me/",
+              { headers: { Authorization: "JWT " + token } }
+            );
+            
+            setAdminData(orgResponse.data);
+          } else if (userTypeResult === 2) {
+            const userResponse = await axios.get(
+              "https://ghablameh.fiust.ir/api/v1/clients/me/",
+              { headers: { Authorization: "JWT " + token } }
+            );
+            setUserData(userResponse.data);
+          }
+        }
       } catch (error) {
-        console.error("Error fetching user data: ", error);
+        console.error("Error: ", error);
       }
     };
-    if (AuthManager.isLoggedIn()) fetchUserData();
+
+    decideAndFetchData();
   }, []);
 
   //dropdown
@@ -67,18 +82,13 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
     }
   };
 
-  //sidebar
-  // const sideBar = useRef();
-  // const handleClickOutsideSidebar = (e) => {
-  //   sideBar.current.style.display = "none";
-  // };
-
   const handleOpenSidebar = () => {
     console.log(sideBar.current);
     let displayStatus = sideBar.current.style.display;
     if (displayStatus !== "block") sideBar.current.style.display = "block";
     else sideBar.current.style.display = "none";
   };
+
   const hanldeOpenNotifications = () => {
     let displayStatus = notification.current.style.display;
     if (displayStatus !== "block") notification.current.style.display = "block";
@@ -98,18 +108,25 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
 
   function UserAvatar() {
     if (AuthManager.isLoggedIn()) {
+      let displayName;
+      let image_src;
+  
+      if (userType === 2 && userData) {
+        displayName = userData.first_name;
+        image_src = userData.image_url ? "https://ghablameh.fiust.ir" + userData.image_url : null;
+      } else if (userType === 1 && adminData) {
+        displayName = adminData.admin_first_name;
+        image_src = adminData.image_url ? "https://ghablameh.fiust.ir" + adminData.image_url : null;
+      }
+  
       return (
         <div className={`flex items-center p-1`}>
-          {userData && userData.profilePicture ? (
-            <img
-              src={userData.profilePicture}
-              alt="Profile"
-              style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-            />
+          {image_src ? (
+            <img src={image_src} onClick={toggleDropdown} alt="Profile" style={{ width: "50px", height: "50px", borderRadius: "50%" }}/>
           ) : (
-            <Avatar
+          <Avatar
               onClick={toggleDropdown}
-              name={userData.first_name}
+              name={displayName}
               size="60"
               round={true}
               maxInitials={1}
@@ -121,15 +138,25 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
   }
 
   function Username() {
-    if (AuthManager.isLoggedIn() && userData) {
-      return (
-        <h6
-          className={`${styles["vazir"]} text-white`}
-          style={{ marginLeft: "15px", fontSize: "20px" }}
-        >
-          {userData.first_name}
-        </h6>
-      );
+    if (AuthManager.isLoggedIn()) {
+      let displayName;
+      if (userType === 2 && userData) {
+        displayName = userData.first_name;
+      } else if (userType === 1 && adminData) {
+        displayName = adminData.admin_first_name;
+      }
+
+      if (displayName) {
+        return (
+          <h6
+            className={`${styles.vazir} text-white`}
+            style={{ marginLeft: '15px', fontSize: '20px' }}
+          >
+            {displayName}
+          </h6>
+
+        );
+      }
     }
   }
 
@@ -174,14 +201,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
 
   return (
     <>
-      <nav
-        style={{
-          backgroundColor: "rgb(38, 87, 124)",
-          paddingTop: "0.07rem",
-          paddingBottom: "0.07rem",
-        }}
-        className={styles.navPos}
-      >
+      <nav style={{backgroundColor: "rgb(38, 87, 124)", paddingTop: "0.07rem", paddingBottom: "0.07rem", }} className={styles.navPos} >
         <div className={`flex justify-between m-2 items-center px-2`}>
           {/* Elements - Logo */}
           <div className={`flex items-center justify-end`}>
@@ -242,17 +262,17 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
               )}
 
             </div>
-            {AuthManager.isLoggedIn() &&  ( isBigScreen&&(
+            {AuthManager.isLoggedIn() && (isBigScreen && (
               <div
                 className={`flex items-center justify-end space-x-3`}
                 style={{ paddingRight: "1.5vw" }}
               >
                 <Link
-                  to="/last"
+                  to="/"
                   className={`text-white`}
                   style={{ fontSize: "1.3rem", marginLeft: "0.5vw" }}
                 >
-                  لیست رزروها
+                  صفحه اصلی
                 </Link>
               </div>
             ))}
@@ -261,9 +281,9 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
           {/* Avatar, username and Login button */}
           <div ref={dropdownRef}>
             <div className={`flex justify-between items-center`}>
-              {userData && (
+              {(userData || adminData) && (
                 <>
-                  {Username(userData.username)}
+                  {Username()}
                   {UserAvatar()}
                 </>
               )}
@@ -271,25 +291,15 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
             </div>
 
             {/* Dropdown */}
-            <div
-              className={`absolute z-10 ${
-                isDropdownOpen ? "" : "hidden"
-              } rounded-lg shadow`}
-              style={{ backgroundColor: "rgb(38, 87, 124)", margin: "0.3vw" }}
-            >
+            <div className={`absolute z-10 ${isDropdownOpen ? "" : "hidden" } rounded-lg shadow p-1`} style={{ backgroundColor: "rgb(38, 87, 124)", margin: "0.3vw" }}>
               <ul className={`py-1 text-sm text-white`}>
                 <li>
-                  <a
-                    className={`block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600`}
-                  >
+                  <a className={`block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600`}>
                     userpanel
                   </a>
                 </li>
                 <li>
-                  <a
-                    onClick={handleLogout}
-                    className={`block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600`}
-                  >
+                  <a onClick={handleLogout} className={`block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600`}>
                     Logout
                   </a>
                 </li>
@@ -298,6 +308,8 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
           </div>
         </div>
       </nav>
+
+      {/* sidebar */}
       <div
         style={{
           display: "none",
@@ -317,18 +329,20 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
           top: "14%",
           right: "12%",
           maxHeight: "300px",
-          width:"20%",
-          zIndex:"2",
-          backgroundColor:"white"
+          width: "20%",
+          zIndex: "2",
+          backgroundColor: "white"
         }}
         ref={notification}
       >
         <Notificationbox />
       </div>
+      {/* wallet */}
       {openWallet && <UserWallet open={openWallet} setOpen={setOpenWallet} />}
     </>
   );
 };
+
 // Navbar.propTypes = {
 //   open: PropTypes.bool.isRequired,
 //   setOpen: PropTypes.func.isRequired,

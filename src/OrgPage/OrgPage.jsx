@@ -3,7 +3,7 @@ import axios from 'axios';
 import styles from './OrgPage.module.css';
 import Footer from '../components/footer';
 import { Link } from 'react-router-dom';
-import DefaultSidebar from '../components/orgPanelSidebar.jsx';
+import OrgSidebar from '../components/orgPanelSidebar.jsx';
 import Navbarparent from '../components/navbarparent.jsx';
 
 function OrgPage() {
@@ -17,7 +17,7 @@ function OrgPage() {
 
   // Define your API endpoint and token
   const API_ENDPOINT = 'https://ghablameh.fiust.ir/api/v1/buffets/';
-  const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3MTYxODEzLCJpYXQiOjE3MTQ1Njk4MTMsImp0aSI6ImQxZTM5Y2I4Yzk3ODQxMGFiYjA0NTVkN2U2M2QwMWUwIiwidXNlcl9pZCI6Mn0.CUEgrbFFFKgk5sy7VfqlKaWVqqg5Gv6hSbDZdrIbetA';
+  const TOKEN = localStorage.getItem('token');
 
   useEffect(() => {
     // Axios request configuration
@@ -141,7 +141,7 @@ function OrgPage() {
         <div className={styles.app}>
           <Navbarparent />
           <div className='flex flex-row justify-between items-center'>
-          <DefaultSidebar/>
+
           <div className={`${styles.itemscenter} flex-grow`}>
             {showModal && (
               <div className="fixed z-10 inset-0 overflow-y-auto">

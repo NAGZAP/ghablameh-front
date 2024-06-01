@@ -30,4 +30,11 @@ const Top5Buffets = async () => {
     return data.data;
 }
 
-export default {GetMyOrganizations , JoinOrganization , Top5Buffets};
+const GetOrganizationBuffets = async () => {
+    const baseUrl = "https://ghablameh.fiust.ir/api/v1/";
+    const token = requests.getToken();
+    let data = null;
+    data = await axios.get(baseUrl + "buffets/" , {headers:{Authorization:`JWT ${token}`}});
+    return data.data;
+}
+export default {GetMyOrganizations , JoinOrganization , Top5Buffets , GetOrganizationBuffets};

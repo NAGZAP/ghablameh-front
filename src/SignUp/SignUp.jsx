@@ -69,7 +69,10 @@ function SignUp() {
 /*       console.log('Normal Person')
  */     await axios.post('https://ghablameh.fiust.ir/api/v1/clients/register/', formattedData);
       //const accessToken = response.data.tokens.access;
-      //localStorage.setItem('token', accessToken); 
+          localStorage.setItem('emailtoverify', data.email);
+          //console.log(localStorage.getItem('emailtoverify'));
+          //console.log(localStorage.emailtoverify)
+          //console.log(data.email)
 /*       console.log(accessToken);
  */        /* console.log('Data sent successfully! User');   */
 /*       return redirect("/")
@@ -96,7 +99,11 @@ function SignUp() {
       };
       await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/register/', formattedData2);
 /*       console.log('Data sent successfully! Org');
- */      navigate("/EmailVerify");
+
+ */      
+        localStorage.setItem('emailtoverify', data.email);
+        //console.log(data.email)
+        navigate("/EmailVerify");
     } catch (error) {
 /*       console.error('Error sending data:', error); */
           alert("اکانتی با اطلاعاتی مشابه استفاده شده است.")

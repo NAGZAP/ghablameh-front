@@ -7,6 +7,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import LoginRequest from "../APIs/Login"
+import Navbarparent from './navbarparent';
+import Footer from './footer';
 const Update = () => {
   const [birthdate, setBirthdate] = useState('');
   const [gender, setGender] = useState('');
@@ -60,12 +62,12 @@ const Update = () => {
       errors.push('رمز عبور جدید و تأیید رمز عبور مطابقت ندارند');
     }
 
-  
+
     if (errors.length > 0) {
       toast.error(errors.join('\n'));
       return;
     }
-    
+
     const userData = {
       avatar,
       birthdate,
@@ -76,16 +78,16 @@ const Update = () => {
       username,
       phone_number: phoneNumber,
     };
-    
+
     try {
       const token = "jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDk1Nzk2LCJpYXQiOjE3MTM1MDM3OTYsImp0aSI6ImI2YzY2NmMzMzA0MDQ4OWNiOTU4MjU0ZGYwMjZiZGNiIiwidXNlcl9pZCI6MTd9.S13ehZA_19i0EtLWlKuT8sPrKgElj1pfAikrV6iC55Q";
-    
+
       const response = await axios.put('https://ghablameh.fiust.ir/api/v1/client/me/', userData, {
         headers: {
           'Authorization': token
         }
       });
-    
+
       if (response.status === 200) {
         console.log('Form submitted successfully');
       } else {
@@ -108,188 +110,192 @@ const Update = () => {
 
 
   return (
-    <div className={styles.container}>
-      <div className={styles.pattern}></div>
-      <div className={styles.card}>
-        <h2 className={styles.title}>به‌روزرسانی اطلاعات کاربر</h2>
-        <form onSubmit={handleFormSubmit} className={styles.form}>
-          {formErrors.length > 0 && (
-            <div className={styles.errorContainer}>
-              <ul className={styles.errorList}>
-                {formErrors.map((error, index) => (
-                  <li key={index}>{error}</li>
-                ))}
-              </ul>
+    <div className={styles.bg}>
+      <Navbarparent />
+      <div className={styles.container}>
+        <div className={styles.pattern}></div>
+        <div className={styles.card}>
+          <h2 className={styles.title}>به‌روزرسانی اطلاعات کاربر</h2>
+          <form onSubmit={handleFormSubmit} className={styles.form}>
+            {formErrors.length > 0 && (
+              <div className={styles.errorContainer}>
+                <ul className={styles.errorList}>
+                  {formErrors.map((error, index) => (
+                    <li key={index}>{error}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <div className={styles.formGroup}>
+              <div className={styles.avatarimg}>
+                <img src={avatar} className={styles.avatar} alt="" />
+              </div>
             </div>
-          )}
-          <div className={styles.formGroup}>
-            <div className={styles.avatarimg}>
-              <img src={avatar} className={styles.avatar} alt="" />
-            </div>
-          </div>
-          <input type="file" onChange={handleChange} className={styles.fileinput} />
-          <div className={styles.formGroup}>
-            <label htmlFor="birthdate" className={styles.label}>
-              تاریخ تولد
-            </label>
-            <input
-              type="date"
-              id="birthdate"
-              value={birthdate}
-              onChange={(e) => setBirthdate(e.target.value)}
-              className={styles.input}
-              required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="gender" className={styles.label}>
-              جنسیت
-            </label>
-            <select
-              id="gender"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-              className={styles.input}
-              required
-            >
-              <option value="">انتخاب جنسیت</option>
-              <option value="مرد">مرد</option>
-              <option value="زن">زن</option>
-              <option value="سایر">سایر</option>
-            </select>
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="username" className={styles.label}>
-              به‌روزرسانی نام کاربری
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className={styles.input}
-              required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="firstName" className={styles.label}>
-           به‌روزرسانی نام
-            </label>
-            <input
-              type="text"
-              id="firstname"
-              value={firstName}
-              onChange={(e) => setfirstName(e.target.value)}
-              className={styles.input}
-              required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="lastName" className={styles.label}>
-              به‌روزرسانی نام خانوادگی
-            </label>
-            <input
-              type="text"
-              id="lastname"
-              value={lastName}
-              onChange={(e) => setlastName(e.target.value)}
-              className={styles.input}
-              required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="phoneNumber" className={styles.label}>
-              به روز رسانی شماره تلفن
-            </label>
-            <input
-              type="text"
-              id="phonenumber"
-              value={phoneNumber}
-              onChange={(e) => setphoneNumber(e.target.value)}
-              className={styles.input}
-              required
-            />
-          </div>
-                <div className={styles.formGroup}>
-            <label htmlFor="email" className={styles.label}>
-             به روزرسانی ایمیل
-            </label>
-            <input
-              type="text"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={styles.input}
-              required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="currentPassword" className={styles.label}>
-              رمز عبور فعلی
-            </label>
-            <div className={styles.passwordInputContainer}>
+            <input type="file" onChange={handleChange} className={styles.fileinput} />
+            <div className={styles.formGroup}>
+              <label htmlFor="birthdate" className={styles.label}>
+                تاریخ تولد
+              </label>
               <input
-                type={showPassword ? 'text' : 'password'}
-                id="currentPassword"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
+                type="date"
+                id="birthdate"
+                value={birthdate}
+                onChange={(e) => setBirthdate(e.target.value)}
                 className={styles.input}
                 required
               />
-              <FontAwesomeIcon
-                icon={showPassword ? faEyeSlash : faEye}
-                className={styles.passwordIcon}
-                onClick={togglePasswordVisibility}
-              />
             </div>
-            
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="newPassword" className={styles.label}>
-              رمز عبور جدید
-            </label>
-            <div className={styles.passwordInputContainer}>
+            <div className={styles.formGroup}>
+              <label htmlFor="gender" className={styles.label}>
+                جنسیت
+              </label>
+              <select
+                id="gender"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                className={styles.input}
+                required
+              >
+                <option value="">انتخاب جنسیت</option>
+                <option value="مرد">مرد</option>
+                <option value="زن">زن</option>
+                <option value="سایر">سایر</option>
+              </select>
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="username" className={styles.label}>
+                به‌روزرسانی نام کاربری
+              </label>
               <input
-                type={showPassword ? 'text' : 'password'}
-                id="newPassword"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className={styles.input}
                 required
               />
-              <FontAwesomeIcon
-                icon={showPassword ? faEyeSlash : faEye}
-                className={styles.passwordIcon}
-                onClick={togglePasswordVisibility}
-              />
             </div>
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="confirmPassword" className={styles.label}>
-              تأیید رمز عبور جدید
-            </label>
-            <div className={styles.passwordInputContainer}>
+            <div className={styles.formGroup}>
+              <label htmlFor="firstName" className={styles.label}>
+                به‌روزرسانی نام
+              </label>
               <input
-                type={showPassword ? 'text' : 'password'}
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                type="text"
+                id="firstname"
+                value={firstName}
+                onChange={(e) => setfirstName(e.target.value)}
                 className={styles.input}
                 required
               />
-              <FontAwesomeIcon
-                icon={showPassword ? faEyeSlash : faEye}
-                className={styles.passwordIcon}
-                onClick={togglePasswordVisibility}
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="lastName" className={styles.label}>
+                به‌روزرسانی نام خانوادگی
+              </label>
+              <input
+                type="text"
+                id="lastname"
+                value={lastName}
+                onChange={(e) => setlastName(e.target.value)}
+                className={styles.input}
+                required
               />
             </div>
-          </div>
-          <button type="submit" className={styles.submit}>
-            ارسال
-          </button>
-        </form>
+            <div className={styles.formGroup}>
+              <label htmlFor="phoneNumber" className={styles.label}>
+                به روز رسانی شماره تلفن
+              </label>
+              <input
+                type="text"
+                id="phonenumber"
+                value={phoneNumber}
+                onChange={(e) => setphoneNumber(e.target.value)}
+                className={styles.input}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="email" className={styles.label}>
+                به روزرسانی ایمیل
+              </label>
+              <input
+                type="text"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={styles.input}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="currentPassword" className={styles.label}>
+                رمز عبور فعلی
+              </label>
+              <div className={styles.passwordInputContainer}>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="currentPassword"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  className={styles.input}
+                  required
+                />
+                <FontAwesomeIcon
+                  icon={showPassword ? faEyeSlash : faEye}
+                  className={styles.passwordIcon}
+                  onClick={togglePasswordVisibility}
+                />
+              </div>
+
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="newPassword" className={styles.label}>
+                رمز عبور جدید
+              </label>
+              <div className={styles.passwordInputContainer}>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="newPassword"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className={styles.input}
+                  required
+                />
+                <FontAwesomeIcon
+                  icon={showPassword ? faEyeSlash : faEye}
+                  className={styles.passwordIcon}
+                  onClick={togglePasswordVisibility}
+                />
+              </div>
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="confirmPassword" className={styles.label}>
+                تأیید رمز عبور جدید
+              </label>
+              <div className={styles.passwordInputContainer}>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className={styles.input}
+                  required
+                />
+                <FontAwesomeIcon
+                  icon={showPassword ? faEyeSlash : faEye}
+                  className={styles.passwordIcon}
+                  onClick={togglePasswordVisibility}
+                />
+              </div>
+            </div>
+            <button type="submit" className={styles.submit}>
+              ارسال
+            </button>
+          </form>
+        </div>
+        <ToastContainer />
       </div>
-      <ToastContainer />
+      <Footer />
     </div>
   );
 };
