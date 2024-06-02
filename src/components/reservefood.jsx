@@ -10,7 +10,7 @@ const Menu = () => {
     const [fetchedAmount, setFetchedAmount] = useState();
     const [foods, setFoods] = useState([
         {
-            "id": 11,
+            "id": 3,
             "client": 1,
             "meal": {
                 "id": 3,
@@ -29,18 +29,18 @@ const Menu = () => {
             },
             "food": {
                 "id": 6,
-                "name": "ناگت مرغ",
-                "description": "ناگت مرغ",
+                "name": "قرمه سبزی",
+                "description": "قرمه سبزی",
                 "price":40000
             },
             "created_at": "2024-05-29T18:06:34.179119+03:30",
             "updated_at": "2024-05-29T18:06:34.179130+03:30"
         },
         {
-            id: 6,
+            id: 3,
             client: 2,
             buffet: { id: 43, name: "Buffet B" },
-            food: { id: 7, name: "پیتزا مارگاریتا", description: "Classic Margherita Pizza", price:50000 },
+            food: { id: 7, name: "قرمه سبزی", description: "قرمه سبزی", price:50000 },
             meal: { id: 5, name: "ناهار", time: "13:00:00" },
             created_at: "2024-05-30T12:30:00.000000+03:30",
             updated_at: "2024-05-30T12:35:00.000000+03:30",
