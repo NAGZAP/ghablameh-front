@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import axios from "axios";
 import requests from '../APIs/AuthManager';
@@ -7,7 +6,7 @@ import { useState, useEffect } from "react";
 import Organizations from "../APIs/Organizations";
 import AuthManager from "../APIs/AuthManager";
 import { ToastContainer, toast } from 'react-toastify';
-
+import Navbarparent from './navbarparent'
 const FoodTable = () => {
 
     const [data, setData] = useState([]);
@@ -33,13 +32,13 @@ const FoodTable = () => {
             }
         };
 
-        fetchData();
+        if (AuthManager.isLoggedIn()) {
+            fetchData();
+        }
     }, []);
 
-    let buffetId = currentBuffet.current.value;
-
     //fetch buffet, meal, food
-    const handleBuffetChange = async () => {
+    const fetchTableData = async () => {
 
         //buffetId
         let buffetId = currentBuffet.current.value;
@@ -55,10 +54,6 @@ const FoodTable = () => {
             //meals
             let meals = (await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/", { headers: { Authorization: `JWT ${token}` } })).data
             setMeals(meals)
-
-            // mealsId.map((meal, index) => {
-            //     console.log("meal dates: ", index, " ", meal.date)
-            // })
 
             //foodsId
             const foodsList = [];
@@ -77,29 +72,8 @@ const FoodTable = () => {
                 }
             }
             setFoods(foods)
-            // console.log('foodsList: ', foods)
         }
     }
-
-    //dates
-    const renderDates = () => {
-        let dateList = [];
-        // console.log("dateList: ",dateList)
-        return mealsId.map((meal, index) => {
-            // if (!dateList.includes(meal.time)) {
-            dateList.push(meal.time);
-            return (
-                <>
-                    <th key={index} className="py-3 flex items-center">
-                        <td className="py-2 px-4 " style={{ borderBottom: '1px solid rgb(38, 87, 124)' }}>{meal.date}</td>
-                    </th>
-                </>
-            );
-            // }  
-            // return null;
-        });
-    };
-
 
     // fetch reserved foods
     useEffect(() => {
@@ -138,17 +112,22 @@ const FoodTable = () => {
 
     //reserve
     const handlereserve = async (food) => {
+        const item = data.find(item => item.id === parseInt(currentBuffet.current.value));
+        const buffetName = item ? item.name : 'Name not found for the specified ID.';
+
         const token = 'JWT ' + localStorage.getItem("token");
         const url = 'https://ghablameh.fiust.ir/api/v1/reserve/' + food.id + '/';
-        console.log('food',food)
+
+        // console.log('food', food)
+
         const requestData = {
-            client: food.client,
+            client: "",
             meal: {
                 name: food.name,
                 time: food.name,
             },
             buffet: {
-                name: data.find(item => item.id === buffetId),
+                name: buffetName,
             },
             food: {
                 name: food.name,
@@ -156,7 +135,7 @@ const FoodTable = () => {
             }
         };
 
-        console.log('requestData',requestData)
+        // console.log('requestData', requestData)
 
         try {
             const response = await axios.patch(url, requestData, {
@@ -181,18 +160,13 @@ const FoodTable = () => {
     //delete reservation
     const handleDeletereserve = async (food) => {
         //id not found. we need the food id in the reservedfoods list not food.id
-        const reservedFood = reservedfoods.find(item => {
-            console.log("food.id:", food.id);
-            console.log("item.id:", item.id);
-            return item.id === food.id;
-        });
-        
-        console.log("Reserved Food:", reservedFood);
+        const reservedFood = reservedfoods.find(item => item.food.id === parseInt(food.id));
+        console.log("Reserved Foods list:", reservedfoods);
+        console.log("reserved Food: ", reservedFood);
 
-        console.log("reservedFood: ",reservedFood)
         const token = 'JWT ' + localStorage.getItem("token");
         const url = 'https://ghablameh.fiust.ir/api/v1/reserve/' + reservedFood.id + '/';
-
+        
         try {
             const response = await axios.delete(url, {
                 headers: {
@@ -200,7 +174,7 @@ const FoodTable = () => {
                 }
             });
 
-            if (response.status === 204) {
+            if (response.status==204) {
                 uncheckedToast(food);
                 setReservedFoods(prev => prev.filter(item => item.id !== food.id));
             } else {
@@ -230,11 +204,11 @@ const FoodTable = () => {
         );
     };
 
-    // reservation canceled toast
+    // reservation deleted toast
     const uncheckedToast = (food) => {
         toast.warn(
             <div className="flex flex-col items-center">
-                <div className="text-center mb-4">{` رزرو ${food.food.name}  حذف شد`}</div>
+                <div className="text-center mb-4">{` رزرو ${food.name}  حذف شد`}</div>
             </div>,
             {
                 position: 'top-center',
@@ -281,9 +255,10 @@ const FoodTable = () => {
         );
     };
 
-    // Checkbox change handler
+    // food Checkbox change handler
     const handleCheckboxChange = (food, isChecked) => {
         const amount = parseInt(fetchedAmount, 10);
+
         if (isChecked) {
             if (food.price > amount) {
                 chargeWalletToast();
@@ -295,7 +270,26 @@ const FoodTable = () => {
         }
     };
 
-    //foods
+    //rendering dates
+    const renderDates = () => {
+        let dateList = [];
+        // console.log("dateList: ",dateList)
+        return mealsId.map((meal, index) => {
+            // if (!dateList.includes(meal.time)) {
+            dateList.push(meal.time);
+            return (
+                <>
+                    <th key={index} className="py-3 flex items-center">
+                        <td className="py-2 px-4 " style={{ borderBottom: '1px solid rgb(38, 87, 124)' }}>{meal.date}</td>
+                    </th>
+                </>
+            );
+            // }  
+            // return null;
+        });
+    };
+
+    //rendering foods
     const renderFoods = () => {
         // let dateList = [];
         return foods.map((food, index) => {
@@ -305,15 +299,19 @@ const FoodTable = () => {
                 <>
                     <th key={index} className="py-2 px-4">
                         <td className="py-2 px-4" onClick={handleCheckboxChange}><div className="flex flex-row justify-center items-center">
-                            <span className="event-name">{food.name}</span>
-                            <span className="event-name">{food.price}</span>
-                            <input
+                        <div className="flex flex-row justify-center items-center p-3 rounded-lg" style={{ background: 'rgba(38, 87, 124,0.3)' }}>
+                        <input
                                 type="checkbox"
                                 checked={reservedfoods.some(reserved => reserved.food.id === food.id)}
                                 onChange={(e) => handleCheckboxChange(food, e.target.checked)}
-                                className="m-2"
+                                className="m-3"
                             />
-                        </div></td>
+                            <div className="flex flex-col">
+                            <span className="event-name">{food.name}</span>
+                            <span className="event-name">{food.price} تومان </span>
+                            </div>
+                            
+                        </div></div></td>
                         {/* <hr className="w-full" style={{ alignSelf: 'center', marginTop: '0.5rem', marginBottom: '0.5rem', backgroundColor: 'rgb(38, 87, 124)', height: '2px', border: 'none' }} /> */}
                     </th>
                 </>
@@ -325,7 +323,7 @@ const FoodTable = () => {
 
     return (
         <>
-            <Navbar />
+            <Navbarparent />
             <div className=""></div>
             <div style={{ width: "100%" }} className="px-5 py-3">
                 <div className="grid grid-cols-3 my-4 text-center"></div>
@@ -334,7 +332,7 @@ const FoodTable = () => {
                 <div className="grid grid-cols-3 w-full" >
                     <div></div>
                     <div className="content-center w-full">
-                        <select className="rounded w-full" onChange={handleBuffetChange} ref={currentBuffet}>
+                        <select className="rounded w-full" onChange={fetchTableData} ref={currentBuffet}>
                             {loading ? (
                                 <option>Loading...</option>
                             ) : (
@@ -379,11 +377,11 @@ const FoodTable = () => {
                                 </tr>
                                 <td className="py-2 px-4">{renderFoods()}</td>
                             </tr>
-                            <tr className="bg-white">
+                            {/* <tr className="bg-white">
                                 <td className="py-2 px-4">جمعه</td>
                                 <td className="py-2 px-4">i</td>
                                 <td className="py-2 px-4">ii</td>
-                            </tr>
+                            </tr> */}
 
                         </tbody>
                     </table>
