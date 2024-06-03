@@ -140,7 +140,7 @@ const WeeklyMenuPage = () => {
   }
   return (
     <>
-      <Navbar />
+      <Navbarparent />
       <div className=""></div>
       <div style={{ width: "100%" }} className="px-5 py-3">
         <div className="grid grid-cols-3 my-4 text-center">

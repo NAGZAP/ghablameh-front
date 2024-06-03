@@ -30,6 +30,7 @@ import OrganizationList from "./components/organizationlist";
 import OrgPanel from "./components/OrgPanel"
 import Boofeh from "./BoofehsOfOrganization/Boofeh";
 import FoodTable from "./components/foodtable";
+import Menu from "./components/reservefood";
 function App() {
   return (
     <BrowserRouter>
@@ -62,6 +63,7 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
         <Route path="/Notif" element={<Notificationbox/>}/>
         <Route path="/foodtable" element={<FoodTable/>}/>
+        <Route path="/menu" element={<Menu />} />
         
       </Routes>
     </BrowserRouter>
