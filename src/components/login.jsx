@@ -43,7 +43,7 @@ function Login() {
           <p className="max font-semibold text-template-custom-blue text-4xl dark:text-template-custom-blue text-center mt-5">
             ورود
           </p>
-          <div className="w-72 mt-1 mb-1 mr-20 ml-20">
+          <div className="w-72 mt-5 mb-1 mr-20 ml-20">
             <div className="relative w-full min-w-[200px] h-10">
               <input
                 className="peer w-full h-full bg-transparent text-template-custom-blue                      
