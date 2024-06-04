@@ -45,6 +45,7 @@ const ForgetPasswordWindow = ({ onClose }) => {
       <div>
         <p>برای بازیابی رمز عبور خود، ایمیل خود را وارد نمایید</p>
         <form onSubmit={handleSubmit}>
+          
           <input
             type="email"
             placeholder="Email"
