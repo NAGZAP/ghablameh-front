@@ -39,9 +39,9 @@ export default function DefaultSidebar() {
         <MenuItem component={<Link to="/menu" />}>
           منو هفتگی بوفه
         </MenuItem>
-        <MenuItem component={<Link to="/weeklymenu" />}>
+{/*         <MenuItem component={<Link to="/weeklymenu" />}>
           برنامه هفتگی سازمانی
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem component={<Link to="/ReviewOnBoofeh" />}>
           نظرسنجی بوفه ها
         </MenuItem>
