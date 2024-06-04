@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styles from './Cards.module.css';
 import { useState } from "react";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 function Cards(props) {
 
@@ -14,7 +16,37 @@ function Cards(props) {
   const [Emojichanger3,setEmojichanger3] = useState(emojis[2])
   const [Emojichanger4,setEmojichanger4] = useState(emojis[2])
   const [Emojichanger5,setEmojichanger5] = useState(emojis[2])
-
+  const ErrorSent = () => {
+    toast.warn(
+        <div className="flex flex-col items-center">
+            <div className="text-center mb-4">{"ارسال اطلاعات با مشکل مواجه شد."}</div>
+        </div>,
+        {
+            position: 'top-center',
+            autoClose: 3000,
+            closeButton: true,
+            hideProgressBar: false,
+            progress: undefined,
+            icon: true,
+        }
+    );
+};
+const  Sendsuc= () => {
+  toast.success(
+      <div className="flex flex-col items-center">
+          <div className="text-center mb-4">{`نظر شما با موفقیت ثبت شد!`}</div>
+      </div>
+      ,
+      {
+          position: 'top-center',
+          autoClose: 3000,
+          closeButton: true,
+          hideProgressBar: false,
+          progress: undefined,
+          icon: false,
+      }
+  );
+};
   const openSecondModal = () => {
     setIsSecondModalOpen(true);
   };
@@ -43,11 +75,12 @@ try {
     rate : (Math.round(((parseInt(value) + parseInt(value2) + parseInt(value3) + parseInt(value4) + parseInt(value5) + 5)/5)))
   };
   await axios.post('https://ghablameh.fiust.ir/api/v1/buffets/' + props.index +'/rates/', rate1 ,{ headers: { Authorization: `JWT ${token}` } });
-      alert('Data sent successfully! Org');
-
-} catch (error) {
-       alert('Error sending data:', error); 
- }
+/*       alert('Data sent successfully! Org'); */
+   Sendsuc();
+ 
+} catch (error){
+  ErrorSent();
+}
 
 
 

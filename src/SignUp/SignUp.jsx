@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Tab, initTWE } from 'tw-elements';
 import Register from '../components/org'
+import { ToastContainer, toast } from 'react-toastify';
 initTWE({ Tab });
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
@@ -80,9 +81,25 @@ function SignUp() {
           navigate("/EmailVerify");
     } catch (error) {
 /*       console.error('Error sending data:', error); */
-          alert("اکانتی با اطلاعاتی مشابه استفاده شده است.")
+/*           alert("اکانتی با اطلاعاتی مشابه استفاده شده است.") */
+          ErrorSignUp();
      }
   };
+  const ErrorSignUp = () => {
+    toast.warn(
+        <div className="flex flex-col items-center">
+            <div className="text-center mb-4">{"اکانتی با اطلاعاتی مشابه استفاده شده است."}</div>
+        </div>,
+        {
+            position: 'top-center',
+            autoClose: 3000,
+            closeButton: true,
+            hideProgressBar: false,
+            progress: undefined,
+            icon: true,
+        }
+    );
+};
   const onSubmit2 = async (data) => {
     try {
       const formattedPhoneNumber = '+98' + data.phonenumber.slice(1); 
@@ -106,7 +123,8 @@ function SignUp() {
         navigate("/EmailVerify");
     } catch (error) {
 /*       console.error('Error sending data:', error); */
-          alert("اکانتی با اطلاعاتی مشابه استفاده شده است.")
+          //alert("اکانتی با اطلاعاتی مشابه استفاده شده است.")
+          ErrorSignUp();
      }
   };
   return (
@@ -435,6 +453,7 @@ function SignUp() {
         )}
       </div>
     </div>
+    <ToastContainer />
     </div>
   );
 }
