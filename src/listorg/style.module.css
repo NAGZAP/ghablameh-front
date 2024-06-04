@@ -1,7 +1,16 @@
+.land {
+
+  background-image: url('../assets/colorkit1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+}
+
 .content {
     margin-top: 20px;
     padding: 20px;
-    background-color: #f5f5f5;
+    /* background-color: #f5f5f5; */
     text-align: center;
   }
   .label
@@ -24,7 +33,7 @@ margin-left: 570px;
 .swiper-slide {
   text-align: center;
   font-size: 18px;
-  background: #fff;
+  /* background: #fff; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,7 +74,7 @@ margin-bottom: 80px;
     position: relative;
     width: 350px;
     height: 550px;
-    background: #fff;
+    /* background: #fff; */
     border-radius: 30px;
     overflow: hidden;
   }
@@ -177,7 +186,7 @@ margin-bottom: 80px;
   
   .container7 .card .contentBx .size h3,
   .container7 .card .contentBx .color h3 {
-    color: white;
+    /* color: white; */
     font-weight: 300;
     font-size: 18px;
     text-transform: uppercase;
@@ -204,7 +213,7 @@ margin-bottom: 80px;
     display: flex;
     margin: 20px;
     margin-top: 120px;
-    background-color: white;
+    /* background-color: white; */
     justify-content: center; /* Center the navbar items */
   }
   .m-navbar-item {
@@ -228,7 +237,7 @@ margin-bottom: 80px;
   
   .content {
     margin-top: 20px;
-    background-color: white;
+    /* background-color: white; */
     display: flex;
     flex-wrap: wrap; /* Allow content items to wrap within the container */
     justify-content: center; /* Center the content items horizontally */
@@ -311,7 +320,7 @@ margin-bottom: 80px;
 }
 .slider::before,
 .slider::after {
-  background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%);
+  /* background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%); */
   content: "";
   height: 100px;
   position: absolute;
@@ -390,7 +399,7 @@ margin-bottom: 80px;
 
 .box-sstyle {
   border-radius: 39px;
-  background: #fff;
+  /* background: #fff; */
   -webkit-box-shadow: 0px 0px 59px rgba(214, 214, 214, 0.35);
   box-shadow: 0px 0px 59px rgba(214, 214, 214, 0.35);
   padding: 50px 30px 30px;

@@ -320,7 +320,9 @@ const Menu = () => {
                     <tbody>
                         {organizedData.map((entry, rowIndex) => (
                             <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
+                                <div className="flex items-center justify-center py-14">
                                 <td className="p-2">{convertToJalali(entry.date)}</td>
+                                </div>
                                 {/* } */}
                                 {mealNames.map((mealName, index) => (
                                     <td key={index} className="p-2">

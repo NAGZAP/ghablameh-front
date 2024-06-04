@@ -77,7 +77,7 @@ const AutoPlayMethods = () => {
           <div key={index} className="slider-slide">
             <h3>{item.name}</h3>
             <p>{item.organization_name}</p>
-            <p>{item.created_at}</p>
+            {/* <p>{item.created_at}</p> */}
           </div>
         ))}
       </Slider>

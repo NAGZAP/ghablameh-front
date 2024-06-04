@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import HomeOrgPage from '../HomePageForOrg/HomePage';
 import ListOrg from '../listorg/listorg';
 import AuthManager from '../APIs/AuthManager';
+import Navbarparent from './navbarparent';
+import Footer from './footer';
+import styles from '../styles/bg.module.css'
 const Home = () => {
     const [flag, setFlag] = useState(null);
 
@@ -24,9 +27,19 @@ const Home = () => {
 
     return (
         <div>
-            {flag === 1 ? <ListOrg /> : <ListOrg />}
+          {AuthManager.isLoggedIn() && (flag === 1 ? <ListOrg /> : <ListOrg />)}
+          {!AuthManager.isLoggedIn() && (
+            <div className={styles.bg}>
+          <Navbarparent/>
+          <div style={{margin:'32rem'}}>
+            
+          </div>
+          <Footer/>
+          
+          </div>
+        )}
         </div>
-    );
+      );
 };
 export default Home;
 
