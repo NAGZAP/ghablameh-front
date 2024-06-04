@@ -2,9 +2,41 @@ import styles from "./EmailVerify.module.css"
 import axios from 'axios';
 import { Link, redirect } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 function EmailVerify(){
+    const Error = (data) => {
+        toast.warn(
+            <div className="flex flex-col items-center">
+                <div className="text-center mb-4">{data}</div>
+            </div>,
+            {
+                position: 'top-center',
+                autoClose: 3000,
+                closeButton: true,
+                hideProgressBar: false,
+                progress: undefined,
+                icon: true,
+            }
+        );
+    };
+    const Notif = (data) => {
+        toast.info(
+            <div className="flex flex-col items-center">
+                <div className="text-center mb-4">{data}</div>
+            </div>,
+            {
+                position: 'top-center',
+                autoClose: 3000,
+                closeButton: true,
+                hideProgressBar: false,
+                progress: undefined,
+                icon: true,
+            }
+        );
+    };
+
     const navigate = useNavigate();
     const Resend = async() =>{
         ///verification/resend/
@@ -13,11 +45,11 @@ function EmailVerify(){
             email: localStorage.getItem('emailtoverify'),
         }
         const response = await axios.post('https://ghablameh.fiust.ir/api/v1/verification/resend/', formattedData);
-        alert(' کد مجددا برای شما ارسال شد!')
+        Notif(' کد مجددا برای شما ارسال شد!')
     
     }     catch (error) {
             // console.error('Error sending data:', error);
-           alert("اکانت درست نیست یا اکانت شما قبلا تایید شده!")
+           Error("اکانت درست نیست یا اکانت شما قبلا تایید شده!");
       }
     } 
     const ChecVerfiCode = async(e) => {
@@ -33,11 +65,11 @@ function EmailVerify(){
         localStorage.setItem('emailtoverify', '');
         //const accessToken = response.data.tokens.access;
         //localStorage.setItem('token', accessToken);
-        alert("اکانت شما با موفقیت ثبت شد!")
+        Notif("اکانت شما با موفقیت ثبت شد!");
         navigate("/login");
     } catch (error) {
                     //console.error('Error sending data:', error);
-                  alert("کد تاییدی درست نیست یا اکانت شما قبلا تایید شده!")
+                    Error("کد تاییدی درست نیست یا اکانت شما قبلا تایید شده!");
              }
         
           };
@@ -64,6 +96,7 @@ function EmailVerify(){
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
      )
 }
