@@ -43,10 +43,10 @@ try {
     rate : (Math.round(((parseInt(value) + parseInt(value2) + parseInt(value3) + parseInt(value4) + parseInt(value5) + 5)/5)))
   };
   await axios.post('https://ghablameh.fiust.ir/api/v1/buffets/' + props.index +'/rates/', rate1 ,{ headers: { Authorization: `JWT ${token}` } });
-       console.log('Data sent successfully! Org');
+      alert('Data sent successfully! Org');
 
 } catch (error) {
-       console.error('Error sending data:', error); 
+       alert('Error sending data:', error); 
  }
 
 

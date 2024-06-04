@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import axios from "axios";
-import styles from "../SignUp/SignUp.module.css";
+import styles from "./login.module.css";
 import { Link, useNavigate, redirect } from "react-router-dom";
 import AuthManager from "../APIs/AuthManager";
 
