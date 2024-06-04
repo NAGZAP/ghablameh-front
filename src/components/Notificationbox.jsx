@@ -1,18 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
 import notifmanager from "../APIs/Notifications";
-
+import io from "socket.io-client";
+import AuthManager from "../APIs/AuthManager";
 const Notificationbox = () => {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const Reads = useRef(null);
   const All = useRef(null);
   const content = useRef(null);
+  const [socket , setSocket] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const alldata = await notifmanager.GetAll();
       setData(alldata.data);
       setCount(alldata.count);
+      const token = AuthManager.getToken();
+      const ws = new WebSocket("https://ghablameh.fiust.ir/api/ws/notifications");
+      ws.onopen(() => {
+        ws.send(JSON.stringify({ type: 'auth', token }));
+      });
+      ws.onmessage((event)=> {
+        setData([...data , event.data]);
+      })
     };
     fetchData();
   }, []);

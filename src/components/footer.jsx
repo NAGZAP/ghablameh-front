@@ -76,7 +76,7 @@ const Footer = () => {
               />
               <div className={`${styles['cta-text']} ml-2`}>
                 <h4>تماس با ما</h4>
-                <span>9876543210 0</span>
+                <span>9876543210+ </span>
               </div>
             </div>
             <div className="flex items-center">

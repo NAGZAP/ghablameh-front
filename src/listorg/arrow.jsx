@@ -1,71 +1,88 @@
-import React, { Component } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Slider from "react-slick";
-import img1 from "./assets/img/main/c9.svg"
-import img2 from "./assets/img/main/c8.png"
-import img3 from "./assets/img/main/c10.jpeg"
-import img4 from "./assets/img/main/c4.png"
-import img5 from "./assets/img/main/c5.png"
-import img6 from "./assets/img/main/c7.svg"
-import './FlexLayout.css'
-export default class AutoPlayMethods extends Component {
-  constructor(props) {
-    super(props);
-    this.play = this.play.bind(this);
-    this.pause = this.pause.bind(this);
-  }
-  play() {
-    this.slider.slickPlay();
-  }
-  pause() {
-    this.slider.slickPause();
-  }
-  render() {
-    const settings = {
-      dots: true,
-      infinite: true,
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 1000
+import './FlexLayout.css';
+import axios from "axios";
+
+const AutoPlayMethods = () => {
+  const [items, setItems] = useState([]);
+
+  const fetchDataFromURL = async () => {
+    const token = 'JWT ' + localStorage.getItem("token");
+
+    try {
+      const response = await axios.get('https://ghablameh.fiust.ir/api/v1/buffets/', {
+        headers: {
+          Authorization: token
+        }
+      });
+
+      console.log('Data retrieved:', response.data);
+      // Assuming the response data is an array of objects with `name` and `organization` properties
+      setItems(response.data);
+
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataFromURL();
+  }, []);
+
+  const sliderRef = useRef(null);
+
+  useEffect(() => {
+    const play = () => {
+      sliderRef.current?.slickPlay();
     };
-    return (
+
+    const pause = () => {
+      sliderRef.current?.slickPause();
+    };
+
+    play();
+
+    return () => {
+      pause();
+    };
+  }, []);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 1000
+  };
+
+  return (
+    <div className="slider-container">
       
-      <div className="slider-container">
-  <link
-    rel="stylesheet"
-    type="text/css"
-    charSet="UTF-8"
-    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-  />
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-  />
+      <link
+        rel="stylesheet"
+        type="text/css"
+        charSet="UTF-8"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+      />
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+      />
 
-  <Slider  class="sslide" ref={slider => (this.slider = slider)} {...settings}>
-    <div className="slider-slide">
-    <img src={img2} alt="coffee"/>
-    </div>
 
-    <div className="slider-slide">
-    <img src={img1} alt="coffee"/>
+      <Slider className="sslide" ref={sliderRef} {...settings}>
+        {items.map((item, index) => (
+          <div key={index} className="slider-slide">
+            <h3>{item.name}</h3>
+            <p>{item.organization_name}</p>
+            <p>{item.created_at}</p>
+          </div>
+        ))}
+      </Slider>
     </div>
-    <div className="slider-slide">
-    <img src={img3} alt="coffee"/>
-    </div>
-    <div class="slider-slide">
-    <img src={img4} alt="coffee"/>
-</div>
+  );
+};
 
-    <div className="slider-slide">
-    <img src={img5} alt="coffee"/>
-    </div>
-    <div className="slider-slide">
-    <img src={img6} alt="coffee"/>
-    </div>
-  </Slider>
-</div>
-    );
-  }
-}
+export default AutoPlayMethods;

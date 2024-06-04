@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{ useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -6,7 +6,8 @@ import axios from "axios";
 import styles from "./login.module.css";
 import { Link, useNavigate, redirect } from "react-router-dom";
 import AuthManager from "../APIs/AuthManager";
-
+import  ForgetPasswordWindow from "../forgetpassword/ForgetPasswordWindow"
+import ForgetPasswordModal from "../forgetpassword/ForgetPasswordWindow";
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
 
@@ -22,6 +23,17 @@ const validationSchema = Yup.object({
 });
 
 function Login() {
+  const [showForgetPasswordModal, setShowForgetPasswordModal] = useState(false); // state برای کنترل نمایش موردال
+
+  const toggleForgetPasswordModal = () => {
+    setShowForgetPasswordModal(!showForgetPasswordModal); // تابع برای تغییر state و نمایش/پنهان کردن موردال
+  };
+
+  const closeForgetPasswordModal = () => {
+    setShowForgetPasswordModal(false);
+  };
+
+
   const navigate=useNavigate()
   const {
     register,
@@ -36,6 +48,9 @@ function Login() {
     localStorage.setItem("token" , responsedata.data.tokens.access);
     navigate("/");
   };
+  
+
+
   return (
     <div className={styles.container}>
       <div className={styles.signup}>
@@ -101,9 +116,20 @@ function Login() {
             <a className={styles.link_to_signin} href="#">
               اکانت ندارید؟ ثبت نام کنید ...
             </a>
+            </p>
+        <p>
+            <a
+              className={styles.forgot_password}
+              onClick={toggleForgetPasswordModal}
+            >
+              فراموشی رمز عبور
+            </a>
           </p>
         </form>
       </div>
+      {showForgetPasswordModal && (
+        <ForgetPasswordModal onClose={closeForgetPasswordModal} />
+      )}
     </div>
   );
 }
