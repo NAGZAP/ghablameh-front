@@ -48,7 +48,7 @@ function DataFromApiList() {
     <>
       <div className={styles.containment_boof}>
         <Navbar />
-        <div className={styles.itemscenter}>
+        <div className={styles.itemscenter+ " " + "mb-20"}>
           <Boofeh searchTerm={searchTerm} onSearchChange={onSearchChange}/>
           {filteredCards.map((card, index) => (
             <Cards
@@ -61,8 +61,9 @@ function DataFromApiList() {
             />
           ))}
         </div>
+        <Footer/>
+
       </div>
-      <Footer/>
     </>
   );
 }
