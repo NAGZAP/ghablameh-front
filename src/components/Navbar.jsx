@@ -217,7 +217,8 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
                 style={{ fontSize: "35px", fontFamily: "vazir" }}
                 onClick={handleOpenSidebar}
               >
-                قابلمه
+                
+                <img src={'../src/images/logo.jpeg'} alt={' قابلمه '} style={{height:'4.5vh'}} />
               </button>
 
               {/* wallet icon */}
