@@ -6,6 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import Footer from './footer'
 import Navbarparent from './navbarparent';
+import { ToastContainer, toast } from 'react-toastify';
+import AuthManager from '../APIs/AuthManager';
+import { Link } from 'react-router-dom';
 const Update = () => {
   const [name, setName] = useState('');
   const [admin_first_name, setAdmin_first_name] = useState('');
@@ -21,13 +24,64 @@ const Update = () => {
 
   const [avatar, setAvatar] = useState('');
   const [formErrors, setFormErrors] = useState([]);
+  
+  const failToast = () => {
+    toast.info(
+        <div className="flex flex-col items-center">
+            <div className="text-center mb-4">{ ` اطلاعات را به درستی وارد کنید `}</div>
+        </div>,
+        {
+            position: 'top-center',
+            autoClose: 3000,
+            closeButton: true,
+            hideProgressBar: false,
+            progress: undefined,
+            icon: false,
+        }
+    );
+};
+
+const passFailToast = () => {
+  toast.info(
+      <div className="flex flex-col items-center">
+          <div className="text-center mb-4">{ `اطلاعات رمز عبور را به درستی وارد کنید ` }</div>
+      </div>,
+      {
+          position: 'top-center',
+          autoClose: 3000,
+          closeButton: true,
+          hideProgressBar: false,
+          progress: undefined,
+          icon: false,
+      }
+  );
+};
+
+const submmitToast = () => {
+  toast.info(
+      <div className="flex flex-col items-center">
+          <div className="text-center mb-4">{ `اطلاعات ثبت شد` }</div>
+          
+          <button className="bg-gray-500 text-white p-2 rounded hover:bg-gray-700 transition duration-150 ease-in-out">
+  <Link to="/" className="text-white">
+    بازگشت به صفحه اصلی
+  </Link>
+</button>
+      </div>,
+      {
+          position: 'top-center',
+          autoClose: 3000,
+          closeButton: true,
+          hideProgressBar: false,
+          progress: undefined,
+          icon: false,
+      }
+  );
+};
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
-  // model
-  const [showMyModel, setShowMyModel] = useState(false);
-
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -80,53 +134,54 @@ const Update = () => {
     };
 
     // Retrieve token
-    const token = 'JWT ' + localStorage.getItem("token");
-    // const token= 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTE0NzcwLCJpYXQiOjE3MTM1MjI3NzAsImp0aSI6Ijk1ZTQ0OTA1Nzc4YjQ3NGFhMTUyNDRmY2Y2MWQ3NmU3IiwidXNlcl9pZCI6Mjl9.qw4BApww-lyBvNYVhBBJUaHLBo6M0snIdCLqRe5q3rU'
-
+    const token =AuthManager.getToken();
+    
     //send form data
     try {
-      const response = await axios.put('https://ghablameh.fiust.ir/api/v1/organizations/me/', formData, {
-        headers: {
-          'Authorization': token
-        }
-      });
+      const response = await axios.put('https://ghablameh.fiust.ir/api/v1/organizations/me/', formData,
+        { headers: { Authorization: "JWT " + token } }
+    );
 
       if (response.status === 200) {
-        console.log('formData submitted successfully');
+        // console.log("1: ",response.status);
+        submmitToast();
       } else {
         const errorData = await response.json();
-        console.log('formData submission failed:', errorData);
+        // console.log('formData submission failed:', errorData);
+        failToast();
       }
     } catch (error) {
       console.error('An error occurred:', error);
+      failToast();
     }
 
-    // Pass data for password update
+    // // Pass data for password update
     const passData = {
       old_password: old_password,
       new_password: new_password,
       confirmPassword: confirm_new_password
     };
 
-    //send pass data
+    // send pass data
     try {
-
-      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/password/', passData, {
-        headers: {
-          'Authorization': token
-        }
-      });
+      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/password/', passData,
+        { headers: { Authorization: "JWT " + token } }
+      );
 
       if (response.status === 200) {
-        console.log('PassData submitted successfully');
+        // console.log('PassData submission', );
+        // console.log("2s: ",response.status);
+        submmitToast();
       } else {
         const errorData = await response.json();
-        console.log('PassData submission failed:', errorData);
+        // console.log('PassData submission failed:', errorData);
+        // console.log("2f: ",response.status);
+        failToast();
       }
     } catch (error) {
-      console.error('An error occurred:', error);
+      // console.error('An error occurred:', error);
+      passFailToast();
     }
-    // Close the form after submission
   };
 
   //image
@@ -278,6 +333,7 @@ const Update = () => {
         </div>
       </div>
       <Footer />
+      <ToastContainer/>
     </div>
   );
 };
