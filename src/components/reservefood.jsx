@@ -1,78 +1,59 @@
-import { useEffect, useState } from 'react';
+import { useRef, useState, useEffect } from "react";
+import Footer from "../components/footer";
+import Navbarparent from './navbarparent'
+import AuthManager from "../APIs/AuthManager";
+import axios from "axios";
+import { useMemo } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import AuthManager from '../APIs/AuthManager';
-import axios from 'axios';
-import Navbarparent from './navbarparent';
+import Organizations from "../APIs/Organizations";
 
 const Menu = () => {
+    const [fetchedData, setFetchedData] = useState([])
+    const [data, setData] = useState([]);
     const [reservedfoods, setReservedFoods] = useState([]);
     const [fetchedAmount, setFetchedAmount] = useState();
-    const [foods, setFoods] = useState([
-        {
-            "id": 3,
-            "client": 1,
-            "meal": {
-                "id": 3,
-                "name": "ناهار",
-                "time": "13:00:00"
-            },
-            "buffet": {
-                "id": 42,
-                "name": "sfsfs",
-                "created_at": "2024-05-15T20:57:23.718005+03:30",
-                "updated_at": "2024-05-15T20:57:23.718017+03:30",
-                "organization_name": "Amir",
-                "average_rate": 2,
-                "number_of_rates": 2,
-                "image": null
-            },
-            "food": {
-                "id": 6,
-                "name": "قرمه سبزی",
-                "description": "قرمه سبزی",
-                "price":40000
-            },
-            "created_at": "2024-05-29T18:06:34.179119+03:30",
-            "updated_at": "2024-05-29T18:06:34.179130+03:30"
-        },
-        {
-            id: 3,
-            client: 2,
-            buffet: { id: 43, name: "Buffet B" },
-            food: { id: 7, name: "قرمه سبزی", description: "قرمه سبزی", price:50000 },
-            meal: { id: 5, name: "ناهار", time: "13:00:00" },
-            created_at: "2024-05-30T12:30:00.000000+03:30",
-            updated_at: "2024-05-30T12:35:00.000000+03:30",
-        },
-        {
-            id: 4,
-            client: 3,
-            buffet: { id: 44, name: "Buffet C" },
-            food: { id: 8, name: "سالاد فصل", description: "Fresh seasonal salad", price:50000 },
-            meal: { id: 6, name: "صبحانه", time: "09:00:00" },
-            created_at: "2024-06-01T08:50:00.000000+03:30",
-            updated_at: "2024-06-01T08:55:00.000000+03:30",
-        }
-    ]);
+    const [loading, setLoading] = useState(true);
+    const currentBuffet = useRef(null);
 
-    // fetch reserved foods
+    //fetch buffets
     useEffect(() => {
-        const fetchReservations = async () => {
+        const fetchData = async () => {
             try {
-                const token = AuthManager.getToken();
-
-                const response = await axios.get("https://ghablameh.fiust.ir/api/v1/reserve/",
-                    { headers: { Authorization: "JWT " + token } }
-                );
-                setReservedFoods(response.data);
+                let result = await Organizations.GetOrganizationBuffets();
+                setData(result);
             } catch (error) {
-                console.error("Error fetching reservations: ", error);
+                console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false);
             }
         };
 
-        if (AuthManager.isLoggedIn()) fetchReservations();
+        if (AuthManager.isLoggedIn()) {
+            fetchData();
+        }
     }, []);
+
+    //fetch table data
+    const fetchData = async () => {
+        try {
+            if (AuthManager.isLoggedIn()) {
+                const token = AuthManager.getToken();
+                const buffet_id = parseInt(currentBuffet.current.value);
+                const from_date = "2024-05-31";
+                const to_date = "2024-06-01";
+
+                const response = await axios.get(
+                    `https://ghablameh.fiust.ir/api/v1/buffets/${buffet_id}/weekly-menus/?from_date=${from_date}&to_date=${to_date}`,
+                    { headers: { Authorization: "JWT " + token } }
+                );
+
+                setFetchedData(response.data);
+                fetchReservations();
+            }
+        } catch (error) {
+            console.error("Error fetching data: ", error);
+        }
+    };
 
     //fetch wallet data
     useEffect(() => {
@@ -91,35 +72,41 @@ const Menu = () => {
         if (AuthManager.isLoggedIn()) fetchUserData();
     }, []);
 
+    // fetch reserved foods
+    const fetchReservations = async () => {
+        try {
+            const token = AuthManager.getToken();
+            const from_date = "2024-05-31";
+            const to_date = "2024-06-01";
+
+            const response = await axios.get(`https://ghablameh.fiust.ir/api/v1/reserve/?from_date=${from_date}&to_date=${to_date}`,
+                { headers: { Authorization: "JWT " + token } }
+            );
+            setReservedFoods(response.data);
+        } catch (error) {
+            console.error("Error fetching reservations: ", error);
+        }
+    };
+
     //reserve
     const handlereserve = async (food) => {
+
         const token = 'JWT ' + localStorage.getItem("token");
-        const url = 'https://ghablameh.fiust.ir/api/v1/reserve/' + food.id + '/';
+        const url = 'https://ghablameh.fiust.ir/api/v1/reserve/';
 
         const requestData = {
-            client: food.client,
-            meal: {
-                name: food.meal.name,
-                time: food.meal.time,
-            },
-            buffet: {
-                name: food.buffet.name,
-            },
-            food: {
-                name: food.food.name,
-                description: food.food.description,
-            }
+            meal_food: food.mealFoodId
         };
 
         try {
-            const response = await axios.patch(url, requestData, {
+            const response = await axios.post(url, requestData, {
                 headers: {
                     'Authorization': token,
                 }
             });
 
-            if (response.status === 200) {
-                setReservedFoods(prev => prev.some(item => item.id === food.id) ? prev : [...prev, food]);
+            if (response.status === 201) {
+                fetchReservations();
                 checkToast(food);
             } else {
                 console.log('Reservation update failed:', response.data);
@@ -133,8 +120,9 @@ const Menu = () => {
 
     //delete reservation
     const handleDeletereserve = async (food) => {
+        const reservedFood = reservedfoods.find(item => item.meal_food.food.id === parseInt(food.foodId));
         const token = 'JWT ' + localStorage.getItem("token");
-        const url = 'https://ghablameh.fiust.ir/api/v1/reserve/' + food.id + '/';
+        const url = 'https://ghablameh.fiust.ir/api/v1/reserve/' + reservedFood.id + '/';
 
         try {
             const response = await axios.delete(url, {
@@ -143,9 +131,9 @@ const Menu = () => {
                 }
             });
 
-            if (response.status === 204) {
+            if (response.status == 204) {
                 uncheckedToast(food);
-                setReservedFoods(prev => prev.filter(item => item.id !== food.id));
+                fetchReservations();
             } else {
                 console.log('Deleting reservation failed:', response.data);
                 failToast();
@@ -160,7 +148,7 @@ const Menu = () => {
     const checkToast = (food) => {
         toast.info(
             <div className="flex flex-col items-center">
-                <div className="text-center mb-4">{`${food.food.name} رزرو شد`}</div>
+                <div className="text-center mb-4">{`${food.name} رزرو شد`}</div>
             </div>,
             {
                 position: 'top-center',
@@ -173,11 +161,11 @@ const Menu = () => {
         );
     };
 
-    // reservation canceled toast
+    // reservation deleted toast
     const uncheckedToast = (food) => {
         toast.warn(
             <div className="flex flex-col items-center">
-                <div className="text-center mb-4">{` رزرو ${food.food.name}  حذف شد`}</div>
+                <div className="text-center mb-4">{` رزرو ${food.name}  حذف شد`}</div>
             </div>,
             {
                 position: 'top-center',
@@ -211,7 +199,7 @@ const Menu = () => {
     const chargeWalletToast = () => {
         toast.info(
             <div className="flex flex-col items-center">
-                <div className="text-center mb-4">{` ابتدا کیف پول خود را شارژ کنید `}</div>
+                <div className="text-center mb-4">{` کیف پول خود را شارژ کنید `}</div>
             </div>,
             {
                 position: 'top-center',
@@ -224,11 +212,12 @@ const Menu = () => {
         );
     };
 
-    // Checkbox change handler
+    // food Checkbox change handler
     const handleCheckboxChange = (food, isChecked) => {
         const amount = parseInt(fetchedAmount, 10);
+
         if (isChecked) {
-            if (food.food.price > amount) {
+            if (food.price > amount) {
                 chargeWalletToast();
             } else {
                 handlereserve(food);
@@ -238,36 +227,119 @@ const Menu = () => {
         }
     };
 
+    //render table
+    const TableComponent = ({ data }) => {
+        if (data.length === 0) {
+            return (
+                <div className="flex items-center justify-center h-64"> {/* Adjust height as needed */}
+                    <span className="flex flex-row justify-center items-center p-2 rounded-lg my-2" style={{ background: 'rgba(38, 87, 124,0.3)' }} >  غذایی جهت رزرو وجود ندارد، بوفه دیگری انتخاب کنید. </span>
+                </div>
+            );
+        }
+
+        const dates = [...new Set(data.map(entry => entry.date))];
+        const mealNames = [...new Set(data.flatMap(entry => entry.meals.map(meal => meal.name)))];
+
+        const organizedData = useMemo(() => {
+            return dates.map(date => {
+                const dateEntry = { date };
+                const mealsForDate = data.find(entry => entry.date === date)?.meals || [];
+
+                mealNames.forEach(mealName => {
+                    const meal = mealsForDate.find(m => m.name === mealName);
+
+                    if (meal) {
+                        // For each meal, create an array of items with detailed information
+                        dateEntry[mealName] = meal.items.map(item => ({
+                            name: item.food.name,
+                            foodId: item.food.id,
+                            mealFoodId: item.id, // Directly assigning the meal's ID as mealFoodId
+                            price: item.price,
+                            numberInStock: item.number_in_stock,
+                        }));
+                    } else {
+                        dateEntry[mealName] = []; // If no meal is found, assign an empty array
+                    }
+                });
+
+                return dateEntry;
+            });
+        }, [data, dates, mealNames]);
+
+        return (
+            <div className="m-4">
+                <table className="min-w-full divide-y divide-gray-300 shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                    <thead className="text-white" style={{ background: 'rgb(38, 87, 124)' }}>
+                        <tr>
+                            <th className="w-1/5 p-2 text-lg font-medium tracking-wider text-center">روز</th>
+                            {mealNames.map((mealName, index) => (
+                                <th key={index} className="w-1/5 p-2 text-lg font-medium tracking-wider text-center">{mealName}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {organizedData.map((entry, rowIndex) => (
+                            <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
+                                <td className="p-2">{entry.date}</td>
+                                {mealNames.map((mealName, index) => (
+                                    <td key={index} className="p-2">
+                                        {entry[mealName].map((food, foodIndex) => (
+                                            <div key={foodIndex} className="flex items-center justify-center">
+                                                <div className="flex flex-row justify-center items-center p-2 rounded-lg my-2" style={{ background: 'rgba(38, 87, 124,0.3)' }}>
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={reservedfoods.some(reserved => reserved.meal_food.food.id === food.foodId)}
+                                                        onChange={(e) => handleCheckboxChange(food, e.target.checked)}
+                                                        className="m-3 rounded-sm"
+                                                    />
+                                                    <div className="flex flex-col p-2 items-center justify-center">
+                                                        <span className="text-sm font-medium text-gray-900">{food.name}</span>
+                                                        <span className="text-sm text-gray-700">{food.price} تومان </span>
+                                                        <span className="text-sm text-gray-700"> موجودی: {food.numberInStock} عدد </span>
+                                                        <span className="text-sm text-gray-700">{food.foodId}  </span>
+                                                    </div>
+                                                </div></div>
+                                        ))}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+    };
+
     return (
         <>
             <Navbarparent />
-            <div className="container mx-auto p-4">
-                {foods.map((food) => (
-                    <div key={food.id} className="bottom flex-grow h-30 py-1 cursor-pointer w-40 m-3">
-                        <div className="event bg-black text-white rounded p-1 text-sm mb-1">
-                            <div className="flex flex-row justify-center items-center">
-                                <span className="event-name">{food.food.name}</span>
-                                <input
-                                    type="checkbox"
-                                    checked={reservedfoods.some(reserved => reserved.food.id === food.food.id)}
-                                    onChange={(e) => handleCheckboxChange(food, e.target.checked)}
-                                    className="m-2"
-                                />
-                            </div>
-                            <div className="flex flex-col justify-center items-center">
+            <div className=""></div>
+            <div style={{ width: "100%" }} className="px-5 py-3">
+                <div className="grid grid-cols-3 my-4 text-center"></div>
 
-                                <span className="meal-name">{food.meal.name}</span>
-
-                                <span className="meal-time">{food.meal.time}</span>
-
-                                <span className="food-price">{food.food.price} تومان</span> 
-                                {/*  Ensure `food.food.price` is the correct path */}
-                            </div>
-                        </div>
+                {/* buffets */}
+                <div className="grid grid-cols-3 w-full" >
+                    <div></div>
+                    <div className="content-center w-full">
+                        <select className="rounded w-full" ref={currentBuffet} onChange={fetchData}>
+                            {loading ? (
+                                <option>Loading...</option>
+                            ) : (
+                                data.map((item) => (
+                                    <option key={item.id} value={item.id}>
+                                        {item.name}
+                                    </option>
+                                ))
+                            )}
+                        </select>
                     </div>
-                ))}
-                <ToastContainer />
+                </div>
+
+                {/* table */}
+                <TableComponent data={fetchedData} />
             </div>
+            <Footer />
+            <ToastContainer />
         </>
     );
 };
