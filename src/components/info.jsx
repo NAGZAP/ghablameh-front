@@ -25,8 +25,21 @@ const Update = () => {
   const [formErrors, setFormErrors] = useState([]);
   const [token, setToken] = useState('');
   const [error, setError] = useState('');
-  const togglePasswordVisibility = () => {
-    setShowPassword((prevState) => !prevState);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    
+  const toggleCurrentPasswordVisibility = () => {
+    setShowCurrentPassword(!showCurrentPassword);
+  };
+
+  const toggleNewPasswordVisibility = () => {
+    setShowNewPassword(!showNewPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   const handleFormSubmit = async (e) => {
@@ -68,26 +81,39 @@ const Update = () => {
       return;
     }
 
-    const userData = {
-      avatar,
-      birthdate,
-      gender,
-      first_name: firstName,
-      last_name: lastName,
-      email,
-      username,
-      phone_number: phoneNumber,
+    const userData =
+    {
+      image_base64: avatar,
+      gender: gender,
+    birthdate: birthdate,
+    first_name: firstName,
+    last_name: lastName,
+    username: username,
+    email: email,
+    phone_number: phoneNumber,
+      
     };
+    const passwordData = {
+      old_password: currentPassword,
+      new_password: newPassword,
+    };
+  
 
     try {
-      const token = "jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDk1Nzk2LCJpYXQiOjE3MTM1MDM3OTYsImp0aSI6ImI2YzY2NmMzMzA0MDQ4OWNiOTU4MjU0ZGYwMjZiZGNiIiwidXNlcl9pZCI6MTd9.S13ehZA_19i0EtLWlKuT8sPrKgElj1pfAikrV6iC55Q";
+       console.log(userData);
+      const token = 'JWT ' + localStorage.getItem("token");
 
-      const response = await axios.put('https://ghablameh.fiust.ir/api/v1/client/me/', userData, {
+      const response = await axios.put('https://ghablameh.fiust.ir/api/v1/clients/me/', userData, {
         headers: {
           'Authorization': token
         }
       });
-
+      const responsePassword = await axios.post('https://ghablameh.fiust.ir/api/v1/clients/password/', passwordData, {
+        headers: {
+          'Authorization': token
+        }
+      });
+  
       if (response.status === 200) {
         console.log('Form submitted successfully');
       } else {
@@ -98,7 +124,7 @@ const Update = () => {
       setError('An error occurred. Please try again later.');
     }
   };
-
+     
   const handleChange = (event) => {
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
@@ -110,6 +136,7 @@ const Update = () => {
 
 
   return (
+    
     <div className={styles.bg}>
       <Navbarparent />
       <div className={styles.container}>
@@ -157,9 +184,9 @@ const Update = () => {
                 required
               >
                 <option value="">انتخاب جنسیت</option>
-                <option value="مرد">مرد</option>
-                <option value="زن">زن</option>
-                <option value="سایر">سایر</option>
+                <option value="M">مرد</option>
+                <option value="F">زن</option>
+         
               </select>
             </div>
             <div className={styles.formGroup}>
@@ -227,13 +254,14 @@ const Update = () => {
                 required
               />
             </div>
+     
             <div className={styles.formGroup}>
               <label htmlFor="currentPassword" className={styles.label}>
                 رمز عبور فعلی
               </label>
               <div className={styles.passwordInputContainer}>
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showCurrentPassword ? 'text' : 'password'}
                   id="currentPassword"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
@@ -241,12 +269,11 @@ const Update = () => {
                   required
                 />
                 <FontAwesomeIcon
-                  icon={showPassword ? faEyeSlash : faEye}
+                  icon={showCurrentPassword ? faEyeSlash : faEye}
                   className={styles.passwordIcon}
-                  onClick={togglePasswordVisibility}
+                  onClick={toggleCurrentPasswordVisibility}
                 />
               </div>
-
             </div>
             <div className={styles.formGroup}>
               <label htmlFor="newPassword" className={styles.label}>
@@ -254,7 +281,7 @@ const Update = () => {
               </label>
               <div className={styles.passwordInputContainer}>
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showNewPassword ? 'text' : 'password'}
                   id="newPassword"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
@@ -262,9 +289,9 @@ const Update = () => {
                   required
                 />
                 <FontAwesomeIcon
-                  icon={showPassword ? faEyeSlash : faEye}
+                  icon={showNewPassword ? faEyeSlash : faEye}
                   className={styles.passwordIcon}
-                  onClick={togglePasswordVisibility}
+                  onClick={toggleNewPasswordVisibility}
                 />
               </div>
             </div>
@@ -274,7 +301,7 @@ const Update = () => {
               </label>
               <div className={styles.passwordInputContainer}>
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showConfirmPassword ? 'text' : 'password'}
                   id="confirmPassword"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -282,9 +309,9 @@ const Update = () => {
                   required
                 />
                 <FontAwesomeIcon
-                  icon={showPassword ? faEyeSlash : faEye}
+                  icon={showConfirmPassword ? faEyeSlash : faEye}
                   className={styles.passwordIcon}
-                  onClick={togglePasswordVisibility}
+                  onClick={toggleConfirmPasswordVisibility}
                 />
               </div>
             </div>

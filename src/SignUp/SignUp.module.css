@@ -186,3 +186,14 @@ p{
   font-size: small;
   margin-bottom: 10px;
 }
+
+.forgot_password {
+  color:#26577C;; 
+ 
+  cursor: pointer;
+}
+
+.forgot_password:hover{
+  color: #E55604;
+  text-decoration: none;
+}

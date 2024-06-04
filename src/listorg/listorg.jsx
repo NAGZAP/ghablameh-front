@@ -2,23 +2,12 @@ import React from 'react';
 
 import Navbar from '../components/Navbar';
 import Footer from '../components/footer';
-import img1 from "./assets/img/main/c1.png"
-import img2 from "./assets/img/main/c2.png"
-import img6 from "./assets/img/main/d1.jpeg"
-import img4 from "./assets/img/main/c4.png"
-import img5 from "./assets/img/main/c5.png"
-import cup from './assets/img/main/coffee-cup.svg'
-import laptop from './assets/img/main/laptop.svg'
-import layout from "./assets/img/main/layout.svg"
-import img3 from "./assets/img/main/c3.png"
-import main from "./assets/img/main/h1.png"
-import main1 from "./assets/img/main/main1.jpeg"
-import main2 from "./assets/img/main/main2.jpeg"
 
-import SliderPage from "./arrow";
+
+import DataFetcher from "./arrow";
 import Select from "react-select";
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 import Slider from 'react-slick';
 import  { useEffect , useState ,useRef} from 'react';
 import styles from './style.module.css';
@@ -35,8 +24,32 @@ function ListOrg() {
   const [selectedItem, setSelectedItem] = useState('option1');
   const [index, setIndex] = React.useState(0);
   const [videoRatio, setVideoRatio] = useState("4_3");
+  const [items, setItems] = useState([]);
+  const [filterLetter, setFilterLetter] = useState('');
+  const fetchDataFromURL = async () => {
+    const token = 'JWT ' + localStorage.getItem("token");
 
-  
+    try {
+      const response = await axios.get('https://ghablameh.fiust.ir/api/v1/buffets/', {
+        headers: {
+          Authorization: token
+        }
+      });
+
+      console.log('Data retrieved:', response.data);
+      // Assuming the response data is an array of objects with `name` and `organization` properties
+      setItems(response.data);
+
+    } catch (error) {
+      console.error('Error retrieving data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataFromURL();
+   
+  }, []);
+
 
   const handleItemClick = (item) => {
     setSelectedItem(item);
@@ -94,16 +107,19 @@ function ListOrg() {
 
 
 
-
   }, []);
+  const filteredItems = items.filter(item => {
+    const firstLetter = item.name.charAt(0).toUpperCase(); // Get the first letter and convert it to uppercase
+    return filterLetter === '' || firstLetter === filterLetter;
+  });
 
-
+  
   return (
     <div className={styles.land}>
       <Navbarparent></Navbarparent>
       <body>
         <div>
-          <SliderPage />
+          < DataFetcher/>
         </div>
         <div className={styles.menu}>
           <ul className={styles['m-navbar']}>
@@ -130,86 +146,49 @@ function ListOrg() {
                 <Select options={options} onChange={handleSelectChange} />
               </div>
             </li>
-            {/* <li>
-              <h4 className={`${styles['text-2xl']} ${styles['font-bold']} ${styles['mr-8']} ${styles['mt-4']} ${styles['text-right']} ${styles['right-250']}`}>بوفه های سازمان</h4>
-            </li> */}
+      
           </ul>
           <div className={styles.content}>
             <div className={`${styles['content-item']} ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}>
-              <a href="#">
+            {items.map((item, index) => (
                 <div className={styles['flex-item']}>
-                  <img src={img1} alt="Image 1" />
-                  <h4>بوفه شماره ۱</h4>
-                </div>
-              </a>
-              <a href="#">
-                <div className={styles['flex-item']}>
-                  <img src={img2} alt="Image 2" />
-                  <h4>بوفه شماره ۲</h4>
-                </div>
-              </a>
-              <a href="#">
-                <div className={styles['flex-item']}>
-                  <img src={img3} alt="Image 3" />
-                  <h4>بوفه شماره ۳</h4>
-                </div>
-              </a>
-              <div className={styles['flex-item']}>
-                <img src={img4} alt="Image 4" />
-                <h4>بوفه شماره ۴</h4>
-              </div>
+                <h3>{item.name}</h3>
+                <p>{item.organization_name}</p>
+                <p>{item.created_at}</p>
+                 </div>
+        ))}
+                
+          
             </div>
-            <div className={`${styles['content-item']} ${selectedItem === 'Item 2' ? styles.active : ''}`}>
-              <a href="#">
-                <div className={styles['flex-item']}>
-                  <img src={img5} alt="Image 5" />
-                  <h4>بوفه شماره ۱</h4>
-                </div>
-              </a>
-              <a href="#">
-                <div className={styles['flex-item']}>
-                  <img src={img3} alt="Image 6" />
-                  <h4>بوفه شماره ۲</h4>
-                </div>
-              </a>
-              <a href="#">
-                <div className={styles['flex-item']}>
-                  <img src={img2} alt="Image 7" />
-                  <h4>بوفه شماره ۳</h4>
-                </div>
-              </a>
-              <a href="#">
-                <div className={styles['flex-item']}>
-                  <img src={img1} alt="Image 8" />
-                  <h4>بوفه شماره ۴</h4>
-                </div>
-              </a>
+         
+              
+            <div className={`${styles['content-item']} ${selectedItem === 'Item 2' ? styles.active : ''}`}> 
+            {items
+  .slice() 
+  .sort((a, b) => a.name.localeCompare(b.name)) 
+  .map((item, index) => (
+    <div key={index} className={styles['flex-item']}>
+      <h3>{item.name}</h3>
+      <p>{item.organization_name}</p>
+      <p>{item.created_at}</p>
+    </div>
+  ))}
+
+           
             </div>
+           
             <div className={`${styles['content-item']} ${selectedItem === 'Item 3' ? styles.active : ''}`}>
-              <a href="#">
-                <div className={styles['flex-item']}>
-                  <img src={img4} alt="Image 9" />
-                  <h4>بوفه شماره ۱</h4>
-                </div>
-              </a>
-              <a href="#">
-                <div className={styles['flex-item']}>
-                  <img src={img2} alt="Image 10" />
-                  <h4>بوفه شماره۲</h4>
-                </div>
-              </a>
-              <a href="#">
-                <div className={styles['flex-item']}>
-                  <img src={img5} alt="Image 11" />
-                  <h4>بوفه شماره ۳</h4>
-                </div>
-              </a>
-              <a href="#">
-                <div className={styles['flex-item']}>
-                  <img src={img3} alt="Image 12" />
-                  <h4>بوفه شماره ۴</h4>
-                </div>
-              </a>
+            {items
+  .slice() // Create a shallow copy of the items array to avoid mutating the original array
+  .sort((a, b) => new Date(a.created_at) - new Date(b.created_at)) // Sort items by created_at date
+  .map((item, index) => (
+    <div key={index} className={styles['flex-item']}>
+      <h3>{item.name}</h3>
+      <p>{item.organization_name}</p>
+      <p>{item.created_at}</p>
+    </div>
+  ))}
+
             </div>
           </div>
         </div>

@@ -19,7 +19,9 @@ import WeeklyMenuPage from "./pages/WeeklyMenu";
 import HomeOrgPage from "./HomePageForOrg/HomePage";
 import Response from "./Response/Response";
 import Home from "./components/homepage";
+import MyComponent from './listorg/listorg'
 import Panel from "./components/panel";
+import  ForgetPasswordWindow from "./forgetpassword/ForgetPasswordWindow"
 import WeeklyMenu from "./components/weeklymenu";
 import ReservationCalendar from "./components/lastreservation";
 import EmailVerify from "./EmailVerify/EmailVerify";
@@ -29,6 +31,7 @@ import Notificationbox from "./components/Notificationbox";
 import OrganizationList from "./components/organizationlist";
 import OrgPanel from "./components/OrgPanel"
 import Boofeh from "./BoofehsOfOrganization/Boofeh";
+import AddWeeklyMenu from "./addweeklybyadmin/addweeklybyadmin"
 function App() {
   return (
     <BrowserRouter>
@@ -40,6 +43,7 @@ function App() {
         <Route path="/sidebar" element={<CustomSidebar />} />
         <Route path="/navbar" element={<Navbarparent />} />
         <Route path="/Updateorg" element={<Updateorg />} />
+        <Route path="/bu" element={<MyComponent />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/HomeOrgPage" element={<HomeOrgPage />} />
@@ -53,10 +57,12 @@ function App() {
         <Route path="/panel" element={<Panel />} />
         <Route path="/weeklymenu2" element={<WeeklyMenu />} />
         <Route path="/last" element={<ReservationCalendar />} />
+        <Route path="/forgetpassword" element={<ForgetPasswordWindow />} />
         <Route path="/EmailVerify" element={<EmailVerify/>} />
         <Route path="/UserWallet" element={<UserWallet />} />
         <Route path="/orgpanel" element={<OrgPanel/>} />
         <Route path="/boofeh" element={<Boofeh/>} />
+        <Route path="/byadmin" element={<AddWeeklyMenu/>} />
         <Route path="/organizationList" element={<OrganizationList/>} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/Notif" element={<Notificationbox/>}/>
