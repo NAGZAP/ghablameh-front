@@ -83,7 +83,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
   };
 
   const handleOpenSidebar = () => {
-    console.log(sideBar.current);
+    // console.log(sideBar.current);
     let displayStatus = sideBar.current.style.display;
     if (displayStatus !== "block") sideBar.current.style.display = "block";
     else sideBar.current.style.display = "none";
