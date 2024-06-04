@@ -7,6 +7,7 @@ import { useMemo } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import Organizations from "../APIs/Organizations";
 import jalaliMoment from 'jalali-moment';
+import moment from 'moment';
 const Menu = () => {
     const [fetchedData, setFetchedData] = useState([])
     const [data, setData] = useState([]);
@@ -21,15 +22,39 @@ const Menu = () => {
               dow: 6, // Set Saturday (شنبه) as the first day of the week
             },
           });
-      
+          
           const getFirstDayOfWeek = () => {
             const now = jalaliMoment();
             const startOfWeek = now.startOf('week');
-            return startOfWeek.format('dddd، jD jMMMM jYYYY'); // Format the date as desired
+            return startOfWeek.format('jYYYY/jM/jD'); 
+            // Format the date as desired
           };
+          const getEndDayOfWeek = () => {
+            const now = jalaliMoment();
+            const endweek = now.endOf('week');
+            return endweek.format('jYYYY/jM/jD'); 
+          };
+          function convertToChristian(date) {
+            const jalaliDate = jalaliMoment(date, 'jYYYY/jM/jD');
+            const christianDate = jalaliDate.toDate();
+            const formattedDate = moment(christianDate, 'ddd MMM DD YYYY').format('YYYY-MM-DD');;
+            return formattedDate
+        }
       
           const firstDayOfWeek = getFirstDayOfWeek();
+          const endweek = getEndDayOfWeek();
+
           console.log('First day of the week:', firstDayOfWeek);
+          console.log('last day of the week:', endweek);
+          //
+
+          const christianDatefday = convertToChristian(firstDayOfWeek);
+          const christianDatelday = convertToChristian(endweek);
+
+          console.log('First day of the week chirestiia:', christianDatefday);
+          console.log('last day of the week: chirestiia', christianDatelday); 
+
+
         }, []);
     
     //fetch buffets
