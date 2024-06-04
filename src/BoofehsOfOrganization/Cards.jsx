@@ -2,9 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Cards.module.css';
 import { useState } from "react";
+import axios from 'axios';
+
 function Cards(props) {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
+  const emojis = ['😠','😦','😑','😀','😍'];
+  const [Emojichanger,setEmojichanger] = useState(emojis[2])
+  const [Emojichanger2,setEmojichanger2] = useState(emojis[2])
+  const [Emojichanger3,setEmojichanger3] = useState(emojis[2])
+  const [Emojichanger4,setEmojichanger4] = useState(emojis[2])
+  const [Emojichanger5,setEmojichanger5] = useState(emojis[2])
 
   const openSecondModal = () => {
     setIsSecondModalOpen(true);
@@ -17,31 +26,63 @@ function Cards(props) {
   const closeModal = () => {
     setIsModalOpen(false);
     setIsSecondModalOpen(false);
+    setEmojichanger(emojis[2])
+    setEmojichanger2(emojis[2])
+    setEmojichanger3(emojis[2])
+    setEmojichanger4(emojis[2])
+    setEmojichanger5(emojis[2])
   };  
-  const emojis = ['😠','😦','😑','😀','😍'];
-  const [Emojichanger,setEmojichanger] = useState(emojis[2])
-  const [Emojichanger2,setEmojichanger2] = useState(emojis[2])
-  const [Emojichanger3,setEmojichanger3] = useState(emojis[2])
-  const [Emojichanger4,setEmojichanger4] = useState(emojis[2])
-  const [Emojichanger5,setEmojichanger5] = useState(emojis[2])
+  
+  const sendRespone = async(e) => {
+/*     console.log(props.index)
+ */    
+
+    const token = localStorage.getItem("token")
+try {
+  const rate1 = {
+    rate : (Math.round(((parseInt(value) + parseInt(value2) + parseInt(value3) + parseInt(value4) + parseInt(value5) + 5)/5)))
+  };
+  await axios.post('https://ghablameh.fiust.ir/api/v1/buffets/' + props.index +'/rates/', rate1 ,{ headers: { Authorization: `JWT ${token}` } });
+       console.log('Data sent successfully! Org');
+
+} catch (error) {
+       console.error('Error sending data:', error); 
+ }
+
+
+
+
+
+/*       console.log(Math.round(((parseInt(value) + parseInt(value2) + parseInt(value3) + parseInt(value4) + parseInt(value5) + 5)/5)))
+ */
+
+
+      window['value'] = 2;
+      window['value2'] = 2;
+      window['value3'] = 2;
+      window['value4'] = 2;
+      window['value5'] = 2;
+      closeModal()
+ 
+  }
   const ChangeEmoji = (e) => {
-    const value = e.target.value;
+    window['value'] = e.target.value;
     setEmojichanger(emojis[value])
   }
   const ChangeEmoji2 = (e) => {
-    const value2 = e.target.value
+    window['value2'] = e.target.value
     setEmojichanger2(emojis[value2])
   }
   const ChangeEmoji3 = (e) => {
-    const value3 = e.target.value
+    window['value3'] = e.target.value
     setEmojichanger3(emojis[value3])
   }
   const ChangeEmoji4 = (e) => {
-    const value4 = e.target.value
+    window['value4']= e.target.value
     setEmojichanger4(emojis[value4])
   }
   const ChangeEmoji5 = (e) => {
-    const value5 = e.target.value
+    window['value5'] = e.target.value
     setEmojichanger5(emojis[value5])
   }
   if (props.isDeleted) {
@@ -51,9 +92,7 @@ function Cards(props) {
     <div className={styles.card}>
       <h2 className={styles.card_orgName}>{props.name}</h2>
       <h3 className={styles.card_orgNum}>{props.counter_organ}</h3>
-      {/* Delete button */}
-{/*       <Response/>
- */}    
+
      <div className={`${styles.itemscenter}`}>
       <button type="button" className={styles.button} onClick={openModal}>
         <p>نظرسنجی غذا بوفه</p>
@@ -164,7 +203,7 @@ function Cards(props) {
         >
             خروج
         </button>
-        <button
+        <button onClick={(e) => sendRespone(e)}
             type="button"
             className="mr-2 px-4 py-2 text-sm ml-4 font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md"
         >

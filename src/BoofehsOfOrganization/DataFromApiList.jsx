@@ -55,9 +55,7 @@ function DataFromApiList() {
               key={index}
               name={card.name}
               counter_organ={card.counter_organ}
-              onDelete={() => handleDeleteCard(card)}
-              isDeleted={deletedCards.includes(card.id)}
-              onEdit={() => handleEditClick(card)}
+              index = {card.id}
             />
           ))}
         </div>
