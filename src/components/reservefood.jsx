@@ -6,7 +6,7 @@ import axios from "axios";
 import { useMemo } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import Organizations from "../APIs/Organizations";
-
+import jalaliMoment from 'jalali-moment';
 const Menu = () => {
     const [fetchedData, setFetchedData] = useState([])
     const [data, setData] = useState([]);
@@ -15,19 +15,23 @@ const Menu = () => {
     const [loading, setLoading] = useState(true);
     const currentBuffet = useRef(null);
 
-    function startOfWeek(date)
-  {
-    var diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
-  
-    return new Date(date.setDate(diff));
- 
-  }
-  const d = new Date();
-  const year =startOfWeek(d).getFullYear();
-  const month =startOfWeek(d).getMonth();
-  const day =startOfWeek(d).getDay();
-  const date =  year +'/'+month+'/'+day;
-    alert(date);
+        useEffect(() => {
+          jalaliMoment.locale('fa', {
+            week: {
+              dow: 6, // Set Saturday (شنبه) as the first day of the week
+            },
+          });
+      
+          const getFirstDayOfWeek = () => {
+            const now = jalaliMoment();
+            const startOfWeek = now.startOf('week');
+            return startOfWeek.format('dddd، jD jMMMM jYYYY'); // Format the date as desired
+          };
+      
+          const firstDayOfWeek = getFirstDayOfWeek();
+          console.log('First day of the week:', firstDayOfWeek);
+        }, []);
+    
     //fetch buffets
     useEffect(() => {
         const fetchData = async () => {
