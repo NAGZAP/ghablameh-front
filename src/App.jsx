@@ -31,6 +31,7 @@ import OrgPanel from "./components/OrgPanel"
 import Boofeh from "./BoofehsOfOrganization/Boofeh";
 import FoodTable from "./components/foodtable";
 import Menu from "./components/reservefood";
+import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList.jsx";
 function App() {
   return (
     <BrowserRouter>
@@ -64,6 +65,7 @@ function App() {
         <Route path="/Notif" element={<Notificationbox/>}/>
         <Route path="/foodtable" element={<FoodTable/>}/>
         <Route path="/menu" element={<Menu />} />
+        <Route path="/ReviewOnBoofeh" element={<DataFromApiList />} />
         
       </Routes>
     </BrowserRouter>

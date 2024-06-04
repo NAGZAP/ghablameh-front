@@ -44,6 +44,9 @@ export default function DefaultSidebar() {
         <MenuItem component={<Link to="/foodtable" />}>
           برنامه هفتگی سازمانی
         </MenuItem>
+        <MenuItem component={<Link to="/ReviewOnBoofeh" />}>
+          نظرسنجی بوفه ها
+        </MenuItem>
 {/*         <MenuItem component={<Link to="/last" />}>رزروها</MenuItem>
  */}        
  <MenuItem component={<Link to="/myorgs" />}>درخواست های عضویت</MenuItem>
