@@ -13,7 +13,7 @@ const FoodTable = () => {
     const [loading, setLoading] = useState(true);
     const currentBuffet = useRef(null);
     const [mealsId, setMealsId] = useState([]);
-    const [meals, setMeals] = useState([]);
+    const [mealFood, setMealFood] = useState([]);
     const [foods, setFoods] = useState([]);
 
     const [reservedfoods, setReservedFoods] = useState([]);
@@ -37,7 +37,7 @@ const FoodTable = () => {
         }
     }, []);
 
-    //fetch buffet, meal, food
+    // fetch buffet, meal, food
     const fetchTableData = async () => {
 
         //buffetId
@@ -46,32 +46,61 @@ const FoodTable = () => {
         const token = requests.getToken();
 
         //mealsId
-        data = await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/", { headers: { Authorization: `JWT ${token}` } });
+        data = await axios.get(`https://ghablameh.fiust.ir/api/v1/buffets/${buffetId}/menus/`, { headers: { Authorization: `JWT ${token}` } });
         if (data.data.length !== 0) {
             let listPK = data.data[0].id;
             setMealsId(data.data);
+            // console.log("meals id: ", mealsId)
+            //date is in here
 
             //meals
-            let meals = (await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/", { headers: { Authorization: `JWT ${token}` } })).data
-            setMeals(meals)
+            let mealFood = (await axios.get(`https://ghablameh.fiust.ir/api/v1/buffets/${buffetId}/menus/${listPK}/meals/`, { headers: { Authorization: `JWT ${token}` } })).data
+            setMealFood(mealFood)
+            // console.log("meal food: ", mealFood)
 
             //foodsId
-            const foodsList = [];
-            for (let meal of meals) {
-                let gottendata = (await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/" + meal.id + "/meals/", { headers: { Authorization: `JWT ${token}` } })).data
-                foodsList.push(gottendata)
+            const foodsId = [];
+            for (let meal of mealFood) {
+                let gottendata = (await axios.get(`https://ghablameh.fiust.ir/api/v1/buffets/${buffetId}/menus/${listPK}/meals/${meal.id}/meals/`, { headers: { Authorization: `JWT ${token}` } })).data
+                let gottendata2 = gottendata.map(foodDetail => ({
+                    ...foodDetail,
+                    mealFood_name: meal.name,
+                    mealFood_id: meal.id
+                }));
+                foodsId.push(gottendata2);
             }
+            // console.log("foods id: ", foodsId)
+
 
             //foods
             const foods = [];
-            for (let foodArray of foodsList) {
+            for (let foodArray of foodsId) {
                 for (let food of foodArray) {
-                    let gottendata2 = (await axios.get("https://ghablameh.fiust.ir/api/v1/foods/" + food.food + "/", { headers: { Authorization: `JWT ${token}` } })).data
-                    gottendata2.price = food.price;
+                    let gottendata = (await axios.get(`https://ghablameh.fiust.ir/api/v1/foods/${food.food}/`, { headers: { Authorization: `JWT ${token}` } })).data
+                    gottendata.price = food.price;
+                    gottendata.number_in_stock = food.number_in_stock;
+
+                    if (!Array.isArray(gottendata)) {
+                        gottendata = [gottendata];
+                    }
+
+                    let gottendata2 = gottendata.map(foodDetail => ({
+                        ...foodDetail,
+                        price: food.price,
+                        mealFood_name: food.mealFood_name,
+                        mealFood_id: food.mealFood_id
+                    }));
+
                     foods.push(gottendata2)
+
                 }
+                // console.log("foods: ", foods)
             }
             setFoods(foods)
+            console.log("foods: ", foods)
+            // foods.map((food, index) => {
+            //     console.log("food.name: ", index,food.name)
+            // })
         }
     }
 
@@ -116,29 +145,27 @@ const FoodTable = () => {
         const buffetName = item ? item.name : 'Name not found for the specified ID.';
 
         const token = 'JWT ' + localStorage.getItem("token");
-        const url = 'https://ghablameh.fiust.ir/api/v1/reserve/' + food.id + '/';
+        const url = 'https://ghablameh.fiust.ir/api/v1/reserve/' + food[0].id + '/';
 
-        // console.log('food', food)
+        console.log('food', food)
 
         const requestData = {
-            client: "",
-            meal: {
-                name: food.name,
-                time: food.name,
-            },
+            client: 1,
+            meal_food: food[0].mealFood_name,
             buffet: {
                 name: buffetName,
             },
             food: {
-                name: food.name,
-                description: food.description,
+                name: food[0].name,
+                description: food[0].description,
             }
         };
 
-        // console.log('requestData', requestData)
+        console.log('requestData: ', requestData)
 
+    
         try {
-            const response = await axios.patch(url, requestData, {
+            const response = await axios.patch(url, JSON.stringify(requestData), {
                 headers: {
                     'Authorization': token,
                 }
@@ -166,7 +193,7 @@ const FoodTable = () => {
 
         const token = 'JWT ' + localStorage.getItem("token");
         const url = 'https://ghablameh.fiust.ir/api/v1/reserve/' + reservedFood.id + '/';
-        
+
         try {
             const response = await axios.delete(url, {
                 headers: {
@@ -174,7 +201,7 @@ const FoodTable = () => {
                 }
             });
 
-            if (response.status==204) {
+            if (response.status == 204) {
                 uncheckedToast(food);
                 setReservedFoods(prev => prev.filter(item => item.id !== food.id));
             } else {
@@ -299,19 +326,20 @@ const FoodTable = () => {
                 <>
                     <th key={index} className="py-2 px-4">
                         <td className="py-2 px-4" onClick={handleCheckboxChange}><div className="flex flex-row justify-center items-center">
-                        <div className="flex flex-row justify-center items-center p-3 rounded-lg" style={{ background: 'rgba(38, 87, 124,0.3)' }}>
-                        <input
-                                type="checkbox"
-                                checked={reservedfoods.some(reserved => reserved.food.id === food.id)}
-                                onChange={(e) => handleCheckboxChange(food, e.target.checked)}
-                                className="m-3"
-                            />
-                            <div className="flex flex-col">
-                            <span className="event-name">{food.name}</span>
-                            <span className="event-name">{food.price} تومان </span>
-                            </div>
-                            
-                        </div></div></td>
+                            <div className="flex flex-row justify-center items-center p-3 rounded-lg" style={{ background: 'rgba(38, 87, 124,0.3)' }}>
+                                <input
+                                    type="checkbox"
+                                    checked={reservedfoods.some(reserved => reserved.food.id === food.id)}
+                                    onChange={(e) => handleCheckboxChange(food, e.target.checked)}
+                                    className="m-3"
+                                />
+                                <div className="flex flex-col">
+                                    <span className="event-name">{food[0].name}</span>
+                                    <span className="event-name">{food[0].price} تومان </span>
+                                    <span className="event-name"> موجودی: {food[0].number_in_stock} عدد </span>
+                                </div>
+
+                            </div></div></td>
                         {/* <hr className="w-full" style={{ alignSelf: 'center', marginTop: '0.5rem', marginBottom: '0.5rem', backgroundColor: 'rgb(38, 87, 124)', height: '2px', border: 'none' }} /> */}
                     </th>
                 </>
@@ -355,7 +383,7 @@ const FoodTable = () => {
                             <tr className=" text-white " style={{ backgroundColor: 'rgb(38, 87, 124)' }}>
                                 <th className="py-2 px-4 text-right text-2xl">روز</th>
 
-                                {meals.map((meal, index) => (
+                                {mealFood.map((meal, index) => (
                                     <>
                                         <th key={index} className="py-2 px-4">
                                             <div className="flex flex-col items-center">
