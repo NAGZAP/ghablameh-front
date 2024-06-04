@@ -1,22 +1,20 @@
-import { useRef,useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import Footer from "../components/footer";
 import Navbarparent from './navbarparent'
 import AuthManager from "../APIs/AuthManager";
 import axios from "axios";
 import { useMemo } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-
 import Organizations from "../APIs/Organizations";
 
 const Menu = () => {
     const [fetchedData, setFetchedData] = useState([])
     const [data, setData] = useState([]);
+    const [reservedfoods, setReservedFoods] = useState([]);
+    const [fetchedAmount, setFetchedAmount] = useState();
     const [loading, setLoading] = useState(true);
     const currentBuffet = useRef(null);
 
-    const [reservedfoods, setReservedFoods] = useState([]);
-    const [fetchedAmount, setFetchedAmount] = useState();
-    
     //fetch buffets
     useEffect(() => {
         const fetchData = async () => {
@@ -37,8 +35,6 @@ const Menu = () => {
 
     //fetch table data
     const fetchData = async () => {
-        // Assuming AuthManager.getToken() and AuthManager.isLoggedIn() are synchronous. 
-        // If they are asynchronous, you should await them as well.
         try {
             if (AuthManager.isLoggedIn()) {
                 const token = AuthManager.getToken();
@@ -52,6 +48,7 @@ const Menu = () => {
                 );
 
                 setFetchedData(response.data);
+                fetchReservations();
             }
         } catch (error) {
             console.error("Error fetching data: ", error);
@@ -76,57 +73,40 @@ const Menu = () => {
     }, []);
 
     // fetch reserved foods
-    useEffect(() => {
-        const fetchReservations = async () => {
-            try {
-                const token = AuthManager.getToken();
+    const fetchReservations = async () => {
+        try {
+            const token = AuthManager.getToken();
+            const from_date = "2024-05-31";
+            const to_date = "2024-06-01";
 
-                const response = await axios.get("https://ghablameh.fiust.ir/api/v1/reserve/",
-                    { headers: { Authorization: "JWT " + token } }
-                );
-                setReservedFoods(response.data);
-                console.log(setReservedFoods)
-            } catch (error) {
-                console.error("Error fetching reservations: ", error);
-            }
-        };
-
-        if (AuthManager.isLoggedIn()) fetchReservations();
-    }, []);
+            const response = await axios.get(`https://ghablameh.fiust.ir/api/v1/reserve/?from_date=${from_date}&to_date=${to_date}`,
+                { headers: { Authorization: "JWT " + token } }
+            );
+            setReservedFoods(response.data);
+        } catch (error) {
+            console.error("Error fetching reservations: ", error);
+        }
+    };
 
     //reserve
     const handlereserve = async (food) => {
-        const item = data.find(item => item.id === parseInt(currentBuffet.current.value));
-        const buffetName = item ? item.name : 'Name not found for the specified ID.';
 
         const token = 'JWT ' + localStorage.getItem("token");
-        const url = 'https://ghablameh.fiust.ir/api/v1/reserve/' + food.id + '/';
-
-        console.log('food', food)
+        const url = 'https://ghablameh.fiust.ir/api/v1/reserve/';
 
         const requestData = {
-            client: 1,
-            meal_food: food[0].mealFood_name,
-            buffet: {
-                name: buffetName,
-            },
-            food: {
-                name: food[0].name,
-                description: food[0].description,
-            }
+            meal_food: food.mealFoodId
         };
 
-        console.log('requestData: ', requestData)
-
         try {
-            const response = await axios.patch(url, JSON.stringify(requestData), {
+            const response = await axios.post(url, requestData, {
                 headers: {
                     'Authorization': token,
                 }
             });
 
-            if (response.status === 200) {
-                setReservedFoods(prev => prev.some(item => item.id === food.id) ? prev : [...prev, food]);
+            if (response.status === 201) {
+                fetchReservations();
                 checkToast(food);
             } else {
                 console.log('Reservation update failed:', response.data);
@@ -140,11 +120,7 @@ const Menu = () => {
 
     //delete reservation
     const handleDeletereserve = async (food) => {
-        //id not found. we need the food id in the reservedfoods list not food.id
-        const reservedFood = reservedfoods.find(item => item.food.id === parseInt(food.id));
-        console.log("Reserved Foods list:", reservedfoods);
-        console.log("reserved Food: ", reservedFood);
-
+        const reservedFood = reservedfoods.find(item => item.meal_food.food.id === parseInt(food.foodId));
         const token = 'JWT ' + localStorage.getItem("token");
         const url = 'https://ghablameh.fiust.ir/api/v1/reserve/' + reservedFood.id + '/';
 
@@ -157,7 +133,7 @@ const Menu = () => {
 
             if (response.status == 204) {
                 uncheckedToast(food);
-                setReservedFoods(prev => prev.filter(item => item.id !== food.id));
+                fetchReservations();
             } else {
                 console.log('Deleting reservation failed:', response.data);
                 failToast();
@@ -223,7 +199,7 @@ const Menu = () => {
     const chargeWalletToast = () => {
         toast.info(
             <div className="flex flex-col items-center">
-                <div className="text-center mb-4">{` ابتدا کیف پول خود را شارژ کنید `}</div>
+                <div className="text-center mb-4">{` کیف پول خود را شارژ کنید `}</div>
             </div>,
             {
                 position: 'top-center',
@@ -266,29 +242,29 @@ const Menu = () => {
 
         const organizedData = useMemo(() => {
             return dates.map(date => {
-              const dateEntry = { date };
-              const mealsForDate = data.find(entry => entry.date === date)?.meals || [];
-          
-              mealNames.forEach(mealName => {
-                const meal = mealsForDate.find(m => m.name === mealName);
-          
-                if (meal) {
-                  // For each meal, create an array of items with detailed information
-                  dateEntry[mealName] = meal.items.map(item => ({
-                    name: item.food.name,
-                    foodId: item.food.id,
-                    mealFoodId: item.id, // Directly assigning the meal's ID as mealFoodId
-                    price: item.price,
-                    numberInStock: item.number_in_stock,
-                  }));
-                } else {
-                  dateEntry[mealName] = []; // If no meal is found, assign an empty array
-                }
-              });
-          
-              return dateEntry;
+                const dateEntry = { date };
+                const mealsForDate = data.find(entry => entry.date === date)?.meals || [];
+
+                mealNames.forEach(mealName => {
+                    const meal = mealsForDate.find(m => m.name === mealName);
+
+                    if (meal) {
+                        // For each meal, create an array of items with detailed information
+                        dateEntry[mealName] = meal.items.map(item => ({
+                            name: item.food.name,
+                            foodId: item.food.id,
+                            mealFoodId: item.id, // Directly assigning the meal's ID as mealFoodId
+                            price: item.price,
+                            numberInStock: item.number_in_stock,
+                        }));
+                    } else {
+                        dateEntry[mealName] = []; // If no meal is found, assign an empty array
+                    }
+                });
+
+                return dateEntry;
             });
-          }, [data, dates, mealNames]);
+        }, [data, dates, mealNames]);
 
         return (
             <div className="m-4">
@@ -312,7 +288,7 @@ const Menu = () => {
                                                 <div className="flex flex-row justify-center items-center p-2 rounded-lg my-2" style={{ background: 'rgba(38, 87, 124,0.3)' }}>
                                                     <input
                                                         type="checkbox"
-                                                        checked={reservedfoods.some(reserved => reserved.food.id === food.id)}
+                                                        checked={reservedfoods.some(reserved => reserved.meal_food.food.id === food.foodId)}
                                                         onChange={(e) => handleCheckboxChange(food, e.target.checked)}
                                                         className="m-3 rounded-sm"
                                                     />
@@ -320,7 +296,7 @@ const Menu = () => {
                                                         <span className="text-sm font-medium text-gray-900">{food.name}</span>
                                                         <span className="text-sm text-gray-700">{food.price} تومان </span>
                                                         <span className="text-sm text-gray-700"> موجودی: {food.numberInStock} عدد </span>
-                                                        {/* <span className="text-sm text-gray-700">{food.mealFoodId}  </span> */}
+                                                        <span className="text-sm text-gray-700">{food.foodId}  </span>
                                                     </div>
                                                 </div></div>
                                         ))}
@@ -345,7 +321,7 @@ const Menu = () => {
                 <div className="grid grid-cols-3 w-full" >
                     <div></div>
                     <div className="content-center w-full">
-                        <select className="rounded w-full"  ref={currentBuffet} onChange={fetchData}> 
+                        <select className="rounded w-full" ref={currentBuffet} onChange={fetchData}>
                             {loading ? (
                                 <option>Loading...</option>
                             ) : (
