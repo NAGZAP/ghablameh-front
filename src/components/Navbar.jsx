@@ -293,11 +293,11 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
             {/* Dropdown */}
             <div className={`absolute z-10 ${isDropdownOpen ? "" : "hidden" } rounded-lg shadow p-1`} style={{ backgroundColor: "rgb(38, 87, 124)", margin: "0.3vw" }}>
               <ul className={`py-1 text-sm text-white`}>
-                <li>
+{/*                 <li>
                   <a className={`block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600`}>
                     userpanel
                   </a>
-                </li>
+                </li> */}
                 <li>
                   <a onClick={handleLogout} className={`block px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-600`}>
                     Logout

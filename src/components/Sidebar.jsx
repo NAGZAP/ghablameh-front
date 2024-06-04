@@ -10,7 +10,7 @@ export default function DefaultSidebar() {
         const checkUserType = async () => {
             const userType = await AuthManager.orguser();
             setFlag(userType);
-            console.log(userType)
+            // console.log(userType)
         };
 
         checkUserType();
@@ -41,11 +41,15 @@ export default function DefaultSidebar() {
         <MenuItem component={<Link to="/weeklymenu2" />}>
           منو هفتگی بوفه
         </MenuItem>
-        <MenuItem component={<Link to="/weeklymenu" />}>
+        <MenuItem component={<Link to="/foodtable" />}>
           برنامه هفتگی سازمانی
         </MenuItem>
-        <MenuItem component={<Link to="/last" />}>رزروها</MenuItem>
-        <MenuItem component={<Link to="/myorgs" />}>درخواست های عضویت</MenuItem>
+        <MenuItem component={<Link to="/ReviewOnBoofeh" />}>
+          نظرسنجی بوفه ها
+        </MenuItem>
+{/*         <MenuItem component={<Link to="/last" />}>رزروها</MenuItem>
+ */}        
+ <MenuItem component={<Link to="/myorgs" />}>درخواست های عضویت</MenuItem>
         <MenuItem component={<Link to="/chooseOrg" />}>درخواست عضویت</MenuItem>
       </Menu>
     </Sidebar>
