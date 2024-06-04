@@ -1,8 +1,11 @@
 /* Style for the calendar container */
 .calendarcontainer {
-    height: 500px;
+    height: 800px;
     margin: 50px;
     margin-bottom: 60px;
+  }
+  .rbc-time-slot {
+    height: 90px; /* Increase this value to make the step intervals larger */
   }
   
   /* Style for the calendar tooltip */
@@ -27,6 +30,8 @@
   /* Style for the calendar cells */
   .rbc-month-view .rbc-row .rbc-day-slot .rbc-day-bg {
     border: 1px solid  #EBE4D1;
+    height: 70px;
+  
   }
   
   /* Style for the calendar event */

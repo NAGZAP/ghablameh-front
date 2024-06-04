@@ -1,12 +1,13 @@
-import React from "react";
+import React ,{ useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import axios from "axios";
-import styles from "../SignUp/SignUp.module.css";
+import styles from "./login.module.css";
 import { Link, useNavigate, redirect } from "react-router-dom";
 import AuthManager from "../APIs/AuthManager";
-
+import  ForgetPasswordWindow from "../forgetpassword/ForgetPasswordWindow"
+import ForgetPasswordModal from "../forgetpassword/ForgetPasswordWindow";
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
 
@@ -22,6 +23,17 @@ const validationSchema = Yup.object({
 });
 
 function Login() {
+  const [showForgetPasswordModal, setShowForgetPasswordModal] = useState(false); // state برای کنترل نمایش موردال
+
+  const toggleForgetPasswordModal = () => {
+    setShowForgetPasswordModal(!showForgetPasswordModal); // تابع برای تغییر state و نمایش/پنهان کردن موردال
+  };
+
+  const closeForgetPasswordModal = () => {
+    setShowForgetPasswordModal(false);
+  };
+
+
   const navigate=useNavigate()
   const {
     register,
@@ -36,6 +48,9 @@ function Login() {
     localStorage.setItem("token" , responsedata.data.tokens.access);
     navigate("/");
   };
+  
+
+
   return (
     <div className={styles.container}>
       <div className={styles.signup}>
@@ -43,7 +58,7 @@ function Login() {
           <p className="max font-semibold text-template-custom-blue text-4xl dark:text-template-custom-blue text-center mt-5">
             ورود
           </p>
-          <div className="w-72 mt-1 mb-1 mr-20 ml-20">
+          <div className="w-72 mt-5 mb-1 mr-20 ml-20">
             <div className="relative w-full min-w-[200px] h-10">
               <input
                 className="peer w-full h-full bg-transparent text-template-custom-blue                      
@@ -101,9 +116,20 @@ function Login() {
             <a className={styles.link_to_signin} href="#">
               اکانت ندارید؟ ثبت نام کنید ...
             </a>
+            </p>
+        <p>
+            <a
+              className={styles.forgot_password}
+              onClick={toggleForgetPasswordModal}
+            >
+              فراموشی رمز عبور
+            </a>
           </p>
         </form>
       </div>
+      {showForgetPasswordModal && (
+        <ForgetPasswordModal onClose={closeForgetPasswordModal} />
+      )}
     </div>
   );
 }

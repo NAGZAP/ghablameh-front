@@ -10,27 +10,38 @@ const isLoggedIn = () => {
   }
 };
  
-const orguser = () =>
-  {
-      const token = getToken ();
-      const baseurl = "https://ghablameh.fiust.ir/api/v1";
-      let user = true ;
-      let organization = true;
-      axios.get(baseurl + "/clients/me" , {headers: {'Authorization':"JWT "+token}}).then(response => console.log(response)).catch(error => { if(error.status===401){user=false}});
-      axios.get(baseurl + "/organizations/me" , {headers: {'Authorization':"JWT "+token}}).then(response => console.log(response)).catch(error => { if(error.status===401){organization=false}});
-      if (user===false && organization===true )
-        {
-           return 1 ;// 1 is equal to oraganization
-        }
-        else if (user===true && organization===false)
-        {
-           return 2 ; // 2 is equal to user
-        }
-        else
-        {
-          return 3; 
-        }
+const orguser = async () => {
+  const token = getToken();
+  const baseurl = "https://ghablameh.fiust.ir/api/v1";
+  let user = true;
+  let organization = true;
+
+  try {
+    await axios.get(baseurl + "/clients/me", {headers: {'Authorization':"JWT "+token}});
+  } catch (error) {
+    if (error.response && error.response.status === 403) {
+      user = false;
+    }
   }
+
+  try {
+    await axios.get(baseurl + "/organizations/me", {headers: {'Authorization':"JWT "+token}});
+  } catch (error) {
+    if (error.response && error.response.status === 403) {
+      organization = false;
+    }
+  }
+
+  if (!user && organization) {
+    return 1; // organization
+  } else if (user && !organization) {
+    return 2; // user
+  } else {
+    return 3;
+  }
+};
+
+
 const LoginRequest = async (username, password) => {
   const baseurl = "https://ghablameh.fiust.ir/api/v1";
   const body = { username: username, password: password };

@@ -140,10 +140,10 @@ const UserWallet = ({ open, setOpen }) => {
     );
 };
 
-UserWallet.propTypes = {
-    open: PropTypes.bool.isRequired,
-    setOpen: PropTypes.func.isRequired,
-};
+// UserWallet.propTypes = {
+//     open: PropTypes.bool.isRequired,
+//     setOpen: PropTypes.func.isRequired,
+// };
 
 
 export default UserWallet;

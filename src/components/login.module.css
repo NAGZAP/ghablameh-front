@@ -15,10 +15,37 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 100vh; */
+    height: 100vh; 
   margin: 0;
   padding: 0;
 }
+.signup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff78;
+    border-radius: 5%;
+    padding: 5%;
+    border: 2px solid rgba(0, 0, 0, 0.298);
+    margin-top: 10%;
+    margin-right: 10%;
+    margin-left: 10%;
+    margin-bottom: 10%;
+    /* Responsive Adjustments */
+    width: 100%;
+    max-width: 600px;
+  
+    @media (max-width: 768px) {
+      padding-top: 0%;
+      margin-right:5%;
+      margin-left: 5%;
+      margin-top: 10%;
+      margin-bottom: 10%;
+      border: 20%;
+      overflow: hidden;
+    }
+  }
 
 @media only screen and (max-width: 600px) {
   .container {
@@ -87,33 +114,7 @@ input::placeholder {
 
 
 
-.signup {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #ffffff78;
-  border-radius: 5%;
-  padding: 5%;
-  border: 2px solid rgba(0, 0, 0, 0.298);
-  margin-top: 10%;
-  margin-right: 10%;
-  margin-left: 10%;
-  margin-bottom: 10%;
-  /* Responsive Adjustments */
-  width: 100%;
-  max-width: 600px;
 
-  @media (max-width: 768px) {
-    padding-top: 0%;
-    margin-right:5%;
-    margin-left: 5%;
-    margin-top: 10%;
-    margin-bottom: 10%;
-    border: 20%;
-    overflow: hidden;
-  }
-}
 /* @media (max-width: 364px) {
   .signup{
     width: 80%;
@@ -185,15 +186,4 @@ p{
   color: #ff0000;
   font-size: small;
   margin-bottom: 10px;
-}
-
-.forgot_password {
-  color:#26577C;; 
- 
-  cursor: pointer;
-}
-
-.forgot_password:hover{
-  color: #E55604;
-  text-decoration: none;
 }
