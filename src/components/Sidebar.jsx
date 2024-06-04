@@ -18,35 +18,38 @@ export default function DefaultSidebar() {
   const userSidebar = () => {
     return (
       <Sidebar>
-        <Menu
-          menuItemStyles={{
-            button: {
-              ":hover": {
-                color: "black",
-                backgroundColor: "#EBE4D1"
-              },
-              color: "white",
+      <Menu
+        menuItemStyles={{
+          button: {
+            ":hover": {
+              color:"black",
+              backgroundColor: "#EBE4D1"
             },
-            root: {
-              backgroundColor: "#26577C",
-              opacity: "5",
-            },
-          }}
-        >
-          <MenuItem component={<Link to="/Update" />}>
-            تغییر اطلاعات کاربری
-          </MenuItem>
-          <MenuItem component={<Link to="/menu" />}>
-            منو هفتگی بوفه
-          </MenuItem>
-          <MenuItem component={<Link to="/weeklymenu" />}>
-            برنامه هفتگی سازمانی
-          </MenuItem>
-          <MenuItem component={<Link to="/last" />}>رزروها</MenuItem>
-          <MenuItem component={<Link to="/myorgs" />}>درخواست های عضویت</MenuItem>
-          <MenuItem component={<Link to="/chooseOrg" />}>درخواست عضویت</MenuItem>
-        </Menu>
-      </Sidebar>
+            color: "white",
+          },
+          root: {
+            backgroundColor: "#26577C",
+            opacity: "5",
+          },
+        }}
+      >
+        <MenuItem component={<Link to="/Update" />}>
+          تغییر اطلاعات کاربری
+        </MenuItem>
+        <MenuItem component={<Link to="/menu" />}>
+          منو هفتگی بوفه
+        </MenuItem>
+        <MenuItem component={<Link to="/weeklymenu" />}>
+          برنامه هفتگی سازمانی
+        </MenuItem>
+        <MenuItem component={<Link to="/ReviewOnBoofeh" />}>
+          نظرسنجی بوفه ها
+        </MenuItem>
+        <MenuItem component={<Link to="/last" />}>رزروها</MenuItem>
+        <MenuItem component={<Link to="/myorgs" />}>درخواست های عضویت</MenuItem>
+        <MenuItem component={<Link to="/chooseOrg" />}>درخواست عضویت</MenuItem>
+      </Menu>
+    </Sidebar>
     );
   }
 
