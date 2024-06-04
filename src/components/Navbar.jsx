@@ -263,7 +263,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
               )}
 
             </div>
-            {AuthManager.isLoggedIn() && (isBigScreen && (
+            {isBigScreen && (
               <div
                 className={`flex items-center justify-end space-x-3`}
                 style={{ paddingRight: "1.5vw" }}
@@ -276,7 +276,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
                   صفحه اصلی
                 </Link>
               </div>
-            ))}
+            )}
           </div>
 
           {/* Avatar, username and Login button */}
