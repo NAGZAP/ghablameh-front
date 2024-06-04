@@ -15,6 +15,19 @@ const Menu = () => {
     const [loading, setLoading] = useState(true);
     const currentBuffet = useRef(null);
 
+    function startOfWeek(date)
+  {
+    var diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
+  
+    return new Date(date.setDate(diff));
+ 
+  }
+  const d = new Date();
+  const year =startOfWeek(d).getFullYear();
+  const month =startOfWeek(d).getMonth();
+  const day =startOfWeek(d).getDay();
+  const date =  year +'/'+month+'/'+day;
+    alert(date);
     //fetch buffets
     useEffect(() => {
         const fetchData = async () => {
