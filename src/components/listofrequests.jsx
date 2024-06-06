@@ -1,31 +1,18 @@
 import { useState, useEffect } from 'react';
 import { XIcon, CheckIcon } from '@heroicons/react/solid';
 import Avatar from 'react-avatar';
-import Navbar from './Navbar';
-import Footer from './footer';
 import styles from '../styles/listofrequests.module.css';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import OrgSidebar from './orgPanelSidebar'
 import Navbarparent from './navbarparent';
-import { red } from '@mui/material/colors';
 function ListOfJoinRequests() {
   const [approved, setApproved] = useState([]);
   const [rejected, setRejected] = useState([]);
   const [IsSelectedUser, setIsSelectedUser] = useState(false)
   const isBigScreen = useMediaQuery('(min-width: 600px)')
   const [requests, setRequests] = useState([]);
-  // const [requests, setRequests] = useState([
-  //   { buffet: 'buffet1', id: 1, firstName: 'John', lastName: 'smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-  //   { buffet: 'buffet2', id: 2, firstName: 'Jane', lastName: 'Smith', status: 'p', avatar: 'https://p1.hiclipart.com/preview/743/500/3/circle-silhouette-logo-user-user-profile-green-facial-expression-nose-cartoon-png-clipart.jpg' },
-  //   { buffet: 'buffet3', id: 3, firstName: 'jacob', lastName: 'eliise', status: 'p', avatar: '' },
-  //   { buffet: 'buffet1', id: 4, firstName: 'John', lastName: 'smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-  //   { buffet: 'buffet2', id: 5, firstName: 'Jane', lastName: 'Smith', status: 'p', avatar: 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png' },
-  //   { buffet: 'buffet3', id: 6, firstName: 'loralie', lastName: 'eliise', status: 'p', avatar: '' },
-
-  // ]);
 
   //fetch list of requests
   const token = 'JWT ' + localStorage.getItem("token");
@@ -52,9 +39,8 @@ function ListOfJoinRequests() {
 
     setRequests(requests.filter((request) => request.id !== user.id));
     setApproved([...approved, updatedUser]);
-    const token = 'JWT ' + localStorage.getItem("token");
-    // const token='JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MTI5NDU4LCJpYXQiOjE3MTM1Mzc0NTgsImp0aSI6IjM5ZGQ3ZWZhZGIyNzRhZDZhN2RlY2I4ZTNjNGQwNmU4IiwidXNlcl9pZCI6MzF9.vaM70ID3rWsWzmYSRt6aNT48cqK9iTt5wLLMAQNWzYk'
 
+    const token = 'JWT ' + localStorage.getItem("token");
     const url = 'https://ghablameh.fiust.ir/api/v1/organizations/join-requests/' + user.id + '/'
 
     try {
@@ -79,7 +65,7 @@ function ListOfJoinRequests() {
     console.log(IsSelectedUser)
     const updatedUser = { ...IsSelectedUser, status: 'R' };
 
-    console.log(IsSelectedUser)
+    // console.log(IsSelectedUser)
     setRejected([...rejected, updatedUser]);
     setRequests(requests.filter((request) => request.id !== IsSelectedUser.id));
 
@@ -238,14 +224,11 @@ function ListOfJoinRequests() {
     <div>
       <div className={`${styles['main-content']} flex flex-col`}>
         <Navbarparent />
-        <div className='flex flex-row'>
           <div className='flex flex-grow justify-center items-center m-3'>
             {ListOfUserRequests()}
-          </div>
         </div>
         <ToastContainer />
       </div>
-      <Footer />
     </div>
   );
 }

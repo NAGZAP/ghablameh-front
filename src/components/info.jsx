@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import LoginRequest from "../APIs/Login"
 import Navbarparent from './navbarparent';
-import Footer from './footer';
 const Update = () => {
   const [birthdate, setBirthdate] = useState('');
   const [gender, setGender] = useState('');
@@ -322,7 +321,6 @@ const Update = () => {
         </div>
         <ToastContainer />
       </div>
-      <Footer />
     </div>
   );
 };

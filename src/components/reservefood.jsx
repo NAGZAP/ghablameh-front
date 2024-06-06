@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from "react";
-import Footer from "../components/footer";
 import Navbarparent from './navbarparent'
 import AuthManager from "../APIs/AuthManager";
 import axios from "axios";
@@ -381,7 +380,6 @@ const Menu = () => {
                 {/* table */}
                 <TableComponent data={fetchedData} />
             </div>
-            <Footer />
             <ToastContainer />
         </>
     );

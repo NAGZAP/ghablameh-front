@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { Tab, initTWE } from 'tw-elements';
 import Register from '../components/org'
 import { ToastContainer, toast } from 'react-toastify';
+import Navbarparent from '../components/navbarparent';
 initTWE({ Tab });
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
@@ -128,6 +129,8 @@ function SignUp() {
      }
   };
   return (
+    <>
+    <Navbarparent/>
     <div className={styles.container}>
     <div className={styles.signup}>
     <p className="max font-semibold text-template-custom-blue text-4xl dark:text-template-custom-blue text-center mt-5">ثبت نام</p>
@@ -455,6 +458,7 @@ function SignUp() {
     </div>
     <ToastContainer />
     </div>
+    </>
   );
 }
 export default SignUp;

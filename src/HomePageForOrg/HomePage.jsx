@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-import Footer from '../components/footer';
 import Navbarparent from '../components/navbarparent'
 import Navbar from '../components/Navbar';
 import styles from './Homepage.module.css';
@@ -145,7 +143,6 @@ function HomeOrgPage() {
 
                         </div>
                     </div>
-                <Footer></Footer>
             </div>
         </div>
         </div>

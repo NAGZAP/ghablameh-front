@@ -1,18 +1,14 @@
-import React from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/footer";
 import ChooseOrganization from "../components/ChooseOrganization";
-import DefaultSidebar from '../components/Sidebar';
+import Navbarparent from "../components/navbarparent";
 const ChooseOrganizationPage = () => {
 
     return (
       <div dir="rtl">
-        <Navbar />
+        <Navbarparent/>
           <div className="px-5 pt-5">
             <div><ChooseOrganization/></div>
             
           </div>
-        <Footer />
       </div>
     );
 }

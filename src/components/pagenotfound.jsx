@@ -1,11 +1,10 @@
 import styles from '../styles/PageNotFound.module.css';
-import Navbar from './Navbar';
-import Footer from './footer';
+import Navbarparent from './navbarparent';
 function PageNotFound() {
     return (
         <div>
         <div className='navbar-me'>
-        <Navbar/>
+        <Navbarparent/>
         </div>
       
         <div className={`${styles['page-not-found']}`}>
@@ -27,7 +26,6 @@ function PageNotFound() {
             </div>
         </div>
         <div>
-        <Footer/>
         </div>
         
         </div>

@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import Footer from './footer'
 import Navbarparent from './navbarparent';
 const Update = () => {
   const [name, setName] = useState('');
@@ -213,7 +212,7 @@ const Update = () => {
         <div className='flex justify-center items-center'>
           <div className={styles.card}>
             <h2 className={styles.title}>به‌روزرسانی اطلاعات سازمان </h2>
-            <form onSubmit={handleFormSubmit} className={`${styles.form} ${styles.formScrollable}`}>
+            <form onSubmit={handleFormSubmit} className={`${styles.form}`}>
               {formErrors.length > 0 && (
                 <div className={styles.errorContainer}>
                   <ul className={styles.errorList}>
@@ -257,7 +256,7 @@ const Update = () => {
                 <label htmlFor="admin_phone_number" className={styles.label}> شماره تماس مدیر سازمان </label>
                 <input type="text" id="admin_phone_number" value={admin_phone_number} onChange={(e) => setAdmin_phone_number(e.target.value)} className={styles.input} required placeholder=' شماره تماس مدیر سازمان ' />
               </div>
-
+              
               <PasswordFields />
               <button type="submit" className={styles.button}>
                 ارسال
@@ -277,7 +276,6 @@ const Update = () => {
           {myForm()}
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './OrgPage.module.css';
-import Footer from '../components/footer';
 import { Link } from 'react-router-dom';
-import OrgSidebar from '../components/orgPanelSidebar.jsx';
 import Navbarparent from '../components/navbarparent.jsx';
 
 function OrgPage() {
@@ -135,11 +133,12 @@ function OrgPage() {
     localStorage.setItem("Boofeh" , person.name);
   };
   return (
-    <div className=''>
-      <div className=''>
-        <div className={styles.containment_boof}>
+    <div >
+      <Navbarparent />
+      {/* <div className=''>*/}
+        <div className={styles.containment_boof} > 
         <div className={styles.app}>
-          <Navbarparent />
+          
           <div className='flex flex-row justify-between items-center'>
 
           <div className={`${styles.itemscenter} flex-grow`}>
@@ -248,8 +247,7 @@ function OrgPage() {
             </div>
           </div>
           </div>
-          <Footer />
-        </div>
+        {/* </div> */}
       </div>
     </div>
   );
