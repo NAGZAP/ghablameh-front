@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap');
 .containment_boof {
-
   background-color: #ffffff;
   font-family: "Vazir", "Vazirmatn", "Arabic Typesetting", sans-serif;
   font-optical-sizing: auto;
@@ -11,10 +10,14 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  margin: 0;
-  padding: 0;
-/*   height: 100vh;
- */}
+  width: 100%;
+  min-height: 70vh;
+}
+
+.app{
+  text-align: center;
+}
+
 /* @media only screen and (max-width: 600px) {
   @media (max-width: 768px) {
   .containment_boof {
@@ -53,7 +56,7 @@
 }
 .card_orgName{
     margin-top: 20px;
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
     color: #26577C;
     font-size: large;
     font-weight:bold;
@@ -80,8 +83,4 @@
     @media (max-width: 367px) {      
       transform: scale(0.4);
     }
-}
-.app{
-  text-align: center;
-  min-height: 100vh;
 }

@@ -3,7 +3,6 @@ import HomeOrgPage from '../HomePageForOrg/HomePage';
 import ListOrg from '../listorg/listorg';
 import AuthManager from '../APIs/AuthManager';
 import Navbarparent from './navbarparent';
-import Footer from './footer';
 import styles from '../styles/bg.module.css'
 const Home = () => {
     const [flag, setFlag] = useState(null);
@@ -34,7 +33,6 @@ const Home = () => {
           <div style={{margin:'32rem'}}>
             
           </div>
-          <Footer/>
           
           </div>
         )}

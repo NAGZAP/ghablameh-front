@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Navbar from '../components/Navbar';
-import Footer from '../components/footer';
 
 
 import DataFetcher from "./arrow";
@@ -194,7 +193,6 @@ function ListOrg() {
         </div>
       </body>
       <OrganizationList/>
-      <Footer></Footer>
     </div>
   );
 }

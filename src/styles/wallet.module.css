@@ -95,3 +95,12 @@
 .bgmee{
 background-color:rgba(113, 112, 112, 0.939);
 }
+
+.bg {
+
+  background-image: url('../assets/colorkit1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+}

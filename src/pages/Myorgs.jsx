@@ -69,10 +69,9 @@
 // export default Myorgs;
 import React, { useRef, useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import Footer from "../components/footer";
 import styles from "../styles/updateinfo.module.css";
 import organizationsRequest from '../APIs/Organizations';
-
+import Navbarparent from "../components/navbarparent";
 const Myorgs = () => {
   const [orgs, setOrgs] = useState([]);
   const [filteredOrgs, setFilteredOrgs] = useState([]);
@@ -99,28 +98,31 @@ const Myorgs = () => {
   };
 
   return (
-    <>
-      <Navbar />
-      <div className="border border-sky-800 mx-2 my-5 p-2">
-        <div className="grid grid-cols-12">
+    <div>
+      <Navbarparent/>
+      <div className={` mx-2 my-5 p-2`}>
+        <div className=" flex items-center justify-center flex-col">
+        <div className="grid grid-cols-12 flex items-center justify-center" style={{width:'50%'}}>
           <div className="col-span-10">
             <input
               ref={searchData}
               type="text"
-              className={styles.input}
+              className={`${[styles.input]} rounded-lg`}
               placeholder="جست و جو ..."
             />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-2 m-2">
             <button
               onClick={handleSearch}
-              className="w-full bg-sky-800 hover:bg-blue-700 text-white font-bold py-2 px-4 "
+              className="w-full bg-sky-800 hover:bg-blue-700 text-white font-bold px-4 rounded-lg"
+              style={{paddingTop:'0.6175rem',paddingBottom:'0.6175rem'}}
             >
               جست و جو
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-1">
+        </div>
+        <div className="grid grid-cols-3 gap-1 mx-3 my-6">
           {filteredOrgs.length === 0 ? (
             <p className="text-red-600 text-center my-5" style={{ fontSize: "24px" }}>
               سازمانی یافت نشد!
@@ -129,7 +131,7 @@ const Myorgs = () => {
             filteredOrgs.map((item) => (
               <div
                 key={item.id}
-                className="border border-sky-800 rounded p-2 my-2"
+                className="border border-sky-800 rounded-lg p-2 my-2 m-2"
               >
                 <div className="grid grid-cols-2">
                   <div>
@@ -138,7 +140,7 @@ const Myorgs = () => {
                   <div>
                     وضعیت :
                     <span
-                      className={`text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:text-green-300 ${
+                      className={`text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:text-green-300 m-3 ${
                         item.status === 'P'
                           ? 'bg-yellow-100'
                           : item.status === 'A'
@@ -164,8 +166,7 @@ const Myorgs = () => {
           )}
         </div>
       </div>
-      <Footer />
-    </>
+    </div>
   );
 };
 

@@ -82,15 +82,12 @@
 // };
 
 // export default WeeklyMenuPage;
-import React, { useRef } from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/footer";
-import WeeklyMenuTable from "../components/WeeklyMenuTable";
-import BuffetsDropdown from "../components/ChooseBuffet";
+import { useRef } from "react";
 import axios from "axios";
 import requests from '../APIs/AuthManager';
 import { useState, useEffect } from "react";
 import Organizations from "../APIs/Organizations";
+import Navbarparent from "../components/navbarparent";
 const WeeklyMenuPage = () => {
   const date = new Date();
   const [data, setData] = useState([]);
@@ -128,7 +125,7 @@ const WeeklyMenuPage = () => {
     //alert(buffetId);
     let data = [];
     const token = requests.getToken();
-    data = await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/"+buffetId +"/menus/", { headers: { Authorization: `JWT ${token}` } });
+    data = await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/", { headers: { Authorization: `JWT ${token}` } });
     if (data.data.length !== 0) {
       let listPK = data.data[0].id;
       let foods = await axios.get("https://ghablameh.fiust.ir/api/v1/buffets/" + buffetId + "/menus/" + listPK + "/meals/", { headers: { Authorization: `JWT ${token}` } });
@@ -140,7 +137,7 @@ const WeeklyMenuPage = () => {
   }
   return (
     <>
-      <Navbarparent />
+      <Navbarparent/>
       <div className=""></div>
       <div style={{ width: "100%" }} className="px-5 py-3">
         <div className="grid grid-cols-3 my-4 text-center">
@@ -286,7 +283,6 @@ content-center w-full">
           </table>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

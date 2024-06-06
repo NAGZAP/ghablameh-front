@@ -34,25 +34,6 @@ const UserWallet = ({ open, setOpen }) => {
     //send data
     const handleTopUp = (user) => {
 
-        // const token = 'JWT ' + localStorage.getItem("token");
-
-        // const url = 'https://ghablameh.fiust.ir/api/v1/wallets/me/' + user.id + '/'
-
-        // try {
-        //     const response = axios.patch(url, amount, {
-        //         headers: {
-        //             'Authorization': token
-        //         }
-        //     });
-        //     if (response.status === 200) {
-        //         console.log('formData submitted successfully');
-        //     } else {
-        //         const errorData = response.json();
-        //         console.log('formData submission failed:', errorData);
-        //     }
-        // } catch (error) {
-        //     console.error('An error occurred:', error);
-        // }
         setOpen(false);
     };
 
@@ -72,7 +53,7 @@ const UserWallet = ({ open, setOpen }) => {
     };
 
     const walletModal = () => (
-        <div className="p-4 inset-0 z-50">
+        <div className="inset-0 z-50" >
            
         {AuthManager.isLoggedIn() && open && 
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
@@ -131,10 +112,8 @@ const UserWallet = ({ open, setOpen }) => {
 
     return (
         <div>
-            <div className={`flex flex-col`}>
-                <div className='flex flex-grow justify-center items-center m-3'>
+            <div className={`${[styles.bg]} flex flex-col justify-center items-center`}>
                     {walletModal()}
-                </div>
             </div>
         </div>
     );

@@ -57,7 +57,7 @@ const AutoPlayMethods = () => {
   };
 
   return (
-    <div className="slider-container">
+    <div className="slider-container m-10">
       
       <link
         rel="stylesheet"

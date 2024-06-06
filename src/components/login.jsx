@@ -8,6 +8,7 @@ import { Link, useNavigate, redirect } from "react-router-dom";
 import AuthManager from "../APIs/AuthManager";
 import  ForgetPasswordWindow from "../forgetpassword/ForgetPasswordWindow"
 import ForgetPasswordModal from "../forgetpassword/ForgetPasswordWindow";
+import Navbarparent from "./navbarparent";
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
 
@@ -52,6 +53,8 @@ function Login() {
 
 
   return (
+    <>
+    <Navbarparent/>
     <div className={styles.container}>
       <div className={styles.signup}>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -131,6 +134,7 @@ function Login() {
         <ForgetPasswordModal onClose={closeForgetPasswordModal} />
       )}
     </div>
+    </>
   );
 }
 export default Login;
