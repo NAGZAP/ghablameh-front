@@ -1,0 +1,12 @@
+.wrapper input {
+    background-color: white;
+    opacity: 60%;
+}
+
+select {
+    color: #000;
+}
+
+select.placeholder {
+    color: #999;
+}

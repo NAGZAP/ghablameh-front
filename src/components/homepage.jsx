@@ -18,9 +18,12 @@ const Home = () => {
 
     if (flag === null) {
         return (
+            <>
+            <Navbarparent/>
             <div className='w-full flex items-center justify-center'>
                 <h3 className="text-xl font-light text-gray-800 pt-3 pb-2 pr-3 text-right p-6 m-2"> در حال انتقال به صفحه اصلی... </h3>
             </div>
+            </>
         );
     }
 
