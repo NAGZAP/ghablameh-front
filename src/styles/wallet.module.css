@@ -1,0 +1,106 @@
+@font-face {
+    font-family: 'vazir';
+    src: url('../assets/fonts/vazir/Vazir.ttf');
+  }
+
+.input {
+    width: 100%;
+    padding: 8px;
+    text-align: right;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .input:hover {
+    background-color: #ffffff;
+  }
+  
+.input::placeholder {
+    font: 0.9rem/0.9 'vazir'; 
+}
+
+.label {
+    font-weight: bold;
+  }
+  .button1 {
+    /* width: 100%; */
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #26577C;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .button2 {
+    /* width: 100%; */
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #545e65;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .button2:hover {
+    background-color: #424d4f;
+  }
+
+  .button1:hover{
+    background-color: #264e6c;
+  }
+  
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .card {
+          width: 90%;
+          margin-top: 20px;
+        }
+      }
+      
+      @media (max-width: 576px) {
+        .card {
+          padding: 10px;
+        }
+        
+        .title {
+          font-size: 20px;
+        }
+        
+        .avatar {
+          width: 100px;
+          height: 100px;
+          border-width: 3px;
+        }
+        
+        .fileinput {
+          height: 40px;
+        }
+        
+        .input {
+          font-size: 12px;
+        }
+        
+        .button {
+          font-size: 12px;
+        }
+      }
+
+.bgme{
+  background-color:rgba(38, 87, 124, 0.953);
+  background-color:rgba(229, 86, 4, 0.939);
+}
+.bgmee{
+background-color:rgba(113, 112, 112, 0.939);
+}
+
+.bg {
+
+  background-image: url('../assets/colorkit1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+}
