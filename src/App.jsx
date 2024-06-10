@@ -32,7 +32,7 @@ import Boofeh from "./BoofehsOfOrganization/Boofeh";
 import Menu from "./components/reservefood";
 import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList";
 import AddWeeklyMenu from "./addweeklybyadmin/addweeklybyadmin";
-
+import Verify from "./components/verify";
 function App() {
   return (
     <BrowserRouter>
@@ -68,6 +68,7 @@ function App() {
         <Route path="/Notif" element={<Notificationbox />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/ReviewOnBoofeh" element={<DataFromApiList />} />
+        <Route path="/verify" element={<Verify />} />
       </Routes>
       <Footer />
       </div>

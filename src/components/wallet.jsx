@@ -1,17 +1,19 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import styles from '../styles/wallet.module.css';
 import PropTypes from 'prop-types';
 import axios from "axios";
 import AuthManager from "../APIs/AuthManager";
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 // const UserWallet = (props) => {
 const UserWallet = ({ open, setOpen }) => {
     // const [open, setOpen] = useState(props.open);
     const [fetchedAmount, setFetchedAmount] = useState('0');
     const [amount, setAmount] = useState('0');
-    const [error, setError] = useState('');
-
+    const [amountError, setAmountError] = useState('');
+    const [requestError, setRequestError] = useState('');
+    const [data, setData] = useState();
 
     // fetch data
     useEffect(() => {
@@ -30,21 +32,55 @@ const UserWallet = ({ open, setOpen }) => {
         if (AuthManager.isLoggedIn()) fetchUserData();
     }, []);
 
-
     //send data
-    const handleTopUp = (user) => {
+    const handleTopUp = () => {
+        if (!amount || amount === '0') {
+            setAmountError(' مبلغ دلخواه خود را وارد کنید. ');
+            return;
+        }else if( amount === '0' || parseInt(amount)<1000){
+            setAmountError(' مبلغ وارد شده باید بیشتر از ۱۰۰۰ تومان باشد. ')
+        }else {
+            postrequest();
+            setAmountError('');
+        }
+    };
 
-        setOpen(false);
+    //post request
+    const postrequest = async () => {
+        const token = "JWT "+AuthManager.getToken();
+        try {
+            const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/join-requests/', parseInt(amount), {
+                headers: {
+                    'Authorization': token,
+                }
+            });
+            
+            setData(response.data);
+            console.log(response.data)
+            const redirectionUrl = response.data.pgw_url+'?token='+response.data.token;
+            
+            // redirect
+            window.location.href = redirectionUrl;
+
+            setAmount('')
+            setRequestError('')
+            setRequestError('')
+            setOpen(false);
+
+        } catch (error) {
+            console.error('Error sending request: ',error);
+            setRequestError(' مشکلی پیش آمده، لطفا در زمان دیگری امتحان کنید. ');
+        }
     };
 
     //error
     const handleAmountChange = (e) => {
         const value = e.target.value;
-        if (!/^\d+$/.test(value)) {
-            setError('مقدار دلخواه خود را به عدد وارد کنید');
-        } else {
-            setError('');
+        if (/^\d*$/.test(e.target.value)) {
+            setAmountError('');
             setAmount(value);
+        } else {
+            setAmountError('مقدار دلخواه خود را به عدد و انگلیسی وارد کنید');
         }
     };
 
@@ -54,8 +90,8 @@ const UserWallet = ({ open, setOpen }) => {
 
     const walletModal = () => (
         <div className="inset-0 z-50" >
-           
-        {AuthManager.isLoggedIn() && open && 
+
+            {AuthManager.isLoggedIn() && open &&
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
                     <div className="bg-white p-10 px-14 rounded-lg shadow-lg items-center justify-center">
                         <div className=' mb-9 mt-4'>
@@ -85,25 +121,29 @@ const UserWallet = ({ open, setOpen }) => {
                             <div className='px-1' onClick={() => handlePresetAmount('60000')}><div className={`${styles.bgme} text-white py-2 px-3 rounded-lg flex flex-col justify-center items-center`}> 60,000 تومان </div></div>
                         </div>
 
-                        <div className='flex justify-center flex-col mt-8 mb-12 items-center'>
+                        <div className='flex justify-center flex-col mt-8 mb-9 items-center'>
                             <input
                                 placeholder=' مبلغ دلخواه '
                                 value={amount !== '0' ? amount : ''}
                                 // type="text"
                                 onChange={handleAmountChange}
                                 className={`${styles.input} mb-1`}
-                                style={{ width: '17vw', textAlign: 'center' }} // Adjust the width as needed, 'auto' or specific value
+                                style={{ width: '17vw', textAlign: 'center' }}
                             />
-                            {error && <span className='text-sm' style={{ color: 'red' }}>{error}</span>}
+                            {amountError && <span className='text-sm mt-2' style={{ color: 'red' }}>{amountError}</span>}
                         </div>
-                        <div className='flex flex-row justify-center'>
+                        <div className='flex flex-col justify-center items-center'>
+                        <div className='flex flex-row justify-center items-center'>
                             <button onClick={handleTopUp} className={`${styles.button1} mx-2 text-white py-2 px-4 rounded mr-2`}>
                                 افزایش موجودی
                             </button>
-                            <button onClick={() => setOpen(false)} className={`${styles.button2} bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded`}>
+                            <button onClick={() => { setOpen(false), setAmountError(''),setAmount(''),setRequestError('') }} className={`${styles.button2} bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded`}>
                                 انصراف
                             </button>
                         </div>
+                        {requestError && <span className='text-sm mt-4' style={{ color: 'red' }}>{requestError}</span>}
+                    </div>
+
                     </div>
                 </div>
             }
@@ -113,8 +153,9 @@ const UserWallet = ({ open, setOpen }) => {
     return (
         <div>
             <div className={`${[styles.bg]} flex flex-col justify-center items-center`}>
-                    {walletModal()}
+                {walletModal()}
             </div>
+            <ToastContainer />
         </div>
     );
 };
