@@ -17,6 +17,7 @@ function Verify() {
     const [verificationSuccessful, setVerificationSuccessful] = useState(false);
     const [verificationFailed, setVerificationFailed] = useState(false);
     const [resultUnknown, setResultUnknown] = useState(false);
+    const [fetchedAmount, setFetchedAmount] = useState('');
     const navigate = useNavigate();
 
     //icon style
@@ -25,6 +26,7 @@ function Verify() {
         hidden: { scale: 0, opacity: 0 },
     };
 
+    // fetch transactoin data
     useEffect(() => {
         const verifyPayment = async () => {
             setIsLoading(true);
@@ -35,11 +37,11 @@ function Verify() {
                     }
                 });
 
-                if (response.status === 200 && response.data.status=='COMPLETED') {
+                if (response.status === 200 && response.data.status == 'COMPLETED') {
                     setIsLoading(false);
                     setVerificationSuccessful(true);
 
-                }else if (response.status === 200 && response.data.status=='UNCOMPLETED') {
+                } else if (response.status === 200 && response.data.status !== 'COMPLETED') {
                     setIsLoading(false);
                     setVerificationFailed(true);
 
@@ -59,6 +61,23 @@ function Verify() {
             verifyPayment();
         }
     }, [queryparamtoken]);
+
+    //fetch wallet data
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const token = AuthManager.getToken();
+
+                const response = await axios.get("https://ghablameh.fiust.ir/api/v1/wallets/me/",
+                    { headers: { Authorization: "JWT " + token } }
+                );
+                setFetchedAmount(response.data.balance);
+            } catch (error) {
+                console.error("Error fetching user data: ", error);
+            }
+        };
+        if (AuthManager.isLoggedIn()) fetchUserData();
+    }, [isLoading]);
 
     return (
         <div>
@@ -83,6 +102,19 @@ function Verify() {
                         >
                             <FontAwesomeIcon icon={faCheckCircle} />
                         </motion.div>
+                        <div className='flex flex-col items-center justify-center bg-gray-50 py-2 px-3 rounded-lg'>
+                            <div className='flex flex-row items-center justify-between pb-1 pt-2 px-3 w-72'>
+                                <div> موجودی کیف پول : </div>
+                                <div> {fetchedAmount} </div>
+                            </div>
+                            <hr className='w-64 mt-3 border-gray-200 border-t' ></hr>
+                            <div className='flex flex-row items-center justify-between mt-3 pt-1 pb-2 px-3 w-72'>
+                                <div> شماره پیگیری : </div>
+                                <div> 234567 </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 )}
 
@@ -104,7 +136,6 @@ function Verify() {
                     <div className="flex flex-col items-center justify-center container mx-auto" >
                         <p className="text-center text-yellow-400 font-bold text-xl mt-12 mb-3">متاسفانه نتیجه تراکنش نامشخص می باشد.</p>
                         <p className="text-center text-yellow-400 font-bold text-xl mb-12"> لطفا کیف پول خود را بررسی کنید.</p>
-                        
                         <motion.div
                             className="text-yellow-400 font-bold text-6xl mx-auto mb-7"
                             initial="hidden"
