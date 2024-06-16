@@ -28,6 +28,7 @@
     "axios": "^1.6.8",
     "flowbite": "^2.3.0",
     "flowbite-react": "^0.7.5",
+    "framer-motion": "^11.2.10",
     "jalali-moment": "^3.3.11",
     "keen-slider": "^6.8.6",
     "moment": "^2.30.1",
