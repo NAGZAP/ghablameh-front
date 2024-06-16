@@ -13,7 +13,7 @@ const UserWallet = ({ open, setOpen }) => {
     const [amount, setAmount] = useState('0');
     const [amountError, setAmountError] = useState('');
     const [requestError, setRequestError] = useState('');
-    const [data, setData] = useState();
+    const [isWaiting, setIsWaiting] = useState(false);
 
     // fetch data
     useEffect(() => {
@@ -30,45 +30,53 @@ const UserWallet = ({ open, setOpen }) => {
             }
         };
         if (AuthManager.isLoggedIn()) fetchUserData();
-    }, []);
+    }, [open]);
 
     //send data
     const handleTopUp = () => {
         if (!amount || amount === '0') {
             setAmountError(' مبلغ دلخواه خود را وارد کنید. ');
             return;
-        }else if( amount === '0' || parseInt(amount)<1000){
+        } else if (amount === '0' || parseInt(amount) < 1000) {
             setAmountError(' مبلغ وارد شده باید بیشتر از ۱۰۰۰ تومان باشد. ')
-        }else {
+        } else {
             postrequest();
             setAmountError('');
         }
     };
 
+
     //post request
     const postrequest = async () => {
-        const token = "JWT "+AuthManager.getToken();
+        setRequestError('');
+        setIsWaiting(true);
+        const token = "JWT " + AuthManager.getToken();
+
+        const requestdata = {
+            amount: parseInt(amount)
+        }
+
         try {
-            const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/join-requests/', parseInt(amount), {
+            const response = await axios.post('https://ghablameh.fiust.ir/api/v1/wallets/deposit/', requestdata, {
                 headers: {
                     'Authorization': token,
                 }
             });
-            
-            setData(response.data);
-            console.log(response.data)
-            const redirectionUrl = response.data.pgw_url+'?token='+response.data.token;
-            
+
+            const redirectionUrl = response.data.pgw_url + '?token=' + response.data.token;
+
             // redirect
             window.location.href = redirectionUrl;
 
             setAmount('')
             setRequestError('')
             setRequestError('')
+            setIsWaiting(false);
             setOpen(false);
 
         } catch (error) {
-            console.error('Error sending request: ',error);
+            // console.error('Error sending request: ',error);
+            setIsWaiting(false);
             setRequestError(' مشکلی پیش آمده، لطفا در زمان دیگری امتحان کنید. ');
         }
     };
@@ -133,16 +141,25 @@ const UserWallet = ({ open, setOpen }) => {
                             {amountError && <span className='text-sm mt-2' style={{ color: 'red' }}>{amountError}</span>}
                         </div>
                         <div className='flex flex-col justify-center items-center'>
-                        <div className='flex flex-row justify-center items-center'>
-                            <button onClick={handleTopUp} className={`${styles.button1} mx-2 text-white py-2 px-4 rounded mr-2`}>
-                                افزایش موجودی
-                            </button>
-                            <button onClick={() => { setOpen(false), setAmountError(''),setAmount(''),setRequestError('') }} className={`${styles.button2} bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded`}>
-                                انصراف
-                            </button>
+                            <div className='flex flex-row justify-center items-center'>
+
+                            {!isWaiting && (
+                                    <button onClick={handleTopUp} className={`${styles.button1} mx-2 text-white py-2 px-4 rounded mr-2`}>
+                                        افزایش موجودی
+                                    </button>
+                                )}
+                                {isWaiting && (
+                                    <button onClick={handleTopUp} className={`${styles.button1} mx-2 text-white py-2 px-4 rounded mr-2`}>
+                                        <div className={`${styles.spinner2}`}></div>
+                                    </button>
+                                )}
+
+                                <button onClick={() => { setOpen(false), setAmountError(''), setAmount(''), setRequestError('') }} className={`${styles.button2} bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded`}>
+                                    انصراف
+                                </button>
+                            </div>
+                            {requestError && <span className='text-sm mt-4' style={{ color: 'red' }}>{requestError}</span>}
                         </div>
-                        {requestError && <span className='text-sm mt-4' style={{ color: 'red' }}>{requestError}</span>}
-                    </div>
 
                     </div>
                 </div>

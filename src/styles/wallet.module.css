@@ -112,3 +112,13 @@
   height: 50px;
   animation: spinner 1s linear infinite;
 }
+
+.spinner2 {
+  border: 3px solid rgba(204, 204, 204, 0.5);
+  border-left-color: rgb(38, 87, 124);
+  border-top-color: rgb(38, 87, 124);
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  animation: spinner 1s linear infinite;
+}

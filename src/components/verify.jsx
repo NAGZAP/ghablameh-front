@@ -30,8 +30,13 @@ function Verify() {
     useEffect(() => {
         const verifyPayment = async () => {
             setIsLoading(true);
+
+            const requestdata={
+                token:queryparamtoken
+             }
+
             try {
-                const response = await axios.post('https://ghablameh.fiust.ir/api/v1/wallets/verify/', queryparamtoken, {
+                const response = await axios.post('https://ghablameh.fiust.ir/api/v1/wallets/verify/', requestdata, {
                     headers: {
                         'Authorization': 'JWT ' + AuthManager.getToken(),
                     }
@@ -113,8 +118,6 @@ function Verify() {
                                 <div> 234567 </div>
                             </div>
                         </div>
-
-
                     </div>
                 )}
 
@@ -129,6 +132,17 @@ function Verify() {
                         >
                             <FontAwesomeIcon icon={faTimesCircle} />
                         </motion.div>
+                        <div className='flex flex-col items-center justify-center bg-gray-50 py-2 px-3 rounded-lg'>
+                            <div className='flex flex-row items-center justify-between pb-1 pt-2 px-3 w-72'>
+                                <div> موجودی کیف پول : </div>
+                                <div> {fetchedAmount} </div>
+                            </div>
+                            <hr className='w-64 mt-3 border-gray-200 border-t' ></hr>
+                            <div className='flex flex-row items-center justify-between mt-3 pt-1 pb-2 px-3 w-72'>
+                                <div> شماره پیگیری : </div>
+                                <div> 87644 </div>
+                            </div>
+                        </div>
                     </div>
                 )}
 
