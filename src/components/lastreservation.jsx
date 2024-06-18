@@ -4,8 +4,6 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 import styles from '../styles/lastreservation.module.css';
 import axios from 'axios';
-import Navbar from './Navbar';
-import Footer from './footer';
 import Navbarparent from './navbarparent';
 
 const localizer = momentLocalizer(moment);
@@ -59,7 +57,6 @@ const ReservationCalendar = () => {
           defaultDate={new Date()}
         />
       </div>
-      <Footer />
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './addweeklybyadmin.css';
-import Footer from '../components/footer';
 import Navbarparent from '../components/navbarparent';
 const AddWeeklyMenu = () => {
   const [menu, setMenu] = useState([
@@ -75,7 +74,6 @@ const AddWeeklyMenu = () => {
       </button>
   
     </div>
-        <Footer/>
         </div>
   );
 };

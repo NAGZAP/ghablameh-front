@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styles from  '../styles/weeklymenu.module.css';
-import Navbar from './Navbar';
-import Footer from './footer';
+import Navbarparent from './navbarparent';
 
 const weeklyMenuData = [
 { روز: 'دوشنبه', وعده: 'صبحانه', غذا: 'تست', تاریخ: '2024-04-14', زمان_توزیع: '8:00 ', هزینه:50000   },
@@ -88,7 +87,7 @@ const WeeklyMenu = () => {
   return (
     <>
      <div className={styles.app}>
-      <Navbar></Navbar>
+      <Navbarparent/>
     <p id={styles.title}>منوی هفتگی</p>
       <div className={styles.menu}>
     <table id={styles.employee}>
@@ -100,7 +99,6 @@ const WeeklyMenu = () => {
   </div>
   {renderPagination()}
   </div>
-  <Footer></Footer>
 
    
     </>

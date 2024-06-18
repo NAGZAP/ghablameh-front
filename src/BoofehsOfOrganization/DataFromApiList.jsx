@@ -3,9 +3,8 @@ import axios from 'axios';
 import Cards from './Cards';
 import Boofeh from './Boofeh';
 import styles from './Cards.module.css';
-import Footer from '../components/footer';
-import Navbar from '../components/Navbar.jsx';
 import { ToastContainer, toast } from 'react-toastify';
+import Navbarparent from '../components/navbarparent';
 
 function DataFromApiList() {
   const [cards, setCards] = useState([]);
@@ -48,7 +47,7 @@ function DataFromApiList() {
   return (
     <>
       <div className={styles.containment_boof}>
-        <Navbar />
+        <Navbarparent/>
         <div className={styles.itemscenter+ " " + "mb-20"}>
           <Boofeh searchTerm={searchTerm} onSearchChange={onSearchChange}/>
           {filteredCards.map((card, index) => (
@@ -60,7 +59,6 @@ function DataFromApiList() {
             />
           ))}
         </div>
-        <Footer/>
         <ToastContainer />
       </div>
     </>

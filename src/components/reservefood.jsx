@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from "react";
-import Footer from "../components/footer";
 import Navbarparent from './navbarparent'
 import AuthManager from "../APIs/AuthManager";
 import axios from "axios";
@@ -7,31 +6,53 @@ import { useMemo } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import Organizations from "../APIs/Organizations";
 import jalaliMoment from 'jalali-moment';
+import moment from 'moment';
 const Menu = () => {
     const [fetchedData, setFetchedData] = useState([])
     const [data, setData] = useState([]);
     const [reservedfoods, setReservedFoods] = useState([]);
     const [fetchedAmount, setFetchedAmount] = useState();
     const [loading, setLoading] = useState(true);
+    const [fromDate, setFromDate] = useState([]);
+    const [toDate, setToDate] = useState([]);
     const currentBuffet = useRef(null);
 
-        useEffect(() => {
-          jalaliMoment.locale('fa', {
+
+    //fetch dates
+    useEffect(() => {
+        jalaliMoment.locale('fa', {
             week: {
-              dow: 6, // Set Saturday (شنبه) as the first day of the week
+                dow: 6,
             },
-          });
-      
-          const getFirstDayOfWeek = () => {
+        });
+
+        const getFirstDayOfWeek = () => {
             const now = jalaliMoment();
             const startOfWeek = now.startOf('week');
-            return startOfWeek.format('dddd، jD jMMMM jYYYY'); // Format the date as desired
-          };
-      
-          const firstDayOfWeek = getFirstDayOfWeek();
-          console.log('First day of the week:', firstDayOfWeek);
-        }, []);
-    
+            return startOfWeek.format('jYYYY/jM/jD');
+        };
+        const getEndDayOfWeek = () => {
+            const now = jalaliMoment();
+            const endweek = now.endOf('week');
+            return endweek.format('jYYYY/jM/jD');
+        };
+        function convertToChristian(date) {
+            const jalaliDate = jalaliMoment(date, 'jYYYY/jM/jD');
+            const christianDate = jalaliDate.toDate();
+            const formattedDate = moment(christianDate, 'ddd MMM DD YYYY').format('YYYY-MM-DD');
+            return formattedDate;
+        }
+
+        const firstDayOfWeek = getFirstDayOfWeek();
+        const endweek = getEndDayOfWeek();
+
+        const christianDatefday = convertToChristian(firstDayOfWeek);
+        setFromDate(christianDatefday)
+        const christianDatelday = convertToChristian(endweek);
+        setToDate(christianDatelday)
+
+    }, []);
+
     //fetch buffets
     useEffect(() => {
         const fetchData = async () => {
@@ -56,11 +77,9 @@ const Menu = () => {
             if (AuthManager.isLoggedIn()) {
                 const token = AuthManager.getToken();
                 const buffet_id = parseInt(currentBuffet.current.value);
-                const from_date = "2024-05-31";
-                const to_date = "2024-06-01";
 
                 const response = await axios.get(
-                    `https://ghablameh.fiust.ir/api/v1/buffets/${buffet_id}/weekly-menus/?from_date=${from_date}&to_date=${to_date}`,
+                    `https://ghablameh.fiust.ir/api/v1/buffets/${buffet_id}/weekly-menus/?from_date=${fromDate}&to_date=${toDate}`,
                     { headers: { Authorization: "JWT " + token } }
                 );
 
@@ -93,10 +112,8 @@ const Menu = () => {
     const fetchReservations = async () => {
         try {
             const token = AuthManager.getToken();
-            const from_date = "2024-05-31";
-            const to_date = "2024-06-01";
 
-            const response = await axios.get(`https://ghablameh.fiust.ir/api/v1/reserve/?from_date=${from_date}&to_date=${to_date}`,
+            const response = await axios.get(`https://ghablameh.fiust.ir/api/v1/reserve/?from_date=${fromDate}&to_date=${toDate}`,
                 { headers: { Authorization: "JWT " + token } }
             );
             setReservedFoods(response.data);
@@ -244,6 +261,11 @@ const Menu = () => {
         }
     };
 
+    const convertToJalali = (date) => {
+        const today = new Date(date).toLocaleDateString('fa-IR');
+        return today;
+    };    
+
     //render table
     const TableComponent = ({ data }) => {
         if (data.length === 0) {
@@ -297,7 +319,10 @@ const Menu = () => {
                     <tbody>
                         {organizedData.map((entry, rowIndex) => (
                             <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
-                                <td className="p-2">{entry.date}</td>
+                                <div className="flex items-center justify-center py-14">
+                                <td className="p-2">{convertToJalali(entry.date)}</td>
+                                </div>
+                                {/* } */}
                                 {mealNames.map((mealName, index) => (
                                     <td key={index} className="p-2">
                                         {entry[mealName].map((food, foodIndex) => (
@@ -355,7 +380,6 @@ const Menu = () => {
                 {/* table */}
                 <TableComponent data={fetchedData} />
             </div>
-            <Footer />
             <ToastContainer />
         </>
     );
