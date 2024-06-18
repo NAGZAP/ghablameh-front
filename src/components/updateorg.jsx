@@ -1,13 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../styles/updateorg.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import Navbarparent from './navbarparent';
-import { ToastContainer, toast } from 'react-toastify';
-import AuthManager from '../APIs/AuthManager';
-import { Link } from 'react-router-dom';
+import Avatar from "react-avatar";
+
 const Update = () => {
   const [name, setName] = useState('');
   const [admin_first_name, setAdmin_first_name] = useState('');
@@ -21,7 +20,8 @@ const Update = () => {
   const [confirm_new_password, setConfirm_new_password] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const [avatar, setAvatar] = useState('');
+  const [image_base64, setImage_base64] = useState('');
+  const [image_url, setImage_url] = useState('');
   const [formErrors, setFormErrors] = useState([]);
   
   const failToast = () => {
@@ -78,9 +78,51 @@ const submmitToast = () => {
   );
 };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+  // model
+  const [showMyModel, setShowMyModel] = useState(false);
+
+  // fetch user data
+  useEffect(() => {
+    const FetchData = async () => {
+      try {
+        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/organizations/me/', {
+          headers: {
+            'Authorization': 'JWT ' + localStorage.getItem("token")
+          }
+        });
+
+        if (response.status === 200) {
+          setName(response.data.name || '');
+          setAdmin_first_name(response.data.admin_first_name || '');
+          setAdmin_last_name(response.data.admin_last_name || '');
+          SetAdmin_username(response.data.admin_username || '');
+          setAdmin_email(response.data.admin_email || '');
+          setAdmin_phone_number(response.data.admin_phone_number || '');
+          setImage_url(response.data.image_url || '')
+
+        } else {
+          console.log('fetching userData failed:', response.status);
+        }
+      } catch (error) {
+        console.error('An error occurred:', error);
+      }
+
+    };
+    FetchData();
+  }, []);
+
+  // useEffect(() => {
+  //   const comeOn = () => {
+  //     console.log("image_base64: ", image_base64)
+  //   };
+  //   comeOn();
+  // }, []);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -104,15 +146,15 @@ const submmitToast = () => {
     if (!admin_phone_number) {
       errors.push('شماره مدیر را وارد کنید');
     }
-    if (!new_password) {
-      errors.push('رمز عبور جدید را وارد کنید');
-    }
-    if (!old_password) {
-      errors.push('رمز عبور جدید را وارد کنید');
-    }
-    if (!confirm_new_password) {
-      errors.push('تأیید رمز عبور جدید را وارد کنید');
-    }
+    // if (!new_password) {
+    //   errors.push('رمز عبور جدید را وارد کنید');
+    // }
+    // if (!old_password) {
+    //   errors.push('رمز عبور جدید را وارد کنید');
+    // }
+    // if (!confirm_new_password) {
+    //   errors.push('تأیید رمز عبور جدید را وارد کنید');
+    // }
     if (new_password !== confirm_new_password) {
       errors.push('رمز عبور جدید و تأیید رمز عبور مطابقت ندارند');
     }
@@ -123,7 +165,7 @@ const submmitToast = () => {
 
     // Submit the form with all the data
     const formData = {
-      avatar,
+      image_base64: image_base64 || '',
       name,
       admin_first_name,
       admin_last_name,
@@ -133,8 +175,8 @@ const submmitToast = () => {
     };
 
     // Retrieve token
-    const token =AuthManager.getToken();
-    
+    const token = 'JWT ' + localStorage.getItem("token");
+
     //send form data
     try {
       const response = await axios.put('https://ghablameh.fiust.ir/api/v1/organizations/me/', formData,
@@ -142,19 +184,20 @@ const submmitToast = () => {
     );
 
       if (response.status === 200) {
-        // console.log("1: ",response.status);
-        submmitToast();
+        console.log('formData submitted successfully');
+        console.log('formData: ', formData)
+        setIsModalOpen(true);
       } else {
         const errorData = await response.json();
-        // console.log('formData submission failed:', errorData);
-        failToast();
+        console.log('formData submission failed:', errorData);
+        console.log('formData: ', formData)
       }
     } catch (error) {
       console.error('An error occurred:', error);
-      failToast();
+      console.log('formData: ', formData)
     }
 
-    // // Pass data for password update
+    // Pass data for password update
     const passData = {
       old_password: old_password,
       new_password: new_password,
@@ -189,77 +232,9 @@ const submmitToast = () => {
     reader.readAsDataURL(event.target.files[0]);
     reader.onload = (e) => {
       let img = e.target.result;
-      setAvatar(img);
+      setImage_base64(img);
     };
   };
-  
-  //passwords
-  function PasswordFields() {
-    return (
-      <div>
-        <div className={styles.formGroup}>
-          <label htmlFor="currentPassword" className={styles.label}>
-            رمز عبور فعلی
-          </label>
-          <div className={styles.passwordInputContainer}>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              id="old_password"
-              value={old_password}
-              onChange={(e) => setOld_password(e.target.value)}
-              className={styles.input}
-              required
-            />
-            <FontAwesomeIcon
-              icon={showPassword ? faEyeSlash : faEye}
-              className={styles.passwordIcon}
-              onClick={togglePasswordVisibility}
-            />
-          </div>
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="newPassword" className={styles.label}>
-            رمز عبور جدید
-          </label>
-          <div className={styles.passwordInputContainer}>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              id="new_password"
-              value={new_password}
-              onChange={(e) => setNew_password(e.target.value)}
-              className={styles.input}
-              required
-            />
-            <FontAwesomeIcon
-              icon={showPassword ? faEyeSlash : faEye}
-              className={styles.passwordIcon}
-              onClick={togglePasswordVisibility}
-            />
-          </div>
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="confirmPassword" className={styles.label}>
-            تأیید رمز عبور جدید
-          </label>
-          <div className={styles.passwordInputContainer}>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              id="confirm_new_password"
-              value={confirm_new_password}
-              onChange={(e) => setConfirm_new_password(e.target.value)}
-              className={styles.input}
-              required
-            />
-            <FontAwesomeIcon
-              icon={showPassword ? faEyeSlash : faEye}
-              className={styles.passwordIcon}
-              onClick={togglePasswordVisibility}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   function myForm() {
     return (
@@ -277,45 +252,139 @@ const submmitToast = () => {
                   </ul>
                 </div>
               )}
-              <div className={styles.formGroup}>
-                <div className={styles.avatarimg}>
-                  <img src={avatar} className={styles.avatar} alt="" />
+
+              {/* image */}
+              <div className='flex flex-col items-center justify-center'>
+                <div className={styles.formGroup}>
+                  <div className={styles.avatarimg}>
+                    <div className='flex flex-col items-center justify-center'>
+                      <label htmlFor="file_input">
+
+                        {image_base64 || image_url?
+                          <img
+                            src={!image_base64 && image_url.startsWith('/api/')
+                              ? `https://ghablameh.fiust.ir/${image_url}`
+                              : image_base64}
+                            className={styles.avatar}
+                            alt="Profile"
+                          />
+                          :
+                          <Avatar
+                            name={name}
+                            size="130"
+                            round={true}
+                            maxInitials={1}
+                          />
+                        }
+
+                      </label>
+                      <input id="file_input" type="file" onChange={handleChange} className={styles.fileinput}></input>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <input type="file" onChange={handleChange} className={styles.fileinput} />
 
-              <div className={styles.formGroup}>
-                <label htmlFor="name" className={styles.label}> نام سازمان  </label>
-                <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} className={styles.input} required placeholder='نام سازمان' />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="admin_username" className={styles.label}> نام کاربری مدیر سازمان  </label>
-                <input type="text" id="admin_username" value={admin_username} onChange={(e) => SetAdmin_username(e.target.value)} className={styles.input} required placeholder=' نام کاربری مدیر سازمان  ' />
-              </div>
+              {/* input fileds */}
+              <div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="name" className={styles.label}> نام سازمان  </label>
+                  <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} className={styles.input} required placeholder='نام سازمان' />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="admin_username" className={styles.label}> نام کاربری مدیر سازمان  </label>
+                  <input type="text" id="admin_username" value={admin_username} onChange={(e) => SetAdmin_username(e.target.value)} className={styles.input} required placeholder=' نام کاربری مدیر سازمان  ' />
+                </div>
 
-              <div className={styles.formGroup}>
-                <label className={styles.label}>نام مدیر سازمان</label>
-                <div className='flex'>
-                  <input type="text" id="admin_first_name" value={admin_first_name} onChange={(e) => setAdmin_first_name(e.target.value)} className={styles.input} required placeholder='نام' />
-                  <div style={{ marginLeft: '10px' }}></div>
-                  <input type="text" id="admin_last_name" value={admin_last_name} onChange={(e) => setAdmin_last_name(e.target.value)} className={styles.input} required placeholder='نام خانوادگی' />
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>نام مدیر سازمان</label>
+                  <div className='flex'>
+                    <input type="text" id="admin_first_name" value={admin_first_name} onChange={(e) => setAdmin_first_name(e.target.value)} className={styles.input} required placeholder='نام' />
+                    <div style={{ marginLeft: '10px' }}></div>
+                    <input type="text" id="admin_last_name" value={admin_last_name} onChange={(e) => setAdmin_last_name(e.target.value)} className={styles.input} required placeholder='نام خانوادگی' />
+                  </div>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label htmlFor="admin_email" className={styles.label}> ایمیل مدیر سازمان </label>
+                  <input type="text" id="admin_email" value={admin_email} onChange={(e) => setAdmin_email(e.target.value)} className={styles.input} required placeholder='  ایمیل مدیر سازمان  ' />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label htmlFor="admin_phone_number" className={styles.label}> شماره تماس مدیر سازمان </label>
+                  <input type="text" id="admin_phone_number" value={admin_phone_number} onChange={(e) => setAdmin_phone_number(e.target.value)} className={styles.input} required placeholder=' شماره تماس مدیر سازمان ' />
                 </div>
               </div>
 
-              <div className={styles.formGroup}>
-                <label htmlFor="admin_email" className={styles.label}> ایمیل مدیر سازمان </label>
-                <input type="text" id="admin_email" value={admin_email} onChange={(e) => setAdmin_email(e.target.value)} className={styles.input} required placeholder='  ایمیل مدیر سازمان  ' />
+
+              {/* password fields */}
+              <div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="currentPassword" className={styles.label}>
+                    رمز عبور فعلی
+                  </label>
+                  <div className={styles.passwordInputContainer}>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      id="old_password"
+                      value={old_password}
+                      onChange={(e) => setOld_password(e.target.value)}
+                      className={styles.input}
+                    // required
+                    />
+                    <FontAwesomeIcon
+                      icon={showPassword ? faEye : faEyeSlash}
+                      className={styles.passwordIcon}
+                      onClick={togglePasswordVisibility}
+                    />
+                  </div>
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="newPassword" className={styles.label}>
+                    رمز عبور جدید
+                  </label>
+                  <div className={styles.passwordInputContainer}>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      id="new_password"
+                      value={new_password}
+                      onChange={(e) => setNew_password(e.target.value)}
+                      className={styles.input}
+                    // required
+                    />
+                    <FontAwesomeIcon
+                      icon={showPassword ? faEye : faEyeSlash}
+                      className={styles.passwordIcon}
+                      onClick={togglePasswordVisibility}
+                    />
+                  </div>
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="confirmPassword" className={styles.label}>
+                    تأیید رمز عبور جدید
+                  </label>
+                  <div className={styles.passwordInputContainer}>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      id="confirm_new_password"
+                      value={confirm_new_password}
+                      onChange={(e) => setConfirm_new_password(e.target.value)}
+                      className={styles.input}
+                    // required
+                    />
+                    <FontAwesomeIcon
+                      icon={showPassword ? faEye : faEyeSlash}
+                      className={styles.passwordIcon}
+                      onClick={togglePasswordVisibility}
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className={styles.formGroup}>
-                <label htmlFor="admin_phone_number" className={styles.label}> شماره تماس مدیر سازمان </label>
-                <input type="text" id="admin_phone_number" value={admin_phone_number} onChange={(e) => setAdmin_phone_number(e.target.value)} className={styles.input} required placeholder=' شماره تماس مدیر سازمان ' />
-              </div>
-              
-              <PasswordFields />
+              {/* submit button */}
               <button type="submit" className={styles.button}>
                 ارسال
               </button>
+
             </form>
           </div>
         </div>
@@ -326,11 +395,14 @@ const submmitToast = () => {
   return (
     <div className={`${styles.bg} flex flex-col`} >
       <Navbarparent />
-      <div className='flex' >
-        <div className='flex flex-grow justify-center items-center z-10'>
           {myForm()}
-        </div>
-      </div>
+          {isModalOpen&&(
+            <div className='flex justify-center items-center bg-white rounded p-2 m-2 z-10' style={{position:'fixed'}}>
+              <div>
+              hi
+              </div>
+            </div>
+          )}
     </div>
   );
 };
