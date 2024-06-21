@@ -4,37 +4,60 @@ import { useState, useEffect } from "react";
 import Select from 'react-select';
 import defaultPhoto from '../images/team.png'
 import styles from '../styles/organizationlist.module.css'
+import { Link } from 'react-router-dom';
+
 function OrganizationList() {
     const [orgData, setOrgData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [rateFilter, setRateFilter] = useState('');
+    const [flag, setFlag] = useState(null);
+
+    //style for filter
     const customStyles = {
         control: (provided, state) => ({
             ...provided,
-            borderColor: state.isFocused ? 'rgb(38, 87, 124)' : 'rgb(38, 87, 124)', // Changes the border color when the select is focused and when it is not.
+            borderColor: state.isFocused ? 'rgb(38, 87, 124)' : 'rgb(38, 87, 124)', // Changes the border color when the select is focused or not.
             borderRadius: '8px',
-            backgroundColor: 'rgba(255, 255, 255, 0.6)', 
-            boxShadow: state.isFocused ? '0 0 0 1px #A593E0' : 'none', // Removes the blue border on focus
+            backgroundColor: 'rgba(255, 255, 255, 0.6)',
+            boxShadow: state.isFocused ? '0 0 0 1px #26577c' : 'none',
         }),
-        // rest of your custom styles
     };
 
+    //fetch flag
     useEffect(() => {
-        const fetchOrganizations = async () => {
-            try {
-                const token = AuthManager.getToken();
-                const response = await axios.get('https://ghablameh.fiust.ir/api/v1/organizations/', {
-                    headers: { Authorization: "JWT " + token }
-                });
-                setOrgData(response.data);
-            } catch (error) {
-                console.error('Error fetching organizations: ', error);
-
-            }
+        const checkUserType = async () => {
+            const userType = await AuthManager.orguser();
+            setFlag(userType);
         };
-        if (AuthManager.isLoggedIn()) fetchOrganizations();
+
+        checkUserType();
     }, []);
 
+    //fetch organizations
+    const fetchOrganizations = async () => {
+        try {
+            const token = AuthManager.getToken();
+            const response = await axios.get('https://ghablameh.fiust.ir/api/v1/organizations/', {
+                headers: { Authorization: "JWT " + token }
+            });
+            setOrgData(response.data);
+        } catch (error) {
+            console.error('Error fetching organizations: ', error);
+
+        }
+    };
+
+    //fetch requests every 5 seconds
+    useEffect(() => {
+        // Fetch immediately for the first time
+        if (AuthManager.isLoggedIn()) fetchOrganizations();
+        const interval = setInterval(() => {
+            if (AuthManager.isLoggedIn()) fetchOrganizations();
+        }, 5000); // (fetch every 5 seconds)
+
+        // Clear the interval when the component is unmounted
+        return () => clearInterval(interval);
+    });
     //search
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
@@ -54,14 +77,12 @@ function OrganizationList() {
         setRateFilter(parseInt(selectedOption.value));
     };
 
-    // const filteredOrgData = orgData
-    //     .filter(org => org.name.toLowerCase().includes(searchTerm.toLowerCase()))
-    //     .filter(org => rateFilter ? String(org.average_rate) === rateFilter : true);
     const filteredOrgData = orgData
         .filter(org => org.name.toLowerCase().includes(searchTerm.toLowerCase()))
         .filter(org => rateFilter ? org.average_rate >= rateFilter && org.average_rate < (rateFilter + 1) : true);
+
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4" style={{ minHeight: '30vh' }}>
             {AuthManager.isLoggedIn() && orgData && (
                 <>
                     <div className={`flex flex-row gap-4 mb-4 items-center ${styles.wrapper}`}>
@@ -72,19 +93,20 @@ function OrganizationList() {
                             value={searchTerm}
                             onChange={handleSearchChange}
                             className={`p-2 border rounded-lg w-full md:w-1/3`}
-                            style={{ border: '1px solid rgb(38, 87, 124)',width:'32.7%' }}
+                            style={{ border: '1px solid rgb(38, 87, 124)', width: '32.7%' }}
                         />
 
                         {/* filter */}
-                        <div className='' style={{ width: '10vw' }}>
+                        <div className='' style={{ width: '12vw' }}>
                             <Select
                                 placeholder="فیلتر بر اساس امتیاز"
                                 value={rateOptions.find(option => option.value === rateFilter)}
                                 onChange={handleRateFilterChange}
                                 options={rateOptions}
-                                className="z-10 md:w-1/7"
+                                // md:w-1/7
                                 title="فیلتر بر اساس امتیاز"
                                 isSearchable={false}
+                                // className={`flex flex-row gap-4 mb-4 items-center ${styles.customelect}`}
                                 styles={customStyles}
                             />
                         </div>
@@ -93,25 +115,32 @@ function OrganizationList() {
             )}
 
             {/* orgs list */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {filteredOrgData.map((org, index) => (
                     <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden" style={{ border: '1px solid rgb(38, 87, 124)' }}>
                         {org.image_url && org.image_url.toLowerCase().endsWith('.jpeg') ? (
-                            <div className="bg-white w-full h-48 overflow-hidden bg-opacity-50" style={{ padding: '10px' }}>
+                            <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
                                 <img src={'https://ghablameh.fiust.ir' + org.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} />
                             </div>
                         ) : (
-                            <img src={defaultPhoto} className="w-full h-48" style={{ objectFit: 'contain' }} />
+                            <img src={defaultPhoto} className="w-full h-40" style={{ objectFit: 'contain' }} />
                         )}
-                        <div className="p-4 flex flex-col justify-start" style={{ borderTop: '1px solid rgb(38, 87, 124)' }}>
+                        <div className="p-3 flex flex-col justify-start" style={{ borderTop: '1px solid rgb(38, 87, 124)' }}>
                             <h3 className="font-bold text-lg">{org.name}</h3>
                             <div className="flex justify-between items-center text-sm">
                                 <div className="flex-1">
-                                    <span>امتیاز: {org.average_rate} ({org.number_of_rates} نظر)</span>
+                                    {org.average_rate ? (
+                                        <span>امتیاز: {org.average_rate}</span>
+                                    ) : (
+                                        <span>امتیاز: بدون نظر</span>
+                                    )}
+                                    {/* ({org.number_of_rates} نظر) */}
                                 </div>
-                                {/* <div>
-                                    <span>{new Date(org.created_at).toLocaleDateString()}</span>
-                                </div> */}
+                                <div>
+                                    {flag === 2 ? (
+                                        <button className='p-2 rounded text-white text-xs' style={{ background: ' rgb(38, 87, 124)' }}><Link to='/chooseOrg'> درخواست عضویت </Link></button>
+                                    ) : null}
+                                </div>
                             </div>
                         </div>
                     </div>
