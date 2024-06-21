@@ -171,7 +171,7 @@ function ListOfJoinRequests() {
                 {/* </div> */}
 
                 {/* <div className="flex items-center flex-row justify-end"> */}
-                <div className="felx items-center justify-center mr-auto text-xs">
+                <div className="felx items-center justify-center mr-auto text-xs m-1">
                   <div className="m-1" style={{ fontSize: '1rem' }}>{user.client_name}</div>
                 </div>
                 {/* <div>
