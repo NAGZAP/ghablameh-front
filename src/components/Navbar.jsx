@@ -164,7 +164,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
   function LogInButton() {
     if (!AuthManager.isLoggedIn()) {
       return (
-        <div className={`flex justify-between items-center`}>
+        <div className={`flex justify-between items-center my-4`}>
           <div style={{}}>
             <Link
               to="/login"
@@ -175,15 +175,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
             </Link>
           </div>
           <div>
-            <h6
-              className={`text-white pl-2`}
-              style={{
-                fontSize: "23px",
-                fontFamily: "vazir",
-                marginRight: "10px",
-              }}
-            >
-            </h6>
+            <h6 className={`text-white pl-2`} style={{fontSize: "23px", fontFamily: "vazir", marginRight: "10px", marginLeft: '7px'}}>/</h6>
           </div>
           <div>
             <Link
