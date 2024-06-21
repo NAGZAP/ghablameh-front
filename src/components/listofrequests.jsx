@@ -44,7 +44,7 @@ function ListOfJoinRequests() {
 
     // Clear the interval when the component is unmounted
     return () => clearInterval(interval);
-  }, []);
+  });
 
   //patch requests
   const handleaccept = async () => {
@@ -134,7 +134,7 @@ function ListOfJoinRequests() {
             <li key={index} style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }} className="px-4 py-2">
               <div className="flex items-center p-2 flex-row justify-between mx-3 my-1">
                 <div className="flex items-center">
-                  <CheckIcon className="h-7 w-7 cursor-pointer" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleAcceptModalOpen(user)} />
+                  <CheckIcon className="h-7 w-7 cursor-pointer ml-5" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleAcceptModalOpen(user)} />
                   <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleRjectModalOpen(user)} />
                 </div>
                 {/* <div style={{ backgroundColor: 'rgb(38, 87, 124)', color: 'white', borderRadius: '5px', height: '3vh', width: '5vw' }} className="rounded p-1 mx-5 flex  items-center justify-center">
