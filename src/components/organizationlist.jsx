@@ -119,13 +119,13 @@ function OrganizationList() {
                 {filteredOrgData.map((org, index) => (
                     <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden" style={{ border: '1px solid rgb(38, 87, 124)' }}>
                         {org.image_url && org.image_url.toLowerCase().endsWith('.jpeg') ? (
-                            <div className="h-48 overflow-hidden " style={{ padding: '10px' }}>
+                            <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
                                 <img src={'https://ghablameh.fiust.ir' + org.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} />
                             </div>
                         ) : (
-                            <img src={defaultPhoto} className="w-full h-44" style={{ objectFit: 'contain' }} />
+                            <img src={defaultPhoto} className="w-full h-40" style={{ objectFit: 'contain' }} />
                         )}
-                        <div className="p-4 flex flex-col justify-start" style={{ borderTop: '1px solid rgb(38, 87, 124)' }}>
+                        <div className="p-3 flex flex-col justify-start" style={{ borderTop: '1px solid rgb(38, 87, 124)' }}>
                             <h3 className="font-bold text-lg">{org.name}</h3>
                             <div className="flex justify-between items-center text-sm">
                                 <div className="flex-1">
