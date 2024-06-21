@@ -14,78 +14,23 @@ const Update = () => {
   const [admin_username, SetAdmin_username] = useState('');
   const [admin_email, setAdmin_email] = useState('');
   const [admin_phone_number, setAdmin_phone_number] = useState('');
+  const [image_base64, setImage_base64] = useState('');
+  const [image_url, setImage_url] = useState('');
 
   const [old_password, setOld_password] = useState('');
   const [new_password, setNew_password] = useState('');
   const [confirm_new_password, setConfirm_new_password] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const [image_base64, setImage_base64] = useState('');
-  const [image_url, setImage_url] = useState('');
+
   const [formErrors, setFormErrors] = useState([]);
-  
-  const failToast = () => {
-    toast.info(
-        <div className="flex flex-col items-center">
-            <div className="text-center mb-4">{ ` اطلاعات را به درستی وارد کنید `}</div>
-        </div>,
-        {
-            position: 'top-center',
-            autoClose: 3000,
-            closeButton: true,
-            hideProgressBar: false,
-            progress: undefined,
-            icon: false,
-        }
-    );
-};
-
-const passFailToast = () => {
-  toast.info(
-      <div className="flex flex-col items-center">
-          <div className="text-center mb-4">{ `اطلاعات رمز عبور را به درستی وارد کنید ` }</div>
-      </div>,
-      {
-          position: 'top-center',
-          autoClose: 3000,
-          closeButton: true,
-          hideProgressBar: false,
-          progress: undefined,
-          icon: false,
-      }
-  );
-};
-
-const submmitToast = () => {
-  toast.info(
-      <div className="flex flex-col items-center">
-          <div className="text-center mb-4">{ `اطلاعات ثبت شد` }</div>
-          
-          <button className="bg-gray-500 text-white p-2 rounded hover:bg-gray-700 transition duration-150 ease-in-out">
-  <Link to="/" className="text-white">
-    بازگشت به صفحه اصلی
-  </Link>
-</button>
-      </div>,
-      {
-          position: 'top-center',
-          autoClose: 3000,
-          closeButton: true,
-          hideProgressBar: false,
-          progress: undefined,
-          icon: false,
-      }
-  );
-};
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [passErrors, setPassErrors] = useState([]);
+  const [isWaitingForm1, setIsWaitingForm1] = useState(false);
+  const [isWaitingForm2, setIsWaitingForm2] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
-
-  // model
-  const [showMyModel, setShowMyModel] = useState(false);
 
   // fetch user data
   useEffect(() => {
@@ -117,117 +62,8 @@ const submmitToast = () => {
     FetchData();
   }, []);
 
-  // useEffect(() => {
-  //   const comeOn = () => {
-  //     console.log("image_base64: ", image_base64)
-  //   };
-  //   comeOn();
-  // }, []);
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-
-    const errors = [];
-    if (!name) {
-      errors.push('نام سازمان را وارد کنید');
-    }
-    if (!admin_first_name) {
-      errors.push('نام مدیر را وارد کنید');
-    }
-    if (!admin_last_name) {
-      errors.push('نام خانودگی مدیر را وارد کنید');
-    }
-    if (!admin_username) {
-      errors.push('نام کاربری مدیر را وارد کنید');
-    }
-    if (!admin_email) {
-      errors.push(' ایمیل مدیر را وارد کنید');
-    }
-    if (!admin_phone_number) {
-      errors.push('شماره مدیر را وارد کنید');
-    }
-    // if (!new_password) {
-    //   errors.push('رمز عبور جدید را وارد کنید');
-    // }
-    // if (!old_password) {
-    //   errors.push('رمز عبور جدید را وارد کنید');
-    // }
-    // if (!confirm_new_password) {
-    //   errors.push('تأیید رمز عبور جدید را وارد کنید');
-    // }
-    if (new_password !== confirm_new_password) {
-      errors.push('رمز عبور جدید و تأیید رمز عبور مطابقت ندارند');
-    }
-    if (errors.length > 0) {
-      alert(errors.join('\n')); // Display error messages in an alert
-      return;
-    }
-
-    // Submit the form with all the data
-    const formData = {
-      image_base64: image_base64 || '',
-      name,
-      admin_first_name,
-      admin_last_name,
-      admin_username,
-      admin_email,
-      admin_phone_number
-    };
-
-    // Retrieve token
-    const token = 'JWT ' + localStorage.getItem("token");
-
-    //send form data
-    try {
-      const response = await axios.put('https://ghablameh.fiust.ir/api/v1/organizations/me/', formData,
-        { headers: { Authorization: "JWT " + token } }
-    );
-
-      if (response.status === 200) {
-        console.log('formData submitted successfully');
-        console.log('formData: ', formData)
-        setIsModalOpen(true);
-      } else {
-        const errorData = await response.json();
-        console.log('formData submission failed:', errorData);
-        console.log('formData: ', formData)
-      }
-    } catch (error) {
-      console.error('An error occurred:', error);
-      console.log('formData: ', formData)
-    }
-
-    // Pass data for password update
-    const passData = {
-      old_password: old_password,
-      new_password: new_password,
-      confirmPassword: confirm_new_password
-    };
-
-    // send pass data
-    try {
-      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/password/', passData,
-        { headers: { Authorization: "JWT " + token } }
-      );
-
-      if (response.status === 200) {
-        // console.log('PassData submission', );
-        // console.log("2s: ",response.status);
-        submmitToast();
-      } else {
-        const errorData = await response.json();
-        // console.log('PassData submission failed:', errorData);
-        // console.log("2f: ",response.status);
-        failToast();
-      }
-    } catch (error) {
-      // console.error('An error occurred:', error);
-      passFailToast();
-    }
-  };
-
   //image
-  const handleChange = (event) => {
+  const handlePhotoChange = (event) => {
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
     reader.onload = (e) => {
@@ -236,23 +72,21 @@ const submmitToast = () => {
     };
   };
 
-  function myForm() {
+  const clearPhoto = () => {
+    setImage_base64('');
+    setImage_url('');
+  }
+
+  //form
+  function Form() {
     return (
       <div className={styles.container} >
         <div className='flex justify-center items-center'>
           <div className={styles.card}>
             <h2 className={styles.title}>به‌روزرسانی اطلاعات سازمان </h2>
-            <form onSubmit={handleFormSubmit} className={`${styles.form}`}>
-              {formErrors.length > 0 && (
-                <div className={styles.errorContainer}>
-                  <ul className={styles.errorList}>
-                    {formErrors.map((error, index) => (
-                      <li key={index}>{error}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
 
+            {/* info */}
+            <form onSubmit={handleFormSubmit} className={`${styles.form}`}>
               {/* image */}
               <div className='flex flex-col items-center justify-center'>
                 <div className={styles.formGroup}>
@@ -260,7 +94,7 @@ const submmitToast = () => {
                     <div className='flex flex-col items-center justify-center'>
                       <label htmlFor="file_input">
 
-                        {image_base64 || image_url?
+                        {image_base64 || image_url ?
                           <img
                             src={!image_base64 && image_url.startsWith('/api/')
                               ? `https://ghablameh.fiust.ir/${image_url}`
@@ -278,43 +112,67 @@ const submmitToast = () => {
                         }
 
                       </label>
-                      <input id="file_input" type="file" onChange={handleChange} className={styles.fileinput}></input>
+                      <input id="file_input" type="file" onChange={handlePhotoChange} className={styles.fileinput}></input>
                     </div>
                   </div>
                 </div>
+                <button type='reset' onClick={clearPhoto} className='m-2 text-white text-sm rounded-lg p-2' style={{ backgroundColor: "rgb(38, 87, 124)" }}> حذف عکس </button>
               </div>
 
               {/* input fileds */}
               <div>
                 <div className={styles.formGroup}>
                   <label htmlFor="name" className={styles.label}> نام سازمان  </label>
-                  <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} className={styles.input} required placeholder='نام سازمان' />
+                  <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} className={styles.input} placeholder='نام سازمان' />
                 </div>
                 <div className={styles.formGroup}>
                   <label htmlFor="admin_username" className={styles.label}> نام کاربری مدیر سازمان  </label>
-                  <input type="text" id="admin_username" value={admin_username} onChange={(e) => SetAdmin_username(e.target.value)} className={styles.input} required placeholder=' نام کاربری مدیر سازمان  ' />
+                  <input type="text" id="admin_username" value={admin_username} onChange={(e) => SetAdmin_username(e.target.value)} className={styles.input} placeholder=' نام کاربری مدیر سازمان  ' />
                 </div>
 
                 <div className={styles.formGroup}>
                   <label className={styles.label}>نام مدیر سازمان</label>
                   <div className='flex'>
-                    <input type="text" id="admin_first_name" value={admin_first_name} onChange={(e) => setAdmin_first_name(e.target.value)} className={styles.input} required placeholder='نام' />
+                    <input type="text" id="admin_first_name" value={admin_first_name} onChange={(e) => setAdmin_first_name(e.target.value)} className={styles.input} placeholder='نام' />
                     <div style={{ marginLeft: '10px' }}></div>
-                    <input type="text" id="admin_last_name" value={admin_last_name} onChange={(e) => setAdmin_last_name(e.target.value)} className={styles.input} required placeholder='نام خانوادگی' />
+                    <input type="text" id="admin_last_name" value={admin_last_name} onChange={(e) => setAdmin_last_name(e.target.value)} className={styles.input} placeholder='نام خانوادگی' />
                   </div>
                 </div>
 
                 <div className={styles.formGroup}>
                   <label htmlFor="admin_email" className={styles.label}> ایمیل مدیر سازمان </label>
-                  <input type="text" id="admin_email" value={admin_email} onChange={(e) => setAdmin_email(e.target.value)} className={styles.input} required placeholder='  ایمیل مدیر سازمان  ' />
+                  <input type="text" id="admin_email" value={admin_email} onChange={(e) => setAdmin_email(e.target.value)} className={styles.input} placeholder='  ایمیل مدیر سازمان  ' />
                 </div>
 
                 <div className={styles.formGroup}>
                   <label htmlFor="admin_phone_number" className={styles.label}> شماره تماس مدیر سازمان </label>
-                  <input type="text" id="admin_phone_number" value={admin_phone_number} onChange={(e) => setAdmin_phone_number(e.target.value)} className={styles.input} required placeholder=' شماره تماس مدیر سازمان ' />
+                  <input type="text" id="admin_phone_number" value={admin_phone_number} onChange={(e) => setAdmin_phone_number(e.target.value)} className={styles.input} placeholder=' شماره تماس مدیر سازمان ' />
                 </div>
+
+                {/* submit button */}
+                {!isWaitingForm1 && (
+                  <button type="submit" className={styles.button}>
+                    ارسال اطلاعات
+                  </button>
+                )}
+                {isWaitingForm1 && (
+                  <button type="submit" className={styles.button}>
+                    <div className={`${styles.spinner2}`}></div>
+                  </button>
+                )}
+
               </div>
 
+            </form>
+
+            {/* pass */}
+            <form onSubmit={handlePassSubmit} className={`${styles.form}`}>
+
+              {/* password title */}
+              <div className='m-3'>
+                <hr style={{ borderTop: '1px solid rgb(38, 87, 124)', marginBottom: '20px', marginTop: '40px' }} />
+                <h2 className={styles.title}>به‌روزرسانی رمز عبور </h2>
+              </div>
 
               {/* password fields */}
               <div>
@@ -381,28 +239,199 @@ const submmitToast = () => {
               </div>
 
               {/* submit button */}
-              <button type="submit" className={styles.button}>
-                ارسال
-              </button>
-
+              {!isWaitingForm2 && (
+                  <button type="submit" className={styles.button}>
+                   به روز رسانی رمز عبور
+                  </button>
+                )}
+                {isWaitingForm2 && (
+                  <button type="submit" className={styles.button}>
+                    <div className={`${styles.spinner2}`}></div>
+                  </button>
+                )}
             </form>
+
           </div>
         </div>
       </div>
     );
   }
 
+  //send form info  
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    const errors = [];
+
+    setFormErrors('');
+
+    let engNumbers = {
+      '۰': 0,
+      '۱': 1,
+      '۲': 2,
+      '۳': 3,
+      '۴': 4,
+      '۵': 5,
+      '۶': 6,
+      '۷': 7,
+      '۸': 8,
+      '۹': 9
+    };
+
+
+    if (!name) {
+      errors.push('نام سازمان را وارد کنید.');
+    }
+    if (!admin_first_name) {
+      errors.push('نام مدیر را وارد کنید.');
+    }
+    if (!admin_last_name) {
+      errors.push('نام خانودگی مدیر را وارد کنید.');
+    }
+    if (!admin_username) {
+      errors.push('نام کاربری مدیر را وارد کنید.');
+    }
+    if (!admin_email) {
+      errors.push(' ایمیل مدیر را وارد کنید.');
+    }
+    if (!admin_phone_number) {
+      errors.push('شماره مدیر را وارد کنید.');
+    }
+    if (!/^([a-zA-Z0-9]+)@([a-zA-Z]+)\.([a-zA-Z]{2,})$/.test(admin_email)) {
+      errors.push(' ایمیل مدیر را به درستی وارد کنید.');
+    }
+    if (admin_phone_number.startsWith('98') && admin_phone_number.length !== 12) {
+      errors.push('شماره مدیر را به درستی وارد کنید.');
+    }
+    if (admin_phone_number.startsWith('09') && admin_phone_number.length !== 11) {
+      errors.push('شماره مدیر را به درستی وارد کنید.');
+    }
+
+    let admin_phone_number_english = admin_phone_number.replace(/[۰-۹]/g, function (w) {
+      return engNumbers[w]
+    });
+
+    // check if admin_phone_number contains only numbers and starts with '989' or '09'
+    if (!/^\d+$/.test(admin_phone_number_english) || !/^(989|09)/.test(admin_phone_number_english)) {
+      errors.push('شماره مدیر را به درستی وارد کنید.');
+    }
+
+    if (errors.length > 0) {
+      alert(errors.join('\n'));
+      setFormErrors(errors);
+      return;
+    }
+
+    //form data
+    const formData = {
+      // image_base64:image_base64 || '',
+      name,
+      admin_first_name,
+      admin_last_name,
+      admin_username,
+      admin_email,
+      admin_phone_number: admin_phone_number_english
+    };
+
+    if (image_base64) {
+      formData.image_base64 = image_base64;
+    }
+
+    //send form data
+    setIsWaitingForm1(true);
+    try {
+      const response = await axios.put('https://ghablameh.fiust.ir/api/v1/organizations/me/', formData,
+        { headers: { Authorization: "JWT " + localStorage.getItem("token") } }
+      );
+
+      if (response.status === 200) {
+        setIsWaitingForm1(false);
+        alert('اطلاعات با موفقیت ثبت شد ');
+        window.location.href = '/';
+      } else {
+        const errorData = await response.json();
+        setIsWaitingForm1(false);
+        alert(response.message);
+      }
+    } catch (error) {
+      setIsWaitingForm1(false);
+      alert(error.message);
+    }
+    setIsWaitingForm1(false);
+  };
+
+  //send form pass
+  const handlePassSubmit = async (e) => {
+    e.preventDefault();
+
+    const errors = [];
+    setPassErrors('');
+
+    if (!new_password) {
+      errors.push('رمز عبور جدید را وارد کنید.');
+    }
+    if (!old_password) {
+      errors.push('رمز عبور جدید را وارد کنید.');
+    }
+    if (!confirm_new_password) {
+      errors.push('تأیید رمز عبور جدید را وارد کنید.');
+    }
+    if (new_password !== confirm_new_password) {
+      errors.push('رمز عبور جدید و تأیید آن مطابقت ندارند.');
+    }
+    if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(new_password)) {
+      errors.push(' رمز عبور باید حداقل ۸ کاراکتر و شامل اعداد و حروف باشد. ');
+    }
+
+
+    if (errors.length > 0) {
+      setPassErrors(errors);
+      alert(errors.join('\n'));
+      return;
+    }
+
+    // Pass data for password update
+    const passData = {
+      old_password: old_password,
+      new_password: new_password,
+      confirmPassword: confirm_new_password
+    };
+
+    // send pass data
+    setIsWaitingForm2(true);
+    try {
+      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/organizations/password/', passData,
+        { headers: { Authorization: "JWT " + localStorage.getItem("token") } }
+      );
+
+      if (response.status === 200) {
+        setIsWaitingForm2(false);
+        alert('اطلاعات با موفقیت ثبت شد ');
+        window.location.href = '/';
+      } else {
+        const errorData = await response.json();
+        setIsWaitingForm2(false);
+        alert(' مشکلی پیش امده.لطفا در زمانی دیگر امتحان کنید ')
+      }
+    } catch (error) {
+      // console.error('An error occurred:', error);
+      setIsWaitingForm2(false);
+      if (error.response.data.old_password) {
+        alert(error.response.data.old_password[0]);
+      } else if (error.response.data.new_password) {
+        alert(error.response.data.new_password[0]);
+      } else if (error.response.data.new_password & error.response.data.old_password) {
+        alert(error.response.data.new_password[0]);
+        alert(error.response.data.new_password[0]);
+      }
+    }
+    setIsWaitingForm2(false);
+  };
+
   return (
     <div className={`${styles.bg} flex flex-col`} >
       <Navbarparent />
-          {myForm()}
-          {isModalOpen&&(
-            <div className='flex justify-center items-center bg-white rounded p-2 m-2 z-10' style={{position:'fixed'}}>
-              <div>
-              hi
-              </div>
-            </div>
-          )}
+      {Form()}
     </div>
   );
 };

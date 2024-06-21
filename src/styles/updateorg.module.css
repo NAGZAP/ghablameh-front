@@ -115,6 +115,9 @@
   color: #fff;
   font-size: 14px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
 }
 
 .button:hover {
@@ -206,4 +209,25 @@
 .avatar {
   width: 100%;
   height: auto;
+}
+
+/* verify page */
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner2 {
+  border: 3px solid rgba(204, 204, 204, 0.5);
+  border-left-color: rgb(38, 87, 124);
+  border-top-color: rgb(38, 87, 124);
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  animation: spinner 1s linear infinite;
 }
