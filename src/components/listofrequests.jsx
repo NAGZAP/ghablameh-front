@@ -3,160 +3,151 @@ import { XIcon, CheckIcon } from '@heroicons/react/solid';
 import Avatar from 'react-avatar';
 import styles from '../styles/listofrequests.module.css';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Navbarparent from './navbarparent';
+
 function ListOfJoinRequests() {
-  const [approved, setApproved] = useState([]);
-  const [rejected, setRejected] = useState([]);
   const [IsSelectedUser, setIsSelectedUser] = useState(false)
-  const isBigScreen = useMediaQuery('(min-width: 600px)')
+  const isBigScreen = useMediaQuery('(min-width: 650px)')
   const [requests, setRequests] = useState([]);
 
   //fetch list of requests
   const token = 'JWT ' + localStorage.getItem("token");
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/organizations/join-requests/', {
-          headers: {
-            'Authorization': token
-          }
-        });
-        setRequests(response.data);
-      } catch (error) {
-        console.error('Error fetching user data: ', error);
-      }
-    };
-    fetchUserData();
-  }, [token]);
 
-  //patch requests
-  const handleaccept = (user) => {
-
-    const updatedUser = { ...user, status: 'A' };
-
-    setRequests(requests.filter((request) => request.id !== user.id));
-    setApproved([...approved, updatedUser]);
-
-    const token = 'JWT ' + localStorage.getItem("token");
-    const url = 'https://ghablameh.fiust.ir/api/v1/organizations/join-requests/' + user.id + '/'
-
+  //fetchUserData
+  const fetchRequests = async () => {
     try {
-      const response = axios.patch(url, { status: 'A' }, {
+      const response = await axios.get('https://ghablameh.fiust.ir/api/v1/organizations/join-requests/', {
         headers: {
           'Authorization': token
         }
       });
-      if (response.status === 200) {
-        console.log('formData submitted successfully');
-      } else {
-        const errorData = response.json();
-        console.log('formData submission failed:', errorData);
-      }
+      const pendingRequests = response.data.filter((request) => request.status === "P");
+
+      setRequests(pendingRequests);
+
+      console.log("requests: ", requests)
+
     } catch (error) {
-      console.error('An error occurred:', error);
+      console.error('Error fetching user data: ', error);
     }
-    toast.dismiss()
   };
 
-  const handlereject = () => {
-    console.log(IsSelectedUser)
-    const updatedUser = { ...IsSelectedUser, status: 'R' };
+  //fetch requests every 5 seconds
+  useEffect(() => {
+    // Fetch immediately for the first time
+    fetchRequests();
+    const interval = setInterval(() => {
+      fetchRequests();
+    }, 5000); // (fetch every 5 seconds)
 
-    // console.log(IsSelectedUser)
-    setRejected([...rejected, updatedUser]);
-    setRequests(requests.filter((request) => request.id !== IsSelectedUser.id));
+    // Clear the interval when the component is unmounted
+    return () => clearInterval(interval);
+  }, []);
+
+  //patch requests
+  const handleaccept = async () => {
 
     const token = 'JWT ' + localStorage.getItem("token");
     const url = 'https://ghablameh.fiust.ir/api/v1/organizations/join-requests/' + IsSelectedUser.id + '/'
 
     try {
-      const response = axios.patch(url, { status: 'R' }, {
+      const response = await axios.patch(url, { status: 'A' }, {
+        headers: {
+          'Authorization': token
+        }
+      });
+      if (response.status === 200) {
+        // console.log('formData submitted successfully');
+        fetchRequests();
+      } else {
+        alert("مشکلی پیش آمده.در زمان دیگری مجددا امتحان کنید.")
+        // console.log('formData submission failed:', errorData);
+      }
+    } catch (error) {
+      // console.error('An error occurred:', error);
+      alert("مشکلی پیش آمده.در زمان دیگری مجددا امتحان کنید.")
+    }
+    setShowAcceptModel(false);
+  };
+
+  const handlereject = async () => {
+
+    const token = 'JWT ' + localStorage.getItem("token");
+    const url = 'https://ghablameh.fiust.ir/api/v1/organizations/join-requests/' + IsSelectedUser.id + '/'
+
+    try {
+      const response = await axios.patch(url, { status: 'R' }, {
         headers: {
           'Authorization': token
         }
       });
 
       if (response.status === 200) {
-        console.log('formData submitted successfully');
+        // console.log('formData submitted successfully');
+        fetchRequests();
       } else {
-        console.log('formData submission failed:', response.data);
+        // console.log('formData submission failed:', response.data);
+        alert("مشکلی پیش آمده.در زمان دیگری مجددا امتحان کنید.")
       }
     } catch (error) {
-      console.error('An error occurred:', error);
+      // console.error('An error occurred:', error);
+      alert("مشکلی پیش آمده.در زمان دیگری مجددا امتحان کنید.")
     }
 
-    setShowMyModel(false);
+    setShowRejectModel(false);
   };
 
-  // yes toast
-  const checkToast = (user) => {
-    toast.info(
-      <div className="flex flex-col items-center">
-        <div className="text-center mb-4"> آیا از قبول کردن این درخواست مطمئن هستید؟</div>
-        <div className="flex justify-center space-x-4">
-          <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handleaccept(user)}> بله </button>
-          <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => toast.dismiss()}> خیر </button>
-        </div>
-      </div>,
-      {
-        position: 'top-center',
-        autoClose: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-        closeButton: true,
-        icon: false,
-      }
-    );
-  };
-
-  //no model
-  const [showMyModel, setShowMyModel] = useState(false);
+  //modals
+  const [showRejectModel, setShowRejectModel] = useState(false);
+  const [showAcceptModel, setShowAcceptModel] = useState(false);
 
   const onClose = () => {
-    setShowMyModel(false);
+    setShowRejectModel(false);
+    setShowAcceptModel(false);
   };
+
   const handleOnClose = (e) => {
     if (e.target.id === "close") onClose();
   };
 
-  const handleOpenModal = (user) => {
-    console.log(user)
-    setShowMyModel(true)
+  const handleRjectModalOpen = (user) => {
+    // console.log(user)
+    setShowRejectModel(true)
+    setIsSelectedUser(user)
+  }
+
+  const handleAcceptModalOpen = (user) => {
+    // console.log(user)
+    setShowAcceptModel(true)
     setIsSelectedUser(user)
   }
 
   const ListOfUserRequests = () => (
-    <div style={{ border: '1px solid rgb(38, 87, 124)', borderRadius: '8px', width: '40vw',backgroundColor:'rgba(255, 255, 255,0.6)' }} className="w-64  font-medium text-gray-900  rounded-lg">
-      <h2 className="text-xl font-semibold text-gray-800  text-center pt-3 pb-2 pr-3" style={{ borderBottom: '1px solid rgb(38, 87, 124)' }}> لیست درخواست ها </h2>
-
-
+    <div style={{ border: '1px solid rgb(38, 87, 124)', borderRadius: '8px', width: '50vw', backgroundColor: 'rgba(255, 255, 255,0.6)' }} className="w-64  font-medium text-gray-900  rounded-lg">
+      <h2 className="text-xl font-semibold text-gray-800  text-center py-3 px-2" style={{ borderBottom: '1px solid rgb(38, 87, 124)',fontSize: isBigScreen ? '1.3rem' : '1rem' }}> لیست درخواست ها </h2>
 
       {isBigScreen && requests.length > 0 && (
         <ul className="w-full">
           {requests.map((user, index) => (
             <li key={index} style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }} className="px-4 py-2">
-              <div className="flex items-center p-2 flex-row justify-between">
+              <div className="flex items-center p-2 flex-row justify-between mx-3 my-1">
                 <div className="flex items-center">
-                  <CheckIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => checkToast(user)} />
-                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleOpenModal(user)} />
-
+                  <CheckIcon className="h-7 w-7 cursor-pointer" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleAcceptModalOpen(user)} />
+                  <XIcon className="h-7 w-7 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleRjectModalOpen(user)} />
                 </div>
                 {/* <div style={{ backgroundColor: 'rgb(38, 87, 124)', color: 'white', borderRadius: '5px', height: '3vh', width: '5vw' }} className="rounded p-1 mx-5 flex  items-center justify-center">
                   {user.organization_name}
                 </div> */}
                 <div className="flex items-center">
-                  <div className="ml-2 text-base">
-                    <div style={{ fontSize: '1.2rem' }}>{user.client_name}</div>
+                  <div className="ml-3 text-base">
+                    <div style={{ fontSize: '1.3rem' }}>{user.client_name}</div>
                   </div>
                   {user.img_url ? (
-                    <img src={user.avatar} alt={`${user.client_name}`} className="h-10 w-10 rounded-full" />
+                    <img src={user.avatar} alt={`${user.client_name}`} className="h-11 w-11 rounded-full" />
                   ) : (
-                    <Avatar name={`${user.client_name}`} size={40} round={true} maxInitials={1} />
+                    <Avatar name={`${user.client_name}`} size={44} round={true} maxInitials={1} />
                   )}
                 </div>
 
@@ -167,27 +158,27 @@ function ListOfJoinRequests() {
           )}
         </ul>
       )}
-      
+
       {!isBigScreen && requests.length > 0 && (
-        <ul style={{ width: '50%'}}>
+        <ul style={{ minWidth: '50vw' }}>
           {requests.map((user, index) => (
-            <li key={index} style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }} className="px-4 py-2">
-              <div className="flex justify-between "> 
-{/* justify-end */}
-                <div className="flex items-center">
-                  <CheckIcon className="h-6 w-6 cursor-pointer ml-2" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => checkToast(user)} />
-                  <XIcon className="h-6 w-6 cursor-pointer ml-6" style={{ color: 'rgb(38, 87, 124)' }} onClick={() => handleOpenModal(user)} />
-                </div>
+            <li key={index} style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }} className="px-1 py-2">
+              <div className="flex flex-row items-center ">
+                {/* justify-between */}
+                {/* <div className="flex items-center justify-end"> */}
+                <CheckIcon className="cursor-pointer ml-1" style={{ color: 'rgb(38, 87, 124)', height: '20px', width: '20px' }} onClick={() => handleAcceptModalOpen(user)} />
+                <XIcon className="cursor-pointer ml-5" style={{ color: 'rgb(38, 87, 124)', height: '20px', width: '20px' }} onClick={() => handleRjectModalOpen(user)} />
+                {/* </div> */}
 
-                <div className="flex items-center flex-row">
-                  <div className=" text-base">
-                    <div style={{ fontSize: '1.2rem' }}>{user.client_name}</div>
-                  </div>
-                  <div>
-                  <div style={{ fontSize: '1.2rem', marginRight:'2rem'  }}> -{index+1} </div>
-                  </div>
-
+                {/* <div className="flex items-center flex-row justify-end"> */}
+                <div className="felx items-center justify-center mr-auto text-xs">
+                  <div className="m-1" style={{ fontSize: '1rem' }}>{user.client_name}</div>
                 </div>
+                {/* <div>
+                    <div style={{ fontSize: '1rem', marginRight: '2rem' }}> -{index + 1} </div>
+                  </div> */}
+
+                {/* </div> */}
 
               </div>
             </li>
@@ -202,16 +193,32 @@ function ListOfJoinRequests() {
         </ul>
       )}
 
-      {showMyModel && (
+      {showRejectModel && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div id="close" onClick={handleOnClose} className={`${styles['modal-me']} bg-white rounded p-2`} style={{ position: 'absolute' }}>
             <div className="flex flex-col items-center">
-              <div className="text-center mb-4">آیا از قبول کردن این درخواست مطمئن هستید؟</div>
+              <div className="text-center mb-4 mx-2 mt-2">آیا از رد کردن این درخواست مطمئن هستید؟</div>
               <div className="flex justify-center space-x-3">
                 <div className='mx-2'>
-                  <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowMyModel(false)}>خیر</button>
+                  <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowRejectModel(false)}>خیر</button>
                 </div>
                 <div className='mx-2'><button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handlereject()}>بله</button>
+                </div></div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showAcceptModel && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div id="close" onClick={handleOnClose} className={`${styles['modal-me']} bg-white rounded p-2`} style={{ position: 'absolute' }}>
+            <div className="flex flex-col items-center">
+              <div className="text-center mb-4 mx-2 mt-2">آیا از قبول کردن این درخواست مطمئن هستید؟</div>
+              <div className="flex justify-center space-x-3">
+                <div className='mx-2'>
+                  <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowAcceptModel(false)}>خیر</button>
+                </div>
+                <div className='mx-2'><button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handleaccept()}>بله</button>
                 </div></div>
             </div>
           </div>
@@ -224,10 +231,9 @@ function ListOfJoinRequests() {
     <div>
       <div className={`${styles['main-content']} flex flex-col`}>
         <Navbarparent />
-          <div className='flex flex-grow justify-center items-center m-3'>
-            {ListOfUserRequests()}
+        <div className='flex flex-grow justify-center items-center m-3'>
+          {ListOfUserRequests()}
         </div>
-        <ToastContainer />
       </div>
     </div>
   );
