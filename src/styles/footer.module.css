@@ -33,11 +33,11 @@ ul {
 }
 
 .footer-cta {
-  border-bottom: 1px solid #ca3918;
+  border-bottom: 1px solid #163043;
 }
 
 .single-cta i {
-  color: #ff5e14;
+  color: #ff5edaa82b14;
   font-size: 30px;
   float: right; /* Change float to right */
   margin-top: 8px;
@@ -111,7 +111,7 @@ ul {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #3b5998;
+  /* background-color: #3b5998; */
   text-align: center;
   line-height: 40px;
   float: right; /* Change float to right */
@@ -124,7 +124,7 @@ ul {
 }
 
 .twitter-bg {
-  background: #55ACEE;
+  /* background: #55ACEE; */
   display: inline-block;
   width: 40px;
   height: 40px;
@@ -135,7 +135,7 @@ ul {
 }
 
 .insta-bg {
-  background: #d139a3;
+  /* background: #d139a3; */
   display: inline-block;
   width: 40px;
   height: 40px;
@@ -146,7 +146,7 @@ ul {
 }
 
 .tel-bg {
-  background: #398fd1;
+  /* background: #398fd1; */
   display: inline-block;
   width: 40px;
   height: 40px;
@@ -160,20 +160,20 @@ ul {
   color: #ffffff;
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
   position: relative;
   text-align: right; /* Change text-align to right */
 }
 
-.footer-widget-heading h3::before {
+/* .footer-widget-heading h3::before {
   content: "";
   position: absolute;
-  right: 0; /* Change left to right */
+  right: 0;
   bottom: -15px;
   height: 2px;
   width: 50px;
   background: #ff5e14;
-}
+} */
 
 .footer-widget ul li {
   display: inline-block;
@@ -183,7 +183,7 @@ ul {
 }
 
 .footer-widget ul li a:hover {
-  color: #ff5e14;
+  color: #163043;
 }
 
 .footer-widget ul li a {
@@ -195,9 +195,9 @@ ul {
 .subscribe-form button {
   position: absolute;
   left: 0; /* Change right to left */
-  background: #ff5e14;
+  background: #163043;
   padding: 13px 20px;
-  border: 1px solid #ff5e14;
+  border: 1px solid #163043;
   top: 0;
 }
 
@@ -209,11 +209,11 @@ ul {
 
 .footer-menu li {
   display: inline-block;
-  margin-right: 20px; /* Change margin-left to margin-right */
+  margin-right: 40px; 
 }
 
 .footer-menu li:hover a {
-  color: #ff5e14;
+  color: #102330;
 }
 
 .footer-menu li a {
@@ -244,7 +244,7 @@ ul {
     width: 40px; /* Adjust the width and height to your desired size */
     height: 40px;
     border-radius: 50%; /* Creates a circular shape */
-    background-color: #3b5998; /* Facebook's primary color */
+    background-color: #3b589800; /* Facebook's primary color */
     text-align: center;
     line-height: 40px;
     margin-left: 15px;
@@ -254,10 +254,11 @@ ul {
     font-size: 14px;
     text-align: left;
      /* Adjust the font size to make the "f" icon smaller or larger */
-    color: rgb(246, 229, 229); /* Icon color */
+    color: rgb(255, 255, 255); /* Icon color */
+    border: 1px solid rgb(255, 255, 255);
   }
   .twitter-bg{
-  background: #55ACEE;
+  /* background: #55ACEE; */
   display: inline-block;
   width: 40px; /* Adjust the width and height to your desired size */
   height: 40px;
@@ -265,9 +266,11 @@ ul {
   text-align: center;
   line-height: 40px;
   margin-left: 15px;
+  color: rgb(255, 255, 255); /* Icon color */
+    border: 1px solid rgb(255, 255, 255);
   }
   .insta-bg{
-  background: #d139a3;
+  /* background: #d139a3; */
   display: inline-block;
   width: 40px; /* Adjust the width and height to your desired size */
   height: 40px;
@@ -275,9 +278,12 @@ ul {
   text-align: center;
   line-height: 40px;
   margin-left: 15px;
+  border: 1px solid rgb(255, 255, 255);
   }
+
+
   .tel-bg{
-    background: #398fd1;
+    /* background: #398fd1; */
     display: inline-block;
     width: 40px; /* Adjust the width and height to your desired size */
     height: 40px;
@@ -290,18 +296,18 @@ ul {
   color: #ffffff;
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 40px;
+  margin-bottom: 15px;
   position: relative;
   }
-  .footer-widget-heading h3::before {
+  /* .footer-widget-heading h3::before {
   content: "";
   position: absolute;
   left: 0;
   bottom: -15px;
   height: 2px;
-  width: 50px;
-  background: #ff5e14;
-  }
+  width: 26vw;
+  background: #daa82b; line color
+  } */
   .footer-widget ul li {
   display: inline-block;
   float: left;
@@ -309,7 +315,7 @@ ul {
   margin-bottom: 12px;
   }
   .footer-widget ul li a:hover{
-  color: #ff5e14;
+  color: #102330;
   }
   .footer-widget ul li a {
   color: #efe5db;
@@ -319,9 +325,9 @@ ul {
   .subscribe-form button {
     position: absolute;
     right: 0;
-    background: #ff5e14;
+    background: #102330;
     padding: 13px 20px;
-    border: 1px solid #ff5e14;
+    border: 1px solid #102330;
     top: 0;
   }
   .subscribe-form button .telegram{
@@ -330,27 +336,30 @@ ul {
   transform: rotate(-6deg);
   }
   .copyright-area{
-  background: #202020;
+  background: #102330;
   padding: 1px 0;
   }
   .copyright-text p {
   padding-top: 20px;
   font-size: 14px;
   color: #878787;
+
   }
   .copyright-text p a{
-  color: #ff5e14;
+  color: #163043;
+  
   }
   .footer-menu li {
   display: inline-block;
-  margin-left: 20px;
+  /* margin-left: 20px; */
+
   }
   .footer-menu li:hover a{
-  color: #ff5e14;
+  color: #102330;
   }
   .footer-menu li a {
   font-size: 14px;
-  color: #878787;
+  color: #ffffff;
   }
 
 
@@ -399,9 +408,9 @@ ul {
       font-size: 18px;
     }
   
-    .footer-menu li {
+    /* .footer-menu li {
       margin-left: 10px;
-    }
+    } */
   }
   
   @media (max-width: 575px) {
@@ -427,8 +436,8 @@ ul {
   
     .footer-social-icon span {
       margin-bottom: 10px;
+      font-family: vazir;
     }
-  
     .footer-menu {
       margin-bottom: 20px;
     }

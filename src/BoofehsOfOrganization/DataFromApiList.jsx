@@ -43,19 +43,19 @@ function DataFromApiList() {
     setInputValue(event.target.value);
   };
 
-  
+
   return (
     <>
       <div className={styles.containment_boof}>
-        <Navbarparent/>
-        <div className={styles.itemscenter+ " " + "mb-20"}>
-          <Boofeh searchTerm={searchTerm} onSearchChange={onSearchChange}/>
+        <Navbarparent />
+        <div className={styles.itemscenter + " " + "mb-20"}>
+          <Boofeh searchTerm={searchTerm} onSearchChange={onSearchChange} />
           {filteredCards.map((card, index) => (
             <Cards
               key={index}
               name={card.name}
               counter_organ={card.counter_organ}
-              index = {card.id}
+              index={card.id}
             />
           ))}
         </div>

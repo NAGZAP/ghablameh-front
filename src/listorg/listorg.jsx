@@ -8,7 +8,7 @@ import Select from "react-select";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Slider from 'react-slick';
-import  { useEffect , useState ,useRef} from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styles from './style.module.css';
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
@@ -46,7 +46,7 @@ function ListOrg() {
 
   useEffect(() => {
     fetchDataFromURL();
-   
+
   }, []);
 
 
@@ -58,28 +58,28 @@ function ListOrg() {
   const handlePlay = () => {
     setIsPlaying(true);
   };
-    
+
   const [sliderRef, instanceRef] = useKeenSlider({
     initial: 0,
     slideChanged(slider) {
-    setCurrentSlide(slider.track.details.rel)
+      setCurrentSlide(slider.track.details.rel)
     },
     created() {
-    setLoaded(true)
+      setLoaded(true)
     },
-    })
+  })
 
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handleSearch = () => {
-  setLoading(true);
-  setTimeout(() => {
-    setLoading(false);
-  }, 1500);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   };
   const handleKeyDown = (event) => {
-  if (event.keyCode === 13) {
-  loading();
-  }
+    if (event.keyCode === 13) {
+      loading();
+    }
   };
   const options = [
 
@@ -112,13 +112,13 @@ function ListOrg() {
     return filterLetter === '' || firstLetter === filterLetter;
   });
 
-  
+
   return (
     <div className={styles.land}>
       <Navbarparent></Navbarparent>
       <body>
         <div>
-          < DataFetcher/>
+          < DataFetcher />
         </div>
         <div className={styles.menu}>
           <ul className={styles['m-navbar']}>
@@ -145,67 +145,66 @@ function ListOrg() {
                 <Select options={options} onChange={handleSelectChange} />
               </div>
             </li>
-      
+
           </ul>
           <div className={styles.content}>
             <div className={`${styles['content-item']} ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}>
-            {items.map((item, index) => (
+              {items.map((item, index) => (
                 <div className={styles['flex-item']}>
-                <h3>{item.name}</h3>
-                <p>{item.organization_name}</p>
-                <p>{item.created_at}</p>
-                 </div>
-        ))}
-                
-          
-            </div>
-         
-              
-            <div className={`${styles['content-item']} ${selectedItem === 'Item 2' ? styles.active : ''}`}> 
-            {items
-  .slice() 
-  .sort((a, b) => a.name.localeCompare(b.name)) 
-  .map((item, index) => (
-    <div key={index} className={styles['flex-item']}>
-      <h3>{item.name}</h3>
-      <p>{item.organization_name}</p>
-      <p>{item.created_at}</p>
-    </div>
-  ))}
+                  <h3>{item.name}</h3>
+                  <p>{item.organization_name}</p>
+                  <p>{item.created_at}</p>
+                </div>
+              ))}
 
-           
+
             </div>
-           
+
+
+            <div className={`${styles['content-item']} ${selectedItem === 'Item 2' ? styles.active : ''}`}>
+              {items
+                .slice()
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((item, index) => (
+                  <div key={index} className={styles['flex-item']}>
+                    <h3>{item.name}</h3>
+                    <p>{item.organization_name}</p>
+                    <p>{item.created_at}</p>
+                  </div>
+                ))}
+
+
+            </div>
+
             <div className={`${styles['content-item']} ${selectedItem === 'Item 3' ? styles.active : ''}`}>
-            {items
-  .slice() // Create a shallow copy of the items array to avoid mutating the original array
-  .sort((a, b) => new Date(a.created_at) - new Date(b.created_at)) // Sort items by created_at date
-  .map((item, index) => (
-    <div key={index} className={styles['flex-item']}>
-      <h3>{item.name}</h3>
-      <p>{item.organization_name}</p>
-      <p>{item.created_at}</p>
-    </div>
-  ))}
+              {items
+                .slice() // Create a shallow copy of the items array to avoid mutating the original array
+                .sort((a, b) => new Date(a.created_at) - new Date(b.created_at)) // Sort items by created_at date
+                .map((item, index) => (
+                  <div key={index} className={styles['flex-item']}>
+                    <h3>{item.name}</h3>
+                    <p>{item.organization_name}</p>
+                    <p>{item.created_at}</p>
+                  </div>
+                ))}
 
             </div>
           </div>
         </div>
       </body>
-      <OrganizationList/>
+      <OrganizationList />
     </div>
   );
 }
 
 export default ListOrg;
 function Arrow(props) {
-const disabeld = props.disabled ? " arrow--disabled" : ""
+  const disabeld = props.disabled ? " arrow--disabled" : ""
   return (
     <svg
       onClick={props.onClick}
-      className={`arrow ${
-        props.left ? "arrow--left" : "arrow--right"
-      } ${disabeld}`}
+      className={`arrow ${props.left ? "arrow--left" : "arrow--right"
+        } ${disabeld}`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >

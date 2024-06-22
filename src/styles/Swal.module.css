@@ -1,0 +1,23 @@
+/* Swal.module.css */
+.confirmButton {
+    background-color: rgb(38, 87, 124) !important;
+    /* border: none !important;   */
+    /* outline: none !important;  */
+    box-shadow: none !important; 
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 15px;
+    padding-left: 15px;
+    /* border-radius: 9999px; */
+    /* color: white !important; */
+  }
+  
+  /* .confirmButton:focus, .confirmButton:hover {
+    border: none !important;
+    outline: none !important; 
+    box-shadow: none !important;
+  } */
+  
+  .iconColor {
+    color: rgb(38, 87, 124) !important; 
+  }
