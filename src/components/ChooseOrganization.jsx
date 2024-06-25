@@ -199,12 +199,12 @@ const ChooseOrganization = () => {
           </label>
 
           <div
-            className=" mb-5 rounded-xl p-4 bg-sky-900  w-72"
+            className=" mb-5 rounded-xl p-4 bg-sky-900 w-80"
             style={{ maxHeight: "350px", overflowY: "scroll", background: '' }}
           >
             {/* border border-sky-800 */}
             {organizations.length === 0 ? (
-              <p className="p-1 text-red-600"> سازمانی یافت نشد. </p>
+              <p className="p-1 text-white"> سازمانی یافت نشد. </p>
             ) : (
               <div className="bg-white bg-opacity-85 rounded-lg p-0.5">
                 {organizations.map((item,index) => (

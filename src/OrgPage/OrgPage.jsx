@@ -193,7 +193,7 @@ function OrgPage() {
                 <div className="fixed z-10 inset-0 overflow-y-auto">
                   <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <div className="fixed inset-0 transition-opacity">
-                      <div className="absolute inset-0 bg-gray-500 opacity-50"></div>
+                      <div className="absolute inset-0 bg-black opacity-50"></div>
                     </div>
                     <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
                     <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -218,12 +218,12 @@ function OrgPage() {
                         </div>
 
                       </div>
-                      <div className="bg-gray-50 px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <button onClick={mode === 'edit' ? handleEdit : handleCreateBuffet} type="button" className="mx-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-template-custom-orange text-base font-medium text-white hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 sm:ml-3 sm:w-auto sm:text-sm">
+                      <div className="bg-gray-50 px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse justify-center">
+                        <button onClick={mode === 'edit' ? handleEdit : handleCreateBuffet} type="button" className=" mr-2 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-template-custom-orange text-base font-medium text-white hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 sm:ml-3 sm:w-auto sm:text-sm">
                           {/* {editBuffet ? 'ویرایش' : 'ایجاد'} */}
                           {mode === 'edit' ? 'ویرایش ' : 'ایجاد  '}
                         </button>
-                        <button onClick={() => { setShowModal(false); setError(''); }} type="button" className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm">
+                        <button onClick={() => { setShowModal(false); setError(''); }} type="button" className=" mr-2 mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm">
                           لغو
                         </button>
                       </div>
@@ -235,7 +235,7 @@ function OrgPage() {
               {/* Delete Confirmation Modal */}
               {deleteConfirmation && (
                 <div className="fixed z-10 inset-0 flex items-center justify-center min-h-screen text-center overflow-y-auto">
-                  <div className="absolute inset-0 bg-gray-500 opacity-50 transition-opacity"></div>
+                  <div className="absolute inset-0 bg-black opacity-50 transition-opacity"></div>
                   <div className="bg-white px-16 py-1 inline-block align-middle rounded-lg text-left shadow-xl transform transition-all my-8 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-5">
                     <div className="p-6 sm:p-6">
                       <div className="text-center sm:items-center">

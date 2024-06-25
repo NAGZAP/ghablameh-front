@@ -35,7 +35,7 @@ function ListOrg() {
         }
       });
 
-      console.log('Data retrieved:', response.data);
+      // console.log('Data retrieved:', response.data);
       // Assuming the response data is an array of objects with `name` and `organization` properties
       setItems(response.data);
 

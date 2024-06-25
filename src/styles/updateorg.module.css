@@ -71,9 +71,10 @@
 .avatar {
   width: 150px;
   height: 150px;
-  border-radius: 50%;
-  border: 5px solid #26577C;
+  /* border-radius: 50%; */
+  /* border: 5px solid #26577C; */
   text-align: center;
+  object-fit: cover; /* Ensure the image fills the circle */
 }
 
 .avatarimg {

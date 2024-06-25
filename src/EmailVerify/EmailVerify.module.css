@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap');
 .container {
   direction: rtl;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   font-family: "Vazir", "Vazirmatn", "Arabic Typesetting", sans-serif;
   font-optical-sizing: auto;
   font-weight: 200;
@@ -14,7 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 80vh;
   margin: 0;
   padding: 0;
 }

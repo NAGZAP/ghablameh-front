@@ -47,7 +47,7 @@ function OrganizationList() {
         }
     };
 
-    //fetch requests every 5 seconds
+    //fetch oragnizations every 5 seconds
     useEffect(() => {
         // Fetch immediately for the first time
         if (AuthManager.isLoggedIn()) fetchOrganizations();
