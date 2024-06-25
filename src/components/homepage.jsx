@@ -4,6 +4,7 @@ import ListOrg from '../listorg/listorg';
 import AuthManager from '../APIs/AuthManager';
 import Navbarparent from './navbarparent';
 import styles from '../styles/bg.module.css'
+import Landing from '../landing/landing';
 const Home = () => {
     const [flag, setFlag] = useState(null);
 
@@ -20,21 +21,27 @@ const Home = () => {
         return (
             <>
             <Navbarparent/>
+        
             <div className='w-full flex items-center justify-center'>
                 <h3 className="text-xl font-light text-gray-800 pt-3 pb-2 pr-3 text-right p-6 m-2"> در حال انتقال به صفحه اصلی... </h3>
+           
+         
             </div>
+         
             </>
         );
     }
 
     return (
         <div>
+      
           {AuthManager.isLoggedIn() && (flag === 1 ? <ListOrg /> : <ListOrg />)}
           {!AuthManager.isLoggedIn() && (
-            <div className={styles.bg}>
+            <div className={styles.bgi}>
           <Navbarparent/>
+          <Landing/>
           <div style={{margin:'32rem'}}>
-            
+      
           </div>
           
           </div>

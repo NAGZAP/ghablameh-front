@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/footer";
 import Update from "./components/info";
+import Landing from "./landing/landing";
 import Register from "./components/org";
 import SignUp from "./SignUp/SignUp";
 import CustomSidebar from "./components/Sidebar";
@@ -40,6 +41,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/footer" element={<Footer />} />
+        <Route path="/landing" element={<Landing />} />
         <Route path="/Update" element={<Update />} />
         <Route path="/login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
