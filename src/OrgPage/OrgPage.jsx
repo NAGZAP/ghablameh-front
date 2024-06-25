@@ -12,12 +12,33 @@ function OrgPage() {
   const [editBuffetName, setEditBuffetName] = useState('');
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [deleteBuffetId, setDeleteBuffetId] = useState(null);
-
+  const [error, setError] = useState("");
+  const [mode, setMode] = useState('');
   // Define your API endpoint and token
   const API_ENDPOINT = 'https://ghablameh.fiust.ir/api/v1/buffets/';
   const TOKEN = localStorage.getItem('token');
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   // Axios request configuration
+  //   const axiosConfig = {
+  //     headers: {
+  //       'Authorization': `JWT ${TOKEN}`
+  //       // Add other headers as needed
+  //     }
+  //   };
+
+  //   // Fetch data using Axios when the component mounts
+  //   axios.get(API_ENDPOINT, axiosConfig)
+  //     .then(response => {
+  //       // Update state with fetched data
+  //       setPeopleData(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching data:', error);
+  //     });
+  // }, []);
+
+  const fetchData = () => {
     // Axios request configuration
     const axiosConfig = {
       headers: {
@@ -25,8 +46,8 @@ function OrgPage() {
         // Add other headers as needed
       }
     };
-
-    // Fetch data using Axios when the component mounts
+  
+    // Fetch data using Axios
     axios.get(API_ENDPOINT, axiosConfig)
       .then(response => {
         // Update state with fetched data
@@ -35,7 +56,21 @@ function OrgPage() {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, []);
+  };
+  
+  // Function to fetch data initially
+  const fetchDataInitially = () => {
+    fetchData();
+  };
+  
+  // Call fetchDataInitially to fetch data when the component loads
+  fetchDataInitially();
+  
+  // Interval for fetching data every 5 seconds
+  const intervalTime = 5 * 1000; // 5 seconds in milliseconds
+  setInterval(() => {
+    fetchData();
+  }, intervalTime);
 
   const handleDeleteConfirmation = (id) => {
     setDeleteBuffetId(id);
@@ -68,6 +103,12 @@ function OrgPage() {
   };
 
   const handleCreateBuffet = () => {
+    setError('');
+    //check if the name is empty
+    if (!newBuffetName) {
+      setError(' نام بوفه را وارد کنید. ');
+      return;
+    }
     // Define the data to be sent in the POST request
     const postData = {
       name: newBuffetName
@@ -97,6 +138,12 @@ function OrgPage() {
   };
 
   const handleEdit = () => {
+    setError('');
+    //check if the name is empty
+    if (!editBuffetName) {
+      setError(' نام بوفه را وارد کنید. ');
+      return;
+    }
     // Define the endpoint for editing the buffet
     const editEndpoint = `${API_ENDPOINT}${editBuffet.id}/`;
 
@@ -146,33 +193,37 @@ function OrgPage() {
                 <div className="fixed z-10 inset-0 overflow-y-auto">
                   <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <div className="fixed inset-0 transition-opacity">
-                      <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                      <div className="absolute inset-0 bg-gray-500 opacity-50"></div>
                     </div>
                     <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
                     <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                      <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <div className="sm:flex sm:items-start">
-                          <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                              {editBuffet ? 'ویرایش بوفه' : 'ساخت بوفه جدید'}
-                            </h3>
-                            <div className="mt-2">
-                              <input
-                                type="text"
-                                value={editBuffet ? editBuffetName : newBuffetName}
-                                onChange={(e) => editBuffet ? setEditBuffetName(e.target.value) : setNewBuffetName(e.target.value)}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                placeholder="نام بوفه جدید"
-                              />
-                            </div>
-                          </div>
+                      <div className="bg-white p-6 flex flex-col items-center text-center">
+                        <h3 className="text-lg mb-5 font-medium text-gray-900" id="modal-title">
+                          {/* {editBuffet ? 'ویرایش بوفه' : 'ساخت بوفه جدید'} */}
+                          {mode === 'edit' ? 'ویرایش بوفه' : 'ساخت بوفه جدید'}
+                        </h3>
+
+                        <div className="flex flex-col justify-center items-start my-2">
+                          <input
+                            type="text"
+                            value={mode === 'edit' ? editBuffetName : newBuffetName}
+                            onChange={(e) => {
+                              mode === 'edit' ? setEditBuffetName(e.target.value) : setNewBuffetName(e.target.value);
+                              setError('');
+                            }}
+                            className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="نام بوفه جدید"
+                          />
+                          {error && <span className='text-red-600 mt-3'>{error}</span>}
                         </div>
+
                       </div>
-                      <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <button onClick={editBuffet ? handleEdit : handleCreateBuffet} type="button" className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-600 text-base font-medium text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 sm:ml-3 sm:w-auto sm:text-sm">
-                          {editBuffet ? 'ویرایش' : 'ایجاد'}
+                      <div className="bg-gray-50 px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button onClick={mode === 'edit' ? handleEdit : handleCreateBuffet} type="button" className="mx-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-template-custom-orange text-base font-medium text-white hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 sm:ml-3 sm:w-auto sm:text-sm">
+                          {/* {editBuffet ? 'ویرایش' : 'ایجاد'} */}
+                          {mode === 'edit' ? 'ویرایش ' : 'ایجاد  '}
                         </button>
-                        <button onClick={() => setShowModal(false)} type="button" className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm">
+                        <button onClick={() => { setShowModal(false); setError(''); }} type="button" className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm">
                           لغو
                         </button>
                       </div>
@@ -183,22 +234,19 @@ function OrgPage() {
 
               {/* Delete Confirmation Modal */}
               {deleteConfirmation && (
-                <div className="fixed z-10 inset-0 overflow-y-auto">
-                  <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                    <div className="fixed inset-0 transition-opacity">
-                      <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                    </div>
-                    <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
-                    <div className="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                      <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <div className="sm:flex sm:items-start">
-                          <div className="text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">آیا مطمئن هستید؟</h3>
-                            <div className="mt-2">
-                              <button onClick={handleDelete} className="px-4 py-2 bg-red-600 text-white font-semibold rounded-md hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">حذف</button>
-                              <button onClick={() => setDeleteConfirmation(false)} className="mx-2 px-4 py-2 bg-gray-600 text-white font-semibold rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">لغو</button>
-                            </div>
-                          </div>
+                <div className="fixed z-10 inset-0 flex items-center justify-center min-h-screen text-center overflow-y-auto">
+                  <div className="absolute inset-0 bg-gray-500 opacity-50 transition-opacity"></div>
+                  <div className="bg-white px-16 py-1 inline-block align-middle rounded-lg text-left shadow-xl transform transition-all my-8 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-5">
+                    <div className="p-6 sm:p-6">
+                      <div className="text-center sm:items-center">
+                        <h3 className="text-lg leading-6 font-medium text-gray-900 mb-6" id="modal-title">آیا از حذف بوفه مطمئن هستید؟</h3>
+                        <div className="flex items-center justify-center">
+                          <button onClick={handleDelete} className="px-4 py-2 mx-2 bg-template-custom-orange text-white font-semibold rounded-md hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            بله
+                          </button>
+                          <button onClick={() => setDeleteConfirmation(false)} className="px-4 py-2 bg-gray-600 text-white font-semibold rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                            لغو
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -206,10 +254,10 @@ function OrgPage() {
                 </div>
               )}
 
-              
+
               <div className={styles.transform}>
 
-              <button onClick={() => setShowModal(true)} className="px-4 mt-36 w-52 py-3 font-medium text-white bg-orange-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-ou text-sm">ساخت بوفه جدید</button>
+                <button onClick={() => { setMode('create'); setShowModal(true); }} className="px-4 mt-36 w-52 py-3 font-medium text-white bg-template-custom-orange rounded-md hover:bg-orange-500 focus:outline-none focus:shadow-outline-red active:bg-red-500 transition duration-150 ease-in-ou text-sm">ساخت بوفه جدید</button>
 
                 <div className='m-10 grid lg:grid-cols-5 md:grid-cols-5 mt-5 mb-5'>
                   <div className='lg:col-start-2 lg:col-span-3 md:col-start-2 md:col-span-3'>
@@ -231,14 +279,16 @@ function OrgPage() {
                             {/* Column 2: Operation Buttons */}
                             <td className="px-6 py-5 whitespace-nowrap">
                               {/* Edit Button */}
-                              <button onClick={() => { setEditBuffet(person); setEditBuffetName(person.name); setShowModal(true); }} className="px-3 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out">ویرایش</button>
+                              <button onClick={() => { setMode('edit'); setEditBuffet(person); setEditBuffetName(person.name); setShowModal(true); }} className="ml-2 px-3 py-2 font-medium text-white bg-sky-800 rounded-md hover:bg-sky-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out">ویرایش</button>
 
+                              {/* Delete Button */}
+
+                              <button onClick={() => handleDeleteConfirmation(person.id)} className="ml-2 px-3 py-2 font-medium text-white bg-template-custom-orange rounded-md hover:bg-orange-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">حذف</button>
                               {/* Table Button */}
                               <Link to="/weeklymenu2">
-                                <button onClick={() => { hanleclickjadval(person) }} className="ml-2 mr-2 px-3 py-2 font-medium text-white bg-gray-600 rounded-md hover:bg-gray-500 focus:outline-none focus:shadow-outline-blue active:bg-gray-600 transition duration-150 ease-in-out">جدول</button>
+                                <button onClick={() => { hanleclickjadval(person) }} className="ml-2 px-3 py-2 font-medium text-white bg-gray-600 rounded-md hover:bg-gray-500 focus:outline-none focus:shadow-outline-blue active:bg-gray-600 transition duration-150 ease-in-out">مشاهده جدول غذایی </button>
                               </Link>
-                              {/* Delete Button */}
-                              <button onClick={() => handleDeleteConfirmation(person.id)} className="ml-2 px-3 py-2 font-medium text-white bg-orange-600 rounded-md hover:bg-orange-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">حذف</button>
+
                             </td>
                           </tr>
                         ))}
