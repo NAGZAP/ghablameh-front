@@ -20,6 +20,7 @@ import {
 } from "react-icons/hi";
 import DefaultSidebar from "./Sidebar";
 import Notificationbox from "./Notificationbox";
+import bgimage from '../assets/wave3.png'
 
 // function Navbar() {
 const Navbar = ({ openWallet, setOpenWallet }) => {
@@ -103,7 +104,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
     setUserData(null); // Clear user data
     localStorage.removeItem("token");
     localStorage.removeItem("refresh-token");
-    console.log(AuthManager.isLoggedIn());
+    // console.log(AuthManager.isLoggedIn());
     navigate("/");
   }
 
@@ -194,6 +195,8 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
   return (
     <>
       <nav style={{ backgroundColor: "rgb(38, 87, 124)" }} className={`flex justify-between items-center w-full pl-5`} >
+        
+       
         {/* Elements - Logo */}
         <div className={`flex items-center justify-center`}>
           <div className={`flex items-center justify-center`}>
@@ -210,7 +213,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
               style={{ fontSize: "35px", fontFamily: "vazir" }}
             >
               {/* <Link to="/"> */}
-                <img src={'../src/images/logo.jpeg'} onClick={handleOpenSidebar} alt={' قابلمه '} style={{ height: '2rem' }} />
+                <img src={'../src/images/logo-orange.jpg'} onClick={handleOpenSidebar} alt={' قابلمه '} style={{ height: '1.7rem' }} />
               {/* </Link> */}
             </button>
 
@@ -307,6 +310,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
             </div> */}
 
         </div>
+        
       </nav>
 
       {/* sidebar */}
@@ -342,6 +346,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
 
       {/* wallet */}
       {openWallet && <UserWallet open={openWallet} setOpen={setOpenWallet} />}
+      <img src={bgimage} alt="background" />
     </>
   );
 };

@@ -47,7 +47,7 @@ function OrganizationList() {
         }
     };
 
-    //fetch requests every 5 seconds
+    //fetch oragnizations every 5 seconds
     useEffect(() => {
         // Fetch immediately for the first time
         if (AuthManager.isLoggedIn()) fetchOrganizations();
@@ -123,12 +123,22 @@ function OrganizationList() {
                                 <img src={'https://ghablameh.fiust.ir' + org.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} />
                             </div>
                         ) : (
-                            <img src={defaultPhoto} className="w-full h-40" style={{ objectFit: 'contain' }} />
+                            <div style={{
+                                height: "160px",
+                                backgroundImage: "repeating-conic-gradient(#26577c  0% 25%, #ffffff 0% 50%)",
+                                backgroundPosition: "0 0, 32px 32px",
+                                backgroundSize: "50px 50px",
+                                opacity:'0.5'
+                             }}
+                                    >
+
+                                    </div>
+                        
                         )}
                         <div className="p-3 flex flex-col justify-start" style={{ borderTop: '1px solid rgb(38, 87, 124)' }}>
-                            <h3 className="font-bold text-lg">{org.name}</h3>
+                            <h3 className="">{org.name}</h3>
                             <div className="flex justify-between items-center text-sm">
-                                <div className="flex-1">
+                                <div className="flex-1 text-xs">
                                     {org.average_rate ? (
                                         <span>امتیاز: {org.average_rate}</span>
                                     ) : (
@@ -138,7 +148,8 @@ function OrganizationList() {
                                 </div>
                                 <div>
                                     {flag === 2 ? (
-                                        <button className='p-2 rounded text-white text-xs' style={{ background: ' rgb(38, 87, 124)' }}><Link to='/chooseOrg'> درخواست عضویت </Link></button>
+                                        // 1d3e57
+                                        <button className='p-2 rounded text-white text-xs' style={{ background: 'rgba(249, 115, 22,0.9)' }}><Link to='/chooseOrg'> درخواست عضویت </Link></button>
                                     ) : null}
                                 </div>
                             </div>

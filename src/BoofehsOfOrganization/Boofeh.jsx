@@ -69,7 +69,7 @@ function Boofeh({ searchTerm, onSearchChange }) {
                 type="search"
                 id="default-search"
                 className="mb-10 block w-full p-4 ps-10 text-sm text-gray-1 border border-gray-500 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-template-custom-orange focus:border-transparent placeholder-template-custom-gray text-gray-500 dark:bg-template-custom-gray dark:border-template-custom-blue dark:placeholder-white dark:text-white dark:focus:ring-2 dark:focus:border-transparent"
-                placeholder="بوفه شرکت مورد نظر ..."
+                placeholder=" جستجو بوفه... "
                 value={searchTerm}
                 onChange={onSearchChange}
               />

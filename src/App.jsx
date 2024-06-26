@@ -42,13 +42,13 @@ function App() {
         <Route path="/footer" element={<Footer />} />
         <Route path="/Update" element={<Update />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/Register" element={<Register />} />
+        {/* <Route path="/Register" element={<Register />} /> */}
         <Route path="/sidebar" element={<CustomSidebar />} />
         <Route path="/navbar" element={<Navbarparent />} />
         <Route path="/Updateorg" element={<Updateorg />} />
         <Route path="/bu" element={<MyComponent />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/HomeOrgPage" element={<HomeOrgPage />} />
+        {/* <Route path="/HomeOrgPage" element={<HomeOrgPage />} /> */}
         <Route path="/ListOfJoinRequests" element={<ListOfJoinRequests />} />
         <Route path="/OrgPage" element={<OrgPage />} />
         <Route path="/chooseorg" element={<ChooseOrganizationPage />} />

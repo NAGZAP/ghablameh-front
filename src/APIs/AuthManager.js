@@ -46,6 +46,7 @@ const LoginRequest = async (username, password) => {
   const baseurl = "https://ghablameh.fiust.ir/api/v1";
   const body = { username: username, password: password };
   const data = await axios.post(baseurl + "/auth/login/", body);
+  // console.log(data.data)
   return data;
 };
 
