@@ -48,9 +48,9 @@ export default function DefaultSidebar() {
               تغییر اطلاعات کاربری
             </span>
           </MenuItem>
-          <MenuItem component={<Link to="/menu" />}>
+          <MenuItem component={<Link to="/Reserve" />}>
             <span style={{ marginRight: '10px' }}>
-              منو هفتگی بوفه
+              رزرو غذا
             </span>
           </MenuItem>
           {/*         <MenuItem component={<Link to="/weeklymenu" />}>
@@ -63,7 +63,7 @@ export default function DefaultSidebar() {
           </MenuItem>
           <MenuItem component={<Link to="/last" />}>
             <span style={{ marginRight: '10px' }}>
-              رزروها
+               مشاهده رزروها 
             </span>
           </MenuItem>
           <MenuItem component={<Link to="/myorgs" />}>

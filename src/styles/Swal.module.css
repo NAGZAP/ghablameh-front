@@ -21,3 +21,28 @@
   .iconColor {
     color: rgb(38, 87, 124) !important; 
   }
+
+  @keyframes spinner {
+    0% {
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(38, 87, 124);
+    border: 8px solid rgba(204, 204, 204, 0.5);
+    border-left-color: rgb(38, 87, 124);
+    border-top-color: rgb(38, 87, 124);
+    border-radius: 50%;
+    width: 10rem;
+    height: 10rem;
+    animation: spinner 1s linear infinite;
+    margin-right: 60px;
+  }
