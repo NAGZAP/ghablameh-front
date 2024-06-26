@@ -89,7 +89,12 @@ const Myorgs = () => {
     };
     fetchOrganizations();
   }, []);
-
+  function gregorianToPersian(dateString) {
+    let options = { year: 'numeric', month: 'long', day: 'numeric' };
+    let today = new Date(dateString).toLocaleDateString('fa-IR', options);
+    console.log(today);
+    return today;
+  }
   const handleSearch = () => {
     const filtered = orgs.filter((item) =>
       item.organization_name.toLowerCase().includes(searchData.current.value.toLowerCase())
@@ -168,7 +173,7 @@ const Myorgs = () => {
 
                   <div className="flex justify-start text-sm my-2 mt-5">
                     <p style={{ direction: "ltr" }}>
-                      تاریخ درخواست : {item.created_at.slice(0, 10)}
+                      تاریخ درخواست : {gregorianToPersian(item.created_at.slice(0, 10))}
                     </p>
                   </div>
 
