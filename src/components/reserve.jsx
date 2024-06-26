@@ -9,7 +9,7 @@ import jalaliMoment from 'jalali-moment';
 import moment from 'moment';
 import Select from 'react-select';
 
-const Menu = () => {
+const Reserve = () => {
     const [fetchedData, setFetchedData] = useState([])
     const [data, setData] = useState([]);
     const [reservedfoods, setReservedFoods] = useState([]);
@@ -92,24 +92,7 @@ const Menu = () => {
             console.error("Error fetching data: ", error);
         }
     };
-
-    //fetch wallet data
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const token = AuthManager.getToken();
-
-                const response = await axios.get("https://ghablameh.fiust.ir/api/v1/wallets/me/",
-                    { headers: { Authorization: "JWT " + token } }
-                );
-                setFetchedAmount(response.data.balance);
-            } catch (error) {
-                console.error("Error fetching user data: ", error);
-            }
-        };
-        if (AuthManager.isLoggedIn()) fetchUserData();
-    }, []);
-
+    
     // fetch reserved foods
     const fetchReservations = async () => {
         try {
@@ -123,6 +106,48 @@ const Menu = () => {
             console.error("Error fetching reservations: ", error);
         }
     };
+
+    //fetch every 5 seconds
+    useEffect(() => {
+        if (currentBuffet.current !== null) {
+        const fetchReservationsId = setInterval(() => {
+            fetchReservations();
+        }, 5000); // 5 seconds
+        const fetchDataId = setInterval(() => {
+            fetchData();
+          }, 5000); // 5 seconds
+        
+          return () => {
+            clearInterval(fetchReservationsId);
+            clearInterval(fetchDataId);
+        };
+      
+      }}, []); 
+
+    //fetch wallet data
+    
+        const fetchWalletData = async () => {
+            try {
+                const token = AuthManager.getToken();
+
+                const response = await axios.get("https://ghablameh.fiust.ir/api/v1/wallets/me/",
+                    { headers: { Authorization: "JWT " + token } }
+                );
+                setFetchedAmount(response.data.balance);
+            } catch (error) {
+                console.error("Error fetching user data: ", error);
+            }
+        };
+
+        useEffect(() => {
+            const intervalId = AuthManager.isLoggedIn() ? setInterval(fetchWalletData, 5000) : null;
+        
+            return () => {
+                if (intervalId !== null) {
+                    clearInterval(intervalId);
+                }
+            };
+        }, []);
 
     //reserve
     const handlereserve = async (food) => {
@@ -308,9 +333,9 @@ const Menu = () => {
         }, [data, dates, mealNames]);
 
         return (
-            <div className="m-4">
+            <div className="my-6 mx-2">
                 <table className="min-w-full divide-y divide-gray-300 shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                    <thead className="text-white bg-sky-900" style={{ background: '' }}>
+                    <thead className="text-white bg-sky-800" style={{ background: '' }}>
                         {/* rgb(218, 168, 43) */}
                         <tr>
                             <th className="w-1/5 p-2 text-lg font-medium tracking-wider text-center">روز</th>
@@ -369,14 +394,14 @@ const Menu = () => {
             <div style={{ width: "100%" }} className="px-5 py-3">
                 <div className="grid grid-cols-3 my-4 text-center"></div>
 
-                {/* buffets */}
+                {/* choose buffet */}
                 <div className="grid grid-cols-3 w-full" >
                     <div></div>
-                    <div className="content-center w-full flex justify-center items-center">
+                    <div className="mb-3 content-center w-full flex justify-center items-center">
                         <Select
                             options={options}
                             value={currentBuffet.current}
-                            isLoading={loading}
+                            // isLoading={loading}
                             className="rounded w-60"
                             placeholder=" بوفه خود را انتخاب کنید. "
                             theme={(theme) => ({
@@ -406,4 +431,4 @@ const Menu = () => {
     );
 };
 
-export default Menu;
+export default Reserve;

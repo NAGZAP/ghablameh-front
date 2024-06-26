@@ -102,19 +102,29 @@ import Swal from "sweetalert2";
 import styles from '../styles/Swal.module.css';
 const ChooseOrganization = () => {
   const [organizations, setOrganizations] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
+
     const fetchOrganizations = async () => {
+      setIsLoading(true);
       try {
         const data = await requests.GetOrganizations();
         setOrganizations(data);
       } catch (error) {
         console.error("Error fetching organizations:", error);
       }
+      setIsLoading(false);
     };
 
+useEffect(() => {
+  fetchOrganizations();
+  const intervalId = setInterval(() => {
     fetchOrganizations();
-  }, []);
+  }, 5000); //5 seconds
+
+  return () => clearInterval(intervalId); // Clear the interval when the component is unmounted 
+
+}, []); 
 
   const handleJoin = async () => {
     let orgs = document.querySelectorAll(".organizationCheckbox");
@@ -203,24 +213,29 @@ const ChooseOrganization = () => {
             style={{ maxHeight: "350px", overflowY: "scroll", background: '' }}
           >
             {/* border border-sky-800 */}
-            {organizations.length === 0 ? (
-              <p className="p-1 text-white"> سازمانی یافت نشد. </p>
-            ) : (
-              <div className="bg-white bg-opacity-85 rounded-lg p-0.5">
-                {organizations.map((item,index) => (
-                  <div className="p-1 m-2" style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }} key={item.id}>
-                    {item.name}
-                    <input
-                      type="checkbox"
-                      id={item.id}
-                      value="true"
-                      className="organizationCheckbox w-4 h-4 text-blue-600  rounded focus:ring-sky-800 dark:focus:ring-sky-900 dark:ring-offset-gray-800 focus:ring-2 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600 my-1"
-                      style={{ float: "left" }}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+
+            {organizations.length === 0 ?
+              isLoading ? (
+                <div className={styles.spinner}></div>
+              ) : (
+                <p className="p-1 text-white"> سازمانی یافت نشد. </p>
+              ) : (
+                <div className="bg-white bg-opacity-85 rounded-lg p-0.5">
+                
+                  {organizations.map((item, index) => (
+                    <div className="p-1 m-2" style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }} key={item.id}>
+                      {item.name}
+                      <input
+                        type="checkbox"
+                        id={item.id}
+                        value="true"
+                        className="organizationCheckbox w-4 h-4 text-blue-600  rounded focus:ring-sky-800 dark:focus:ring-sky-900 dark:ring-offset-gray-800 focus:ring-2 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600 my-1"
+                        style={{ float: "left" }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
 
           </div>
           <div className="mt-2 mx-36">
