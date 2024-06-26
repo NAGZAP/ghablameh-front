@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import notifmanager from "../APIs/Notifications";
 import io from "socket.io-client";
 import AuthManager from "../APIs/AuthManager";
+import jalaliMoment from 'jalali-moment';
+import moment from 'moment';
 const Notificationbox = () => {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
@@ -42,6 +44,13 @@ const Notificationbox = () => {
     All.current.classList = "p-1 bg-sky-800 text-stone-100";
   };
 
+  function gregorianToPersian(dateString) {
+    let options = { year: 'numeric', month: 'long', day: 'numeric' };
+    let today = new Date(dateString).toLocaleDateString('fa-IR', options);
+    console.log(today);
+    return today;
+  }
+
   return (
     <div className="border border-sky-800 rounded" style={{ width: "100%" }}>
       <div className="grid grid-cols-2">
@@ -71,7 +80,7 @@ const Notificationbox = () => {
           </span>
         </div>
       </div>
-      <div className="p-1 m-1" ref={content}>
+      <div className="p-1 m-1" ref={content} style={{maxHeight:"250px",overflowY:"scroll"}}>
         {data.length === 0 ? (
           <div className="text-stone-800 text-center">در حال حاضر اعلانی ندارید </div>
         ) : (
@@ -81,10 +90,10 @@ const Notificationbox = () => {
               className={m.read ? "bg-slate-300 p-2 mx-1 my-2 rounded" : "bg-slate-300 p-2 mx-1 my-2 rounded"}
             >
               <span>{m.title}</span>
-              <p style={{ fontSize: "14px" }}>{m.message.slice(0, 10)}</p>
+              {/* <p style={{ fontSize: "14px" }}>{m.message.slice(0, 10)}</p> */}
               <div className="grid grid-cols-2" style={{ fontSize: "12px" }}>
-                <div>{m.created_at}</div>
-                <div style={{ textAlign: "left" }}>{m.user}</div>
+                <div>{gregorianToPersian(m.created_at.slice(0,10))}</div>
+                {/* <div style={{ textAlign: "left" }}>{m.user}</div> */}
               </div>
             </div>
           ))

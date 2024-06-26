@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
+
 import Footer from "./components/footer";
 import Update from "./components/info";
 import Register from "./components/org";
@@ -29,10 +29,11 @@ import Navbarparent from "./components/navbarparent";
 import Notificationbox from "./components/Notificationbox";
 import OrganizationList from "./components/organizationlist";
 import Boofeh from "./BoofehsOfOrganization/Boofeh";
-import Menu from "./components/reservefood";
+import Reserve from "./components/reserve";
 import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList";
 import AddWeeklyMenu from "./addweeklybyadmin/addweeklybyadmin";
-
+import Verify from "./components/verify";
+import "./App.css";
 function App() {
   return (
     <BrowserRouter>
@@ -42,13 +43,13 @@ function App() {
         <Route path="/footer" element={<Footer />} />
         <Route path="/Update" element={<Update />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/Register" element={<Register />} />
+        {/* <Route path="/Register" element={<Register />} /> */}
         <Route path="/sidebar" element={<CustomSidebar />} />
         <Route path="/navbar" element={<Navbarparent />} />
         <Route path="/Updateorg" element={<Updateorg />} />
         <Route path="/bu" element={<MyComponent />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/HomeOrgPage" element={<HomeOrgPage />} />
+        {/* <Route path="/HomeOrgPage" element={<HomeOrgPage />} /> */}
         <Route path="/ListOfJoinRequests" element={<ListOfJoinRequests />} />
         <Route path="/OrgPage" element={<OrgPage />} />
         <Route path="/chooseorg" element={<ChooseOrganizationPage />} />
@@ -66,8 +67,9 @@ function App() {
         <Route path="/organizationList" element={<OrganizationList />} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/Notif" element={<Notificationbox />} />
-        <Route path="/menu" element={<Menu />} />
+        <Route path="/Reserve" element={<Reserve />} />
         <Route path="/ReviewOnBoofeh" element={<DataFromApiList />} />
+        <Route path="/verify" element={<Verify />} />
       </Routes>
       <Footer />
       </div>

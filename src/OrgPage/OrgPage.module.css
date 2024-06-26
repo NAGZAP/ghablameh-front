@@ -1,17 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap');
 .containment_boof {
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   font-family: "Vazir", "Vazirmatn", "Arabic Typesetting", sans-serif;
   font-optical-sizing: auto;
   font-weight: 200;
   font-style: normal;
   font-size: 9pt;
-  background-image: url('../assets/colorkit1.png');
+  /* background-image: url('../assets/colorkit1.png'); */
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   width: 100%;
   min-height: 70vh;
+  margin-bottom: 30px;
 }
 
 .app{

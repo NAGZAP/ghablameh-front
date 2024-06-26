@@ -18,7 +18,7 @@ function PageNotFound() {
             </div>
 
             <div className={`${styles['text-me']} flex justify-center`}>
-                <h3 className={`${styles['text-me']}`}>!صفحه مورد نظر یافت نشد</h3>
+                <h3 className={`${styles['text-me']}`}>صفحه مورد نظر یافت نشد!</h3>
             </div>
 
             <div className={`flex justify-center`}>

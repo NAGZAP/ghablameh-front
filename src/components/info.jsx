@@ -6,9 +6,11 @@ import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import LoginRequest from "../APIs/Login"
 import Navbarparent from './navbarparent';
+import Avatar from "react-avatar";
+
 const Update = () => {
+
   const [birthdate, setBirthdate] = useState('');
   const [gender, setGender] = useState('');
   const [username, setUsername] = useState('');
@@ -16,10 +18,14 @@ const Update = () => {
   const [lastName, setlastName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setphoneNumber] = useState('');
+
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+
+  const [image_base64, setImage_base64] = useState('');
+  const [image_url, setImage_url] = useState('');
+
   const [avatar, setAvatar] = useState('');
   const [formErrors, setFormErrors] = useState([]);
   const [token, setToken] = useState('');
@@ -28,7 +34,41 @@ const Update = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    
+  const [isWaitingForm1, setIsWaitingForm1] = useState(false);
+  const [isWaitingForm2, setIsWaitingForm2] = useState(false);
+
+  const [passErrors, setPassErrors] = useState([]);
+
+  // fetch user data
+  useEffect(() => {
+    const FetchData = async () => {
+      try {
+        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/clients/me/', {
+          headers: {
+            'Authorization': 'JWT ' + localStorage.getItem("token")
+          }
+        });
+
+        if (response.status === 200) {
+          setGender(response.data.gender || '');
+          setBirthdate(response.data.setBirthdate || '')
+          setUsername(response.data.username || '');
+          setfirstName(response.data.first_name || '');
+          setlastName(response.data.last_name || '');
+          setEmail(response.data.email || '');
+          setphoneNumber(response.data.phone_number || '');
+          setImage_url(response.data.image_url || '')
+        } else {
+          console.log('fetching userData failed:', response.status);
+        }
+      } catch (error) {
+        console.error('An error occurred:', error);
+      }
+
+    };
+    FetchData();
+  }, []);
+
   const toggleCurrentPasswordVisibility = () => {
     setShowCurrentPassword(!showCurrentPassword);
   };
@@ -46,6 +86,21 @@ const Update = () => {
 
     const errors = [];
 
+    setFormErrors('');
+
+    let engNumbers = {
+      '۰': 0,
+      '۱': 1,
+      '۲': 2,
+      '۳': 3,
+      '۴': 4,
+      '۵': 5,
+      '۶': 6,
+      '۷': 7,
+      '۸': 8,
+      '۹': 9
+    };
+
     if (!birthdate) {
       errors.push('تاریخ تولد را وارد کنید');
     }
@@ -58,12 +113,89 @@ const Update = () => {
       errors.push('نام کاربری را وارد کنید');
     }
 
-    if (!currentPassword) {
-      errors.push('رمز عبور فعلی را وارد کنید');
+    if (newPassword !== confirmPassword) {
+      errors.push('رمز عبور جدید و تأیید رمز عبور مطابقت ندارند');
     }
 
-    if (!newPassword) {
-      errors.push('رمز عبور جدید را وارد کنید');
+    if (!/^([a-zA-Z0-9]+)@([a-zA-Z]+)\.([a-zA-Z]{2,})$/.test(email)) {
+      errors.push(' ایمیل مدیر را به درستی وارد کنید.');
+    }
+    if (phoneNumber.startsWith('98') && phoneNumber.length !== 12) {
+      errors.push('شماره مدیر را به درستی وارد کنید.');
+    }
+    if (phoneNumber.startsWith('09') && phoneNumber.length !== 11) {
+      errors.push('شماره مدیر را به درستی وارد کنید.');
+    }
+
+    let phoneNumber_english = phoneNumber.replace(/[۰-۹]/g, function (w) {
+      return engNumbers[w]
+    });
+
+    // check if admin_phone_number contains only numbers and starts with '989' or '09'
+    if (!/^\d+$/.test(phoneNumber_english) || !/^(989|09)/.test(phoneNumber_english)) {
+      errors.push('شماره مدیر را به درستی وارد کنید.');
+    }
+
+    // if (errors.length > 0) {
+    //   alert(errors.join('\n'));
+    //   setFormErrors(errors);
+    //   return;
+    // }
+    if (errors.length > 0) {
+      toast.error(errors.join('\n'));
+      return;
+    }
+
+    const userData = {
+      gender: gender,
+      birthdate: birthdate,
+      first_name: firstName,
+      last_name: lastName,
+      username: username,
+      email: email,
+      phone_number: phoneNumber_english,
+    };
+
+    if (image_base64) {
+      userData.image_base64 = image_base64;
+    }
+
+    //send form data
+    setIsWaitingForm1(true);
+    try {
+      console.log(userData);
+      const token = 'JWT ' + localStorage.getItem("token");
+
+      const response = await axios.put('https://ghablameh.fiust.ir/api/v1/clients/me/', userData, {
+        headers: {
+          'Authorization': token
+        }
+      });
+
+      if (response.status === 200) {
+        setIsWaitingForm1(false);
+        alert('اطلاعات با موفقیت ثبت شد ');
+        window.location.href = '/';
+      } else {
+        const errorData = await response.json();
+        setIsWaitingForm1(false);
+        alert(response.message);
+      }
+    } catch (error) {
+      setIsWaitingForm1(false);
+      alert(error.message);
+    }
+    setIsWaitingForm1(false);
+  };
+
+  const handlePassSubmit = async (e) => {
+    e.preventDefault();
+
+    const errors = [];
+    setPassErrors('');
+
+    if (!currentPassword) {
+      errors.push('رمز عبور فعلی را وارد کنید');
     }
 
     if (!confirmPassword) {
@@ -74,74 +206,74 @@ const Update = () => {
       errors.push('رمز عبور جدید و تأیید رمز عبور مطابقت ندارند');
     }
 
-
     if (errors.length > 0) {
       toast.error(errors.join('\n'));
       return;
     }
 
-    const userData =
-    {
-      image_base64: avatar,
-      gender: gender,
-    birthdate: birthdate,
-    first_name: firstName,
-    last_name: lastName,
-    username: username,
-    email: email,
-    phone_number: phoneNumber,
-      
-    };
     const passwordData = {
       old_password: currentPassword,
       new_password: newPassword,
     };
-  
-
+    setIsWaitingForm2(true);
     try {
-       console.log(userData);
       const token = 'JWT ' + localStorage.getItem("token");
 
-      const response = await axios.put('https://ghablameh.fiust.ir/api/v1/clients/me/', userData, {
+      const response = await axios.post('https://ghablameh.fiust.ir/api/v1/clients/password/', passwordData, {
         headers: {
           'Authorization': token
         }
       });
-      const responsePassword = await axios.post('https://ghablameh.fiust.ir/api/v1/clients/password/', passwordData, {
-        headers: {
-          'Authorization': token
-        }
-      });
-  
+
       if (response.status === 200) {
-        console.log('Form submitted successfully');
+        setIsWaitingForm2(false);
+        alert('اطلاعات با موفقیت ثبت شد ');
+        window.location.href = '/';
       } else {
-        setError('Form submission failed: ' + response.data.message);
+        const errorData = await response.json();
+        setIsWaitingForm2(false);
+        alert(' مشکلی پیش امده.لطفا در زمانی دیگر امتحان کنید ')
       }
     } catch (error) {
-      console.error('An error occurred:', error);
-      setError('An error occurred. Please try again later.');
+      // console.error('An error occurred:', error);
+      setIsWaitingForm2(false);
+      if (error.response.data.old_password) {
+        alert(error.response.data.old_password[0]);
+      } else if (error.response.data.new_password) {
+        alert(error.response.data.new_password[0]);
+      } else if (error.response.data.new_password & error.response.data.old_password) {
+        alert(error.response.data.new_password[0]);
+        alert(error.response.data.new_password[0]);
+      }
     }
+    setIsWaitingForm2(false);
   };
-     
-  const handleChange = (event) => {
+
+  //image
+  const handlePhotoChange = (event) => {
     let reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
     reader.onload = (e) => {
       let img = e.target.result;
-      setAvatar(img);
+      setImage_base64(img);
     };
   };
 
+  const clearPhoto = () => {
+    setImage_base64('');
+    setImage_url('');
+  }
 
   return (
-    
+
     <div className={styles.bg}>
       <Navbarparent />
       <div className={styles.container}>
         <div className={styles.pattern}></div>
         <div className={styles.card}>
           <h2 className={styles.title}>به‌روزرسانی اطلاعات کاربر</h2>
+
+          {/* info */}
           <form onSubmit={handleFormSubmit} className={styles.form}>
             {formErrors.length > 0 && (
               <div className={styles.errorContainer}>
@@ -152,12 +284,41 @@ const Update = () => {
                 </ul>
               </div>
             )}
-            <div className={styles.formGroup}>
-              <div className={styles.avatarimg}>
-                <img src={avatar} className={styles.avatar} alt="" />
+            
+            {/* image */}
+            <div className='flex flex-col items-center justify-center'>
+              <div className={styles.formGroup}>
+                <div className={styles.avatarimg}>
+                  <div className='flex flex-col items-center justify-center'>
+                    <label htmlFor="file_input">
+
+                      {image_base64 || image_url ?
+                        <img
+                          src={!image_base64 && image_url.startsWith('/api/')
+                            ? `https://ghablameh.fiust.ir/${image_url}`
+                            : image_base64}
+                          className={styles.avatar}
+                          alt="Profile"
+                        />
+                        :
+                        <Avatar
+                          name={firstName}
+                          size="130"
+                          round={true}
+                          maxInitials={1}
+                        />
+                      }
+
+                    </label>
+                    <input id="file_input" type="file" onChange={handlePhotoChange} className={styles.fileinput}></input>
+                  </div>
+                </div>
               </div>
+              <button type='reset' onClick={clearPhoto} className='m-2 text-white text-sm rounded-lg p-2' style={{ backgroundColor: "rgb(38, 87, 124)" }}> حذف عکس </button>
             </div>
-            <input type="file" onChange={handleChange} className={styles.fileinput} />
+
+
+
             <div className={styles.formGroup}>
               <label htmlFor="birthdate" className={styles.label}>
                 تاریخ تولد
@@ -168,6 +329,7 @@ const Update = () => {
                 value={birthdate}
                 onChange={(e) => setBirthdate(e.target.value)}
                 className={styles.input}
+                style={{ borderRadius: '10px' }}
                 required
               />
             </div>
@@ -180,17 +342,18 @@ const Update = () => {
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
                 className={styles.input}
+                style={{ borderRadius: '10px' }}
                 required
               >
                 <option value="">انتخاب جنسیت</option>
                 <option value="M">مرد</option>
                 <option value="F">زن</option>
-         
+
               </select>
             </div>
             <div className={styles.formGroup}>
               <label htmlFor="username" className={styles.label}>
-                به‌روزرسانی نام کاربری
+                نام کاربری
               </label>
               <input
                 type="text"
@@ -198,12 +361,14 @@ const Update = () => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className={styles.input}
+                style={{ borderRadius: '10px' }}
                 required
               />
             </div>
+
             <div className={styles.formGroup}>
               <label htmlFor="firstName" className={styles.label}>
-                به‌روزرسانی نام
+                نام
               </label>
               <input
                 type="text"
@@ -211,12 +376,13 @@ const Update = () => {
                 value={firstName}
                 onChange={(e) => setfirstName(e.target.value)}
                 className={styles.input}
+                style={{ borderRadius: '10px' }}
                 required
               />
             </div>
             <div className={styles.formGroup}>
               <label htmlFor="lastName" className={styles.label}>
-                به‌روزرسانی نام خانوادگی
+                نام خانوادگی
               </label>
               <input
                 type="text"
@@ -224,12 +390,13 @@ const Update = () => {
                 value={lastName}
                 onChange={(e) => setlastName(e.target.value)}
                 className={styles.input}
+                style={{ borderRadius: '10px' }}
                 required
               />
             </div>
             <div className={styles.formGroup}>
               <label htmlFor="phoneNumber" className={styles.label}>
-                به روز رسانی شماره تلفن
+                شماره تلفن
               </label>
               <input
                 type="text"
@@ -237,12 +404,13 @@ const Update = () => {
                 value={phoneNumber}
                 onChange={(e) => setphoneNumber(e.target.value)}
                 className={styles.input}
+                style={{ borderRadius: '10px' }}
                 required
               />
             </div>
             <div className={styles.formGroup}>
               <label htmlFor="email" className={styles.label}>
-                به روزرسانی ایمیل
+                ایمیل
               </label>
               <input
                 type="text"
@@ -250,10 +418,33 @@ const Update = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={styles.input}
+                style={{ borderRadius: '10px' }}
                 required
               />
             </div>
-     
+            {/* submit button */}
+            {!isWaitingForm1 && (
+              <button type="submit" className={styles.button}>
+                ارسال اطلاعات
+              </button>
+            )}
+            {isWaitingForm1 && (
+              <button type="submit" className={styles.button}>
+                <div className={`${styles.spinner2}`}></div>
+              </button>
+            )}
+          </form>
+
+          {/* pass */}
+          <form onSubmit={handlePassSubmit} className={`${styles.form}`}>
+
+            {/* password title */}
+            <div className='m-3'>
+              <hr style={{ borderTop: '1px solid rgb(38, 87, 124)', marginBottom: '20px', marginTop: '40px' }} />
+              <h2 className={styles.title}>به‌روزرسانی رمز عبور </h2>
+            </div>
+
+            {/* password fields */}
             <div className={styles.formGroup}>
               <label htmlFor="currentPassword" className={styles.label}>
                 رمز عبور فعلی
@@ -265,10 +456,11 @@ const Update = () => {
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   className={styles.input}
+                  style={{ borderRadius: '10px' }}
                   required
                 />
                 <FontAwesomeIcon
-                  icon={showCurrentPassword ? faEyeSlash : faEye}
+                  icon={showCurrentPassword ? faEye : faEyeSlash}
                   className={styles.passwordIcon}
                   onClick={toggleCurrentPasswordVisibility}
                 />
@@ -285,10 +477,11 @@ const Update = () => {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   className={styles.input}
+                  style={{ borderRadius: '10px' }}
                   required
                 />
                 <FontAwesomeIcon
-                  icon={showNewPassword ? faEyeSlash : faEye}
+                  icon={showNewPassword ? faEye : faEyeSlash}
                   className={styles.passwordIcon}
                   onClick={toggleNewPasswordVisibility}
                 />
@@ -305,18 +498,27 @@ const Update = () => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className={styles.input}
+                  style={{ borderRadius: '10px' }}
                   required
                 />
                 <FontAwesomeIcon
-                  icon={showConfirmPassword ? faEyeSlash : faEye}
+                  icon={showConfirmPassword ? faEye : faEyeSlash}
                   className={styles.passwordIcon}
                   onClick={toggleConfirmPasswordVisibility}
                 />
               </div>
             </div>
-            <button type="submit" className={styles.submit}>
-              ارسال
-            </button>
+            {/* submit button */}
+            {!isWaitingForm2 && (
+              <button type="submit" className={styles.button}>
+                به روز رسانی رمز عبور
+              </button>
+            )}
+            {isWaitingForm2 && (
+              <button type="submit" className={styles.button}>
+                <div className={`${styles.spinner2}`}></div>
+              </button>
+            )}
           </form>
         </div>
         <ToastContainer />

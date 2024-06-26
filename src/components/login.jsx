@@ -108,7 +108,7 @@ function Login() {
                 className={
                   styles.button_sign +
                   " " +
-                  "peer w-full h-[40px] bg-template-custom-blue text-white outline-none focus:outline-none disabled:bg-template-custom-orange disabled:border-0 transition-all rounded-full cursor-pointer"
+                  "peer w-full h-[40px] bg-template-custom-blue text-white outline-none focus:outline-none disabled:bg-orange-500 disabled:border-0 transition-all rounded-full cursor-pointer"
                 }
                 type="submit"
                 value="ورود"
@@ -116,13 +116,14 @@ function Login() {
             </div>
           </p>
           <p>
-            <a className={styles.link_to_signin} href="#">
-              اکانت ندارید؟ ثبت نام کنید ...
+            <a className={styles.link_to_signin} href="/signup">
+              حساب کاربری ندارید؟ ثبت نام کنید.
             </a>
             </p>
         <p>
             <a
-              className={styles.forgot_password}
+            // href="#"
+            className={`${styles.forgot_password} cursor-pointer hover:text-orange-500`}
               onClick={toggleForgetPasswordModal}
             >
               فراموشی رمز عبور
