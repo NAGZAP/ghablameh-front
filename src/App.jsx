@@ -31,8 +31,9 @@ import OrganizationList from "./components/organizationlist";
 import Boofeh from "./BoofehsOfOrganization/Boofeh";
 import Reserve from "./components/reserve";
 import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList";
-import AddWeeklyMenu from "./addweeklybyadmin/addweeklybyadmin";
+// import AddWeeklyMenu from "./addweeklybyadmin/addweeklybyadmin";
 import Verify from "./components/verify";
+import AddWeeklyMenu from "./components/addweeklybyadmin";
 import "./App.css";
 function App() {
   return (
@@ -70,6 +71,8 @@ function App() {
         <Route path="/Reserve" element={<Reserve />} />
         <Route path="/ReviewOnBoofeh" element={<DataFromApiList />} />
         <Route path="/verify" element={<Verify />} />
+        <Route path="/addweeklymenu" element={<AddWeeklyMenu />} />
+
       </Routes>
       <Footer />
       </div>
