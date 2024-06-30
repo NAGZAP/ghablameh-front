@@ -9,10 +9,10 @@
   margin-left: 20px;
 }
 
-.account-box.selected {
+/* .account-box.selected {
   border-color: blue;
 
-}
+} */
 
 .forget-password-window {
   position: fixed;
@@ -45,14 +45,14 @@
     background-color: #ffffff;
   }
   50% {
-    background-color: #f2f1f1;
+    background-color: rgb(236, 240, 244);
   }
   100% {
     background-color: #ffffff;
   }
 }
 .forget-password-window h2 {
-  color:#ff5e14; ;
+  color:rgb(231, 107, 18);
   font-size: 24px;
   margin-bottom: 20px;
   text-align: center;
@@ -84,7 +84,7 @@
 }
 
 .forget-password-window button[type="submit"] {
-  background-color: #ff5e14;;
+  background-color: rgb(236, 110, 20);
   color: #ffffff;
   border: none;
   padding: 12px 24px;
@@ -95,8 +95,8 @@
 }
 
 .forget-password-window button[type="submit"]:hover {
-  background-color: #ffffff;
-  color: #ff5e14;;
+  background-color: rgb(210, 98, 18);
+  color: #ffffff;;
 }
 
 .forget-password-window .close-icon {
@@ -111,4 +111,5 @@
 .forget-password-window .close-icon:hover {
   color:#ff5e14;;
 }
+
 

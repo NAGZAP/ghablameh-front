@@ -89,7 +89,12 @@ const Myorgs = () => {
     };
     fetchOrganizations();
   }, []);
-
+  function gregorianToPersian(dateString) {
+    let options = { year: 'numeric', month: 'long', day: 'numeric' };
+    let today = new Date(dateString).toLocaleDateString('fa-IR', options);
+    console.log(today);
+    return today;
+  }
   const handleSearch = () => {
     const filtered = orgs.filter((item) =>
       item.organization_name.toLowerCase().includes(searchData.current.value.toLowerCase())
@@ -99,29 +104,33 @@ const Myorgs = () => {
 
   return (
     <div>
-      <Navbarparent/>
+      <Navbarparent />
       <div className={` mx-2 my-5 p-2`}>
         <div className=" flex items-center justify-center flex-col">
-        <div className="grid grid-cols-12 flex items-center justify-center" style={{width:'50%'}}>
-          <div className="col-span-10">
-            <input
-              ref={searchData}
-              type="text"
-              className={`${[styles.input]} rounded-lg`}
-              placeholder="جست و جو ..."
-            />
+          <div className="grid grid-cols-12 flex items-center justify-center" style={{ width: '50%' }}>
+            <div className="col-span-10">
+              <input
+                ref={searchData}
+                type="text"
+                className={`${[styles.input]} rounded-lg`}
+                placeholder="جستجو ..."
+              />
+            </div>
+
+            <div className="col-span-2 m-2">
+              <button
+                onClick={handleSearch}
+                className="w-full bg-sky-800 hover:bg-sky-900 text-white px-2 rounded-lg"
+                style={{ paddingTop: '0.62rem', paddingBottom: '0.62rem' }}
+              >
+                جست و جو
+              </button>
+            </div>
+
           </div>
-          <div className="col-span-2 m-2">
-            <button
-              onClick={handleSearch}
-              className="w-full bg-sky-800 hover:bg-blue-700 text-white font-bold px-4 rounded-lg"
-              style={{paddingTop:'0.6175rem',paddingBottom:'0.6175rem'}}
-            >
-              جست و جو
-            </button>
-          </div>
+
         </div>
-        </div>
+
         <div className="grid grid-cols-3 gap-1 mx-3 my-6">
           {filteredOrgs.length === 0 ? (
             <p className="text-red-600 text-center my-5" style={{ fontSize: "24px" }}>
@@ -131,40 +140,51 @@ const Myorgs = () => {
             filteredOrgs.map((item) => (
               <div
                 key={item.id}
-                className="border border-sky-800 rounded-lg p-2 my-2 m-2"
+                className="border border-sky-800 rounded-lg p-2 pt-3 pr-3 my-2 m-2"
               >
-                <div className="grid grid-cols-2">
-                  <div>
-                    <p>نام سازمان : {item.organization_name}</p>
-                  </div>
-                  <div>
-                    وضعیت :
-                    <span
-                      className={`text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:text-green-300 m-3 ${
-                        item.status === 'P'
+
+                <div className="flex flex-col justify-end">
+
+                  <div className="flex flex-row justify-between">
+                    <div>
+                      <p >نام سازمان :  
+                        <span className=" font-bold">{` ${item.organization_name}`}</span>
+                        </p>
+                    </div>
+
+                    <div>
+                      وضعیت :
+                      <span
+                        className={`text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:text-green-300 m-3 ${item.status === 'P'
                           ? 'bg-yellow-100'
                           : item.status === 'A'
-                          ? 'bg-green-200'
-                          : 'bg-red-400'
-                      }`}
-                    >
-                      {item.status === 'P'
-                        ? 'درحال بررسی'
-                        : item.status === 'A'
-                        ? 'تایید شده'
-                        : 'رد شده'}
-                    </span>
+                            ? 'bg-green-200'
+                            : 'bg-red-400'
+                          }`}
+                      >
+                        {item.status === 'P'
+                          ? 'درحال بررسی'
+                          : item.status === 'A'
+                            ? 'تایید شده'
+                            : 'رد شده'}
+                      </span>
+                    </div>
                   </div>
+
+                  <div className="flex justify-start text-sm my-2 mt-5">
+                    <p style={{ direction: "ltr" }}>
+                      تاریخ درخواست : {gregorianToPersian(item.created_at.slice(0, 10))}
+                    </p>
+                  </div>
+
                 </div>
-                <div className="text-center my-2 mt-5">
-                  <p style={{ direction: "ltr" }}>
-                    تاریخ درخواست : {item.created_at.slice(0, 10)}
-                  </p>
-                </div>
+
               </div>
+
             ))
           )}
         </div>
+
       </div>
     </div>
   );

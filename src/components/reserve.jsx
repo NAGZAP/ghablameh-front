@@ -7,7 +7,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import Organizations from "../APIs/Organizations";
 import jalaliMoment from 'jalali-moment';
 import moment from 'moment';
-const Menu = () => {
+import Select from 'react-select';
+
+const Reserve = () => {
     const [fetchedData, setFetchedData] = useState([])
     const [data, setData] = useState([]);
     const [reservedfoods, setReservedFoods] = useState([]);
@@ -90,24 +92,7 @@ const Menu = () => {
             console.error("Error fetching data: ", error);
         }
     };
-
-    //fetch wallet data
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const token = AuthManager.getToken();
-
-                const response = await axios.get("https://ghablameh.fiust.ir/api/v1/wallets/me/",
-                    { headers: { Authorization: "JWT " + token } }
-                );
-                setFetchedAmount(response.data.balance);
-            } catch (error) {
-                console.error("Error fetching user data: ", error);
-            }
-        };
-        if (AuthManager.isLoggedIn()) fetchUserData();
-    }, []);
-
+    
     // fetch reserved foods
     const fetchReservations = async () => {
         try {
@@ -121,6 +106,48 @@ const Menu = () => {
             console.error("Error fetching reservations: ", error);
         }
     };
+
+    //fetch every 5 seconds
+    useEffect(() => {
+        if (currentBuffet.current !== null) {
+        const fetchReservationsId = setInterval(() => {
+            fetchReservations();
+        }, 5000); // 5 seconds
+        const fetchDataId = setInterval(() => {
+            fetchData();
+          }, 5000); // 5 seconds
+        
+          return () => {
+            clearInterval(fetchReservationsId);
+            clearInterval(fetchDataId);
+        };
+      
+      }}, []); 
+
+    //fetch wallet data
+    
+        const fetchWalletData = async () => {
+            try {
+                const token = AuthManager.getToken();
+
+                const response = await axios.get("https://ghablameh.fiust.ir/api/v1/wallets/me/",
+                    { headers: { Authorization: "JWT " + token } }
+                );
+                setFetchedAmount(response.data.balance);
+            } catch (error) {
+                console.error("Error fetching user data: ", error);
+            }
+        };
+
+        useEffect(() => {
+            const intervalId = AuthManager.isLoggedIn() ? setInterval(fetchWalletData, 5000) : null;
+        
+            return () => {
+                if (intervalId !== null) {
+                    clearInterval(intervalId);
+                }
+            };
+        }, []);
 
     //reserve
     const handlereserve = async (food) => {
@@ -264,7 +291,7 @@ const Menu = () => {
     const convertToJalali = (date) => {
         const today = new Date(date).toLocaleDateString('fa-IR');
         return today;
-    };    
+    };
 
     //render table
     const TableComponent = ({ data }) => {
@@ -306,9 +333,10 @@ const Menu = () => {
         }, [data, dates, mealNames]);
 
         return (
-            <div className="m-4">
+            <div className="my-6 mx-2">
                 <table className="min-w-full divide-y divide-gray-300 shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                    <thead className="text-white" style={{ background: 'rgb(38, 87, 124)' }}>
+                    <thead className="text-white bg-sky-800" style={{ background: '' }}>
+                        {/* rgb(218, 168, 43) */}
                         <tr>
                             <th className="w-1/5 p-2 text-lg font-medium tracking-wider text-center">روز</th>
                             {mealNames.map((mealName, index) => (
@@ -318,29 +346,31 @@ const Menu = () => {
                     </thead>
                     <tbody>
                         {organizedData.map((entry, rowIndex) => (
-                            <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-100'}>
+                            <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
                                 <div className="flex items-center justify-center py-14">
-                                <td className="p-2">{convertToJalali(entry.date)}</td>
+                                    <td className="p-2 text-sky-950">{convertToJalali(entry.date)}</td>
                                 </div>
                                 {/* } */}
                                 {mealNames.map((mealName, index) => (
                                     <td key={index} className="p-2">
                                         {entry[mealName].map((food, foodIndex) => (
                                             <div key={foodIndex} className="flex items-center justify-center">
-                                                <div className="flex flex-row justify-center items-center p-2 rounded-lg my-2" style={{ background: 'rgba(38, 87, 124,0.3)' }}>
+                                                <div className="flex flex-row justify-center items-center p-2 rounded-lg my-2" style={{ background: 'rgba(251, 146, 60, 0.9)' }}>
+                                                    {/* rgba(218, 168, 43,0.4) */}
                                                     <input
                                                         type="checkbox"
                                                         checked={reservedfoods.some(reserved => reserved.meal_food.food.id === food.foodId)}
                                                         onChange={(e) => handleCheckboxChange(food, e.target.checked)}
                                                         className="m-3 rounded-sm"
                                                     />
-                                                    <div className="flex flex-col p-2 items-center justify-center">
-                                                        <span className="text-sm font-medium text-gray-900">{food.name}</span>
-                                                        <span className="text-sm text-gray-700">{food.price} تومان </span>
-                                                        <span className="text-sm text-gray-700"> موجودی: {food.numberInStock} عدد </span>
-                                                        <span className="text-sm text-gray-700">{food.foodId}  </span>
+                                                    <div className="flex flex-col p-2 items-start justify-center">
+                                                        <span className="text-sm font-bold text-sky-900">{food.name}</span>
+                                                        <span className="text-xs pt-1 font-normal text-sky-900">{food.price} تومان </span>
+                                                        <span className="text-xs text-sky-900"> موجودی: {food.numberInStock} عدد </span>
+                                                        {/* <span className="text-sm text-gray-700">{food.foodId}  </span> */}
                                                     </div>
-                                                </div></div>
+                                                </div>
+                                            </div>
                                         ))}
                                     </td>
                                 ))}
@@ -352,6 +382,11 @@ const Menu = () => {
         );
     };
 
+    const options = data.map((item) => ({
+        value: item.id,
+        label: item.name
+    }));
+
     return (
         <>
             <Navbarparent />
@@ -359,21 +394,32 @@ const Menu = () => {
             <div style={{ width: "100%" }} className="px-5 py-3">
                 <div className="grid grid-cols-3 my-4 text-center"></div>
 
-                {/* buffets */}
+                {/* choose buffet */}
                 <div className="grid grid-cols-3 w-full" >
                     <div></div>
-                    <div className="content-center w-full">
-                        <select className="rounded w-full" ref={currentBuffet} onChange={fetchData}>
-                            {loading ? (
-                                <option>Loading...</option>
-                            ) : (
-                                data.map((item) => (
-                                    <option key={item.id} value={item.id}>
-                                        {item.name}
-                                    </option>
-                                ))
-                            )}
-                        </select>
+                    <div className="mb-3 content-center w-full flex justify-center items-center">
+                        <Select
+                            options={options}
+                            value={currentBuffet.current}
+                            // isLoading={loading}
+                            className="rounded w-60"
+                            placeholder=" بوفه خود را انتخاب کنید. "
+                            theme={(theme) => ({
+                                ...theme,
+                                colors: {
+                                    ...theme.colors,
+                                    text: 'de6016',
+                                    primary: 'rgb(38, 87, 124)',
+                                    primary25: 'rgba(38, 87, 124,0.4)',
+                                }
+                            })}
+
+                            onChange={selectedOption => {
+                                currentBuffet.current = selectedOption;
+                                fetchData();
+                            }}
+                        />
+
                     </div>
                 </div>
 
@@ -385,4 +431,4 @@ const Menu = () => {
     );
 };
 
-export default Menu;
+export default Reserve;

@@ -1,9 +1,10 @@
 .land {
 
-  background-image: url('../assets/colorkit1.png');
+  /* background-image: url('../assets/colorkit1.png'); */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  /* background-color: #e3915b31; */
 
 }
 
@@ -420,4 +421,8 @@ margin-bottom: 80px;
 .select .li
 {
   font-size: 50px;
+}
+
+.custom-width {
+  width: 200px;
 }

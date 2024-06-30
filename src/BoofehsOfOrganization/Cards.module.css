@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap');
 .containment_boof {
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   font-family: "Vazir", "Vazirmatn", "Arabic Typesetting", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 200;
+  /* font-weight: 200;
   font-style: normal;
-  font-size: 9pt;
-   background-image: url('../assets/colorkit1.png');
+  font-size: 9pt; */
+   /* background-image: url('../assets/colorkit1.png'); */
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -52,7 +52,7 @@
     width: 150px;
 }
 .card_orgName{
-    margin-top: 20px;
+    margin-top: 15px;
     margin-bottom: 15px;
     color: #26577C;
     font-size: large;
@@ -66,7 +66,7 @@
     font-weight:bold;
 }
 .button{
-    @apply bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 px-2 rounded-full border-none cursor-pointer mt-3 mb-1 mr-1;
+    @apply bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-1 px-1 rounded-full border-none cursor-pointer mt-3 mb-1 mr-1;
   }
 .rtl{
   direction: rtl;
@@ -74,12 +74,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap');
 .containment_boof {
 
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   font-family: "Vazir", "Vazirmatn", "Arabic Typesetting", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 200;
+  /* font-weight: 200;
   font-style: normal;
-  font-size: 9pt;
+  font-size: 9pt; */
 /*   background-image: url('../assets/colorkit1.png');
  */  background-repeat: no-repeat;
   background-size: cover;
@@ -89,7 +89,7 @@
 /*   height: 100vh;
  */}
 .button{
-    @apply bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 px-20 rounded-full border-none cursor-pointer mt-1 mb-1;
+    @apply bg-template-custom-blue hover:bg-template-custom-orange text-white font-medium py-2 px-4 rounded-full border-none cursor-pointer mt-1 mb-1;
 }
 .bodys{
   display: flex;

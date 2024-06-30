@@ -20,6 +20,7 @@ import {
 } from "react-icons/hi";
 import DefaultSidebar from "./Sidebar";
 import Notificationbox from "./Notificationbox";
+import bgimage from '../assets/wave3.png'
 
 // function Navbar() {
 const Navbar = ({ openWallet, setOpenWallet }) => {
@@ -103,7 +104,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
     setUserData(null); // Clear user data
     localStorage.removeItem("token");
     localStorage.removeItem("refresh-token");
-    console.log(AuthManager.isLoggedIn());
+    // console.log(AuthManager.isLoggedIn());
     navigate("/");
   }
 
@@ -121,15 +122,14 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
       }
 
       return (
-        <div className={`flex items-center ml-4`}>
+        <div className={`flex items-center ml-1`}>
           {image_src ? (
-            <img src={image_src} alt="Profile" style={{ width: "45px", height: "45px", borderRadius: "50%" }}/>
+            <img src={image_src} alt="Profile" style={{ width: isBigScreen ? "2.7rem" : "2.1rem", height: isBigScreen ? "2.7rem" : "2.1rem", borderRadius: "50%" }} />
           ) : (
             <Avatar
               // onClick={toggleDropdown}
-              
               name={displayName}
-              size="60"
+              size={isBigScreen ? "50" : "45"}
               round={true}
               maxInitials={1}
             />
@@ -152,7 +152,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
         return (
           <h6
             className={`${styles.vazir} text-white`}
-            style={{ marginLeft: '15px', fontSize: '20px' }}
+            style={{ marginLeft: '10px', fontSize: isBigScreen ? "20px" : "16px" }}
           >
             {displayName}
           </h6>
@@ -165,7 +165,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
   function LogInButton() {
     if (!AuthManager.isLoggedIn()) {
       return (
-        <div className={`flex justify-between items-center`}>
+        <div className={`flex justify-between items-center my-4`}>
           <div style={{}}>
             <Link
               to="/login"
@@ -176,16 +176,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
             </Link>
           </div>
           <div>
-            <h6
-              className={`text-white pl-2`}
-              style={{
-                fontSize: "23px",
-                fontFamily: "vazir",
-                marginRight: "10px",
-              }}
-            >
-              /
-            </h6>
+            <h6 className={`text-white pl-2`} style={{fontSize: "23px", fontFamily: "vazir", marginRight: "10px", marginLeft: '7px'}}>/</h6>
           </div>
           <div>
             <Link
@@ -203,13 +194,16 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
 
   return (
     <>
-      <nav style={{ backgroundColor: "rgb(38, 87, 124)" }} className={`flex justify-between items-center w-full pl-5 py-1`} >
-        {/* <div > */}
+      <nav style={{ backgroundColor: "rgb(38, 87, 124)" }} className={`flex justify-between items-center w-full pl-5`} >
+        
+       
         {/* Elements - Logo */}
-        <div className={`flex items-center justify-end`}>
-          <div className={`flex items-center justify-end`}>
+        <div className={`flex items-center justify-center`}>
+          <div className={`flex items-center justify-center`}>
+
+            {/* ghaablame icon */}
             <button
-              className="me-1.5 items-center text-white inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+              className="flex items-center text-white ml-5 mr-6"
               type="button"
               data-twe-offcanvas-toggle
               data-twe-target="#offcanvasRight"
@@ -219,7 +213,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
               style={{ fontSize: "35px", fontFamily: "vazir" }}
             >
               {/* <Link to="/"> */}
-                <img src={'../src/images/logo.jpeg'} onClick={handleOpenSidebar} alt={' قابلمه '} style={{ height: '4.5vh' }} />
+                <img src={'../src/images/logo-orange.jpg'} onClick={handleOpenSidebar} alt={' قابلمه '} style={{ height: '1.7rem' }} />
               {/* </Link> */}
             </button>
 
@@ -250,7 +244,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
                   width="24"
                   height="24"
                   fill="none"
-                  viewBox="0 0 24 24"
+                  viewBox="0 0 22 22"
                   onClick={hanldeOpenNotifications}
                 >
                   <path
@@ -284,9 +278,10 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
         {/* Avatar, username and Login button */}
         <div ref={dropdownRef}>
           <div className={`flex justify-between items-center`}>
+            {/* logout icon */}
             {(userData || adminData) && (
               <>
-                <svg xmlns="http://www.w3.org/2000/svg"  onClick={handleLogout} viewBox="0 0 24 24" fill="currentColor" className="size-6 m-3" style={{ color: 'white' }}>
+                <svg xmlns="http://www.w3.org/2000/svg" onClick={handleLogout} viewBox="0 0 24 24" fill="currentColor" className="size-6 m-2" style={{ color: 'white', width: isBigScreen ? "24px" : "22px", height: isBigScreen ? "24px" : "20px" }}>
                   <path fillRule="evenodd" d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 15 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm10.72 4.72a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 1 1-1.06-1.06l1.72-1.72H9a.75.75 0 0 1 0-1.5h10.94l-1.72-1.72a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
                 </svg>
                 {Username()}
@@ -315,7 +310,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
             </div> */}
 
         </div>
-        {/* </div> */}
+        
       </nav>
 
       {/* sidebar */}
@@ -331,6 +326,8 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
       >
         <DefaultSidebar />
       </div>
+
+      {/* notifications */}
       <div
         style={{
           display: "none",
@@ -346,8 +343,10 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
       >
         {AuthManager.isLoggedIn() && <Notificationbox />}
       </div>
+
       {/* wallet */}
       {openWallet && <UserWallet open={openWallet} setOpen={setOpenWallet} />}
+      <img src={bgimage} alt="background" />
     </>
   );
 };

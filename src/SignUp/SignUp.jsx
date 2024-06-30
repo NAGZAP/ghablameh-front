@@ -15,31 +15,31 @@ initTWE({ Tab });
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
 const validationSchema = Yup.object({
-  Firstname: Yup.string().required('نام خود را به شکل درست وارد کنید!'),
-  Lastname: Yup.string().required('نام خانوادگی خود را به شکل درست وارد کنید!'),
-  email: Yup.string().email('فرم نادرست برای ایمیل').required('ایمیل خود را به شکل درست وارد کنید!'),
-  phonenumber: Yup.string().matches(/^\d{11}$/,"فرم شماره تلفن باید به شکل درست باشد!").required(),
+  Firstname: Yup.string().required('نام خود را به درستی وارد کنید!'),
+  Lastname: Yup.string().required('نام خانوادگی خود را به درستی وارد کنید!'),
+  email: Yup.string().email('ایمیل خود را به درستی وارد کنید!').required('ایمیل خود را به درستی وارد کنید!'),
+  phonenumber: Yup.string().matches(/^\d{11}$/,"فرم شماره تلفن را به درستی وارد کنید!").required(),
   password: Yup.string()
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 'رمز کوتاه تر از ۸ حرف نمی تواند باشد!')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 'رمز عبور نمی تواند کوتاه تر از ۸ حرف  باشد!')
     .required(),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'رمز ها باید با هم برابر باشند!')
-    .required('لطفا رمز خود را تکرار کنید!'),
-  Account: Yup.string().required("لطفا اسمی برای اکانت خود قرار دهید!"),
+    .oneOf([Yup.ref('password')], 'رمز عبور و تکرار آن باید با هم برابر باشند!')
+    .required(' رمز خود را تکرار کنید!'),
+  Account: Yup.string().required('نام کاربری خود را به درستی وارد کنید!'),
 });
 // ORG
 const validationSchema2 = Yup.object({
-  Firstname: Yup.string().required(' خود را به شکل درست وارد کنید!'),
-  Lastname: Yup.string().required('نام خانوادگی خود را به شکل درست وارد کنید!'),
-  email: Yup.string().email('فرم نادرست برای ایمیل').required('ایمیل خود را به شکل درست وارد کنید!'),
-  phonenumber: Yup.string().matches(/^\d{11}$/,"فرم شماره تلفن باید به شکل درست باشد!").required(),
+  Firstname: Yup.string().required(' خود را به درستی وارد کنید!'),
+  Lastname: Yup.string().required('نام خانوادگی خود را به درستی وارد کنید!'),
+  email: Yup.string().email('ایمیل خود را به درستی وارد کنید!').required('ایمیل خود را به درستی وارد کنید!'),
+  phonenumber: Yup.string().matches(/^\d{11}$/,"فرم شماره تلفن را به درستی وارد کنید!").required(),
   password: Yup.string()
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 'رمز کوتاه تر از ۸ حرف نمی تواند باشد!')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 'رمز عبور نمی تواند کوتاه تر از ۸ حرف  باشد!')
     .required(),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'رمز ها باید با هم برابر باشند!')
-    .required('لطفا رمز خود را تکرار کنید!'),
-  Account: Yup.string().required("لطفا اسمی برای اکانت خود قرار دهید!"),
+    .oneOf([Yup.ref('password')], 'رمز عبور و تکرار آن باید با هم برابر باشند!')
+    .required('رمز خود را تکرار کنید!'),
+    Account: Yup.string().required('نام کاربری خود را به درستی وارد کنید!'),
 });
 function SignUp() {
   const [activeTab, setActiveTab] = useState('tabs-Persons');
@@ -89,7 +89,7 @@ function SignUp() {
   const ErrorSignUp = () => {
     toast.warn(
         <div className="flex flex-col items-center">
-            <div className="text-center mb-4">{"اکانتی با اطلاعاتی مشابه استفاده شده است."}</div>
+            <div className="text-center mb-4">{"حساب کاربری دیگری با اطلاعاتی مشابه وجود دارد."}</div>
         </div>,
         {
             position: 'top-center',

@@ -16,15 +16,16 @@ export default function DefaultSidebar() {
   }, []);
   if (flag === null) {
     return (
-        <div className='w-full flex items-center justify-center'>
-            <h3 className="text-xl font-light text-gray-800 pt-3 pb-2 pr-3 text-right p-6 m-2"> منتظر بمانید... </h3>
-        </div>
+      <div className='w-full flex items-center justify-center'>
+        {/* این نشون داده نشه بهتره */}
+        {/* <h3 className="text-xl font-light pt-10 pb-7 pr-3 text-right p-6 m-2 bg-sky-900 text-white "> منتظر بمانید... </h3> */}
+      </div>
     );
-}
+  }
 
   const userSidebar = () => {
     return (
-      <Sidebar>
+      <Sidebar style={{ boxShadow: "0px 3px 6px #00000029" }}  >
         <Menu
           menuItemStyles={{
             button: {
@@ -36,25 +37,45 @@ export default function DefaultSidebar() {
             },
             root: {
               backgroundColor: "#26577C",
-              opacity: "5",
+              // opacity: "5",
+              boxShadow: "0px 3px 8px #00000029", // This line adds the shadow
+              // marginRight:'2px'
             },
           }}
         >
-          <MenuItem component={<Link to="/Update" />}>
-            تغییر اطلاعات کاربری
+          <MenuItem component={<Link to="/update" />}>
+            <span style={{ marginRight: '10px' }}>
+              تغییر اطلاعات کاربری
+            </span>
           </MenuItem>
-          <MenuItem component={<Link to="/menu" />}>
-            منو هفتگی بوفه
+          <MenuItem component={<Link to="/Reserve" />}>
+            <span style={{ marginRight: '10px' }}>
+              رزرو غذا
+            </span>
           </MenuItem>
           {/*         <MenuItem component={<Link to="/weeklymenu" />}>
           برنامه هفتگی سازمانی
         </MenuItem> */}
           <MenuItem component={<Link to="/ReviewOnBoofeh" />}>
-            نظرسنجی بوفه ها
+            <span style={{ marginRight: '10px' }}>
+              نظرسنجی بوفه ها
+            </span>
           </MenuItem>
-          <MenuItem component={<Link to="/last" />}>رزروها</MenuItem>
-          <MenuItem component={<Link to="/myorgs" />}>درخواست های عضویت</MenuItem>
-          <MenuItem component={<Link to="/chooseOrg" />}>درخواست عضویت</MenuItem>
+          <MenuItem component={<Link to="/last" />}>
+            <span style={{ marginRight: '10px' }}>
+               مشاهده رزروها 
+            </span>
+          </MenuItem>
+          <MenuItem component={<Link to="/myorgs" />}>
+            <span style={{ marginRight: '10px' }}>
+              درخواست های عضویت
+            </span>
+          </MenuItem>
+          <MenuItem component={<Link to="/chooseOrg" />}>
+            <span style={{ marginRight: '10px' }}>
+              درخواست عضویت جدید
+            </span>
+          </MenuItem>
         </Menu>
       </Sidebar>
     );
