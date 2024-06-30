@@ -18,6 +18,5 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: rgba(38, 87, 124, 0.1);
-  border-color: rgb(218, 168, 43);
+  background-color: rgba(9, 114, 194, 0.1);
 }
