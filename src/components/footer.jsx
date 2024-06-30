@@ -278,7 +278,7 @@ const Footer = () => {
         </div>
       </div>
      
-      <div className={styles['copyright-area']}>
+      {/* <div className={styles['copyright-area']}>
       <div className={styles['container']}>
         <div className="row">
         <div className=" lg:text-left ml-9 mb-2">
@@ -308,7 +308,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div> */}
 
     </footer>
     </div>
