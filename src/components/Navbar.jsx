@@ -20,7 +20,7 @@ import {
 } from "react-icons/hi";
 import DefaultSidebar from "./Sidebar";
 import Notificationbox from "./Notificationbox";
-import bgimage from '../assets/wave3.png'
+import bgimage from '../../public/wave3.png'
 
 // function Navbar() {
 const Navbar = ({ openWallet, setOpenWallet }) => {
@@ -143,9 +143,9 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
     if (AuthManager.isLoggedIn()) {
       let displayName;
       if (userType === 2 && userData) {
-        displayName = userData.first_name;
+        displayName = userData.first_name+' '+userData.last_name;
       } else if (userType === 1 && adminData) {
-        displayName = adminData.admin_first_name;
+        displayName = adminData.admin_first_name+' '+adminData.admin_last_name;
       }
 
       if (displayName) {
@@ -213,7 +213,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
               style={{ fontSize: "35px", fontFamily: "vazir" }}
             >
               {/* <Link to="/"> */}
-                <img src={'../src/images/logo-orange.jpg'} onClick={handleOpenSidebar} alt={' قابلمه '} style={{ height: '1.7rem' }} />
+                <img src={'../../public//logo-orange.jpg'} onClick={handleOpenSidebar} alt={' قابلمه '} style={{ height: '1.7rem' }} />
               {/* </Link> */}
             </button>
 

@@ -61,11 +61,6 @@ export default function DefaultSidebar() {
               نظرسنجی بوفه ها
             </span>
           </MenuItem>
-          <MenuItem component={<Link to="/last" />}>
-            <span style={{ marginRight: '10px' }}>
-               مشاهده رزروها 
-            </span>
-          </MenuItem>
           <MenuItem component={<Link to="/myorgs" />}>
             <span style={{ marginRight: '10px' }}>
               درخواست های عضویت
@@ -102,12 +97,16 @@ export default function DefaultSidebar() {
           <MenuItem component={<Link to='/Updateorg' />}>
             تغییر اطلاعات سازمان
           </MenuItem>
+          <MenuItem component={<Link to='/addweeklymenu' />}>
+            منو هفتگی 
+          </MenuItem>
           <MenuItem component={<Link to='/ListOfJoinRequests' />}>
             درخواست های عضویت
           </MenuItem>
           <MenuItem component={<Link to='/orgpage' />}>
             مدیریت بوفه ها
           </MenuItem>
+          
         </Menu>
       </Sidebar>
     );

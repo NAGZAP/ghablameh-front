@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from '../assets/password22.png';
+import logo from '../../public/password22.png';
 import styles from '../listorg/home.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";

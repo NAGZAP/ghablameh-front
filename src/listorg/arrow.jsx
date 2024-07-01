@@ -5,28 +5,36 @@ import axios from "axios";
 
 const AutoPlayMethods = () => {
   const [items, setItems] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
 
   const fetchDataFromURL = async () => {
     const token = 'JWT ' + localStorage.getItem("token");
-
+    
     try {
       const response = await axios.get('https://ghablameh.fiust.ir/api/v1/buffets/', {
         headers: {
           Authorization: token
         }
       });
-
-      // console.log('Data retrieved:', response.data);
-      // Assuming the response data is an array of objects with `name` and `organization` properties
+      
       setItems(response.data);
-
     } catch (error) {
       console.error('Error retrieving data:', error);
     }
   };
 
+  const fetchOrganizations = async () => {
+    try {
+      const response = await axios.get('https://ghablameh.fiust.ir/api/v1/organizations/');
+      setOrganizations(response.data);
+    } catch (error) {
+      console.error('Error retrieving organizations:', error);
+    }
+  };
+
   useEffect(() => {
     fetchDataFromURL();
+    fetchOrganizations();
   }, []);
 
   const sliderRef = useRef(null);
@@ -58,7 +66,6 @@ const AutoPlayMethods = () => {
 
   return (
     <div className="slider-container m-10">
-      
       <link
         rel="stylesheet"
         type="text/css"
@@ -71,13 +78,32 @@ const AutoPlayMethods = () => {
         href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
       />
 
-
       <Slider className="sslide" ref={sliderRef} {...settings}>
         {items.map((item, index) => (
           <div key={index} className="slider-slide">
-            <h3>{item.name}</h3>
-            <p>{item.organization_name}</p>
-            {/* <p>{item.created_at}</p> */}
+          
+            {organizations.length > 0 && (
+              <React.Fragment>
+                {item.organization && item.organization in organizations ? (
+                  <img
+                    src={organizations[item.organization].image_url}
+                    alt={organizations[item.organization].name}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      height: "160px",
+                      backgroundImage: "repeating-conic-gradient(#26577c  0% 25%, #ffffff 0% 50%)",
+                      backgroundPosition: "0 0, 32px 32px",
+                      backgroundSize: "50px 50px",
+                      opacity: '0.5'
+                    }}
+                  />
+                )}
+              </React.Fragment>
+            )}
+  <h3>{item.name}</h3>
+  <p>{item.organization_name}</p>
           </div>
         ))}
       </Slider>

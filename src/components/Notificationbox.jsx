@@ -47,7 +47,6 @@ const Notificationbox = () => {
   function gregorianToPersian(dateString) {
     let options = { year: 'numeric', month: 'long', day: 'numeric' };
     let today = new Date(dateString).toLocaleDateString('fa-IR', options);
-    console.log(today);
     return today;
   }
 

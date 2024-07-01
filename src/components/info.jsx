@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import Navbarparent from './navbarparent';
 import Avatar from "react-avatar";
-
+import Select from "react-select";
 const Update = () => {
 
   const [birthdate, setBirthdate] = useState('');
@@ -39,6 +39,11 @@ const Update = () => {
 
   const [passErrors, setPassErrors] = useState([]);
 
+  const options = [
+    { value: 'M', label: 'مرد' },
+    { value: 'F', label: 'زن' }
+  ];
+
   // fetch user data
   useEffect(() => {
     const FetchData = async () => {
@@ -50,14 +55,18 @@ const Update = () => {
         });
 
         if (response.status === 200) {
-          setGender(response.data.gender || '');
-          setBirthdate(response.data.setBirthdate || '')
+
+          const genderOption = options.find(option => option.value == response.data.gender);
+          setGender(genderOption || null);
+
+          setBirthdate(response.data.birthdate || '')
           setUsername(response.data.username || '');
           setfirstName(response.data.first_name || '');
           setlastName(response.data.last_name || '');
           setEmail(response.data.email || '');
           setphoneNumber(response.data.phone_number || '');
           setImage_url(response.data.image_url || '')
+          console.log(response.data)
         } else {
           console.log('fetching userData failed:', response.status);
         }
@@ -117,7 +126,7 @@ const Update = () => {
       errors.push('رمز عبور جدید و تأیید رمز عبور مطابقت ندارند');
     }
 
-    if (!/^([a-zA-Z0-9]+)@([a-zA-Z]+)\.([a-zA-Z]{2,})$/.test(email)) {
+    if (!/^([a-zA-Z0-9!_.]+)@([a-zA-Z]+)\.([a-zA-Z]{2,})$/.test(email)) {
       errors.push(' ایمیل مدیر را به درستی وارد کنید.');
     }
     if (phoneNumber.startsWith('98') && phoneNumber.length !== 12) {
@@ -147,7 +156,7 @@ const Update = () => {
     }
 
     const userData = {
-      gender: gender,
+      gender: gender.value,
       birthdate: birthdate,
       first_name: firstName,
       last_name: lastName,
@@ -163,13 +172,10 @@ const Update = () => {
     //send form data
     setIsWaitingForm1(true);
     try {
-      console.log(userData);
-      const token = 'JWT ' + localStorage.getItem("token");
+      console.log("userData: ", userData);
 
       const response = await axios.put('https://ghablameh.fiust.ir/api/v1/clients/me/', userData, {
-        headers: {
-          'Authorization': token
-        }
+        headers: { Authorization: "JWT " + localStorage.getItem("token") }
       });
 
       if (response.status === 200) {
@@ -183,7 +189,25 @@ const Update = () => {
       }
     } catch (error) {
       setIsWaitingForm1(false);
-      alert(error.message);
+      // alert(error.message);
+
+      if (error.response.data.phone_number) {
+        alert(error.response.data.phone_number);
+      }
+      if (error.response.data.first_name) {
+        alert(error.response.data.first_name);
+      }
+      if (error.response.data.username) {
+        alert(error.response.data.username);
+      }
+      if (error.response.data.last_name) {
+        alert(error.response.data.last_name);
+      }
+      if (error.response.data.email) {
+        alert(error.response.data.email);
+      }
+
+      console.error(error.response.data)
     }
     setIsWaitingForm1(false);
   };
@@ -264,6 +288,9 @@ const Update = () => {
     setImage_url('');
   }
 
+  const handleChangeGender = (selectedOption) => {
+    setGender(selectedOption);
+  }
   return (
 
     <div className={styles.bg}>
@@ -284,7 +311,7 @@ const Update = () => {
                 </ul>
               </div>
             )}
-            
+
             {/* image */}
             <div className='flex flex-col items-center justify-center'>
               <div className={styles.formGroup}>
@@ -317,8 +344,6 @@ const Update = () => {
               <button type='reset' onClick={clearPhoto} className='m-2 text-white text-sm rounded-lg p-2' style={{ backgroundColor: "rgb(38, 87, 124)" }}> حذف عکس </button>
             </div>
 
-
-
             <div className={styles.formGroup}>
               <label htmlFor="birthdate" className={styles.label}>
                 تاریخ تولد
@@ -337,20 +362,27 @@ const Update = () => {
               <label htmlFor="gender" className={styles.label}>
                 جنسیت
               </label>
-              <select
+              <Select
+                options={options}
                 id="gender"
                 value={gender}
-                onChange={(e) => setGender(e.target.value)}
-                className={styles.input}
-                style={{ borderRadius: '10px' }}
+                onChange={handleChangeGender}
+                styles={{
+                  control: styles => ({ ...styles, borderColor: 'rgb(38, 87, 124)', borderRadius: '10px' })
+                }}
+                theme={(theme) => ({
+                  ...theme,
+                  colors: {
+                    ...theme.colors,
+                    text: 'de6016',
+                    primary: 'rgb(38, 87, 124)',
+                    primary25: 'rgba(38, 87, 124,0.4)',
+                  }
+                })}
                 required
-              >
-                <option value="">انتخاب جنسیت</option>
-                <option value="M">مرد</option>
-                <option value="F">زن</option>
-
-              </select>
+              />
             </div>
+
             <div className={styles.formGroup}>
               <label htmlFor="username" className={styles.label}>
                 نام کاربری

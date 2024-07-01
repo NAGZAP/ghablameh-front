@@ -1,8 +1,5 @@
+
 import React from 'react';
-
-import Navbar from '../components/Navbar';
-
-
 import DataFetcher from "./arrow";
 import Select from "react-select";
 import { Link } from 'react-router-dom';
@@ -14,17 +11,20 @@ import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
 import Navbarparent from '../components/navbarparent';
 import OrganizationList from '../components/organizationlist';
+
 const colors = ["#0088FE", "#00C49F", "#FFBB28"];
 const delay = 2500;
 
 function ListOrg() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [loaded, setLoaded] = useState(false)
-  const [selectedItem, setSelectedItem] = useState('option1');
+  const [selectedItem, setSelectedItem] = useState('تمام بوفه ها');
   const [index, setIndex] = React.useState(0);
   const [videoRatio, setVideoRatio] = useState("4_3");
   const [items, setItems] = useState([]);
   const [filterLetter, setFilterLetter] = useState('');
+  const [organizations, setOrganizations] = useState([]);
+
   const fetchDataFromURL = async () => {
     const token = 'JWT ' + localStorage.getItem("token");
 
@@ -35,24 +35,30 @@ function ListOrg() {
         }
       });
 
-      // console.log('Data retrieved:', response.data);
-      // Assuming the response data is an array of objects with `name` and `organization` properties
       setItems(response.data);
-
     } catch (error) {
       console.error('Error retrieving data:', error);
     }
   };
 
+  const fetchOrganizations = async () => {
+    try {
+      const response = await axios.get('https://ghablameh.fiust.ir/api/v1/organizations/');
+      setOrganizations(response.data);
+    } catch (error) {
+      console.error('Error retrieving organizations:', error);
+    }
+  };
+
   useEffect(() => {
     fetchDataFromURL();
-
+    fetchOrganizations();
   }, []);
-
 
   const handleItemClick = (item) => {
     setSelectedItem(item);
   };
+
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = () => {
@@ -82,10 +88,9 @@ function ListOrg() {
     }
   };
   const options = [
-
-    { value: 'option1', label: 'دانشگاه علم و صنعت' },
-    { value: 'option2', label: 'دانشگاه امیرکبیر' },
-    { value: 'option3', label: 'دانشگاه شریف' },
+    { value: 'دانشگاه علم و صنعت', label: 'دانشگاه علم و صنعت' },
+    { value: 'دانشگاه امیرکبیر', label: 'دانشگاه امیرکبیر' },
+    { value: 'دانشگاه شریف', label: 'دانشگاه شریف' },
   ];
   const handleSelectChange = (selectedOption) => {
     setSelectedItem(selectedOption.value);
@@ -102,16 +107,18 @@ function ListOrg() {
         preloader.style.display = 'none';
       }
     }
-
-
-
-
   }, []);
+
   const filteredItems = items.filter(item => {
     const firstLetter = item.name.charAt(0).toUpperCase(); // Get the first letter and convert it to uppercase
     return filterLetter === '' || firstLetter === filterLetter;
   });
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+    return date.toLocaleDateString('fa-IR', options);
+  };
 
   return (
     <div className={styles.land}>
@@ -140,56 +147,100 @@ function ListOrg() {
             >
               تاریخ تشکیل شده
             </li>
-            <li>
-              <div className={styles.select}>
-                <Select options={options} onChange={handleSelectChange} />
-              </div>
-            </li>
+         
 
           </ul>
           <div className={styles.content}>
-            <div className={`${styles['content-item']} ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}>
-              {items.map((item, index) => (
-                <div className={styles['flex-item']}>
-                  <h3>{item.name}</h3>
-                  <p>{item.organization_name}</p>
-                  <p>{item.created_at}</p>
-                </div>
-              ))}
-
-
+  <div className={`${styles['content-item']} ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}>
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {items.map((item, index) => (
+        <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden custom-width" style={{ border: '1px solid rgb(38, 87, 124)' }}>
+          {organizations.length > 0 && organizations.find(org => org.id === item.organization)?.image_url && organizations.find(org => org.id === item.organization)?.image_url.toLowerCase().endsWith('.jpeg') ? (
+            <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
+              <img src={'https://ghablameh.fiust.ir' + organizations.find(org => org.id === item.organization)?.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} alt={item.organization_name} />
             </div>
-
-
-            <div className={`${styles['content-item']} ${selectedItem === 'Item 2' ? styles.active : ''}`}>
-              {items
-                .slice()
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map((item, index) => (
-                  <div key={index} className={styles['flex-item']}>
-                    <h3>{item.name}</h3>
-                    <p>{item.organization_name}</p>
-                    <p>{item.created_at}</p>
-                  </div>
-                ))}
-
-
-            </div>
-
-            <div className={`${styles['content-item']} ${selectedItem === 'Item 3' ? styles.active : ''}`}>
-              {items
-                .slice() // Create a shallow copy of the items array to avoid mutating the original array
-                .sort((a, b) => new Date(a.created_at) - new Date(b.created_at)) // Sort items by created_at date
-                .map((item, index) => (
-                  <div key={index} className={styles['flex-item']}>
-                    <h3>{item.name}</h3>
-                    <p>{item.organization_name}</p>
-                    <p>{item.created_at}</p>
-                  </div>
-                ))}
-
-            </div>
+          ) : (
+            <div style={{
+              height: "160px",
+         
+              backgroundImage: "repeating-conic-gradient(#26577c  0% 25%, #ffffff 0% 50%)",
+              backgroundPosition: "0 0, 32px 32px",
+              backgroundSize: "50px 50px",
+              opacity: '0.5'
+            }}
+            />
+          )}
+          <div className="p-4">
+            <h3 className="text-lg font-bold">{item.name}</h3>
+            <p className="text-gray-600">{item.organization_name}</p>
+            <p className="text-gray-600">{(item.created_at)}</p>
           </div>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div className={`${styles['content-item']} ${selectedItem === 'Item 2' ? styles.active : ''}`}>
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    {filteredItems
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((item, index) => (
+        <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden" style={{ border: '1px solid rgb(38, 87, 124)' }}>
+        {organizations.length > 0 && organizations.find(org => org.id === item.organization)?.image_url && organizations.find(org => org.id === item.organization)?.image_url.toLowerCase().endsWith('.jpeg') ? (
+          <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
+            <img src={'https://ghablameh.fiust.ir' + organizations.find(org => org.id === item.organization)?.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} alt={item.organization_name} />
+          </div>
+        ) : (
+          <div style={{
+            height: "160px",
+            backgroundImage: "repeating-conic-gradient(#26577c  0% 25%, #ffffff 0% 50%)",
+            backgroundPosition: "0 0, 32px 32px",
+            backgroundSize: "50px 50px",
+            opacity: '0.5'
+          }}
+          />
+        )}
+         <div className="p-4">
+            <h3 className="text-lg font-bold">{item.name}</h3>
+            <p className="text-gray-600">{item.organization_name}</p>
+            <p className="text-gray-600">{(item.created_at)}</p>
+          </div>
+        </div>
+      ))}
+  </div>
+  </div>
+  <div className={`${styles['content-item']} ${selectedItem === 'Item 3' ? styles.active : ''}`}>
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    {filteredItems
+      .slice()
+      .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+      .map((item, index) => (
+        <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden" style={{ border: '1px solid rgb(38, 87, 124)' }}>
+        {organizations.length > 0 && organizations.find(org => org.id === item.organization)?.image_url && organizations.find(org => org.id === item.organization)?.image_url.toLowerCase().endsWith('.jpeg') ? (
+          <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
+            <img src={'https://ghablameh.fiust.ir' + organizations.find(org => org.id === item.organization)?.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} alt={item.organization_name} />
+          </div>
+        ) : (
+          <div style={{
+            height: "160px",
+            backgroundImage: "repeating-conic-gradient(#26577c  0% 25%, #ffffff 0% 50%)",
+            backgroundPosition: "0 0, 32px 32px",
+            backgroundSize: "50px 50px",
+            opacity: '0.5'
+          }}
+          />
+        )}
+         <div className="p-4">
+            <h3 className="text-lg font-bold">{item.name}</h3>
+            <p className="text-gray-600">{item.organization_name}</p>
+            <p className="text-gray-600">{(item.created_at)}</p>
+          </div>
+        </div>
+      ))}
+  </div>
+  </div>
+</div>
+    
         </div>
       </body>
       <OrganizationList />
@@ -198,23 +249,5 @@ function ListOrg() {
 }
 
 export default ListOrg;
-function Arrow(props) {
-  const disabeld = props.disabled ? " arrow--disabled" : ""
-  return (
-    <svg
-      onClick={props.onClick}
-      className={`arrow ${props.left ? "arrow--left" : "arrow--right"
-        } ${disabeld}`}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-    >
-      {props.left && (
-        <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
-      )}
-      {!props.left && (
-        <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
-      )}
-    </svg>
-  )
-}
+
 

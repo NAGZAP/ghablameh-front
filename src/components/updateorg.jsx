@@ -20,17 +20,28 @@ const Update = () => {
   const [old_password, setOld_password] = useState('');
   const [new_password, setNew_password] = useState('');
   const [confirm_new_password, setConfirm_new_password] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-
 
   const [formErrors, setFormErrors] = useState([]);
   const [passErrors, setPassErrors] = useState([]);
   const [isWaitingForm1, setIsWaitingForm1] = useState(false);
   const [isWaitingForm2, setIsWaitingForm2] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword((prevState) => !prevState);
+
+  const toggleCurrentPasswordVisibility = () => {
+    setShowCurrentPassword(!showCurrentPassword);
   };
+
+  const toggleNewPasswordVisibility= () => {
+    setShowNewPassword(!showNewPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
 
   // fetch user data
   useEffect(() => {
@@ -104,7 +115,7 @@ const Update = () => {
                           />
                           :
                           <Avatar
-                            name={name}
+                            name={admin_first_name}
                             size="130"
                             round={true}
                             maxInitials={1}
@@ -182,7 +193,7 @@ const Update = () => {
                   </label>
                   <div className={styles.passwordInputContainer}>
                     <input
-                      type={showPassword ? 'text' : 'password'}
+                      type={showCurrentPassword ? 'text' : 'password'}
                       id="old_password"
                       value={old_password}
                       onChange={(e) => setOld_password(e.target.value)}
@@ -190,9 +201,9 @@ const Update = () => {
                     // required
                     />
                     <FontAwesomeIcon
-                      icon={showPassword ? faEye : faEyeSlash}
+                      icon={showCurrentPassword ? faEye : faEyeSlash}
                       className={styles.passwordIcon}
-                      onClick={togglePasswordVisibility}
+                      onClick={toggleCurrentPasswordVisibility}
                     />
                   </div>
                 </div>
@@ -202,7 +213,7 @@ const Update = () => {
                   </label>
                   <div className={styles.passwordInputContainer}>
                     <input
-                      type={showPassword ? 'text' : 'password'}
+                      type={showNewPassword ? 'text' : 'password'}
                       id="new_password"
                       value={new_password}
                       onChange={(e) => setNew_password(e.target.value)}
@@ -210,9 +221,9 @@ const Update = () => {
                     // required
                     />
                     <FontAwesomeIcon
-                      icon={showPassword ? faEye : faEyeSlash}
+                      icon={showNewPassword ? faEye : faEyeSlash}
                       className={styles.passwordIcon}
-                      onClick={togglePasswordVisibility}
+                      onClick={toggleNewPasswordVisibility}
                     />
                   </div>
                 </div>
@@ -222,7 +233,7 @@ const Update = () => {
                   </label>
                   <div className={styles.passwordInputContainer}>
                     <input
-                      type={showPassword ? 'text' : 'password'}
+                      type={showConfirmPassword ? 'text' : 'password'}
                       id="confirm_new_password"
                       value={confirm_new_password}
                       onChange={(e) => setConfirm_new_password(e.target.value)}
@@ -230,9 +241,9 @@ const Update = () => {
                     // required
                     />
                     <FontAwesomeIcon
-                      icon={showPassword ? faEye : faEyeSlash}
+                      icon={showConfirmPassword ? faEye : faEyeSlash}
                       className={styles.passwordIcon}
-                      onClick={togglePasswordVisibility}
+                      onClick={toggleConfirmPasswordVisibility}
                     />
                   </div>
                 </div>
@@ -297,9 +308,9 @@ const Update = () => {
     if (!admin_phone_number) {
       errors.push('شماره مدیر را وارد کنید.');
     }
-    if (!/^([a-zA-Z0-9]+)@([a-zA-Z]+)\.([a-zA-Z]{2,})$/.test(admin_email)) {
-      errors.push(' ایمیل مدیر را به درستی وارد کنید.');
-    }
+    if (!/^([a-zA-Z0-9!_.]+)@([a-zA-Z]+)\.([a-zA-Z]{2,})$/.test(admin_email)) {
+      errors.push('ایمیل مدیر را به درستی وارد کنید.');
+     }
     if (admin_phone_number.startsWith('98') && admin_phone_number.length !== 12) {
       errors.push('شماره مدیر را به درستی وارد کنید.');
     }
@@ -355,7 +366,26 @@ const Update = () => {
       }
     } catch (error) {
       setIsWaitingForm1(false);
-      alert(error.message);
+      console.error(error.response.data);
+
+      if (error.response.data.name) {
+        alert(error.response.data.name);
+      }
+      if (error.response.data.admin_first_name) {
+        alert(error.response.data.admin_first_name);
+      }
+      if (error.response.data.admin_last_name) {
+        alert(error.response.data.admin_last_name);
+      }
+      if (error.response.data.admin_username) {
+        alert(error.response.data.admin_username);
+      }
+      if (error.response.data.admin_email) {
+        alert(error.response.data.admin_email);
+      }
+      if (error.response.data.admin_phone_number) {
+        alert(error.response.data.admin_phone_number);
+      }
     }
     setIsWaitingForm1(false);
   };

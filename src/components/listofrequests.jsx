@@ -26,8 +26,9 @@ function ListOfJoinRequests() {
       const pendingRequests = response.data.filter((request) => request.status === "P");
 
       setRequests(pendingRequests);
+      console.log(pendingRequests)
 
-      console.log("requests: ", requests)
+      // console.log("requests: ", requests)
 
     } catch (error) {
       console.error('Error fetching user data: ', error);
