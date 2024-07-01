@@ -149,7 +149,7 @@ function OrganizationList() {
                                 <div>
                                     {flag === 2 ? (
                                         // 1d3e57
-                                        <button className='p-2 rounded text-white text-xs' style={{ background: 'rgba(249, 115, 22,0.9)' }}><Link to='/chooseOrg'> درخواست عضویت </Link></button>
+                                        <button className='p-2 mt-3 rounded text-white text-xs' style={{ background: 'rgba(249, 115, 22,0.9)' }}><Link to='/chooseOrg'> درخواست عضویت </Link></button>
                                     ) : null}
                                 </div>
                             </div>

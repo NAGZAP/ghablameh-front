@@ -143,9 +143,9 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
     if (AuthManager.isLoggedIn()) {
       let displayName;
       if (userType === 2 && userData) {
-        displayName = userData.first_name;
+        displayName = userData.first_name+' '+userData.last_name;
       } else if (userType === 1 && adminData) {
-        displayName = adminData.admin_first_name;
+        displayName = adminData.admin_first_name+' '+adminData.admin_last_name;
       }
 
       if (displayName) {

@@ -9,7 +9,7 @@ const isLoggedIn = () => {
     return true;
   }
 };
- 
+
 const orguser = async () => {
   const token = getToken();
   const baseurl = "https://ghablameh.fiust.ir/api/v1";
@@ -17,7 +17,7 @@ const orguser = async () => {
   let organization = true;
 
   try {
-    await axios.get(baseurl + "/clients/me", {headers: {'Authorization':"JWT "+token}});
+    await axios.get(baseurl + "/clients/me", { headers: { 'Authorization': "JWT " + token } });
   } catch (error) {
     if (error.response && error.response.status === 403) {
       user = false;
@@ -25,7 +25,7 @@ const orguser = async () => {
   }
 
   try {
-    await axios.get(baseurl + "/organizations/me", {headers: {'Authorization':"JWT "+token}});
+    await axios.get(baseurl + "/organizations/me", { headers: { 'Authorization': "JWT " + token } });
   } catch (error) {
     if (error.response && error.response.status === 403) {
       organization = false;
@@ -45,9 +45,15 @@ const orguser = async () => {
 const LoginRequest = async (username, password) => {
   const baseurl = "https://ghablameh.fiust.ir/api/v1";
   const body = { username: username, password: password };
-  const data = await axios.post(baseurl + "/auth/login/", body);
+  try {
+    const data = await axios.post(baseurl + "/auth/login/", body);
+    return data;
+  } catch (error) {
+    console.error("error: ", error)
+  }
+
   // console.log(data.data)
-  return data;
+  
 };
 
 const GetOrganizations = async () => {
