@@ -5,6 +5,7 @@ import Boofeh from './Boofeh';
 import styles from './Cards.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import Navbarparent from '../components/navbarparent';
+import { Link } from 'react-router-dom';
 
 function DataFromApiList() {
   const [cards, setCards] = useState([]);
@@ -50,14 +51,21 @@ function DataFromApiList() {
         <Navbarparent />
         <div className={styles.itemscenter + " " + "mb-20"}>
           <Boofeh searchTerm={searchTerm} onSearchChange={onSearchChange} />
-          {filteredCards.map((card, index) => (
-            <Cards
-              key={index}
-              name={card.name}
-              counter_organ={card.counter_organ}
-              index={card.id}
-            />
-          ))}
+          {filteredCards.length === 0 ? (
+            <div className='flex flex-col  justify-center items-center'>
+            <p className='text-lg mb-7'> شما عضو سازمانی نیستید. </p>
+            <Link to='/chooseOrg' className='bg-sky-800 hover:bg-sky-900 text-white rounded-lg py-2 px-2'> برای عضویت در سازمان ها کلیک کنید. </Link>
+          </div>
+          ) : (
+            filteredCards.map((card, index) => (
+              <Cards
+                key={index}
+                name={card.name}
+                counter_organ={card.counter_organ}
+                index={card.id}
+              />
+            ))
+          )}
         </div>
         <ToastContainer />
       </div>

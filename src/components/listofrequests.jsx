@@ -26,6 +26,7 @@ function ListOfJoinRequests() {
       const pendingRequests = response.data.filter((request) => request.status === "P");
 
       setRequests(pendingRequests);
+      console.log(pendingRequests)
 
       // console.log("requests: ", requests)
 
