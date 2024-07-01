@@ -2,7 +2,7 @@ import axios from 'axios';
 import AuthManager from "../APIs/AuthManager";
 import { useState, useEffect } from "react";
 import Select from 'react-select';
-import defaultPhoto from '../images/team.png'
+import defaultPhoto from '../../public/team.png'
 import styles from '../styles/organizationlist.module.css'
 import { Link } from 'react-router-dom';
 
@@ -118,7 +118,7 @@ function OrganizationList() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {filteredOrgData.map((org, index) => (
                     <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden" style={{ border: '1px solid rgb(38, 87, 124)' }}>
-                        {org.image_url && org.image_url.toLowerCase().endsWith('.jpeg') ? (
+                        {org.image_url ?(
                             <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
                                 <img src={'https://ghablameh.fiust.ir' + org.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} />
                             </div>

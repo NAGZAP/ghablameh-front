@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { AiOutlineReload, AiOutlineSearch } from "react-icons/ai";
-import filterIcon from "../images/filter.png";
+import filterIcon from "../../public/filter.png";
 
 const FilterOrganizations = () => {
     //product list
