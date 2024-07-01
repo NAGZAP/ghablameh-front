@@ -15,10 +15,11 @@ const Reserve = () => {
     const [reservedfoods, setReservedFoods] = useState([]);
     const [fetchedAmount, setFetchedAmount] = useState();
     const [loading, setLoading] = useState(true);
-    const [fromDate, setFromDate] = useState();
-    const [toDate, setToDate] = useState();
+    //const [fromDate, setFromDate] = useState();
+    //const [toDate, setToDate] = useState();
     const currentBuffet = useRef(null);
-
+    const fromDate = useRef(0);
+    const toDate = useRef(0);
     //fetch dates
     useEffect(() => {
         jalaliMoment.locale('fa', {
@@ -49,54 +50,57 @@ const Reserve = () => {
         const endweek = getEndDayOfWeek();
 
         const christianDatefday = convertToChristian(firstDayOfWeek);
-        setFromDate(christianDatefday)
+        fromDate.current = christianDatefday;
         const christianDatelday = convertToChristian(endweek);
-        setToDate(christianDatelday)
+        toDate.current = christianDatelday;
         // console.log('line 55')
     }, []);
 
     async function getNextWeek() {
         try {
-            const currentDate = new Date(fromDate);
+            const currentDate = new Date(fromDate.current);
             currentDate.setDate(currentDate.getDate() + 7);
-            setFromDate(currentDate.toISOString().split('T')[0]); // Format as 'YYYY-MM-DD'
-    
-            const currentDate2 = new Date(toDate);
+            fromDate.current = currentDate.toISOString().split('T')[0]; // Format as 'YYYY-MM-DD'
+
+            const currentDate2 = new Date(toDate.current);
             currentDate2.setDate(currentDate2.getDate() + 7);
-            setToDate(currentDate2.toISOString().split('T')[0]);
-    
+            toDate.current = currentDate2.toISOString().split('T')[0];
+
             // Assuming fetchData() is an asynchronous function
             await fetchData();
-    
+
             console.log('Next week:');
-            console.log('From Date:', fromDate);
+            console.log('From Date:'+ fromDate.current);
+            console.log("To Date : " + toDate.current)
+            console.log(fetchedData);
+            console.log("=======================================")
             // console.log('To Date:', toDate);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     }
-    
+
     async function getLastWeek() {
         try {
-            const currentDate = new Date(fromDate);
+            const currentDate = new Date(fromDate.current);
             currentDate.setDate(currentDate.getDate() - 7);
-            setFromDate(currentDate.toISOString().split('T')[0]);
-    
-            const currentDate2 = new Date(toDate);
+            fromDate.current = currentDate.toISOString().split('T')[0];
+
+            const currentDate2 = new Date(toDate.current);
             currentDate2.setDate(currentDate2.getDate() - 7);
-            setToDate(currentDate2.toISOString().split('T')[0]);
-    
+            toDate.current = currentDate2.toISOString().split('T')[0];
+
             // Assuming fetchData() is an asynchronous function
             await fetchData();
-    
+
             console.log('Last week:');
-            console.log('From Date:', fromDate);
+            console.log('From Date:', fromDate.current);
             // console.log('To Date:', toDate);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     }
-    
+
     //fetch buffets
     useEffect(() => {
         const fetchData = async () => {
@@ -121,9 +125,10 @@ const Reserve = () => {
             if (AuthManager.isLoggedIn()) {
                 const token = AuthManager.getToken();
                 const buffet_id = parseInt(currentBuffet.current.value);
-
+                console.log("From Date From req : " + fromDate.current)
+                console.log("To Date From req : " + toDate.current)
                 const response = await axios.get(
-                    `https://ghablameh.fiust.ir/api/v1/buffets/${buffet_id}/weekly-menus/?from_date=${fromDate}&to_date=${toDate}`,
+                    `https://ghablameh.fiust.ir/api/v1/buffets/${buffet_id}/weekly-menus/?from_date=${fromDate.current}&to_date=${toDate.current}`,
                     { headers: { Authorization: "JWT " + token } }
                 );
 
@@ -140,7 +145,7 @@ const Reserve = () => {
         try {
             const token = AuthManager.getToken();
 
-            const response = await axios.get(`https://ghablameh.fiust.ir/api/v1/reserve/?from_date=${fromDate}&to_date=${toDate}`,
+            const response = await axios.get(`https://ghablameh.fiust.ir/api/v1/reserve/?from_date=${fromDate.current}&to_date=${toDate.current}`,
                 { headers: { Authorization: "JWT " + token } }
             );
             setReservedFoods(response.data);
@@ -190,6 +195,10 @@ const Reserve = () => {
             }
         };
     }, []);
+
+    // useEffect(()=> {
+    //     alert("Current Value of ToDate : " +toDate)
+    // },[toDate]);
 
     //reserve
     const handlereserve = async (food) => {
@@ -342,7 +351,7 @@ const Reserve = () => {
             }
             else if (food.numberInStock == 0) {
                 numberInStockToast();
-            } 
+            }
             else {
                 handlereserve(food);
             }
@@ -368,7 +377,6 @@ const Reserve = () => {
 
         const dates = [...new Set(data.map(entry => entry.date))];
         const mealNames = [...new Set(data.flatMap(entry => entry.meals.map(meal => meal.name)))];
-
         const organizedData = useMemo(() => {
             return dates.map(date => {
                 const dateEntry = { date };
@@ -397,50 +405,50 @@ const Reserve = () => {
 
         return (
             // <div className="my-6 mx-2">
-                <table className="min-w-full divide-y divide-gray-300 shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                    <thead className="text-white bg-sky-800" style={{ background: '' }}>
-                        {/* rgb(218, 168, 43) */}
-                        <tr>
-                            <th className="w-1/5 p-2 text-lg font-medium tracking-wider text-center">روز</th>
+            <table className="min-w-full divide-y divide-gray-300 shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <thead className="text-white bg-sky-800" style={{ background: '' }}>
+                    {/* rgb(218, 168, 43) */}
+                    <tr>
+                        <th className="w-1/5 p-2 text-lg font-medium tracking-wider text-center">روز</th>
+                        {mealNames.map((mealName, index) => (
+                            <th key={index} className="w-1/5 p-2 text-lg font-medium tracking-wider text-center">{mealName}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {organizedData.map((entry, rowIndex) => (
+                        <tr key={rowIndex} className={`${'flex'} ${'items-center'} ${'justify-center'} py-14 ${rowIndex % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
+                            {/* <div className="flex items-center justify-center py-14"> */}
+                            <td className="p-2 text-sky-950">{convertToJalali(entry.date)}</td>
+                            {/* </div> */}
+                            {/* } */}
                             {mealNames.map((mealName, index) => (
-                                <th key={index} className="w-1/5 p-2 text-lg font-medium tracking-wider text-center">{mealName}</th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {organizedData.map((entry, rowIndex) => (
-                            <tr key={rowIndex} className={`${'flex'} ${'items-center'} ${'justify-center'} py-14 ${rowIndex % 2 === 0? 'bg-white' : 'bg-slate-50'}`}>
-                                {/* <div className="flex items-center justify-center py-14"> */}
-                                    <td className="p-2 text-sky-950">{convertToJalali(entry.date)}</td>
-                                {/* </div> */}
-                                {/* } */}
-                                {mealNames.map((mealName, index) => (
-                                    <td key={index} className="p-2">
-                                        {entry[mealName].map((food, foodIndex) => (
-                                            <div key={foodIndex} className="flex items-center justify-center">
-                                                <div className="flex flex-row justify-center items-center p-2 rounded-lg my-2" style={{ background: 'rgba(251, 146, 60, 0.9)' }}>
-                                                    {/* rgba(218, 168, 43,0.4) */}
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={reservedfoods.some(reserved => reserved.meal_food.food.id === food.foodId)}
-                                                        onChange={(e) => handleCheckboxChange(food, e.target.checked)}
-                                                        className="m-3 rounded-sm"
-                                                    />
-                                                    <div className="flex flex-col p-2 items-start justify-center">
-                                                        <span className="text-sm font-bold text-sky-900">{food.name}</span>
-                                                        <span className="text-xs pt-1 font-normal text-sky-900">{food.price} تومان </span>
-                                                        <span className="text-xs text-sky-900"> موجودی: {food.numberInStock} عدد </span>
-                                                        {/* <span className="text-sm text-gray-700">{food.foodId}  </span> */}
-                                                    </div>
+                                <td key={index} className="p-2">
+                                    {entry[mealName].map((food, foodIndex) => (
+                                        <div key={foodIndex} className="flex items-center justify-center">
+                                            <div className="flex flex-row justify-center items-center p-2 rounded-lg my-2" style={{ background: 'rgba(251, 146, 60, 0.9)' }}>
+                                                {/* rgba(218, 168, 43,0.4) */}
+                                                <input
+                                                    type="checkbox"
+                                                    checked={reservedfoods.some(reserved => reserved.meal_food.food.id === food.foodId)}
+                                                    onChange={(e) => handleCheckboxChange(food, e.target.checked)}
+                                                    className="m-3 rounded-sm"
+                                                />
+                                                <div className="flex flex-col p-2 items-start justify-center">
+                                                    <span className="text-sm font-bold text-sky-900">{food.name}</span>
+                                                    <span className="text-xs pt-1 font-normal text-sky-900">{food.price} تومان </span>
+                                                    <span className="text-xs text-sky-900"> موجودی: {food.numberInStock} عدد </span>
+                                                    {/* <span className="text-sm text-gray-700">{food.foodId}  </span> */}
                                                 </div>
                                             </div>
-                                        ))}
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                                        </div>
+                                    ))}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
             // </div> 
         );
     };
@@ -475,13 +483,15 @@ const Reserve = () => {
                                     primary: 'rgb(38, 87, 124)',
                                     primary25: 'rgba(38, 87, 124,0.4)',
                                 }
+
                             })}
 
                             onChange={selectedOption => {
                                 currentBuffet.current = selectedOption;
                                 fetchData();
                             }}
-                        />
+                        >
+                        </Select>
 
                     </div>
                 </div>
@@ -489,8 +499,8 @@ const Reserve = () => {
                 {/* last week / next week button */}
                 <div className="flex flex-row my-5 justify-center items-center w-full">
                     {/* <div className="flex flex-row justify-end items-center "> */}
-                        <button className="rounded-xl bg-sky-800 mx-24 px-5 py-2 text-white hover:bg-sky-900" onClick={getNextWeek}> هفته بعدی </button>
-                        <button className="rounded-xl bg-sky-800 mx-24 px-5 py-2 text-white hover:bg-sky-900" onClick={getLastWeek}> هفته قبلی </button>
+                    <button className="rounded-xl bg-sky-800 mx-24 px-5 py-2 text-white hover:bg-sky-900" onClick={getNextWeek}> هفته بعدی </button>
+                    <button className="rounded-xl bg-sky-800 mx-24 px-5 py-2 text-white hover:bg-sky-900" onClick={getLastWeek}> هفته قبلی </button>
                     {/* </div> */}
                 </div>
 
