@@ -48,6 +48,7 @@ function Login() {
     let responsedata = await AuthManager.LoginRequest(data.username , data.password);
     localStorage.setItem("token" , responsedata.data.tokens.access);
     navigate("/");
+    window.location.reload();
   };
   
 

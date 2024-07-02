@@ -106,6 +106,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
     localStorage.removeItem("refresh-token");
     // console.log(AuthManager.isLoggedIn());
     navigate("/");
+    window.location.reload();
   }
 
   function UserAvatar() {
