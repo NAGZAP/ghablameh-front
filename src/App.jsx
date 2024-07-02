@@ -61,6 +61,7 @@ function App() {
         {/*<Route path="/footer" element={<Footer />} />*/}        
         {/* <Route path="/Update" element={<Update />} /> {/* User */} 
         {userRole === 2 && <Route path="/Update" element={<Update />} />}
+        {userRole === 3 && <Route path="/Update" element={<Login />} />}
         {/*<Route path="/login" element={<Login />} />  NoUser */}
         {userRole === 3 && <Route path = "/login" element={<Login />} />}
         {/* <Route path="/Register" element={<Register />} /> */}
@@ -70,39 +71,50 @@ function App() {
         {/* <Route path="/HomeOrgPage" element={<HomeOrgPage />} /> */}   
         {/* <Route path="/Updateorg" element={<Updateorg />} /> Org */}
         {userRole === 1 && <Route path = "/Updateorg" element={<Updateorg />} />}
+        {userRole === 3 && <Route path="/Updateorg" element={<Login />} />}
         {/* <Route path="/signup" element={<SignUp />} /> */}
         {userRole === 3 && <Route path = "/signup" element={<SignUp />} />}
         {/* <Route path="/ListOfJoinRequests" element={<ListOfJoinRequests />} /> admins */}
         {userRole === 1 && <Route path = "/ListOfJoinRequests" element={<ListOfJoinRequests />} />}
+        {userRole === 3 && <Route path="/ListOfJoinRequests" element={<Login />} />}
         {/* <Route path="/OrgPage" element={<OrgPage />} />  admins */}
         {userRole === 1 && <Route path = "/OrgPage" element={<OrgPage />} />}
+        {userRole === 3 && <Route path="/OrgPage" element={<Login />} />}
         {/* <Route path="/chooseorg" element={<ChooseOrganizationPage />} /> User */}
         {userRole === 2 && <Route path = "/chooseorg" element={<ChooseOrganizationPage />} />}
+        {userRole === 3 && <Route path="/chooseorg" element={<Login />} />}
         {/* <Route path="/Myorgs" element={<Myorgs />} />User */}
         {userRole === 2 && <Route path = "/Myorgs" element={<Myorgs />} />}
+        {userRole === 3 && <Route path="/Myorgs" element={<Login />} />}
         {/* <Route path="/slider" element={<UserSlider />} /> */}
         {/* <Route path="/WeeklyMenu" element={<WeeklyMenuPage />} /> */}
         {/* <Route path="/Response" element={<Response />} /> */}
         {/* <Route path="/panel" element={<Panel />} /> */}
         {/* <Route path="/weeklymenu2" element={<WeeklyMenu />} /> admin */}
         {userRole === 1 && <Route path = "/weeklymenu2" element={<WeeklyMenu />} />}
+        {userRole === 3 && <Route path="/weeklymenu2" element={<Login />} />}
         {/* <Route path="/last" element={<ReservationCalendar />} /> */}
         {/* <Route path="/forgetpassword" element={<ForgetPasswordWindow />} /> */}
         {/* <Route path="/EmailVerify" element={<EmailVerify />} /> non-user */}
         {userRole === 2 && <Route path = "/EmailVerify" element={<EmailVerify />} />}
+        {userRole === 3 && <Route path="/EmailVerify" element={<Login />} />}
         {/* <Route path="/boofeh" element={<Boofeh />} /> */}
         {/* <Route path="/byadmin" element={<AddWeeklyMenu />} /> admin */}
         {userRole === 1 && <Route path = "/byadmin" element={<AddWeeklyMenu />} />}
+        {userRole === 3 && <Route path="/byadmin" element={<Login />} />}
         {/* <Route path="/organizationList" element={<OrganizationList />} /> */}
         <Route path="*" element={<PageNotFound />} />
         {/* <Route path="/Notif" element={<Notificationbox />} /> */}
         {/* <Route path="/Reserve" element={<Reserve />} />user */}
         {userRole === 2 && <Route path = "/Reserve" element={<Reserve />} />}
+        {userRole === 3 && <Route path="/Reserve" element={<Login />} />}
         {/* <Route path="/ReviewOnBoofeh" element={<DataFromApiList />} />User */}
         {userRole === 2 && <Route path = "/ReviewOnBoofeh" element={<Reserve />} />}
+        {userRole === 3 && <Route path="/ReviewOnBoofeh" element={<Login />} />}
         {/* <Route path="/verify" element={<Verify />} /> */}
         {/* <Route path="/addweeklymenu" element={<AddWeeklyMenu />} /> admin repeat of by admin!!!! */}
         {userRole === 1 && <Route path = "/addweeklymenu" element={<AddWeeklyMenu />} />}
+        {userRole === 3 && <Route path="/addweeklymenu" element={<Login />} />}
       </Routes>
       <Footer />
       </div>
