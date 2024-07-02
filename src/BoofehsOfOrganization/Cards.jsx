@@ -123,12 +123,12 @@ function Cards(props) {
   }
   return (
     <div className={styles.card}>
-      <h2 className={`${styles.card_orgName} font-bold text-xl`}>{props.name}</h2>
+      <h2 className={`${styles.card_orgName} font-bold text-2xl`}>{props.name}</h2>
       <h3 className={styles.card_orgNum}>{props.counter_organ}</h3>
 
       <div className={`${styles.itemscenter} flex `}>
-        <button type="button" className={`${styles.button} font-normal text-sm`} onClick={openModal}>
-          <h3>نظرسنجی غذا بوفه</h3>
+        <button type="button" className={`${styles.button}`} onClick={openModal}>
+          <h4 className=''>نظرسنجی غذا بوفه</h4>
         </button>
 
         {isModalOpen && (

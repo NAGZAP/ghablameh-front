@@ -113,7 +113,7 @@ const Myorgs = () => {
                 ref={searchData}
                 type="text"
                 className={`${[styles.input]} rounded-lg`}
-                placeholder="جستجو ..."
+                placeholder="جست و جو ..."
               />
             </div>
 

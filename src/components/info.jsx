@@ -344,102 +344,128 @@ const Update = () => {
               <button type='reset' onClick={clearPhoto} className='m-2 text-white text-sm rounded-lg p-2' style={{ backgroundColor: "rgb(38, 87, 124)" }}> حذف عکس </button>
             </div>
 
-            <div className={styles.formGroup}>
-              <label htmlFor="birthdate" className={styles.label}>
-                تاریخ تولد
-              </label>
-              <input
-                type="date"
-                id="birthdate"
-                value={birthdate}
-                onChange={(e) => setBirthdate(e.target.value)}
-                className={styles.input}
-                style={{ borderRadius: '10px' }}
-                required
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="gender" className={styles.label}>
-                جنسیت
-              </label>
-              <Select
-                options={options}
-                id="gender"
-                value={gender}
-                onChange={handleChangeGender}
-                styles={{
-                  control: styles => ({ ...styles, borderColor: 'rgb(38, 87, 124)', borderRadius: '10px' })
-                }}
-                theme={(theme) => ({
-                  ...theme,
-                  colors: {
-                    ...theme.colors,
-                    text: 'de6016',
-                    primary: 'rgb(38, 87, 124)',
-                    primary25: 'rgba(38, 87, 124,0.4)',
-                  }
-                })}
-                required
-              />
-            </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="username" className={styles.label}>
-                نام کاربری
-              </label>
-              <input
-                type="text"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className={styles.input}
-                style={{ borderRadius: '10px' }}
-                required
-              />
+              <div className='flex flex-row items-center w-full justify-center mt-10'>
+                <div className='ml-2 w-1/2'>
+                  <label htmlFor="firstName" className={styles.label}>
+                    نام
+                  </label>
+                  <input
+                    type="text"
+                    id="firstname"
+                    value={firstName}
+                    onChange={(e) => setfirstName(e.target.value)}
+                    className={styles.input}
+                    style={{ borderRadius: '10px' }}
+                    required
+                  />
+                </div>
+                <div className='w-1/2'>
+                  <label htmlFor="lastName" className={styles.label}>
+                    نام خانوادگی
+                  </label>
+                  <input
+                    type="text"
+                    id="lastname"
+                    value={lastName}
+                    onChange={(e) => setlastName(e.target.value)}
+                    className={styles.input}
+                    style={{ borderRadius: '10px' }}
+                    required
+                  />
+                </div>
+              </div>
             </div>
 
-            <div className={styles.formGroup}>
-              <label htmlFor="firstName" className={styles.label}>
-                نام
-              </label>
-              <input
-                type="text"
-                id="firstname"
-                value={firstName}
-                onChange={(e) => setfirstName(e.target.value)}
-                className={styles.input}
-                style={{ borderRadius: '10px' }}
-                required
-              />
+            <div className='flex flex-row items-center w-full justify-center mt-6'>
+              <div className='ml-2 w-1/2'>
+                <div className={styles.formGroup}>
+                  <label htmlFor="username" className={styles.label}>
+                    نام کاربری
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className={styles.input}
+                    style={{ borderRadius: '10px', direction: 'ltr' }}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className='w-1/2'>
+                <div className={styles.formGroup}>
+                  <label htmlFor="phoneNumber" className={styles.label}>
+                    شماره تلفن
+                  </label>
+                  <input
+                    type="text"
+                    id="phonenumber"
+                    value={phoneNumber}
+                    onChange={(e) => setphoneNumber(e.target.value)}
+                    className={styles.input}
+                    style={{ borderRadius: '10px', direction: 'ltr' }}
+                    required
+                  />
+                </div>
+              </div>
             </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="lastName" className={styles.label}>
-                نام خانوادگی
-              </label>
-              <input
-                type="text"
-                id="lastname"
-                value={lastName}
-                onChange={(e) => setlastName(e.target.value)}
-                className={styles.input}
-                style={{ borderRadius: '10px' }}
-                required
-              />
+
+
+            <div className='flex flex-row items-center w-full justify-center mt-2'>
+              <div className='ml-2 w-1/2'>
+                <div className={styles.formGroup}>
+                  <label htmlFor="birthdate" className={styles.label}>
+                    تاریخ تولد
+                  </label>
+                  <input
+                    type="date"
+                    id="birthdate"
+                    value={birthdate}
+                    onChange={(e) => setBirthdate(e.target.value)}
+                    className={styles.input}
+                    style={{ borderRadius: '10px' }}
+                    required
+                  />
+                </div>
+              </div>
+              <div className='w-1/2'>
+                <div className={styles.formGroup}>
+                  <label htmlFor="gender" className={styles.label}>
+                    جنسیت
+                  </label>
+                  <Select
+                    options={options}
+                    id="gender"
+                    value={gender}
+                    onChange={handleChangeGender}
+                    styles={{
+                      control: (styles) => ({
+                        ...styles,
+                        padding: '3px',
+                        borderColor: '#6c727f',
+                        borderRadius: '10px'
+                      }),
+                    }}
+                    theme={(theme) => ({
+                      ...theme,
+                      colors: {
+                        ...theme.colors,
+                        text: 'de6016',
+                        primary: 'rgb(38, 87, 124)',
+                        primary25: 'rgba(38, 87, 124,0.4)',
+                      }
+                    })}
+                    required
+                  />
+                </div>
+              </div>
             </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="phoneNumber" className={styles.label}>
-                شماره تلفن
-              </label>
-              <input
-                type="text"
-                id="phonenumber"
-                value={phoneNumber}
-                onChange={(e) => setphoneNumber(e.target.value)}
-                className={styles.input}
-                style={{ borderRadius: '10px' }}
-                required
-              />
-            </div>
+
+
             <div className={styles.formGroup}>
               <label htmlFor="email" className={styles.label}>
                 ایمیل
@@ -447,10 +473,11 @@ const Update = () => {
               <input
                 type="text"
                 id="email"
+                // dir="ltr"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={styles.input}
-                style={{ borderRadius: '10px' }}
+                style={{ borderRadius: '10px', direction: 'ltr' }}
                 required
               />
             </div>

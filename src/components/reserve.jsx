@@ -8,6 +8,7 @@ import Organizations from "../APIs/Organizations";
 import jalaliMoment from 'jalali-moment';
 import moment from 'moment';
 import Select from 'react-select';
+import { Link } from "react-router-dom";
 
 const Reserve = () => {
     const [fetchedData, setFetchedData] = useState([])
@@ -60,11 +61,19 @@ const Reserve = () => {
         try {
             const currentDate = new Date(fromDate.current);
             currentDate.setDate(currentDate.getDate() + 7);
+<<<<<<< Updated upstream
             fromDate.current = currentDate.toISOString().split('T')[0]; // Format as 'YYYY-MM-DD'
 
             const currentDate2 = new Date(toDate.current);
             currentDate2.setDate(currentDate2.getDate() + 7);
             toDate.current = currentDate2.toISOString().split('T')[0];
+=======
+            setFromDate(currentDate.toISOString().split('T')[0]); // Format as 'YYYY-MM-DD'
+
+            const currentDate2 = new Date(toDate);
+            currentDate2.setDate(currentDate2.getDate() + 7);
+            setToDate(currentDate2.toISOString().split('T')[0]);
+>>>>>>> Stashed changes
 
             // Assuming fetchData() is an asynchronous function
             await fetchData();
@@ -84,11 +93,19 @@ const Reserve = () => {
         try {
             const currentDate = new Date(fromDate.current);
             currentDate.setDate(currentDate.getDate() - 7);
+<<<<<<< Updated upstream
             fromDate.current = currentDate.toISOString().split('T')[0];
 
             const currentDate2 = new Date(toDate.current);
             currentDate2.setDate(currentDate2.getDate() - 7);
             toDate.current = currentDate2.toISOString().split('T')[0];
+=======
+            setFromDate(currentDate.toISOString().split('T')[0]);
+
+            const currentDate2 = new Date(toDate);
+            currentDate2.setDate(currentDate2.getDate() - 7);
+            setToDate(currentDate2.toISOString().split('T')[0]);
+>>>>>>> Stashed changes
 
             // Assuming fetchData() is an asynchronous function
             await fetchData();
@@ -367,9 +384,9 @@ const Reserve = () => {
 
     //render table
     const TableComponent = ({ data }) => {
-        if (data.length === 0) {
+        if (data.length === 0 && options.length!==0) {
             return (
-                <div className="flex items-center justify-center h-64"> {/* Adjust height as needed */}
+                <div className="flex items-center justify-center"> 
                     <span className="flex flex-row justify-center items-center p-2 rounded-lg my-2" style={{ background: 'rgba(38, 87, 124,0.3)' }} >  غذایی جهت رزرو وجود ندارد، بوفه دیگری انتخاب کنید. </span>
                 </div>
             );
@@ -402,9 +419,20 @@ const Reserve = () => {
                 return dateEntry;
             });
         }, [data, dates, mealNames]);
-
+        if (data.length !== 0 && options.length!==0) {
         return (
+<<<<<<< Updated upstream
             // <div className="my-6 mx-2">
+=======
+            <div className="my-6 mx-2">
+                {/* last week / next week button */}
+                <div className="flex flex-row my-5 justify-center items-center w-full">
+                    {/* <div className="flex flex-row justify-end items-center "> */}
+                    <button className="rounded-xl bg-sky-800 mx-24 px-5 py-2 text-white hover:bg-sky-900" onClick={getNextWeek}> هفته بعدی </button>
+                    <button className="rounded-xl bg-sky-800 mx-24 px-5 py-2 text-white hover:bg-sky-900" onClick={getLastWeek}> هفته قبلی </button>
+                    {/* </div> */}
+                </div>
+>>>>>>> Stashed changes
             <table className="min-w-full divide-y divide-gray-300 shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 <thead className="text-white bg-sky-800" style={{ background: '' }}>
                     {/* rgb(218, 168, 43) */}
@@ -449,8 +477,13 @@ const Reserve = () => {
                     ))}
                 </tbody>
             </table>
+<<<<<<< Updated upstream
             // </div> 
+=======
+         </div> 
+>>>>>>> Stashed changes
         );
+    }
     };
 
     const options = data.map((item) => ({
@@ -462,12 +495,13 @@ const Reserve = () => {
         <>
             <Navbarparent />
             <div className=""></div>
-            <div style={{ width: "100%" }} className="px-5 py-3">
+            <div style={{ width: "100%" }} className="px-5 py-3 my-24">
                 <div className="grid grid-cols-3 my-4 text-center"></div>
 
                 {/* choose buffet */}
                 <div className="grid grid-cols-3 w-full" >
                     <div></div>
+<<<<<<< Updated upstream
                     <div className="mb-3 content-center w-full flex justify-center items-center">
                         <Select
                             options={options}
@@ -492,10 +526,44 @@ const Reserve = () => {
                             }}
                         >
                         </Select>
+=======
+                    
+                        {options.length === 0 ? (
+                            <div className='flex flex-col w-full justify-center items-center'>
+                                <p className='text-lg mb-7 w-full'> برای رزرو غذا ابتدا عضو سازمان ها شوید. </p>
+                                <Link to='/chooseOrg' className='bg-sky-800 hover:bg-sky-900 text-white text-center rounded-lg py-2 px-2'> عضویت در سازمان ها </Link>
+                            </div>
+                        ) : (
+                        <div className="mb-3 content-center w-full flex justify-center items-center">
+                            <Select
+                                options={options}
+                                value={currentBuffet.current}
+                                // isLoading={loading}
+                                className="rounded w-60"
+                                placeholder=" بوفه خود را انتخاب کنید. "
+                                theme={(theme) => ({
+                                    ...theme,
+                                    colors: {
+                                        ...theme.colors,
+                                        text: 'de6016',
+                                        primary: 'rgb(38, 87, 124)',
+                                        primary25: 'rgba(38, 87, 124,0.4)',
+                                    }
+                                })}
 
-                    </div>
+                                onChange={selectedOption => {
+                                    currentBuffet.current = selectedOption;
+                                    fetchData();
+                                }}
+                            />
+                        </div>
+                        )}
+                    
+>>>>>>> Stashed changes
+
                 </div>
 
+<<<<<<< Updated upstream
                 {/* last week / next week button */}
                 <div className="flex flex-row my-5 justify-center items-center w-full">
                     {/* <div className="flex flex-row justify-end items-center "> */}
@@ -503,6 +571,9 @@ const Reserve = () => {
                     <button className="rounded-xl bg-sky-800 mx-24 px-5 py-2 text-white hover:bg-sky-900" onClick={getLastWeek}> هفته قبلی </button>
                     {/* </div> */}
                 </div>
+=======
+                
+>>>>>>> Stashed changes
 
                 {/* table */}
                 <TableComponent data={fetchedData} />
