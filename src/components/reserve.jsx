@@ -16,11 +16,10 @@ const Reserve = () => {
     const [reservedfoods, setReservedFoods] = useState([]);
     const [fetchedAmount, setFetchedAmount] = useState();
     const [loading, setLoading] = useState(true);
-    //const [fromDate, setFromDate] = useState();
-    //const [toDate, setToDate] = useState();
+    const [fromDate, setFromDate] = useState();
+    const [toDate, setToDate] = useState();
     const currentBuffet = useRef(null);
-    const fromDate = useRef(0);
-    const toDate = useRef(0);
+
     //fetch dates
     useEffect(() => {
         jalaliMoment.locale('fa', {
@@ -51,73 +50,54 @@ const Reserve = () => {
         const endweek = getEndDayOfWeek();
 
         const christianDatefday = convertToChristian(firstDayOfWeek);
-        fromDate.current = christianDatefday;
+        setFromDate(christianDatefday)
         const christianDatelday = convertToChristian(endweek);
-        toDate.current = christianDatelday;
+        setToDate(christianDatelday)
         // console.log('line 55')
     }, []);
 
     async function getNextWeek() {
         try {
-            const currentDate = new Date(fromDate.current);
+            const currentDate = new Date(fromDate);
             currentDate.setDate(currentDate.getDate() + 7);
-<<<<<<< Updated upstream
             fromDate.current = currentDate.toISOString().split('T')[0]; // Format as 'YYYY-MM-DD'
 
             const currentDate2 = new Date(toDate.current);
             currentDate2.setDate(currentDate2.getDate() + 7);
             toDate.current = currentDate2.toISOString().split('T')[0];
-=======
-            setFromDate(currentDate.toISOString().split('T')[0]); // Format as 'YYYY-MM-DD'
-
-            const currentDate2 = new Date(toDate);
-            currentDate2.setDate(currentDate2.getDate() + 7);
-            setToDate(currentDate2.toISOString().split('T')[0]);
->>>>>>> Stashed changes
 
             // Assuming fetchData() is an asynchronous function
             await fetchData();
-
+    
             console.log('Next week:');
-            console.log('From Date:'+ fromDate.current);
-            console.log("To Date : " + toDate.current)
-            console.log(fetchedData);
-            console.log("=======================================")
+            console.log('From Date:', fromDate);
             // console.log('To Date:', toDate);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     }
-
+    
     async function getLastWeek() {
         try {
-            const currentDate = new Date(fromDate.current);
+            const currentDate = new Date(fromDate);
             currentDate.setDate(currentDate.getDate() - 7);
-<<<<<<< Updated upstream
             fromDate.current = currentDate.toISOString().split('T')[0];
 
             const currentDate2 = new Date(toDate.current);
             currentDate2.setDate(currentDate2.getDate() - 7);
             toDate.current = currentDate2.toISOString().split('T')[0];
-=======
-            setFromDate(currentDate.toISOString().split('T')[0]);
-
-            const currentDate2 = new Date(toDate);
-            currentDate2.setDate(currentDate2.getDate() - 7);
-            setToDate(currentDate2.toISOString().split('T')[0]);
->>>>>>> Stashed changes
 
             // Assuming fetchData() is an asynchronous function
             await fetchData();
-
+    
             console.log('Last week:');
-            console.log('From Date:', fromDate.current);
+            console.log('From Date:', fromDate);
             // console.log('To Date:', toDate);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     }
-
+    
     //fetch buffets
     useEffect(() => {
         const fetchData = async () => {
@@ -142,10 +122,9 @@ const Reserve = () => {
             if (AuthManager.isLoggedIn()) {
                 const token = AuthManager.getToken();
                 const buffet_id = parseInt(currentBuffet.current.value);
-                console.log("From Date From req : " + fromDate.current)
-                console.log("To Date From req : " + toDate.current)
+
                 const response = await axios.get(
-                    `https://ghablameh.fiust.ir/api/v1/buffets/${buffet_id}/weekly-menus/?from_date=${fromDate.current}&to_date=${toDate.current}`,
+                    `https://ghablameh.fiust.ir/api/v1/buffets/${buffet_id}/weekly-menus/?from_date=${fromDate}&to_date=${toDate}`,
                     { headers: { Authorization: "JWT " + token } }
                 );
 
@@ -162,7 +141,7 @@ const Reserve = () => {
         try {
             const token = AuthManager.getToken();
 
-            const response = await axios.get(`https://ghablameh.fiust.ir/api/v1/reserve/?from_date=${fromDate.current}&to_date=${toDate.current}`,
+            const response = await axios.get(`https://ghablameh.fiust.ir/api/v1/reserve/?from_date=${fromDate}&to_date=${toDate}`,
                 { headers: { Authorization: "JWT " + token } }
             );
             setReservedFoods(response.data);
@@ -212,10 +191,6 @@ const Reserve = () => {
             }
         };
     }, []);
-
-    // useEffect(()=> {
-    //     alert("Current Value of ToDate : " +toDate)
-    // },[toDate]);
 
     //reserve
     const handlereserve = async (food) => {
@@ -368,7 +343,7 @@ const Reserve = () => {
             }
             else if (food.numberInStock == 0) {
                 numberInStockToast();
-            }
+            } 
             else {
                 handlereserve(food);
             }
@@ -394,6 +369,7 @@ const Reserve = () => {
 
         const dates = [...new Set(data.map(entry => entry.date))];
         const mealNames = [...new Set(data.flatMap(entry => entry.meals.map(meal => meal.name)))];
+
         const organizedData = useMemo(() => {
             return dates.map(date => {
                 const dateEntry = { date };
@@ -423,16 +399,6 @@ const Reserve = () => {
         return (
 <<<<<<< Updated upstream
             // <div className="my-6 mx-2">
-=======
-            <div className="my-6 mx-2">
-                {/* last week / next week button */}
-                <div className="flex flex-row my-5 justify-center items-center w-full">
-                    {/* <div className="flex flex-row justify-end items-center "> */}
-                    <button className="rounded-xl bg-sky-800 mx-24 px-5 py-2 text-white hover:bg-sky-900" onClick={getNextWeek}> هفته بعدی </button>
-                    <button className="rounded-xl bg-sky-800 mx-24 px-5 py-2 text-white hover:bg-sky-900" onClick={getLastWeek}> هفته قبلی </button>
-                    {/* </div> */}
-                </div>
->>>>>>> Stashed changes
             <table className="min-w-full divide-y divide-gray-300 shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 <thead className="text-white bg-sky-800" style={{ background: '' }}>
                     {/* rgb(218, 168, 43) */}
@@ -477,7 +443,6 @@ const Reserve = () => {
                     ))}
                 </tbody>
             </table>
-<<<<<<< Updated upstream
             // </div> 
 =======
          </div> 
@@ -517,7 +482,6 @@ const Reserve = () => {
                                     primary: 'rgb(38, 87, 124)',
                                     primary25: 'rgba(38, 87, 124,0.4)',
                                 }
-
                             })}
 
                             onChange={selectedOption => {
@@ -526,49 +490,16 @@ const Reserve = () => {
                             }}
                         >
                         </Select>
-=======
-                    
-                        {options.length === 0 ? (
-                            <div className='flex flex-col w-full justify-center items-center'>
-                                <p className='text-lg mb-7 w-full'> برای رزرو غذا ابتدا عضو سازمان ها شوید. </p>
-                                <Link to='/chooseOrg' className='bg-sky-800 hover:bg-sky-900 text-white text-center rounded-lg py-2 px-2'> عضویت در سازمان ها </Link>
-                            </div>
-                        ) : (
-                        <div className="mb-3 content-center w-full flex justify-center items-center">
-                            <Select
-                                options={options}
-                                value={currentBuffet.current}
-                                // isLoading={loading}
-                                className="rounded w-60"
-                                placeholder=" بوفه خود را انتخاب کنید. "
-                                theme={(theme) => ({
-                                    ...theme,
-                                    colors: {
-                                        ...theme.colors,
-                                        text: 'de6016',
-                                        primary: 'rgb(38, 87, 124)',
-                                        primary25: 'rgba(38, 87, 124,0.4)',
-                                    }
-                                })}
 
-                                onChange={selectedOption => {
-                                    currentBuffet.current = selectedOption;
-                                    fetchData();
-                                }}
-                            />
-                        </div>
-                        )}
-                    
->>>>>>> Stashed changes
-
+                    </div>
                 </div>
 
 <<<<<<< Updated upstream
                 {/* last week / next week button */}
                 <div className="flex flex-row my-5 justify-center items-center w-full">
                     {/* <div className="flex flex-row justify-end items-center "> */}
-                    <button className="rounded-xl bg-sky-800 mx-24 px-5 py-2 text-white hover:bg-sky-900" onClick={getNextWeek}> هفته بعدی </button>
-                    <button className="rounded-xl bg-sky-800 mx-24 px-5 py-2 text-white hover:bg-sky-900" onClick={getLastWeek}> هفته قبلی </button>
+                        <button className="rounded-xl bg-sky-800 mx-24 px-5 py-2 text-white hover:bg-sky-900" onClick={getNextWeek}> هفته بعدی </button>
+                        <button className="rounded-xl bg-sky-800 mx-24 px-5 py-2 text-white hover:bg-sky-900" onClick={getLastWeek}> هفته قبلی </button>
                     {/* </div> */}
                 </div>
 =======

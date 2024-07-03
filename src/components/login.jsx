@@ -48,6 +48,7 @@ function Login() {
     let responsedata = await AuthManager.LoginRequest(data.username , data.password);
     localStorage.setItem("token" , responsedata.data.tokens.access);
     navigate("/");
+    window.location.reload();
   };
   
 
@@ -123,7 +124,7 @@ function Login() {
         <p>
             <a
             // href="#"
-            className={`${styles.forgot_password} cursor-pointer hover:text-orange-500`}
+            className={`${styles.forgot_password} cursor-pointer text-template-custom-blue hover:text-orange-500`}
               onClick={toggleForgetPasswordModal}
             >
               فراموشی رمز عبور
