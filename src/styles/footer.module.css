@@ -414,11 +414,17 @@ ul {
 }
 
 .footer-widget {
-  margin:20px;
+  /* margin:20px; */
 }
 
+@media (min-width: 768px) {
 
+}
 @media (max-width: 991px) {
+  .footer-widget {
+    margin:20px;
+  }
+
   .footer-cta {
     border-bottom: none;
   }

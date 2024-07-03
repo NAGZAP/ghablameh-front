@@ -34,7 +34,7 @@ const Update = () => {
     setShowCurrentPassword(!showCurrentPassword);
   };
 
-  const toggleNewPasswordVisibility= () => {
+  const toggleNewPasswordVisibility = () => {
     setShowNewPassword(!showNewPassword);
   };
 
@@ -132,42 +132,68 @@ const Update = () => {
 
               {/* input fileds */}
               <div>
-                <div className={styles.formGroup}>
+                <div className={`${styles.formGroup} mt-3`}>
                   <label htmlFor="name" className={styles.label}> نام سازمان  </label>
-                  <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} className={styles.input} placeholder='نام سازمان' />
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="admin_username" className={styles.label}> نام کاربری مدیر سازمان  </label>
-                  <input type="text" id="admin_username" value={admin_username} onChange={(e) => SetAdmin_username(e.target.value)} className={styles.input} placeholder=' نام کاربری مدیر سازمان  ' />
+                  <input type="text" id="name" style={{ borderRadius: '10px' }} value={name} onChange={(e) => setName(e.target.value)} className={styles.input} placeholder='نام سازمان' />
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label className={styles.label}>نام مدیر سازمان</label>
-                  <div className='flex'>
-                    <input type="text" id="admin_first_name" value={admin_first_name} onChange={(e) => setAdmin_first_name(e.target.value)} className={styles.input} placeholder='نام' />
-                    <div style={{ marginLeft: '10px' }}></div>
-                    <input type="text" id="admin_last_name" value={admin_last_name} onChange={(e) => setAdmin_last_name(e.target.value)} className={styles.input} placeholder='نام خانوادگی' />
+                  <div className='flex mt-8'>
+                    <div className='w-1/2'>
+                      <label htmlFor="adminFirstName" className={styles.label}>نام مدیر سازمان</label>
+                      <input
+                        type="text"
+                        id="adminFirstName"
+                        style={{ borderRadius: '10px' }}
+                        value={admin_first_name}
+                        onChange={(e) => setAdmin_first_name(e.target.value)}
+                        className={styles.input}
+                        placeholder='نام'
+                      />
+                    </div>
+                    <div className='w-1/2 mr-4'>
+                      <label htmlFor="adminLastName" className={styles.label}>نام خانوادگی مدیر سازمان</label>
+                      <input
+                        type="text"
+                        id="adminLastName"
+                        style={{ borderRadius: '10px' }}
+                        value={admin_last_name}
+                        onChange={(e) => setAdmin_last_name(e.target.value)}
+                        className={styles.input}
+                        placeholder='نام خانوادگی'
+                      />
+                    </div>
                   </div>
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label htmlFor="admin_email" className={styles.label}> ایمیل مدیر سازمان </label>
-                  <input type="text" id="admin_email" value={admin_email} onChange={(e) => setAdmin_email(e.target.value)} className={styles.input} placeholder='  ایمیل مدیر سازمان  ' />
+                  <div className='flex mt-8'>
+                    <div className='w-1/2'>
+                    <label htmlFor="admin_username" className={styles.label}> نام کاربری مدیر سازمان  </label>
+                      <input type="text" id="admin_username" style={{ borderRadius: '10px', direction: 'ltr' }} value={admin_username} onChange={(e) => SetAdmin_username(e.target.value)} className={styles.input} placeholder=' نام کاربری مدیر سازمان  ' />
+                    
+                    </div>
+                    <div className='w-1/2 mr-4'>
+                    <label htmlFor="admin_phone_number" className={styles.label}> شماره تماس مدیر سازمان </label>
+                    <input type="text" id="admin_phone_number" style={{ borderRadius: '10px', direction: 'ltr'}} value={admin_phone_number} onChange={(e) => setAdmin_phone_number(e.target.value)} className={styles.input} placeholder=' شماره تماس مدیر سازمان ' />
+                    </div>
+                  </div>
                 </div>
 
+
                 <div className={styles.formGroup}>
-                  <label htmlFor="admin_phone_number" className={styles.label}> شماره تماس مدیر سازمان </label>
-                  <input type="text" id="admin_phone_number" value={admin_phone_number} onChange={(e) => setAdmin_phone_number(e.target.value)} className={styles.input} placeholder=' شماره تماس مدیر سازمان ' />
+                  <label htmlFor="admin_email" className={styles.label}> ایمیل مدیر سازمان </label>
+                  <input type="text" id="admin_email" style={{ borderRadius: '10px', direction: 'ltr' }} value={admin_email} onChange={(e) => setAdmin_email(e.target.value)} className={styles.input} placeholder='  ایمیل مدیر سازمان  ' />
                 </div>
 
                 {/* submit button */}
                 {!isWaitingForm1 && (
-                  <button type="submit" className={styles.button}>
+                  <button type="submit" className={styles.button} style={{ borderRadius: '10px' }}>
                     ارسال اطلاعات
                   </button>
                 )}
                 {isWaitingForm1 && (
-                  <button type="submit" className={styles.button}>
+                  <button type="submit" className={styles.button} style={{ borderRadius: '10px' }}>
                     <div className={`${styles.spinner2}`}></div>
                   </button>
                 )}
@@ -198,6 +224,7 @@ const Update = () => {
                       value={old_password}
                       onChange={(e) => setOld_password(e.target.value)}
                       className={styles.input}
+                      style={{ borderRadius: '10px' }}
                     // required
                     />
                     <FontAwesomeIcon
@@ -218,6 +245,7 @@ const Update = () => {
                       value={new_password}
                       onChange={(e) => setNew_password(e.target.value)}
                       className={styles.input}
+                      style={{ borderRadius: '10px' }}
                     // required
                     />
                     <FontAwesomeIcon
@@ -238,6 +266,7 @@ const Update = () => {
                       value={confirm_new_password}
                       onChange={(e) => setConfirm_new_password(e.target.value)}
                       className={styles.input}
+                      style={{ borderRadius: '10px' }}
                     // required
                     />
                     <FontAwesomeIcon
@@ -251,15 +280,15 @@ const Update = () => {
 
               {/* submit button */}
               {!isWaitingForm2 && (
-                  <button type="submit" className={styles.button}>
-                   به روز رسانی رمز عبور
-                  </button>
-                )}
-                {isWaitingForm2 && (
-                  <button type="submit" className={styles.button}>
-                    <div className={`${styles.spinner2}`}></div>
-                  </button>
-                )}
+                <button type="submit" className={styles.button} style={{ borderRadius: '10px' }}>
+                  به روز رسانی رمز عبور
+                </button>
+              )}
+              {isWaitingForm2 && (
+                <button type="submit" className={styles.button} style={{ borderRadius: '10px' }}>
+                  <div className={`${styles.spinner2}`}></div>
+                </button>
+              )}
             </form>
 
           </div>
@@ -310,7 +339,7 @@ const Update = () => {
     }
     if (!/^([a-zA-Z0-9!_.]+)@([a-zA-Z]+)\.([a-zA-Z]{2,})$/.test(admin_email)) {
       errors.push('ایمیل مدیر را به درستی وارد کنید.');
-     }
+    }
     if (admin_phone_number.startsWith('98') && admin_phone_number.length !== 12) {
       errors.push('شماره مدیر را به درستی وارد کنید.');
     }

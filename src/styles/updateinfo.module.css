@@ -68,10 +68,11 @@
 
 .input {
   width: 100%;
-  padding: 8px;
-  text-align: right;
-  border: 1px solid #26577C;
+  padding: 8px;  
   border-radius: 10px;
+  /* text-align: right; */
+  border: 1px solid #26577C;
+
   font-size: 14px;
 }
 

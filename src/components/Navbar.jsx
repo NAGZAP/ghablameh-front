@@ -144,9 +144,18 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
     if (AuthManager.isLoggedIn()) {
       let displayName;
       if (userType === 2 && userData) {
-        displayName = userData.first_name+' '+userData.last_name;
+        if (isBigScreen) {
+          displayName = userData.first_name + ' ' + userData.last_name;
+        } else {
+          displayName = userData.first_name;
+        }
+
       } else if (userType === 1 && adminData) {
-        displayName = adminData.admin_first_name+' '+adminData.admin_last_name;
+        if (isBigScreen) {
+          displayName = adminData.admin_first_name + ' ' + adminData.admin_last_name;
+        } else {
+          displayName = adminData.admin_first_name;
+        }
       }
 
       if (displayName) {
@@ -177,7 +186,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
             </Link>
           </div>
           <div>
-            <h6 className={`text-white pl-2`} style={{fontSize: "23px", fontFamily: "vazir", marginRight: "10px", marginLeft: '7px'}}>/</h6>
+            <h6 className={`text-white pl-2`} style={{ fontSize: "23px", fontFamily: "vazir", marginRight: "10px", marginLeft: '7px' }}>/</h6>
           </div>
           <div>
             <Link
@@ -196,8 +205,8 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
   return (
     <>
       <nav style={{ backgroundColor: "rgb(38, 87, 124)" }} className={`flex justify-between items-center w-full pl-5`} >
-        
-       
+
+
         {/* Elements - Logo */}
         <div className={`flex items-center justify-center`}>
           <div className={`flex items-center justify-center`}>
@@ -214,7 +223,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
               style={{ fontSize: "35px", fontFamily: "vazir" }}
             >
               {/* <Link to="/"> */}
-                <img src={'../../public//logo-orange.jpg'} onClick={handleOpenSidebar} alt={' قابلمه '} style={{ height: '1.7rem' }} />
+              <img src={'../../public//logo-orange.jpg'} onClick={handleOpenSidebar} alt={' قابلمه '} style={{ height: '1.7rem' }} />
               {/* </Link> */}
             </button>
 
@@ -311,7 +320,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
             </div> */}
 
         </div>
-        
+
       </nav>
 
       {/* sidebar */}
@@ -347,7 +356,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
 
       {/* wallet */}
       {openWallet && <UserWallet open={openWallet} setOpen={setOpenWallet} />}
-      <img src={bgimage} alt="background" />
+      <img src={bgimage} alt="background" className="mb-4" />
     </>
   );
 };

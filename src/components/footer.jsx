@@ -181,7 +181,25 @@ import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faTelegram} from '@fortawesome/free-brands-svg-icons';
+import {useState} from 'react';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 const Footer = () => {
+  const isBigScreen = useMediaQuery('(min-width: 1000px)')
+  const isMediumScreen = useMediaQuery('(min-width: 900px)')
+  const isSmallScreen = useMediaQuery('(min-width: 300px)')
+
+  let widthhh;
+  // if (isBigScreen) {
+  //   widthhh = '3vw';
+  // }
+   if (isMediumScreen) {
+    widthhh = '25vw';
+  }else if(isSmallScreen){
+    widthhh = '55vw';
+  }
+
+
   return (
    
     <div className={styles.app}>
@@ -190,7 +208,7 @@ const Footer = () => {
         <div className={`${styles['footer-content']} pt-5 pb-5`}>
           <div className={styles['iner-footer']}>
 
-            <div className="mb-10">
+            <div className="my-2 mr-1 ml-10">
               <div className={styles['footer-widget']}>
                 {/* <div className={styles['footer-logo']}>
                   <a href="index.html">
@@ -199,8 +217,8 @@ const Footer = () => {
                 </div> */}
                 <div className={styles['footer-widget-heading']}>
                   <h3> شبکه های اجتماعی</h3>
-                  <hr className='border-orange-500 my-4 w-72' style={{borderTop:'3px solid rgb(255 90 31)'}}></hr>
-                  <a href="#"><FontAwesomeIcon icon={faFacebookF} className={`${styles['facebook-bg']} text-white`} /></a>
+                  <hr className='border-orange-500 my-4 w-full' style={{borderTop:'3px solid rgb(255 90 31)'}}></hr>
+                 {/* <a href="#"><FontAwesomeIcon icon={faFacebookF} className={`${styles['facebook-bg']} text-white`} /></a> */}
                   <a href="#"><FontAwesomeIcon icon={faTwitter} className={`${styles['twitter-bg']} text-white`} /></a>
                   <a href="#"><FontAwesomeIcon icon={faInstagram} className={`${styles['insta-bg']} text-white`} /></a>
                   <a href="#"><FontAwesomeIcon icon={faTelegram} className={`${styles['tel-bg']} text-white`} /></a>
@@ -208,13 +226,14 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="mb-10">
+            <div className="my-2 mr-1 ml-10">
               <div className={styles['footer-widget']}>
                 <div className={styles['footer-widget-heading']}>
                   <h3>لینک های مفید</h3>
+                  <hr className='border-orange-500 my-4 w-full' style={{borderTop:'3px solid rgb(255 90 31)'}}></hr>
+                 
                 </div>
-                <hr className='border-orange-500 my-4 w-80' style={{borderTop:'3px solid rgb(255 90 31)'}}></hr>
-                  
+                 
                 <ul>
                   <li><a href="#">خانه</a></li>
                   <li><a href="#">درباره</a></li>
@@ -228,13 +247,17 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="mb-10">
+            <div className="my-2 mr-1 ml-10">
               <div className={styles['footer-widget']}>
                 <div className={styles['footer-widget-heading']}>
                   <h3>ارتباط با ما</h3>
+                  <hr className='border-orange-500 my-4 w-full' style={{borderTop:'3px solid rgb(255 90 31)'}}></hr>
+                 
                 </div>
-                <hr className='border-orange-500 my-4 w-96' style={{borderTop:'3px solid rgb(255 90 31)'}}></hr>
-                  
+                <div className=''>
+                {/* <hr className='border-orange-500 my-4' style={{borderTop:'3px solid rgb(255 90 31)',  width: widthhh}}></hr> */}
+                {/* <hr style={{ width: "50%" }} /> */}
+                  </div>
                 <div className={styles.footer}>
             <div className="flex items-center">
               <FontAwesomeIcon
@@ -243,8 +266,8 @@ const Footer = () => {
                 style={{ color: '#ff5e14', fontSize: '24px' }}
               />
               <div className={`${styles['cta-text']} ml-2`}>
-                <h4>آدرس ما</h4>
-                <span>تهران ، خیابان فرجام ، دانشگاه علم و صنعت ایران</span>
+                <h4>آدرس </h4>
+                <span>تهران، خیابان فرجام، دانشگاه علم و صنعت</span>
               </div>
             </div>
             <div className="flex items-center">
