@@ -20,7 +20,7 @@ import {
 } from "react-icons/hi";
 import DefaultSidebar from "./Sidebar";
 import Notificationbox from "./Notificationbox";
-import bgimage from '../../public/wave3.png'
+import bgimage from '/wave3.png'
 
 // function Navbar() {
 const Navbar = ({ openWallet, setOpenWallet }) => {
@@ -223,7 +223,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
               style={{ fontSize: "35px", fontFamily: "vazir" }}
             >
               {/* <Link to="/"> */}
-              <img src={'../../public//logo-orange.jpg'} onClick={handleOpenSidebar} alt={' قابلمه '} style={{ height: '1.7rem' }} />
+              <img src={'./logo-orange.jpg'} onClick={handleOpenSidebar} alt={' قابلمه '} style={{ height: '1.7rem' }} />
               {/* </Link> */}
             </button>
 

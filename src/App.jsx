@@ -114,7 +114,7 @@ function App() {
           {userRole === 2 && <Route path="/Reserve" element={<Reserve />} />}
           {userRole === 3 && <Route path="/Reserve" element={<Login />} />}
           {/* <Route path="/ReviewOnBoofeh" element={<DataFromApiList />} />User */}
-          {userRole === 2 && <Route path="/ReviewOnBoofeh" element={<Reserve />} />}
+          {userRole === 2 && <Route path="/ReviewOnBoofeh" element={<DataFromApiList />} />}
           {userRole === 3 && <Route path="/ReviewOnBoofeh" element={<Login />} />}
           {/* <Route path="/verify" element={<Verify />} /> */}
           {/* <Route path="/addweeklymenu" element={<AddWeeklyMenu />} /> admin repeat of by admin!!!! */}
