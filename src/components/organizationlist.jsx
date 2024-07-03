@@ -2,7 +2,7 @@ import axios from 'axios';
 import AuthManager from "../APIs/AuthManager";
 import { useState, useEffect } from "react";
 import Select from 'react-select';
-import defaultPhoto from '../../public/team.png'
+import defaultPhoto from '/team.png'
 import styles from '../styles/organizationlist.module.css'
 import { Link } from 'react-router-dom';
 

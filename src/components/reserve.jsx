@@ -153,6 +153,7 @@ const Reserve = () => {
         }
         setIsLoading(false);
     };
+
     // useEffect(() => {
     //     if (AuthManager.isLoggedIn()) {
     //         fetchData();
@@ -160,6 +161,7 @@ const Reserve = () => {
     // }, [currentBuffet.current]);
 
     // fetch reserved foods
+
     const fetchReservations = async () => {
         try {
             const token = AuthManager.getToken();
@@ -439,26 +441,26 @@ const Reserve = () => {
         if (data.length === 0 && options.length !== 0 && dates.length === 0) {
             return (
                 <div className="flex flex-col items-center justify-center">
-                    
+
                     {/* last week / next week button */}
-                    <div className="flex flex-row my-5 justify-center items-center bg-white bg-opacity-60 rounded-lg" style={{padding: isBigScreen ? '16px':'10px' }}>
-                    <button className="rounded-lg bg-sky-800 px-5 py-2 text-white hover:bg-sky-900" onClick={getLastWeek} style={{ fontSize: isBigScreen ? '1rem' : '0.6rem',marginLeft: isBigScreen ? '40px':'10px', paddingLeft: isBigScreen ? '1rem': '0.5rem' ,paddingRight: isBigScreen ? '1rem': '0.5rem' }}> هفته قبلی </button>
+                    <div className="flex flex-row my-5 justify-center items-center bg-white bg-opacity-60 rounded-lg" style={{ padding: isBigScreen ? '16px' : '10px' }}>
+                        <button className="rounded-lg bg-sky-800 px-5 py-2 text-white hover:bg-sky-900" onClick={getLastWeek} style={{ fontSize: isBigScreen ? '1rem' : '0.6rem', marginLeft: isBigScreen ? '40px' : '10px', paddingLeft: isBigScreen ? '1rem' : '0.5rem', paddingRight: isBigScreen ? '1rem' : '0.5rem' }}> هفته قبلی </button>
                         {/* currentBuffet.current.value */}
-                        <div className=" flex items-center justify-center flex-row bg-opacity-50 py-1 px-2 rounded-lg" style={{ background: 'rgba(38, 87, 124, 0.2)' ,fontSize: isBigScreen ? '1rem' : '0.8rem'}}>
+                        <div className=" flex items-center justify-center flex-row bg-opacity-50 py-1 px-2 rounded-lg" style={{ background: 'rgba(38, 87, 124, 0.2)', fontSize: isBigScreen ? '1rem' : '0.8rem' }}>
                             {convertToJalali(toDate.current)}
                             {/* {fromDate.current} */}
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            {isBigScreen&&(<div>-&nbsp;&nbsp;&nbsp;&nbsp;</div>) }
-                            {!isBigScreen&&(<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>) }
-                            
+                            {isBigScreen && (<div>-&nbsp;&nbsp;&nbsp;&nbsp;</div>)}
+                            {!isBigScreen && (<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>)}
+
                             {convertToJalali(fromDate.current)}
                         </div>
 
-                       <button className="rounded-lg bg-sky-800 px-5 py-2 text-white hover:bg-sky-900" onClick={getNextWeek} style={{ fontSize: isBigScreen ? '1rem' : '0.6rem',marginRight: isBigScreen ? '40px':'10px', paddingLeft: isBigScreen ? '1rem': '0.5rem' ,paddingRight: isBigScreen ? '1rem': '0.5rem' }}>هفته بعدی </button>
+                        <button className="rounded-lg bg-sky-800 px-5 py-2 text-white hover:bg-sky-900" onClick={getNextWeek} style={{ fontSize: isBigScreen ? '1rem' : '0.6rem', marginRight: isBigScreen ? '40px' : '10px', paddingLeft: isBigScreen ? '1rem' : '0.5rem', paddingRight: isBigScreen ? '1rem' : '0.5rem' }}>هفته بعدی </button>
                     </div>
 
                     <span className="flex flex-row justify-center my-20 items-center p-2 rounded-lg " style={{ background: 'rgba(38, 87, 124,0.2)' }} >  غذایی جهت رزرو وجود ندارد. </span>
-                
+
                 </div>
             );
         }
@@ -466,31 +468,31 @@ const Reserve = () => {
         //table
         if (data.length !== 0 && options.length !== 0) {
             return (
-                <div className="my-6 mx-2">
-                    <div className="flex flex-col items-center justify-center">
-                    {/* last week / next week button */}
-                    <div className="flex flex-row my-5 justify-center items-center bg-white bg-opacity-60 rounded-lg" style={{padding: isBigScreen ? '16px':'10px' }}>
-                    <button className="rounded-lg bg-sky-800 px-5 py-2 text-white hover:bg-sky-900" onClick={getLastWeek} style={{ fontSize: isBigScreen ? '1rem' : '0.6rem',marginLeft: isBigScreen ? '40px':'10px', paddingLeft: isBigScreen ? '1rem': '0.5rem' ,paddingRight: isBigScreen ? '1rem': '0.5rem' }}> هفته قبلی </button>
-                        {/* currentBuffet.current.value */}
-                        <div className=" flex items-center justify-center flex-row bg-opacity-50 py-1 px-2 rounded-lg" style={{ background: 'rgba(38, 87, 124, 0.2)' ,fontSize: isBigScreen ? '1rem' : '0.8rem'}}>
-                            {convertToJalali(toDate.current)}
-                            {/* {fromDate.current} */}
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            {isBigScreen&&(<div>-&nbsp;&nbsp;&nbsp;&nbsp;</div>) }
-                            {!isBigScreen&&(<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>) }
-                            
-                            {convertToJalali(fromDate.current)}
-                        </div>
+                <div className="">
 
-                       <button className="rounded-lg bg-sky-800 px-5 py-2 text-white hover:bg-sky-900" onClick={getNextWeek} style={{ fontSize: isBigScreen ? '1rem' : '0.6rem',marginRight: isBigScreen ? '40px':'10px', paddingLeft: isBigScreen ? '1rem': '0.5rem' ,paddingRight: isBigScreen ? '1rem': '0.5rem' }}>هفته بعدی </button>
+                    <div className="flex flex-col items-center justify-center">
+                        {/* last week / next week button */}
+                        <div className="flex flex-row my-5 justify-center items-center bg-white bg-opacity-60 rounded-lg" style={{ padding: isBigScreen ? '16px' : '10px' }}>
+                            <button className="rounded-lg bg-sky-800 px-5 py-2 text-white hover:bg-sky-900" onClick={getLastWeek} style={{ fontSize: isBigScreen ? '1rem' : '0.6rem', marginLeft: isBigScreen ? '40px' : '10px', paddingLeft: isBigScreen ? '1rem' : '0.5rem', paddingRight: isBigScreen ? '1rem' : '0.5rem' }}> هفته قبلی </button>
+                            {/* currentBuffet.current.value */}
+                            <div className=" flex items-center justify-center flex-row bg-opacity-50 py-1 px-2 rounded-lg" style={{ background: 'rgba(38, 87, 124, 0.2)', fontSize: isBigScreen ? '1rem' : '0.8rem' }}>
+                                {convertToJalali(toDate.current)}
+                                {/* {fromDate.current} */}
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                {isBigScreen && (<div>-&nbsp;&nbsp;&nbsp;&nbsp;</div>)}
+                                {!isBigScreen && (<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>)}
+
+                                {convertToJalali(fromDate.current)}
+                            </div>
+
+                            <button className="rounded-lg bg-sky-800 px-5 py-2 text-white hover:bg-sky-900" onClick={getNextWeek} style={{ fontSize: isBigScreen ? '1rem' : '0.6rem', marginRight: isBigScreen ? '40px' : '10px', paddingLeft: isBigScreen ? '1rem' : '0.5rem', paddingRight: isBigScreen ? '1rem' : '0.5rem' }}>هفته بعدی </button>
+                        </div>
                     </div>
-                     </div>
 
                     {/* table */}
-                    <div className="my-6 mx-2">
+                    <div className="m-4">
                         <table className="min-w-full divide-y divide-gray-300 shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                            <thead className="text-white bg-sky-800" style={{ background: '' }}>
-                                {/* rgb(218, 168, 43) */}
+                            <thead className="text-white" style={{ background: 'rgb(38, 87, 124)' }}>
                                 <tr>
                                     <th className="w-1/5 p-2 text-lg font-medium tracking-wider text-center">روز</th>
                                     {mealNames.map((mealName, index) => (
@@ -500,17 +502,13 @@ const Reserve = () => {
                             </thead>
                             <tbody>
                                 {organizedData.map((entry, rowIndex) => (
-                                    <tr key={rowIndex} className={`${'flex'} ${'items-center'} ${'justify-center'} py-14 ${rowIndex % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
-                                        {/* <div className="flex items-center justify-center py-14"> */}
-                                        <td className="p-2 text-sky-950">{convertToJalali(entry.date)}</td>
-                                        {/* </div> */}
-                                        {/* } */}
+                                    <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
+                                        <td className="p-2 text-center">{convertToJalali(entry.date)}</td>
                                         {mealNames.map((mealName, index) => (
                                             <td key={index} className="p-2">
                                                 {entry[mealName].map((food, foodIndex) => (
                                                     <div key={foodIndex} className="flex items-center justify-center">
-                                                        <div className="flex flex-row justify-center items-center p-2 rounded-lg my-2" style={{ background: 'rgba(251, 146, 60, 0.9)' }}>
-                                                            {/* rgba(218, 168, 43,0.4) */}
+                                                        <div className="flex flex-row justify-center items-center p-1 rounded-lg my-2" style={{ background: 'rgba(38, 87, 124,0.3)' }}>
                                                             <input
                                                                 type="checkbox"
                                                                 checked={reservedfoods.some(reserved => reserved.meal_food.food.id === food.foodId)}
@@ -519,12 +517,11 @@ const Reserve = () => {
                                                             />
                                                             <div className="flex flex-col p-2 items-start justify-center">
                                                                 <span className="text-sm font-bold text-sky-900">{food.name}</span>
-                                                                <span className="text-xs pt-1 font-normal text-sky-900">{food.price} تومان </span>
-                                                                <span className="text-xs text-sky-900"> موجودی: {food.numberInStock} عدد </span>
+                                                                <span className="text-xs pt-1 font-normal ">{food.price} تومان </span>
+                                                                <span className="text-xs "> موجودی: {food.numberInStock} عدد </span>
                                                                 {/* <span className="text-sm text-gray-700">{food.foodId}  </span> */}
                                                             </div>
-                                                        </div>
-                                                    </div>
+                                                        </div></div>
                                                 ))}
                                             </td>
                                         ))}
@@ -554,9 +551,8 @@ const Reserve = () => {
                 <div className="grid grid-cols-3 w-full" >
                     <div></div>
 
+                    {/* choose buffet */}
                     <div className="mb-3 content-center w-full flex justify-center items-center">
-
-                        {/* choose buffet */}
                         {options.length === 0 ? (
                             <div className='flex flex-col w-full justify-center items-center'>
                                 <p className='text-lg mb-7 w-full'> برای رزرو غذا ابتدا عضو سازمان ها شوید. </p>
@@ -594,6 +590,7 @@ const Reserve = () => {
 
                 {/* table */}
                 {!isLoading && (<TableComponent data={fetchedData} />)}
+
                 {isLoading && (
                     <div className="flex flex-col items-center my-10 justify-center">
                         <div className={`${styles.spinner}`}></div>
