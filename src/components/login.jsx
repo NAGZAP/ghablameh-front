@@ -1,4 +1,4 @@
-import React ,{ useState } from "react";
+import React ,{ useState ,useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -9,6 +9,9 @@ import AuthManager from "../APIs/AuthManager";
 import  ForgetPasswordWindow from "../forgetpassword/ForgetPasswordWindow"
 import ForgetPasswordModal from "../forgetpassword/ForgetPasswordWindow";
 import Navbarparent from "./navbarparent";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css'; // Ensure this line is included
+import '../styles/customNotifications.css'
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
 
@@ -34,7 +37,28 @@ function Login() {
     setShowForgetPasswordModal(false);
   };
 
-
+  const createNotification = useCallback((type) => {
+    return () => {
+      switch (type) {
+        case 'info':
+          NotificationManager.info('ایمیل شما تایید نشده است!');
+          break;
+        case 'success':
+          NotificationManager.success('با موفقیت وارد شدید!', 'عملیات موفق');
+          break;
+        case 'warning':
+          NotificationManager.warning('Warning message', 'Close after 3000ms', 3000);
+          break;
+        case 'error':
+          NotificationManager.error('نام کاربری یا کلمه عبور اشتباه است!', 'خطا', 5000, () => {
+            alert('callback');
+          });
+          break;
+        default:
+          break;
+      }
+    };
+  }, []);
   const navigate=useNavigate()
   const {
     register,
@@ -46,9 +70,26 @@ function Login() {
 
   const onSubmit = async (data) => {
     let responsedata = await AuthManager.LoginRequest(data.username , data.password);
-    localStorage.setItem("token" , responsedata.data.tokens.access);
-    navigate("/");
-    window.location.reload();
+    try{
+    let message = responsedata.response.data.message;
+    if(message !== undefined)
+    {
+      if(responsedata.response.data.message == "username or password not correct"){
+        createNotification('error')();
+      }
+      else 
+        createNotification('info')();
+    }
+  }
+  catch
+    {
+      createNotification('success')();
+      localStorage.setItem("token" , responsedata.data.tokens.access);
+      navigate("/");
+      window.location.reload();
+    }
+    
+
   };
   
 
@@ -56,12 +97,14 @@ function Login() {
   return (
     <>
     <Navbarparent/>
+    <NotificationContainer/>
     <div className={styles.container}>
       <div className={styles.signup}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <p className="max font-semibold text-template-custom-blue text-4xl dark:text-template-custom-blue text-center mt-5">
             ورود
           </p>
+          
           <div className="w-72 mt-5 mb-1 mr-20 ml-20">
             <div className="relative w-full min-w-[200px] h-10">
               <input
@@ -136,6 +179,7 @@ function Login() {
         <ForgetPasswordModal onClose={closeForgetPasswordModal} />
       )}
     </div>
+    
     </>
   );
 }
