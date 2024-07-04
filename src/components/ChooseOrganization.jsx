@@ -116,15 +116,15 @@ const ChooseOrganization = () => {
       setIsLoading(false);
     };
 
-useEffect(() => {
-  fetchOrganizations();
-  const intervalId = setInterval(() => {
-    fetchOrganizations();
-  }, 5000); //5 seconds
+// useEffect(() => {
+//   fetchOrganizations();
+//   const intervalId = setInterval(() => {
+//     fetchOrganizations();
+//   }, 5000); //5 seconds
 
-  return () => clearInterval(intervalId); // Clear the interval when the component is unmounted 
+//   return () => clearInterval(intervalId); // Clear the interval when the component is unmounted 
 
-}, []); 
+// }, []); 
 
   const handleJoin = async () => {
     let orgs = document.querySelectorAll(".organizationCheckbox");

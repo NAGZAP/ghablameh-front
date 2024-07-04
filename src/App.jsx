@@ -101,8 +101,8 @@ function App() {
           {userRole === 3 && <Route path="/weeklymenu2" element={<Login />} />}
           <Route path="/last" element={<ReservationCalendar />} />
           {/* <Route path="/forgetpassword" element={<ForgetPasswordWindow />} /> */}
-          {/* <Route path="/EmailVerify" element={<EmailVerify />} /> non-user */}
-          {userRole === 3 && <Route path="/EmailVerify" element={<EmailVerify />} />}
+          <Route path="/EmailVerify" element={<EmailVerify />} /> 
+          {/* {userRole === 3 && <Route path="/EmailVerify" element={<EmailVerify />} />} */}
           {/* {userRole === 3 && <Route path="/EmailVerify" element={<Login />} />} */}
           {/* <Route path="/boofeh" element={<Boofeh />} /> */}
           {/* <Route path="/byadmin" element={<AddWeeklyMenu />} /> admin */}
@@ -117,7 +117,7 @@ function App() {
           {/* <Route path="/ReviewOnBoofeh" element={<DataFromApiList />} />User */}
           {userRole === 2 && <Route path="/ReviewOnBoofeh" element={<DataFromApiList />} />}
           {userRole === 3 && <Route path="/ReviewOnBoofeh" element={<Login />} />}
-          {/* <Route path="/verify" element={<Verify />} /> */}
+          <Route path="/verify" element={<Verify />} />
           {/* <Route path="/addweeklymenu" element={<AddWeeklyMenu />} /> admin repeat of by admin!!!! */}
           {userRole === 1 && <Route path="/addweeklymenu" element={<AddWeeklyMenu />} />}
           {userRole === 3 && <Route path="/addweeklymenu" element={<Login />} />}

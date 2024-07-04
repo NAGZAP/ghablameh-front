@@ -67,10 +67,10 @@ function OrgPage() {
   fetchDataInitially();
   
   // Interval for fetching data every 5 seconds
-  const intervalTime = 5 * 1000; // 5 seconds in milliseconds
-  setInterval(() => {
-    fetchData();
-  }, intervalTime);
+  // const intervalTime = 5 * 1000; // 5 seconds in milliseconds
+  // setInterval(() => {
+  //   fetchData();
+  // }, intervalTime);
 
   const handleDeleteConfirmation = (id) => {
     setDeleteBuffetId(id);

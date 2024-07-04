@@ -35,17 +35,17 @@ function ListOfJoinRequests() {
     }
   };
 
-  //fetch requests every 5 seconds
-  useEffect(() => {
-    // Fetch immediately for the first time
-    fetchRequests();
-    const interval = setInterval(() => {
-      fetchRequests();
-    }, 5000); // (fetch every 5 seconds)
+  // //fetch requests every 5 seconds
+  // useEffect(() => {
+  //   // Fetch immediately for the first time
+  //   fetchRequests();
+  //   const interval = setInterval(() => {
+  //     fetchRequests();
+  //   }, 5000); // (fetch every 5 seconds)
 
-    // Clear the interval when the component is unmounted
-    return () => clearInterval(interval);
-  });
+  //   // Clear the interval when the component is unmounted
+  //   return () => clearInterval(interval);
+  // });
 
   //patch requests
   const handleaccept = async () => {
