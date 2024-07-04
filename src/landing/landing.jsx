@@ -1,38 +1,56 @@
-
+import Navbarparent from '../components/navbarparent';
 import './landing.css';
+import'./style.css';
 import React from 'react';
 import shape from './images/bg.png'
 import feature1 from './images/feature-1.png';
 import feature2 from './images/feature-2.png';
 import aboutBanner from './images/about-banner.png';
+import img1 from "./images/team.svg"
 const Landing = () => {
   return (
+
     <div>
-      {/* HEADER */}
+    <Navbarparent/>
+      <section class="wrapper">
+      <div class="container">
+        <div class="grid-cols-2">
+          <div class="grid-item-1">
+          <h1 class="main-heading inline-block text-center">
+  به سامانه قابلمه خوش آمدید
+</h1>
+            <p class="info-text">
+             برای دیدن امکانات سایت لطف ثبت نام کنید یا اگر حساب دارید وارد شوید
+            </p>
+
+            <div class="btn_wrapper">
+              <button class="btn view_more_btn">
+                 ثبت نام
+              </button>
+
+              <button class="btn d_btn">ورود</button>
+            </div>
+          </div>
+          <div class="grid-item-2">
+            <div class="team_img_wrapper">
+              <img src={img1} alt="team-img" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
       {/* HERO SECTION */}
-      <section className="hero" id="home">
-        <div className="container">
-          <div className="hero-content">
-            <h1 className="h1 hero-title">Your full-funnel growth agency</h1>
-            <p className="hero-text">
-              Capture and retrieve your lists across devices to help you stay organized at work, home, and on the go.
-            </p>
-            <button className="btn btn-primary">Get started</button>
-          </div>
-          <div className="hero-banner"></div>
-        </div>
-        <img src={shape} alt="shape" className="shape-content" />
-      </section>
+     
 
       {/* ABOUT SECTION */}
       <section className="about" id="about">
         <div className="container">
           <div className="about-top">
-            <h2 className="h2 section-title">What we do</h2>
+            <h2 className="h2 section-title">قابلمه</h2>
             <p className="section-text">
-              Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back into the
-              development of the asset through its charitable foundation.
+           این سامانه ، سامانه رزرو غذا است که کارفرمایان بخش های مختلف میتوانند منوی هفتگی خود را تعریف کنند 
+           تا افراد بخش های مرتبط بتوانند غذای مورد نظر خود را رزرو کنند
             </p>
             <ul className="about-list">
               <li>
@@ -40,9 +58,9 @@ const Landing = () => {
                   <div className="card-icon">
                     <ion-icon name="briefcase-outline"></ion-icon>
                   </div>
-                  <h3 className="h3 card-title">Paid Search and Social Management</h3>
+                  <h3 className="h3 card-title">جامع بودن</h3>
                   <p className="card-text">
-                    Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back
+                    قابلمه به تمام شرکت ها و بخش های صنعتی و آکادمیک خدمات خود را ارائه می دهد
                   </p>
                 </div>
               </li>
@@ -51,9 +69,11 @@ const Landing = () => {
                   <div className="card-icon">
                     <ion-icon name="chatbubbles-outline"></ion-icon>
                   </div>
-                  <h3 className="h3 card-title">Direct Response Content</h3>
+                  <h3 className="h3 card-title">رزو غذا</h3>
                   <p className="card-text">
-                    Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back
+                تمام کاربران به راحتی میتوانند غذا خود را
+                <br/>
+                 در بوفه موردنظر رزرو کنند
                   </p>
                 </div>
               </li>
@@ -62,9 +82,9 @@ const Landing = () => {
                   <div className="card-icon">
                     <ion-icon name="rocket-outline"></ion-icon>
                   </div>
-                  <h3 className="h3 card-title">CRO and Retention Optimizations</h3>
+                  <h3 className="h3 card-title">تعریف منوی هفتگی</h3>
                   <p className="card-text">
-                    Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back
+                  تمامی سازمان ها میتوانند منوی هفتگی مورد نظر خود را برای بوفه های خود تعریف کنند
                   </p>
                 </div>
               </li>
@@ -75,12 +95,11 @@ const Landing = () => {
               <img src={aboutBanner}alt="about banner" className="about-banner" />
             </figure>
             <div className="about-bottom-content">
-              <h2 className="h2 section-title">We're obsessed with growth</h2>
+              <h2 className="h2 section-title"> با نظرات خود ما را یاری کنید</h2>
               <p className="section-text">
-                Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back into the
-                development of the asset through its charitable foundation.
+                اگر نظر یا انتقادی درباره ی نحوه کارکرد سایت دارید با ما در میان بگذارید تا با کمک شما عملکرد خود را بهبود دهیم 
               </p>
-              <button className="btn btn-secondary">Sign Up For Free</button>
+              
             </div>
           </div>
         </div>
@@ -88,39 +107,13 @@ const Landing = () => {
 
       {/* FEATURES SECTION */}
       <section className="features" id="features">
-        <div className="container">
-          <h2 className="h2 section-title">Our team is made up of all different backgrounds from all over the world.</h2>
-          <p className="section-text">
-            Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back into the
-            development of the asset through its charitable foundation.
-          </p>
-          <ul className="features-list">
-            <li className="features-item">
-              <figure className="features-item-banner">
-                <img src={feature1} alt="feature banner" />
-              </figure>
-              <div className="feature-item-content">
-                <h3 className="h2 item-title">Cover your everyday expenses</h3>
-                <p className="item-text">
-                  Inspiration comes in many ways and you like to save everything from. sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua.
-                </p>
-              </div>
-            </li>
-            <li className="features-item">
-              <figure className="features-item-banner">
-                <img src={feature2}alt="feature banner" />
-              </figure>
-              <div className="feature-item-content">
-                <h3 className="h2 item-title">We offer low fees that are transparent</h3>
-                <p className="item-text">
-                  Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back into the
-                  development of the asset through its charitable foundation.
-                </p>
-              </div>
-            </li>
-          </ul>
+        <div>
+             
+
+
+
         </div>
+    
       </section>
       
     </div>

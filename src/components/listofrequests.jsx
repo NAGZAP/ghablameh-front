@@ -27,7 +27,7 @@ function ListOfJoinRequests() {
 
       setRequests(pendingRequests);
 
-      console.log("requests: ", requests)
+      // console.log("requests: ", requests)
 
     } catch (error) {
       console.error('Error fetching user data: ', error);

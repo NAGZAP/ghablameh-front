@@ -1,4 +1,3 @@
-
 import React from 'react';
 import DataFetcher from "./arrow";
 import Select from "react-select";
@@ -9,6 +8,8 @@ import { useEffect, useState, useRef } from 'react';
 import styles from './style.module.css';
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
+import cup from './coffee-cup.svg'
+
 import Navbarparent from '../components/navbarparent';
 import OrganizationList from '../components/organizationlist';
 
@@ -74,7 +75,20 @@ function ListOrg() {
       setLoaded(true)
     },
   })
+  const [reservations, setReservations] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://ghablameh.fiust.ir/api/v1/reserve/');
+        setReservations(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
   const [loading, setLoading] = useState(false);
   const handleSearch = () => {
     setLoading(true);
@@ -121,12 +135,19 @@ function ListOrg() {
   };
 
   return (
+
+
     <div className={styles.land}>
+
+
+
       <Navbarparent></Navbarparent>
       <body>
         <div>
           < DataFetcher />
         </div>
+      
+          
         <div className={styles.menu}>
           <ul className={styles['m-navbar']}>
             <li
@@ -154,7 +175,7 @@ function ListOrg() {
   <div className={`${styles['content-item']} ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}>
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {items.map((item, index) => (
-        <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden custom-width" style={{ border: '1px solid rgb(38, 87, 124)' }}>
+        <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden custom-width" style={{ border: '1px solid rgb(38, 87, 124)', width: '300px' }}>
           {organizations.length > 0 && organizations.find(org => org.id === item.organization)?.image_url && organizations.find(org => org.id === item.organization)?.image_url.toLowerCase().endsWith('.jpeg') ? (
             <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
               <img src={'https://ghablameh.fiust.ir' + organizations.find(org => org.id === item.organization)?.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} alt={item.organization_name} />
@@ -173,7 +194,7 @@ function ListOrg() {
           <div className="p-4">
             <h3 className="text-lg font-bold">{item.name}</h3>
             <p className="text-gray-600">{item.organization_name}</p>
-            <p className="text-gray-600">{(item.created_at)}</p>
+            <p className="text-gray-600">{new Date(item.created_at).toLocaleDateString('fa-IR')}</p>
           </div>
         </div>
       ))}
@@ -185,7 +206,7 @@ function ListOrg() {
       .slice()
       .sort((a, b) => a.name.localeCompare(b.name))
       .map((item, index) => (
-        <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden" style={{ border: '1px solid rgb(38, 87, 124)' }}>
+        <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden" style={{ border: '1px solid rgb(38, 87, 124)' ,  width: '300px' }}>
         {organizations.length > 0 && organizations.find(org => org.id === item.organization)?.image_url && organizations.find(org => org.id === item.organization)?.image_url.toLowerCase().endsWith('.jpeg') ? (
           <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
             <img src={'https://ghablameh.fiust.ir' + organizations.find(org => org.id === item.organization)?.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} alt={item.organization_name} />
@@ -203,7 +224,7 @@ function ListOrg() {
          <div className="p-4">
             <h3 className="text-lg font-bold">{item.name}</h3>
             <p className="text-gray-600">{item.organization_name}</p>
-            <p className="text-gray-600">{(item.created_at)}</p>
+            <p className="text-gray-600">{new Date(item.created_at).toLocaleDateString('fa-IR')}</p>
           </div>
         </div>
       ))}
@@ -213,9 +234,9 @@ function ListOrg() {
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
     {filteredItems
       .slice()
-      .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
       .map((item, index) => (
-        <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden" style={{ border: '1px solid rgb(38, 87, 124)' }}>
+        <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden" style={{ border: '1px solid rgb(38, 87, 124)', width: '300px' }}>
         {organizations.length > 0 && organizations.find(org => org.id === item.organization)?.image_url && organizations.find(org => org.id === item.organization)?.image_url.toLowerCase().endsWith('.jpeg') ? (
           <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
             <img src={'https://ghablameh.fiust.ir' + organizations.find(org => org.id === item.organization)?.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} alt={item.organization_name} />
@@ -233,14 +254,13 @@ function ListOrg() {
          <div className="p-4">
             <h3 className="text-lg font-bold">{item.name}</h3>
             <p className="text-gray-600">{item.organization_name}</p>
-            <p className="text-gray-600">{(item.created_at)}</p>
+            <p className="text-gray-600">{new Date(item.created_at).toLocaleDateString('fa-IR')}</p>
           </div>
         </div>
       ))}
   </div>
-  </div>
 </div>
-    
+</div>
         </div>
       </body>
       <OrganizationList />

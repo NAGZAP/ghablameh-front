@@ -187,3 +187,7 @@ p{
   font-size: small;
   margin-bottom: 10px;
 }
+.forgot_password {
+  color: #26577c;
+  cursor: pointer;
+}

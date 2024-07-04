@@ -123,7 +123,7 @@ function Login() {
         <p>
             <a
             // href="#"
-            className={`${styles.forgot_password} cursor-pointer hover:text-orange-500`}
+            className={`${styles.forgot_password} cursor-pointer  hover:text-orange-500`}
               onClick={toggleForgetPasswordModal}
             >
               فراموشی رمز عبور

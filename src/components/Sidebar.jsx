@@ -102,6 +102,10 @@ export default function DefaultSidebar() {
           <MenuItem component={<Link to='/Updateorg' />}>
             تغییر اطلاعات سازمان
           </MenuItem>
+          
+          <MenuItem component={<Link to='/addweeklymenu' />}>
+            منو هفتگی 
+          </MenuItem>
           <MenuItem component={<Link to='/ListOfJoinRequests' />}>
             درخواست های عضویت
           </MenuItem>
