@@ -4,42 +4,22 @@ import styles from './FlexLayout.module.css';
 import axios from "axios";
 
 const AutoPlayMethods = () => {
-  const [items, setItems] = useState([]);
-  const [organizations, setOrganizations] = useState([]);
+  const [topOrganizations, setTopOrganizations] = useState([]);
+  const sliderRef = useRef(null);
 
-  const fetchDataFromURL = async () => {
-    const token = 'JWT ' + localStorage.getItem("token");
-    
-    try {
-      const response = await axios.get('https://ghablameh.fiust.ir/api/v1/buffets/', {
-        headers: {
-          Authorization: token
-        }
-      });
-      
-      setItems(response.data);
-    } catch (error) {
-      console.error('Error retrieving data:', error);
-    }
-  };
-
-  const fetchOrganizations = async () => {
+  const fetchTopOrganizations = async () => {
     try {
       const response = await axios.get('https://ghablameh.fiust.ir/api/v1/organizations/');
-      setOrganizations(response.data);
+      const sortedOrgs = response.data.sort((a, b) => b.average_rate - a.average_rate).slice(0, 5);
+      setTopOrganizations(sortedOrgs);
     } catch (error) {
       console.error('Error retrieving organizations:', error);
     }
   };
 
   useEffect(() => {
-    fetchDataFromURL();
-    fetchOrganizations();
-  }, []);
+    fetchTopOrganizations();
 
-  const sliderRef = useRef(null);
-
-  useEffect(() => {
     const play = () => {
       sliderRef.current?.slickPlay();
     };
@@ -82,53 +62,44 @@ const AutoPlayMethods = () => {
 
   return (
     <div className={styles.sliderContainer}>
-      
-    <link
-      rel="stylesheet"
-      type="text/css"
-      charSet="UTF-8"
-      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-    />
+      <link
+        rel="stylesheet"
+        type="text/css"
+        charSet="UTF-8"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+      />
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+      />
 
-    <Slider className={styles.slide} ref={sliderRef} {...settings}>
-      
-      {items.map((item, index) => (
-    
-        <div key={index} className={styles.slide}>
-          <div className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden custom-width" style={{ border: '1px solid rgb(38, 87, 124)',marginRight: '20px' }}>
-            {organizations.length > 0 && (
-              <React.Fragment>
-                {item.organization && item.organization in organizations ? (
-                  <img
-                    src={organizations[item.organization].image_url}
-                    alt={organizations[item.organization].name}
-                  />
-                ) : (
-                  <div
-                    style={{
-                      height: "160px",
-                      backgroundImage: "repeating-conic-gradient(#26577c  0% 25%, #ffffff 0% 50%)",
-                      backgroundPosition: "0 0, 32px 32px",
-                      backgroundSize: "50px 50px",
-                      opacity: '0.5',
-                    }}
-                  />
-                )}
-              </React.Fragment>
-            )}
-            
-            <h3>{item.name}</h3>
-            <p>{item.organization_name}</p>
+      <Slider className={styles.slide} ref={sliderRef} {...settings}>
+        {topOrganizations.map((org, index) => (
+          <div key={index} className={styles.slide}>
+            <div className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden custom-width" style={{ border: '1px solid rgb(38, 87, 124)', marginRight: '20px' }}>
+              {org.image_url  ? (
+                <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
+                  <img src={'https://ghablameh.fiust.ir' + org.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} />
+                </div>
+              ) : (
+                <div
+                  style={{
+                    height: "160px",
+                    backgroundImage: "repeating-conic-gradient(#26577c  0% 25%, #ffffff 0% 50%)",
+                    backgroundPosition: "0 0, 32px 32px",
+                    backgroundSize: "50px 50px",
+                    opacity: '0.5',
+                  }}
+                />
+              )}
+              <h3>{org.name}</h3>
+              <p>Average Rate: {org.average_rate}</p>
+            </div>
           </div>
-        </div>
-      ))}
-    </Slider>
-  </div>
+        ))}
+      </Slider>
+    </div>
   );
 };
 

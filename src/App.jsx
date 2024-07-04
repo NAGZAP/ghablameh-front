@@ -21,7 +21,7 @@ import MyComponent from './listorg/listorg';
 import Panel from "./components/panel";
 import ForgetPasswordWindow from "./forgetpassword/ForgetPasswordWindow";
 import WeeklyMenu from "./components/weeklymenu";
-import ReservationCalendar from "./components/lastreservation";
+import ReservationCalendar from "./components/lastreservation/lastreservation";
 import EmailVerify from "./EmailVerify/EmailVerify";
 import UserWallet from "./components/wallet";
 import Navbarparent from "./components/navbarparent";
@@ -36,6 +36,7 @@ import "./App.css";
 import AuthManager from "./APIs/AuthManager";
 import { useEffect } from "react";
 import { useState } from "react";
+import Landing from "./landing/landing";
 // 1== Org 2 == User 3 == no-log or sign
 function App() {
   const [userRole, setUserRole] = useState(null);
@@ -98,7 +99,7 @@ function App() {
           {/* <Route path="/weeklymenu2" element={<WeeklyMenu />} /> admin */}
           {userRole === 1 && <Route path="/weeklymenu2" element={<WeeklyMenu />} />}
           {userRole === 3 && <Route path="/weeklymenu2" element={<Login />} />}
-          {/* <Route path="/last" element={<ReservationCalendar />} /> */}
+          <Route path="/last" element={<ReservationCalendar />} />
           {/* <Route path="/forgetpassword" element={<ForgetPasswordWindow />} /> */}
           {/* <Route path="/EmailVerify" element={<EmailVerify />} /> non-user */}
           {userRole === 3 && <Route path="/EmailVerify" element={<EmailVerify />} />}
@@ -120,6 +121,7 @@ function App() {
           {/* <Route path="/addweeklymenu" element={<AddWeeklyMenu />} /> admin repeat of by admin!!!! */}
           {userRole === 1 && <Route path="/addweeklymenu" element={<AddWeeklyMenu />} />}
           {userRole === 3 && <Route path="/addweeklymenu" element={<Login />} />}
+          <Route path="/landing" element={<Landing />} />
         </Routes>
         <Footer />
       </div>

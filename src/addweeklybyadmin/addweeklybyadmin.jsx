@@ -44,7 +44,7 @@ const AddWeeklyMenu = () => {
           Authorization: token,
         },
       });
-
+      console.log('sdxfcgvhbjnklljhgv 47')
       console.log('Data retrieved:', response.data);
       setbuffeh(response.data);
       const ids = response.data.map((buffet) => buffet.id);
@@ -158,8 +158,10 @@ const AddWeeklyMenu = () => {
 
     setSelectedMenuDate1(formattedDate);
     const debouncedFetchData = debounce(() => {
+      console.log('sdxfcgvhbjnklljhgv')
       fetchMeals(selectedBuffetId, formattedDate);
       fetchFoods();
+      console.log('sdxfcgvhbjnklljhgv 164')
     }, 500);
     debouncedFetchData();
   };
@@ -182,6 +184,7 @@ const AddWeeklyMenu = () => {
   };
 
   const fetchFoods = async () => {
+    console.log('sdxfcgvhbjnklljhgv')
     const token = 'JWT ' + localStorage.getItem('token');
 
     try {
@@ -192,7 +195,9 @@ const AddWeeklyMenu = () => {
       });
 
       console.log('Foods retrieved:', response.data);
+      console.log('sdxfcgvhbjnklljhgv')
       setFoods(response.data);
+      console.log('foods: ',foods)
     } catch (error) {
       console.error('Error retrieving foods:', error);
     }
