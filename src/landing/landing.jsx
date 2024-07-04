@@ -22,7 +22,6 @@ const Landing = () => {
             <p class="info-text">
              برای دیدن امکانات سایت لطف ثبت نام کنید یا اگر حساب دارید وارد شوید
             </p>
-
             <div class="btn_wrapper">
               <button class="btn view_more_btn">
                  ثبت نام
