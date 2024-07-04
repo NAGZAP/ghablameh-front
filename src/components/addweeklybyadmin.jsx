@@ -6,7 +6,9 @@ import Navbarparent from '../components/navbarparent';
 import Select from 'react-select';
 
 import { ToastContainer, toast } from 'react-toastify';
-
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+import '../styles/customNotifications.css';
 const AddWeeklyMenu = () => {
   const [buffeh, setbuffeh] = useState([]);
   const [buffetId, setBuffetId] = useState('');
@@ -99,7 +101,9 @@ const AddWeeklyMenu = () => {
 
   const addFoodItem = async () => {
     if (!newFoodItem.name) {
-      infoToast();
+      // infoToast();
+      createNotification('info')();
+      // createNotification('buffet')();
       return;
     }
     // console.log(newFoodItem)
@@ -120,14 +124,23 @@ const AddWeeklyMenu = () => {
       // console.log('New food item added:', response.data);
       setNewFoodItem({ name: '', description: '' });
 
-      successToast();
+      // successToast();
+      createNotification('succes')();
       await fetchFoods(); // Fetch the updated list of foods
     } catch (error) {
-      console.error('Error adding new food item:', error);
+      // console.error('Error adding new food item:', error.message);
+      
+      if (error.message== "Network Error")
+      createNotification('fail',error.message)();
+
       if (error.response.data.name) {
         // console.log("error.response.data.name: ", error.response.data.name)
-        failToast(error.response.data.name);
+        // failToast(error.response.data.name);
+        createNotification('fail', error.response.data.name)();
+        return;
       }
+
+      //
 
     }
   };
@@ -135,7 +148,8 @@ const AddWeeklyMenu = () => {
   const addMeals = async () => {
     const token = 'JWT ' + localStorage.getItem('token');
     if (!selectedBuffetId) {
-      buffetToast();
+      // buffetToast();
+      createNotification('buffet')();
       return;
     }
 
@@ -147,7 +161,8 @@ const AddWeeklyMenu = () => {
     };
 
     if (!data.name || !data.time) {
-      infoToast();
+      // infoToast();
+      createNotification('info')();
       return;
     }
 
@@ -165,15 +180,18 @@ const AddWeeklyMenu = () => {
       const newMeal = response.data;
       setMeals([...meals, newMeal]); // Update the meals state with the new meal
       // console.log('Meals added:', response.data);
-      successToast();
+      // successToast();
+      createNotification('succes')();
     } catch (error) {
       console.error('Error adding meals:', error);
       if (error.response.data.time) {
-        failToast(error.response.data.time);
+        // failToast(error.response.data.time);
+        createNotification('fail', error.response.data.time)();
         return;
       }
       if (error.response.data.name) {
-        failToast(error.response.data.name);
+        // failToast(error.response.data.name);
+        createNotification('fail', error.response.data.name)();
       }
 
     }
@@ -181,7 +199,8 @@ const AddWeeklyMenu = () => {
 
   const addMealItem = async () => {
     if (!selectedBuffetId) {
-      buffetToast();
+      // buffetToast();
+      createNotification('buffet')();
       return;
     }
 
@@ -196,7 +215,8 @@ const AddWeeklyMenu = () => {
       number_in_stock: numberInStock, // Use the numberInStock state variable
     };
     if (!data.food || !data.price || !data.number_in_stock) {
-      infoToast();
+      // infoToast();
+      createNotification('info')();
       return;
     }
 
@@ -214,19 +234,23 @@ const AddWeeklyMenu = () => {
       );
 
       // console.log('Meal item added:', response.data);
-      successToast();
+      // successToast();
+      createNotification('succes')();
     } catch (error) {
       console.error('Error adding meal item:', error);
       if (error.response.data.food) {
-        failToast(error.response.data.food);
+        // failToast(error.response.data.food);
+        createNotification('fail', error.response.data.food)();
         return;
       }
       if (error.response.data.price) {
-        failToast(error.response.data.price);
+        // failToast(error.response.data.price);
+        createNotification('fail', error.response.data.price)();
         return;
       }
       if (error.response.data.number_in_stock) {
-        failToast(error.response.data.number_in_stock);
+        // failToast(error.response.data.number_in_stock);
+        createNotification('fail', error.number_in_stock)();
       }
     }
   };
@@ -243,6 +267,28 @@ const AddWeeklyMenu = () => {
   };
 
   //Toast
+  const createNotification = (type,error) => {
+    return () => {
+      switch (type) {
+        case 'succes':
+          NotificationManager.success(`با موفقیت اضافه شد `, '', 2000);
+          break;
+        case 'info':
+          NotificationManager.warning(`اطلاعات لازم را وارد کنید `, '', 2000);
+          break;
+        case 'buffet':
+          NotificationManager.warning(' ابتدا بوفه خود را انتخاب کنید  ', '', 2000);
+          break;
+        case 'fail':
+          NotificationManager.error( `${error}`,'مشکلی پیش آمده', 2000);
+          break;
+
+        default:
+          break;
+      }
+    };
+  };
+
   const successToast = () => {
     toast.info(
       <div className="flex flex-col items-center">
@@ -373,7 +419,7 @@ const AddWeeklyMenu = () => {
   return (
     <div className='w-full flex flex-col justify-center items-center' >
       <Navbarparent />
-
+      <NotificationContainer />
       {/* buffet */}
       <div className={style['buffet-selection']}>
         <label htmlFor="buffet-select">بوفه مورد نظر را انتخاب کنید.</label>

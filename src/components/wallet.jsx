@@ -3,9 +3,6 @@ import styles from '../styles/wallet.module.css';
 import PropTypes from 'prop-types';
 import axios from "axios";
 import AuthManager from "../APIs/AuthManager";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
 // const UserWallet = (props) => {
 const UserWallet = ({ open, setOpen }) => {
     // const [open, setOpen] = useState(props.open);
@@ -172,7 +169,7 @@ const UserWallet = ({ open, setOpen }) => {
             <div className={`${[styles.bg]} flex flex-col justify-center items-center`}>
                 {walletModal()}
             </div>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
         </div>
     );
 };

@@ -102,7 +102,7 @@ function App() {
           {/* <Route path="/forgetpassword" element={<ForgetPasswordWindow />} /> */}
           {/* <Route path="/EmailVerify" element={<EmailVerify />} /> non-user */}
           {userRole === 2 && <Route path="/EmailVerify" element={<EmailVerify />} />}
-          {userRole === 3 && <Route path="/EmailVerify" element={<Login />} />}
+          {/* {userRole === 3 && <Route path="/EmailVerify" element={<Login />} />} */}
           {/* <Route path="/boofeh" element={<Boofeh />} /> */}
           {/* <Route path="/byadmin" element={<AddWeeklyMenu />} /> admin */}
           {userRole === 1 && <Route path="/byadmin" element={<AddWeeklyMenu />} />}

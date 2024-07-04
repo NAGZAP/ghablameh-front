@@ -4,6 +4,7 @@ import AuthManager from "../APIs/AuthManager";
 import axios from "axios";
 import { useMemo } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Organizations from "../APIs/Organizations";
 import jalaliMoment from 'jalali-moment';
 import moment from 'moment';
@@ -11,6 +12,9 @@ import Select from 'react-select';
 import { Link } from "react-router-dom";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import styles from '../styles/wallet.module.css'
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css'; 
+import '../styles/customNotifications.css';
 const Reserve = () => {
     const [fetchedData, setFetchedData] = useState([])
     const [data, setData] = useState([]);
@@ -240,14 +244,16 @@ const Reserve = () => {
 
             if (response.status === 201) {
                 fetchReservations();
-                checkToast(food);
+                // checkToast(food);
+                createNotification('reserved',food)();
             } else {
                 console.log('Reservation update failed:', response.data);
-                failToast();
+                createNotification('fail', food)();
             }
         } catch (error) {
             console.error('An error occurred:', error);
-            failToast();
+            // failToast();
+            createNotification('fail', food)();
         }
     }
 
@@ -265,18 +271,45 @@ const Reserve = () => {
             });
 
             if (response.status == 204) {
-                uncheckedToast(food);
+                // uncheckedToast(food);
+                createNotification('unreserved',food)();
                 fetchReservations();
             } else {
-                console.log('Deleting reservation failed:', response.data);
-                failToast();
+                // console.log('Deleting reservation failed:', response.data);
+                // failToast();
+                createNotification('fail',food)();
             }
         } catch (error) {
-            console.error('An error occurred:', error);
-            failToast();
+            // console.error('An error occurred:', error);
+            // failToast();
+            createNotification('fail',food)();
         }
     }
+    
 
+    const createNotification = (type, food) => {
+        return () => {
+            switch (type) {
+                case 'reserved':
+                    NotificationManager.success(`${food.name} رزرو شد`,'', 2000);
+                    break;
+                case 'unreserved':
+                    NotificationManager.success(`رزرو ${food.name} حذف شد`,'', 2000);
+                    break;
+                case 'numberinstock':
+                    NotificationManager.warning('موجودی غذا کافی نیست ','', 2000);
+                    break;
+                case 'fail':
+                    NotificationManager.error('در فرایند رزرو خطایی رخ داد ','', 2000);
+                    break;
+                case 'wallet':
+                    NotificationManager.warning('کیف پول خود را شارژ کنید ','', 2000);
+                    break;
+                default:
+                    break;
+            }
+        };
+    };
     // reservation completed toast
     const checkToast = (food) => {
         toast.info(
@@ -315,7 +348,7 @@ const Reserve = () => {
     const failToast = () => {
         toast.info(
             <div className="flex flex-col items-center">
-                <div className="text-center mb-4">{`!در فرایند رزرو خطایی رخ داد`}</div>
+                <div className="text-center mb-4">{`!در فرایند رزرو خطایی رخ داد `}</div>
             </div>,
             {
                 position: 'top-center',
@@ -365,13 +398,15 @@ const Reserve = () => {
     // food Checkbox change handler
     const handleCheckboxChange = (food, isChecked) => {
         const amount = parseInt(fetchedAmount, 10);
-        console.log(food)
+        // console.log(food)
         if (isChecked) {
             if (food.price > amount) {
-                chargeWalletToast();
+                // chargeWalletToast();
+                createNotification('wallet',food)();
+                // console.log(food.price,amount)
             }
             else if (food.numberInStock == 0) {
-                numberInStockToast();
+                createNotification('numberinstock',food)();
             }
             else {
                 handlereserve(food);
@@ -436,7 +471,7 @@ const Reserve = () => {
         }, [data, dates, mealNames]);
 
         setIsLoading(false);
-        console.log(organizedData)
+        // console.log(organizedData)
 
         if (data.length === 0 && options.length !== 0 && dates.length === 0) {
             return (
@@ -544,7 +579,7 @@ const Reserve = () => {
     return (
         <>
             <Navbarparent />
-            <div className=""></div>
+            <NotificationContainer/>
             <div style={{ width: "100%" }} className="px-5 py-3 my-24">
                 <div className="grid grid-cols-3 my-4 text-center"></div>
 
@@ -598,7 +633,7 @@ const Reserve = () => {
                     </div>
                 )}
             </div>
-            <ToastContainer />
+
         </>
     );
 };

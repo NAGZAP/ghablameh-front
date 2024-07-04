@@ -6,6 +6,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import Navbarparent from './navbarparent';
 import Avatar from "react-avatar";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+import '../styles/customNotifications.css';
+import {useNavigate } from "react-router-dom";
 
 const Update = () => {
   const [name, setName] = useState('');
@@ -29,6 +33,7 @@ const Update = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const navigate = useNavigate();
 
   const toggleCurrentPasswordVisibility = () => {
     setShowCurrentPassword(!showCurrentPassword);
@@ -42,6 +47,22 @@ const Update = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
+
+  const createNotification = (type,error) => {
+    return () => {
+      switch (type) {
+        case 'fail':
+          NotificationManager.error(`${error}`, '', 3000);
+          break;
+        case 'success':
+          NotificationManager.success(' رفتن به صفحه اصلی ','اطلاعات با موفقیت ثبت شد ',  3000,() => {navigate("/")});
+          break;
+
+        default:
+          break;
+      }
+    };
+  };
 
   // fetch user data
   useEffect(() => {
@@ -321,30 +342,44 @@ const Update = () => {
 
     if (!name) {
       errors.push('نام سازمان را وارد کنید.');
+
+      createNotification('fail','نام سازمان را وارد کنید.')();
     }
     if (!admin_first_name) {
       errors.push('نام مدیر را وارد کنید.');
+
+      createNotification('fail','نام مدیر را وارد کنید.')();
     }
     if (!admin_last_name) {
       errors.push('نام خانودگی مدیر را وارد کنید.');
+
+      createNotification('fail','نام خانودگی مدیر را وارد کنید.')();
     }
     if (!admin_username) {
       errors.push('نام کاربری مدیر را وارد کنید.');
+
+      createNotification('fail','نام کاربری مدیر را وارد کنید.')();
     }
     if (!admin_email) {
       errors.push(' ایمیل مدیر را وارد کنید.');
+
+      createNotification('fail',' ایمیل مدیر را وارد کنید.')();
     }
     if (!admin_phone_number) {
       errors.push('شماره مدیر را وارد کنید.');
+      createNotification('fail','شماره مدیر را وارد کنید.')();
     }
     if (!/^([a-zA-Z0-9!_.]+)@([a-zA-Z]+)\.([a-zA-Z]{2,})$/.test(admin_email)) {
       errors.push('ایمیل مدیر را به درستی وارد کنید.');
+      createNotification('fail','ایمیل مدیر را به درستی وارد کنید.')();
     }
     if (admin_phone_number.startsWith('98') && admin_phone_number.length !== 12) {
       errors.push('شماره مدیر را به درستی وارد کنید.');
+      createNotification('fail','شماره مدیر را به درستی وارد کنید.')();
     }
     if (admin_phone_number.startsWith('09') && admin_phone_number.length !== 11) {
       errors.push('شماره مدیر را به درستی وارد کنید.');
+      createNotification('fail','شماره مدیر را به درستی وارد کنید.')();
     }
 
     let admin_phone_number_english = admin_phone_number.replace(/[۰-۹]/g, function (w) {
@@ -354,10 +389,12 @@ const Update = () => {
     // check if admin_phone_number contains only numbers and starts with '989' or '09'
     if (!/^\d+$/.test(admin_phone_number_english) || !/^(989|09)/.test(admin_phone_number_english)) {
       errors.push('شماره مدیر را به درستی وارد کنید.');
+      createNotification('fail','شماره مدیر را به درستی وارد کنید.')();
     }
 
     if (errors.length > 0) {
-      alert(errors.join('\n'));
+      // alert(errors.join('\n'));
+      
       setFormErrors(errors);
       return;
     }
@@ -386,34 +423,42 @@ const Update = () => {
 
       if (response.status === 200) {
         setIsWaitingForm1(false);
-        alert('اطلاعات با موفقیت ثبت شد ');
-        window.location.href = '/';
+        // alert('اطلاعات با موفقیت ثبت شد ');
+        // window.location.href = '/';
+        createNotification('success')();
       } else {
         const errorData = await response.json();
         setIsWaitingForm1(false);
-        alert(response.message);
+        // alert(response.message);
+        createNotification('fail',response.message)();
       }
     } catch (error) {
       setIsWaitingForm1(false);
       console.error(error.response.data);
 
       if (error.response.data.name) {
-        alert(error.response.data.name);
+        // alert(error.response.data.name);
+        createNotification('fail',error.response.data.name)();
       }
       if (error.response.data.admin_first_name) {
-        alert(error.response.data.admin_first_name);
+        // alert(error.response.data.admin_first_name);
+        createNotification('fail',error.response.data.admin_first_name)();
       }
       if (error.response.data.admin_last_name) {
-        alert(error.response.data.admin_last_name);
+        // alert(error.response.data.admin_last_name);
+        createNotification('fail',error.response.data.admin_last_name)();
       }
       if (error.response.data.admin_username) {
-        alert(error.response.data.admin_username);
+        // alert(error.response.data.admin_username);
+        createNotification('fail',error.response.data.admin_username)();
       }
       if (error.response.data.admin_email) {
-        alert(error.response.data.admin_email);
+        // alert(error.response.data.admin_email);
+        createNotification('fail',error.response.data.admin_email)();
       }
       if (error.response.data.admin_phone_number) {
-        alert(error.response.data.admin_phone_number);
+        // alert(error.response.data.admin_phone_number);
+        createNotification('fail',error.response.data.admin_phone_number)();
       }
     }
     setIsWaitingForm1(false);
@@ -428,24 +473,30 @@ const Update = () => {
 
     if (!new_password) {
       errors.push('رمز عبور جدید را وارد کنید.');
+      createNotification('fail','رمز عبور جدید را وارد کنید.')();
+      
     }
     if (!old_password) {
-      errors.push('رمز عبور جدید را وارد کنید.');
+      errors.push('رمز عبور فعلی را وارد کنید.');
+      createNotification('fail','رمز عبور فعلی را وارد کنید')();
+      
     }
     if (!confirm_new_password) {
       errors.push('تأیید رمز عبور جدید را وارد کنید.');
+      createNotification('fail','تأیید رمز عبور جدید را وارد کنید.')();
     }
     if (new_password !== confirm_new_password) {
       errors.push('رمز عبور جدید و تأیید آن مطابقت ندارند.');
+      createNotification('fail','رمز عبور جدید و تأیید آن مطابقت ندارند.')();
     }
     if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(new_password)) {
       errors.push(' رمز عبور باید حداقل ۸ کاراکتر و شامل اعداد و حروف باشد. ');
+      createNotification('fail',' رمز عبور باید حداقل ۸ کاراکتر و شامل اعداد و حروف باشد. ')();
     }
 
-
     if (errors.length > 0) {
-      setPassErrors(errors);
-      alert(errors.join('\n'));
+      // setPassErrors(errors);
+      // alert(errors.join('\n'));
       return;
     }
 
@@ -465,23 +516,29 @@ const Update = () => {
 
       if (response.status === 200) {
         setIsWaitingForm2(false);
-        alert('اطلاعات با موفقیت ثبت شد ');
-        window.location.href = '/';
+        // alert('اطلاعات با موفقیت ثبت شد ');
+        // window.location.href = '/';
+        createNotification('success')();
       } else {
         const errorData = await response.json();
         setIsWaitingForm2(false);
-        alert(' مشکلی پیش امده.لطفا در زمانی دیگر امتحان کنید ')
+        // alert(' مشکلی پیش امده.لطفا در زمانی دیگر امتحان کنید ')
+        createNotification('fail',' مشکلی پیش امده.لطفا در زمانی دیگر امتحان کنید ')();
       }
     } catch (error) {
       // console.error('An error occurred:', error);
       setIsWaitingForm2(false);
       if (error.response.data.old_password) {
-        alert(error.response.data.old_password[0]);
+        // alert(error.response.data.old_password[0]);
+        createNotification('fail',error.response.data.old_password[0])();
       } else if (error.response.data.new_password) {
-        alert(error.response.data.new_password[0]);
+        // alert(error.response.data.new_password[0]);
+        createNotification('fail',error.response.data.new_password[0])();
       } else if (error.response.data.new_password & error.response.data.old_password) {
-        alert(error.response.data.new_password[0]);
-        alert(error.response.data.new_password[0]);
+        // alert(error.response.data.new_password[0]);
+        // alert(error.response.data.old_password[0]);
+        createNotification('fail',error.response.data.new_password[0])();
+        createNotification('fail',error.response.data.old_password[0])();
       }
     }
     setIsWaitingForm2(false);
@@ -490,6 +547,7 @@ const Update = () => {
   return (
     <div className={`${styles.bg} flex flex-col`} >
       <Navbarparent />
+      <NotificationContainer />
       {Form()}
     </div>
   );

@@ -9,6 +9,12 @@ import axios from 'axios';
 import Navbarparent from './navbarparent';
 import Avatar from "react-avatar";
 import Select from "react-select";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+import '../styles/customNotifications.css';
+
+import {useNavigate } from "react-router-dom";
+
 const Update = () => {
 
   const [birthdate, setBirthdate] = useState('');
@@ -38,7 +44,7 @@ const Update = () => {
   const [isWaitingForm2, setIsWaitingForm2] = useState(false);
 
   const [passErrors, setPassErrors] = useState([]);
-
+  const navigate = useNavigate();
   const options = [
     { value: 'M', label: 'مرد' },
     { value: 'F', label: 'زن' }
@@ -90,6 +96,22 @@ const Update = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
+  const createNotification = (type,error) => {
+    return () => {
+      switch (type) {
+        case 'fail':
+          NotificationManager.error(`${error}`, '', 3000);
+          break;
+        case 'success':
+          NotificationManager.success(' رفتن به صفحه اصلی ','اطلاعات با موفقیت ثبت شد ',  3000,() => {navigate("/")});
+          break;
+
+        default:
+          break;
+      }
+    };
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -112,28 +134,35 @@ const Update = () => {
 
     if (!birthdate) {
       errors.push('تاریخ تولد را وارد کنید');
+      createNotification('fail','تاریخ تولد را وارد کنید')();
     }
 
     if (!gender) {
       errors.push('جنسیت را انتخاب کنید');
+      createNotification('fail','جنسیت را انتخاب کنید')();
     }
 
     if (!username) {
       errors.push('نام کاربری را وارد کنید');
+      createNotification('fail','نام کاربری را وارد کنید')();
     }
 
     if (newPassword !== confirmPassword) {
       errors.push('رمز عبور جدید و تأیید رمز عبور مطابقت ندارند');
+      createNotification('fail','رمز عبور جدید و تأیید آن مطابقت ندارند')();
     }
 
     if (!/^([a-zA-Z0-9!_.]+)@([a-zA-Z]+)\.([a-zA-Z]{2,})$/.test(email)) {
-      errors.push(' ایمیل مدیر را به درستی وارد کنید.');
+      errors.push(' ایمیل را به درستی وارد کنید.');
+      createNotification('fail','ایمیل را به درستی وارد کنید.')();
     }
     if (phoneNumber.startsWith('98') && phoneNumber.length !== 12) {
-      errors.push('شماره مدیر را به درستی وارد کنید.');
+      errors.push('شماره را به درستی وارد کنید.');
+      createNotification('fail','شماره را به درستی وارد کنید.')();
     }
     if (phoneNumber.startsWith('09') && phoneNumber.length !== 11) {
-      errors.push('شماره مدیر را به درستی وارد کنید.');
+      errors.push('شماره را به درستی وارد کنید.');
+      createNotification('fail','شماره را به درستی وارد کنید.')();
     }
 
     let phoneNumber_english = phoneNumber.replace(/[۰-۹]/g, function (w) {
@@ -142,7 +171,8 @@ const Update = () => {
 
     // check if admin_phone_number contains only numbers and starts with '989' or '09'
     if (!/^\d+$/.test(phoneNumber_english) || !/^(989|09)/.test(phoneNumber_english)) {
-      errors.push('شماره مدیر را به درستی وارد کنید.');
+      errors.push('شماره را به درستی وارد کنید.');
+      createNotification('fail','شماره را به درستی وارد کنید.')();
     }
 
     // if (errors.length > 0) {
@@ -151,7 +181,10 @@ const Update = () => {
     //   return;
     // }
     if (errors.length > 0) {
-      toast.error(errors.join('\n'));
+      // toast.error(errors.join('\n'));
+
+      // createNotification('fail',errors.join('\n'))();
+      setFormErrors('');
       return;
     }
 
@@ -180,35 +213,43 @@ const Update = () => {
 
       if (response.status === 200) {
         setIsWaitingForm1(false);
-        alert('اطلاعات با موفقیت ثبت شد ');
-        window.location.href = '/';
+        // alert('اطلاعات با موفقیت ثبت شد ');
+        createNotification('success')();
+        // window.location.href = '/';
       } else {
         const errorData = await response.json();
         setIsWaitingForm1(false);
-        alert(response.message);
+        // alert(response.message);
+        createNotification('fail',response.message)();
       }
     } catch (error) {
       setIsWaitingForm1(false);
       // alert(error.message);
 
       if (error.response.data.phone_number) {
-        alert(error.response.data.phone_number);
+        // alert(error.response.data.phone_number);
+        createNotification('fail',error.response.data.phone_number)();
       }
       if (error.response.data.first_name) {
-        alert(error.response.data.first_name);
+        // alert(error.response.data.first_name);
+        createNotification('fail',error.response.data.first_name)();
       }
       if (error.response.data.username) {
-        alert(error.response.data.username);
+        // alert(error.response.data.username);
+        createNotification('fail',error.response.data.username)();
       }
       if (error.response.data.last_name) {
-        alert(error.response.data.last_name);
+        // alert(error.response.data.last_name);
+        createNotification('fail',error.response.data.last_name)();
       }
       if (error.response.data.email) {
-        alert(error.response.data.email);
+        // alert(error.response.data.email);
+        createNotification('fail',error.response.data.email)();
       }
 
-      console.error(error.response.data)
+      // console.error(error.response.data)
     }
+    setFormErrors('');
     setIsWaitingForm1(false);
   };
 
@@ -220,18 +261,26 @@ const Update = () => {
 
     if (!currentPassword) {
       errors.push('رمز عبور فعلی را وارد کنید');
+      createNotification('fail','رمز عبور فعلی را وارد کنید')();
     }
 
     if (!confirmPassword) {
       errors.push('تأیید رمز عبور جدید را وارد کنید');
+      createNotification('fail','تأیید رمز عبور جدید را وارد کنید')();
     }
 
     if (newPassword !== confirmPassword) {
       errors.push('رمز عبور جدید و تأیید رمز عبور مطابقت ندارند');
+      createNotification('fail','رمز عبور جدید و تأیید آن مطابقت ندارند')();
+    }
+    if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(newPassword)) {
+      errors.push(' رمز عبور باید حداقل ۸ کاراکتر و شامل اعداد و حروف باشد. ');
+      createNotification('fail',' رمز عبور باید حداقل ۸ کاراکتر و شامل اعداد و حروف باشد. ')();
     }
 
     if (errors.length > 0) {
-      toast.error(errors.join('\n'));
+      // toast.error(errors.join('\n'));
+      setFormErrors('');
       return;
     }
 
@@ -251,25 +300,32 @@ const Update = () => {
 
       if (response.status === 200) {
         setIsWaitingForm2(false);
-        alert('اطلاعات با موفقیت ثبت شد ');
-        window.location.href = '/';
+         // alert('اطلاعات با موفقیت ثبت شد ');
+         createNotification('success')();
+         // window.location.href = '/';
       } else {
         const errorData = await response.json();
         setIsWaitingForm2(false);
-        alert(' مشکلی پیش امده.لطفا در زمانی دیگر امتحان کنید ')
+        // alert(' مشکلی پیش امده.لطفا در زمانی دیگر امتحان کنید ')
+        createNotification('fail',' مشکلی پیش امده.لطفا در زمانی دیگر امتحان کنید ')();
       }
     } catch (error) {
       // console.error('An error occurred:', error);
       setIsWaitingForm2(false);
       if (error.response.data.old_password) {
-        alert(error.response.data.old_password[0]);
+        // alert(error.response.data.old_password[0]);
+        createNotification('fail',error.response.data.old_password[0])();
       } else if (error.response.data.new_password) {
-        alert(error.response.data.new_password[0]);
+        // alert(error.response.data.new_password[0]);
+        createNotification('fail',error.response.data.new_password[0])();
       } else if (error.response.data.new_password & error.response.data.old_password) {
-        alert(error.response.data.new_password[0]);
-        alert(error.response.data.new_password[0]);
+        // alert(error.response.data.new_password[0]);
+        // alert(error.response.data.old_password[0]);
+        createNotification('fail',error.response.data.new_password[0])();
+        createNotification('fail',error.response.data.old_password[0])();
       }
     }
+    setFormErrors('');
     setIsWaitingForm2(false);
   };
 
@@ -295,6 +351,8 @@ const Update = () => {
 
     <div className={styles.bg}>
       <Navbarparent />
+
+      <NotificationContainer />
       <div className={styles.container}>
         <div className={styles.pattern}></div>
         <div className={styles.card}>
@@ -580,7 +638,7 @@ const Update = () => {
             )}
           </form>
         </div>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
       </div>
     </div>
   );

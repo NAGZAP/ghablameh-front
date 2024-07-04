@@ -6,6 +6,9 @@ import styles from './Cards.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import Navbarparent from '../components/navbarparent';
 import { Link } from 'react-router-dom';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+import '../styles/customNotifications.css';
 
 function DataFromApiList() {
   const [cards, setCards] = useState([]);
@@ -49,6 +52,7 @@ function DataFromApiList() {
     <>
       <div className={styles.containment_boof}>
         <Navbarparent />
+        <NotificationContainer />
         <div className={styles.itemscenter + " " + "mb-20"}>
           <Boofeh searchTerm={searchTerm} onSearchChange={onSearchChange} />
           {filteredCards.length === 0 ? (
@@ -67,7 +71,7 @@ function DataFromApiList() {
             ))
           )}
         </div>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
       </div>
     </>
   );
