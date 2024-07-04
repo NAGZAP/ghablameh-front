@@ -11,6 +11,7 @@
 .content {
     margin-top: 20px;
     padding: 20px;
+    margin-bottom: 120px;
     /* background-color: #f5f5f5; */
     text-align: center;
   }
@@ -194,10 +195,7 @@ margin-bottom: 80px;
     letter-spacing: 3px;
     margin-right: 7px;
   }
-  .menu {
-    font-family: Arial, sans-serif;
 
-  }
   .menu h2{
     text-align: right;
     margin-bottom: 20px;
@@ -391,7 +389,7 @@ margin-bottom: 80px;
   height: 120px;
   padding: 25px;
   padding-left: 30px;
-  background-color: #5bb1e3;
+  background-color: #ff5e14;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -408,11 +406,7 @@ margin-bottom: 80px;
   text-align: center;
   margin-bottom: 40px;
 }
-.card-content .icon
-{
-  margin-left: 140px;
-  margin-bottom: 80px;
-}
+
 
 .text-wrapper {
   flex: 1;
@@ -425,4 +419,106 @@ margin-bottom: 80px;
 
 .custom-width {
   width: 200px;
+}
+
+
+.cardcontainer {
+  display: flex;
+   margin: 80px;
+}
+.card {
+  flex: 2;
+  height: 400px;
+  margin-left: 80px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 24px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+  cursor: pointer;
+  margin-right: 40px;
+  margin-top: 150px;
+  margin-bottom: 40px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border: 2px solid #ff5e14;
+}
+
+.card:last-child {
+  margin-right: 0;
+}
+
+.cardcontent {
+  text-align: center;
+  
+}
+.cardcontent p {
+  font-size: 17px;
+  margin: 30px;
+  color: #000;
+  margin-top: 10px;
+  
+}.cardcontent h3{
+  font-size: 20px;
+  margin: 30px;
+  color: #000;
+  margin-top: 10px;
+  
+}
+
+.circle {
+  width: 120px;
+  height: 120px;
+ 
+  padding-left: 30px;
+   
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.card {
+  width: 40%;
+  max-width: 800px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+}
+
+.cardcontent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-height: 400px; /* Set the maximum height of the card content */
+  overflow-y: auto; /* Add a vertical scrollbar if the content exceeds the maximum height */
+  padding-right: 16px; /* Add some right padding to make the scrollbar visible */
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+
+.cardcontent > div {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }

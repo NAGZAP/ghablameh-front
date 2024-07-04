@@ -45,12 +45,9 @@ const orguser = async () => {
 const LoginRequest = async (username, password) => {
   const baseurl = "https://ghablameh.fiust.ir/api/v1";
   const body = { username: username, password: password };
-  try {
-    const data = await axios.post(baseurl + "/auth/login/", body);
+    const data = await axios.post(baseurl + "/auth/login/", body).then(resp =>{ return resp}).catch(err => {return err});
     return data;
-  } catch (error) {
-    console.error("error: ", error)
-  }
+
 
   // console.log(data.data)
   
