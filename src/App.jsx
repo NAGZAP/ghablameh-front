@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Footer from "./components/footer";
 import Update from "./components/info";
-import Landing from "./landing/landing";
 import Register from "./components/org";
 import SignUp from "./SignUp/SignUp";
 import CustomSidebar from "./components/Sidebar";
