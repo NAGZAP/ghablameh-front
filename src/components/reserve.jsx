@@ -211,15 +211,15 @@ const Reserve = () => {
         }
     };
 
-    useEffect(() => {
-        const intervalId = AuthManager.isLoggedIn() ? setInterval(fetchWalletData, 5000) : null;
+    // useEffect(() => {
+    //     const intervalId = AuthManager.isLoggedIn() ? setInterval(fetchWalletData, 5000) : null;
 
-        return () => {
-            if (intervalId !== null) {
-                clearInterval(intervalId);
-            }
-        };
-    }, []);
+    //     return () => {
+    //         if (intervalId !== null) {
+    //             clearInterval(intervalId);
+    //         }
+    //     };
+    // }, []);
 
     // useEffect(()=> {
     //     alert("Current Value of ToDate : " +toDate)
