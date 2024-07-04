@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import '../styles/customNotifications.css';
-
+import {useNavigate } from "react-router-dom";
 function Cards(props) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,7 +19,7 @@ function Cards(props) {
   const [Emojichanger4, setEmojichanger4] = useState(emojis[2])
   const [Emojichanger5, setEmojichanger5] = useState(emojis[2])
 
-
+  const navigate = useNavigate();
 
     //Toast
     const createNotification = (type) => {
@@ -29,7 +29,8 @@ function Cards(props) {
             NotificationManager.error('ارسال اطلاعات با مشکل مواجه شد ', '', 2000);
             break;
           case 'Sendsuc':
-            NotificationManager.success(`نظر شما با موفقیت ثبت شد`, '', 2000);
+            
+          NotificationManager.success(' رفتن به صفحه اصلی ','اطلاعات با موفقیت ثبت شد ',  3000,() => {navigate("/")});
             break;
 
           default:
@@ -98,13 +99,20 @@ function Cards(props) {
       const rate1 = {
         rate: (Math.round(((parseInt(value) + parseInt(value2) + parseInt(value3) + parseInt(value4) + parseInt(value5) + 5) / 5)))
       };
+      // const rate1 = {
+      //   rate: ((parseInt(value) + parseInt(value2) + parseInt(value3) + parseInt(value4) + parseInt(value5) + 5) / 5)
+      // };
+      console.log(rate1)
       await axios.post('https://ghablameh.fiust.ir/api/v1/buffets/' + props.index + '/rates/', rate1, { headers: { Authorization: `JWT ${token}` } });
       /*       alert('Data sent successfully! Org'); */
       // Sendsuc();
-      createNotification('Sendsuc')();
+      // createNotification('Sendsuc')(' رفتن به صفحه اصلی ','اطلاعات با موفقیت ثبت شد ',  3000,() => {navigate("/")});
+      createNotification('success')();
+              // window.location.href = '/myorgs';
 
     } catch (error) {
       // ErrorSent();
+      console.error(error)
       createNotification('ErrorSent')();
     }
 
@@ -198,7 +206,7 @@ function Cards(props) {
 
         {isSecondModalOpen && (
           <div
-            className={`fixed left-0 top-0 z-[1055] h-full  w-full flex items-center justify-center bg-opacity-50 bg-black `}
+            className={`fixed left-0 top-0 z-[1055] h-full  w-full flex items-center justify-center bg-opacity-70 bg-black `}
             onClick={closeModal}
           >
             <div
