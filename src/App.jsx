@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Footer from "./components/footer";
@@ -32,48 +31,98 @@ import OrganizationList from "./components/organizationlist";
 import Boofeh from "./BoofehsOfOrganization/Boofeh";
 import Reserve from "./components/reserve";
 import DataFromApiList from "./BoofehsOfOrganization/DataFromApiList";
-import AddWeeklyMenu from "./addweeklybyadmin/addweeklybyadmin";
 import Verify from "./components/verify";
+import AddWeeklyMenu from "./components/addweeklybyadmin";
 import "./App.css";
+import AuthManager from "./APIs/AuthManager";
+import { useEffect } from "react";
+import { useState } from "react";
+// 1== Org 2 == User 3 == no-log or sign
 function App() {
+  const [userRole, setUserRole] = useState(null);
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      const role = await AuthManager.orguser();
+      setUserRole(role);
+    };
+
+    fetchUserRole();
+  }, []);
+
+  if (userRole === null) {
+    return (
+      <div className="flex flex-col items-center justify-center mt-52">
+        <div className='spinner'></div>
+        <p className="text-center text-gray-500 m-9"> در حال دریافت اطلاعات...  </p>
+      </div>
+    );
+  }
+  //alert(userRole)
   return (
     <BrowserRouter>
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/footer" element={<Footer />} />
-        <Route path="/landing" element={<Landing />} />
-        <Route path="/Update" element={<Update />} />
-        <Route path="/login" element={<Login />} />
-        {/* <Route path="/Register" element={<Register />} /> */}
-        <Route path="/sidebar" element={<CustomSidebar />} />
-        <Route path="/navbar" element={<Navbarparent />} />
-        <Route path="/Updateorg" element={<Updateorg />} />
-        <Route path="/bu" element={<MyComponent />} />
-        <Route path="/signup" element={<SignUp />} />
-        {/* <Route path="/HomeOrgPage" element={<HomeOrgPage />} /> */}
-        <Route path="/ListOfJoinRequests" element={<ListOfJoinRequests />} />
-        <Route path="/OrgPage" element={<OrgPage />} />
-        <Route path="/chooseorg" element={<ChooseOrganizationPage />} />
-        <Route path="/Myorgs" element={<Myorgs />} />
-        <Route path="/slider" element={<UserSlider />} />
-        <Route path="/WeeklyMenu" element={<WeeklyMenuPage />} />
-        <Route path="/Response" element={<Response />} />
-        <Route path="/panel" element={<Panel />} />
-        <Route path="/weeklymenu2" element={<WeeklyMenu />} />
-        <Route path="/last" element={<ReservationCalendar />} />
-        <Route path="/forgetpassword" element={<ForgetPasswordWindow />} />
-        <Route path="/EmailVerify" element={<EmailVerify />} />
-        <Route path="/boofeh" element={<Boofeh />} />
-        <Route path="/byadmin" element={<AddWeeklyMenu />} />
-        <Route path="/organizationList" element={<OrganizationList />} />
-        <Route path="*" element={<PageNotFound />} />
-        <Route path="/Notif" element={<Notificationbox />} />
-        <Route path="/Reserve" element={<Reserve />} />
-        <Route path="/ReviewOnBoofeh" element={<DataFromApiList />} />
-        <Route path="/verify" element={<Verify />} />
-      </Routes>
-      <Footer />
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          {/*<Route path="/footer" element={<Footer />} />*/}
+          {/* <Route path="/Update" element={<Update />} /> {/* User */}
+          {userRole === 2 && <Route path="/Update" element={<Update />} />}
+          {userRole === 3 && <Route path="/Update" element={<Login />} />}
+          {/*<Route path="/login" element={<Login />} />  NoUser */}
+          {userRole === 3 && <Route path="/login" element={<Login />} />}
+          {/* <Route path="/Register" element={<Register />} /> */}
+          {/*<Route path="/sidebar" element={<CustomSidebar />} />*/}
+          {/*<Route path="/navbar" element={<Navbarparent />} />*/}
+          {/*<Route path="/bu" element={<MyComponent />} />*/}
+          {/* <Route path="/HomeOrgPage" element={<HomeOrgPage />} /> */}
+          {/* <Route path="/Updateorg" element={<Updateorg />} /> Org */}
+          {userRole === 1 && <Route path="/Updateorg" element={<Updateorg />} />}
+          {userRole === 3 && <Route path="/Updateorg" element={<Login />} />}
+          {/* <Route path="/signup" element={<SignUp />} /> */}
+          {userRole === 3 && <Route path="/signup" element={<SignUp />} />}
+          {/* <Route path="/ListOfJoinRequests" element={<ListOfJoinRequests />} /> admins */}
+          {userRole === 1 && <Route path="/ListOfJoinRequests" element={<ListOfJoinRequests />} />}
+          {userRole === 3 && <Route path="/ListOfJoinRequests" element={<Login />} />}
+          {/* <Route path="/OrgPage" element={<OrgPage />} />  admins */}
+          {userRole === 1 && <Route path="/OrgPage" element={<OrgPage />} />}
+          {userRole === 3 && <Route path="/OrgPage" element={<Login />} />}
+          {/* <Route path="/chooseorg" element={<ChooseOrganizationPage />} /> User */}
+          {userRole === 2 && <Route path="/chooseorg" element={<ChooseOrganizationPage />} />}
+          {userRole === 3 && <Route path="/chooseorg" element={<Login />} />}
+          {/* <Route path="/Myorgs" element={<Myorgs />} />User */}
+          {userRole === 2 && <Route path="/Myorgs" element={<Myorgs />} />}
+          {userRole === 3 && <Route path="/Myorgs" element={<Login />} />}
+          {/* <Route path="/slider" element={<UserSlider />} /> */}
+          {/* <Route path="/WeeklyMenu" element={<WeeklyMenuPage />} /> */}
+          {/* <Route path="/Response" element={<Response />} /> */}
+          {/* <Route path="/panel" element={<Panel />} /> */}
+          {/* <Route path="/weeklymenu2" element={<WeeklyMenu />} /> admin */}
+          {userRole === 1 && <Route path="/weeklymenu2" element={<WeeklyMenu />} />}
+          {userRole === 3 && <Route path="/weeklymenu2" element={<Login />} />}
+          {/* <Route path="/last" element={<ReservationCalendar />} /> */}
+          {/* <Route path="/forgetpassword" element={<ForgetPasswordWindow />} /> */}
+          {/* <Route path="/EmailVerify" element={<EmailVerify />} /> non-user */}
+          {userRole === 3 && <Route path="/EmailVerify" element={<EmailVerify />} />}
+          {/* {userRole === 3 && <Route path="/EmailVerify" element={<Login />} />} */}
+          {/* <Route path="/boofeh" element={<Boofeh />} /> */}
+          {/* <Route path="/byadmin" element={<AddWeeklyMenu />} /> admin */}
+          {userRole === 1 && <Route path="/byadmin" element={<AddWeeklyMenu />} />}
+          {userRole === 3 && <Route path="/byadmin" element={<Login />} />}
+          {/* <Route path="/organizationList" element={<OrganizationList />} /> */}
+          <Route path="*" element={<PageNotFound />} />
+          {/* <Route path="/Notif" element={<Notificationbox />} /> */}
+          {/* <Route path="/Reserve" element={<Reserve />} />user */}
+          {userRole === 2 && <Route path="/Reserve" element={<Reserve />} />}
+          {userRole === 3 && <Route path="/Reserve" element={<Login />} />}
+          {/* <Route path="/ReviewOnBoofeh" element={<DataFromApiList />} />User */}
+          {userRole === 2 && <Route path="/ReviewOnBoofeh" element={<DataFromApiList />} />}
+          {userRole === 3 && <Route path="/ReviewOnBoofeh" element={<Login />} />}
+          {/* <Route path="/verify" element={<Verify />} /> */}
+          {/* <Route path="/addweeklymenu" element={<AddWeeklyMenu />} /> admin repeat of by admin!!!! */}
+          {userRole === 1 && <Route path="/addweeklymenu" element={<AddWeeklyMenu />} />}
+          {userRole === 3 && <Route path="/addweeklymenu" element={<Login />} />}
+        </Routes>
+        <Footer />
       </div>
     </BrowserRouter>
   );

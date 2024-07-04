@@ -14,6 +14,7 @@
   margin-top: 9vh;
   margin-bottom: 9vh;
   transform: scale(1.5);
+  overflow-x:hidden !important;
 }
 
 .home-link {
@@ -45,10 +46,10 @@
 
 .error-container {
   text-align: center;
-  font-size: 106px;
+  font-size: 6.625rem;
   font-family: 'Catamaran', sans-serif;
-  font-weight: 800;
-  margin: 70px 15px;
+  font-weight: 50rem;
+  margin: 4.375rem 0.938rem;
 }
 
 .error-container>span {
@@ -58,8 +59,8 @@
 
 /* 4 */
 .error-container>span.four {
-  width: 136px;
-  height: 43px;
+  width: 8.5rem;
+  height: 2.688rem;
   border-radius: 999px;
   background:
     linear-gradient(140deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.07) 43%, transparent 44%, transparent 100%),
@@ -76,9 +77,9 @@
 }
 
 .error-container>span.four:before {
-  width: 43px;
-  height: 156px;
-  left: 60px;
+  width: 2.688rem;
+  height: 9.75rem;
+  left: 3.75rem;
   bottom: -43px;
   background:
     linear-gradient(128deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.07) 40%, transparent 41%, transparent 100%),
@@ -87,7 +88,7 @@
 }
 
 .error-container>span.four:after {
-  width: 137px;
+  width: 8.563rem;
   height: 43px;
   transform: rotate(-49.5deg);
   left: -18px;
@@ -176,21 +177,45 @@
   }
 }
 
-@media screen and (max-width: 584px) {
+@media screen and (max-width: 538px) {
   .size-me {
     margin: 10vw 7vw;
     transform: scale(1.1);
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 493px) {
   .size-me {
     margin: 10vw 7vw;
     transform: scale(1);
 
   }
 }
+@media screen and (max-width: 437px) {
+  .size-me {
+    margin: 10vw 7vw;
+    transform: scale(0.8);
 
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .size-me {
+    margin: 10vw 7vw;
+    margin-bottom:  0vw;
+    transform: scale(0.6);
+
+  }
+}
+@media screen and (max-width: 263px) {
+  .size-me {
+    margin: 10vw 7vw;
+    margin-bottom:  0vw;
+    transform: scale(0.5);
+
+  }
+}
+/* 
 @media screen and (max-height: 420px) {
   .size-me {
     margin-top: 10vw;
@@ -225,4 +250,4 @@
     margin: 0rem;
     margin-top: 0rem;
   }
-}
+} */

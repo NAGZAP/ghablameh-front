@@ -113,7 +113,7 @@ const Myorgs = () => {
                 ref={searchData}
                 type="text"
                 className={`${[styles.input]} rounded-lg`}
-                placeholder="جستجو ..."
+                placeholder="جست و جو ..."
               />
             </div>
 
@@ -131,7 +131,7 @@ const Myorgs = () => {
 
         </div>
 
-        <div className="grid grid-cols-3 gap-1 mx-3 my-6">
+        <div className="mx-3 my-6">
           {filteredOrgs.length === 0 ? (
             <p className="text-red-600 text-center my-5" style={{ fontSize: "24px" }}>
               سازمانی یافت نشد!
@@ -143,16 +143,14 @@ const Myorgs = () => {
                 className="border border-sky-800 rounded-lg p-2 pt-3 pr-3 my-2 m-2"
               >
 
-                <div className="flex flex-col justify-end">
-
-                  <div className="flex flex-row justify-between">
-                    <div>
-                      <p >نام سازمان :  
-                        <span className=" font-bold">{` ${item.organization_name}`}</span>
-                        </p>
-                    </div>
-
-                    <div>
+                <div>
+                  <div>
+                    <p >نام سازمان :
+                      <span className=" font-bold">{` ${item.organization_name}`}</span>
+                    </p>
+                  </div>
+                  <div className="text-center my-5">
+                    <span>
                       وضعیت :
                       <span
                         className={`text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:text-green-300 m-3 ${item.status === 'P'
@@ -168,10 +166,10 @@ const Myorgs = () => {
                             ? 'تایید شده'
                             : 'رد شده'}
                       </span>
-                    </div>
+                    </span>
                   </div>
 
-                  <div className="flex justify-start text-sm my-2 mt-5">
+                  <div>
                     <p style={{ direction: "ltr" }}>
                       تاریخ درخواست : {gregorianToPersian(item.created_at.slice(0, 10))}
                     </p>

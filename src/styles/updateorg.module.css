@@ -89,7 +89,7 @@
 .input {
   width: 100%;
   padding: 8px;
-  text-align: right;
+  /* text-align: right; */
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
@@ -119,6 +119,7 @@
   display: flex;
   justify-content: center;
   justify-items: center;
+  /* border-radius: '10px'; */
 }
 
 .button:hover {
@@ -175,6 +176,7 @@
 
   .button {
     font-size: 12px;
+    
   }
 }
 

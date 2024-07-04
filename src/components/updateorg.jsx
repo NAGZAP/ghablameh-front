@@ -6,6 +6,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import Navbarparent from './navbarparent';
 import Avatar from "react-avatar";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+import '../styles/customNotifications.css';
+import {useNavigate } from "react-router-dom";
 
 const Update = () => {
   const [name, setName] = useState('');
@@ -20,16 +24,44 @@ const Update = () => {
   const [old_password, setOld_password] = useState('');
   const [new_password, setNew_password] = useState('');
   const [confirm_new_password, setConfirm_new_password] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-
 
   const [formErrors, setFormErrors] = useState([]);
   const [passErrors, setPassErrors] = useState([]);
   const [isWaitingForm1, setIsWaitingForm1] = useState(false);
   const [isWaitingForm2, setIsWaitingForm2] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword((prevState) => !prevState);
+  const navigate = useNavigate();
+
+  const toggleCurrentPasswordVisibility = () => {
+    setShowCurrentPassword(!showCurrentPassword);
+  };
+
+  const toggleNewPasswordVisibility = () => {
+    setShowNewPassword(!showNewPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
+
+  const createNotification = (type,error) => {
+    return () => {
+      switch (type) {
+        case 'fail':
+          NotificationManager.error(`${error}`, '', 3000);
+          break;
+        case 'success':
+          NotificationManager.success(' رفتن به صفحه اصلی ','اطلاعات با موفقیت ثبت شد ',  3000,() => {navigate("/")});
+          break;
+
+        default:
+          break;
+      }
+    };
   };
 
   // fetch user data
@@ -104,7 +136,7 @@ const Update = () => {
                           />
                           :
                           <Avatar
-                            name={name}
+                            name={admin_first_name}
                             size="130"
                             round={true}
                             maxInitials={1}
@@ -121,42 +153,68 @@ const Update = () => {
 
               {/* input fileds */}
               <div>
-                <div className={styles.formGroup}>
+                <div className={`${styles.formGroup} mt-3`}>
                   <label htmlFor="name" className={styles.label}> نام سازمان  </label>
-                  <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} className={styles.input} placeholder='نام سازمان' />
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="admin_username" className={styles.label}> نام کاربری مدیر سازمان  </label>
-                  <input type="text" id="admin_username" value={admin_username} onChange={(e) => SetAdmin_username(e.target.value)} className={styles.input} placeholder=' نام کاربری مدیر سازمان  ' />
+                  <input type="text" id="name" style={{ borderRadius: '10px' }} value={name} onChange={(e) => setName(e.target.value)} className={styles.input} placeholder='نام سازمان' />
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label className={styles.label}>نام مدیر سازمان</label>
-                  <div className='flex'>
-                    <input type="text" id="admin_first_name" value={admin_first_name} onChange={(e) => setAdmin_first_name(e.target.value)} className={styles.input} placeholder='نام' />
-                    <div style={{ marginLeft: '10px' }}></div>
-                    <input type="text" id="admin_last_name" value={admin_last_name} onChange={(e) => setAdmin_last_name(e.target.value)} className={styles.input} placeholder='نام خانوادگی' />
+                  <div className='flex mt-8'>
+                    <div className='w-1/2'>
+                      <label htmlFor="adminFirstName" className={styles.label}>نام مدیر سازمان</label>
+                      <input
+                        type="text"
+                        id="adminFirstName"
+                        style={{ borderRadius: '10px' }}
+                        value={admin_first_name}
+                        onChange={(e) => setAdmin_first_name(e.target.value)}
+                        className={styles.input}
+                        placeholder='نام'
+                      />
+                    </div>
+                    <div className='w-1/2 mr-4'>
+                      <label htmlFor="adminLastName" className={styles.label}>نام خانوادگی مدیر سازمان</label>
+                      <input
+                        type="text"
+                        id="adminLastName"
+                        style={{ borderRadius: '10px' }}
+                        value={admin_last_name}
+                        onChange={(e) => setAdmin_last_name(e.target.value)}
+                        className={styles.input}
+                        placeholder='نام خانوادگی'
+                      />
+                    </div>
                   </div>
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label htmlFor="admin_email" className={styles.label}> ایمیل مدیر سازمان </label>
-                  <input type="text" id="admin_email" value={admin_email} onChange={(e) => setAdmin_email(e.target.value)} className={styles.input} placeholder='  ایمیل مدیر سازمان  ' />
+                  <div className='flex mt-8'>
+                    <div className='w-1/2'>
+                    <label htmlFor="admin_username" className={styles.label}> نام کاربری مدیر سازمان  </label>
+                      <input type="text" id="admin_username" style={{ borderRadius: '10px', direction: 'ltr' }} value={admin_username} onChange={(e) => SetAdmin_username(e.target.value)} className={styles.input} placeholder=' نام کاربری مدیر سازمان  ' />
+                    
+                    </div>
+                    <div className='w-1/2 mr-4'>
+                    <label htmlFor="admin_phone_number" className={styles.label}> شماره تماس مدیر سازمان </label>
+                    <input type="text" id="admin_phone_number" style={{ borderRadius: '10px', direction: 'ltr'}} value={admin_phone_number} onChange={(e) => setAdmin_phone_number(e.target.value)} className={styles.input} placeholder=' شماره تماس مدیر سازمان ' />
+                    </div>
+                  </div>
                 </div>
 
+
                 <div className={styles.formGroup}>
-                  <label htmlFor="admin_phone_number" className={styles.label}> شماره تماس مدیر سازمان </label>
-                  <input type="text" id="admin_phone_number" value={admin_phone_number} onChange={(e) => setAdmin_phone_number(e.target.value)} className={styles.input} placeholder=' شماره تماس مدیر سازمان ' />
+                  <label htmlFor="admin_email" className={styles.label}> ایمیل مدیر سازمان </label>
+                  <input type="text" id="admin_email" style={{ borderRadius: '10px', direction: 'ltr' }} value={admin_email} onChange={(e) => setAdmin_email(e.target.value)} className={styles.input} placeholder='  ایمیل مدیر سازمان  ' />
                 </div>
 
                 {/* submit button */}
                 {!isWaitingForm1 && (
-                  <button type="submit" className={styles.button}>
+                  <button type="submit" className={styles.button} style={{ borderRadius: '10px' }}>
                     ارسال اطلاعات
                   </button>
                 )}
                 {isWaitingForm1 && (
-                  <button type="submit" className={styles.button}>
+                  <button type="submit" className={styles.button} style={{ borderRadius: '10px' }}>
                     <div className={`${styles.spinner2}`}></div>
                   </button>
                 )}
@@ -182,17 +240,18 @@ const Update = () => {
                   </label>
                   <div className={styles.passwordInputContainer}>
                     <input
-                      type={showPassword ? 'text' : 'password'}
+                      type={showCurrentPassword ? 'text' : 'password'}
                       id="old_password"
                       value={old_password}
                       onChange={(e) => setOld_password(e.target.value)}
                       className={styles.input}
+                      style={{ borderRadius: '10px' }}
                     // required
                     />
                     <FontAwesomeIcon
-                      icon={showPassword ? faEye : faEyeSlash}
+                      icon={showCurrentPassword ? faEye : faEyeSlash}
                       className={styles.passwordIcon}
-                      onClick={togglePasswordVisibility}
+                      onClick={toggleCurrentPasswordVisibility}
                     />
                   </div>
                 </div>
@@ -202,17 +261,18 @@ const Update = () => {
                   </label>
                   <div className={styles.passwordInputContainer}>
                     <input
-                      type={showPassword ? 'text' : 'password'}
+                      type={showNewPassword ? 'text' : 'password'}
                       id="new_password"
                       value={new_password}
                       onChange={(e) => setNew_password(e.target.value)}
                       className={styles.input}
+                      style={{ borderRadius: '10px' }}
                     // required
                     />
                     <FontAwesomeIcon
-                      icon={showPassword ? faEye : faEyeSlash}
+                      icon={showNewPassword ? faEye : faEyeSlash}
                       className={styles.passwordIcon}
-                      onClick={togglePasswordVisibility}
+                      onClick={toggleNewPasswordVisibility}
                     />
                   </div>
                 </div>
@@ -222,17 +282,18 @@ const Update = () => {
                   </label>
                   <div className={styles.passwordInputContainer}>
                     <input
-                      type={showPassword ? 'text' : 'password'}
+                      type={showConfirmPassword ? 'text' : 'password'}
                       id="confirm_new_password"
                       value={confirm_new_password}
                       onChange={(e) => setConfirm_new_password(e.target.value)}
                       className={styles.input}
+                      style={{ borderRadius: '10px' }}
                     // required
                     />
                     <FontAwesomeIcon
-                      icon={showPassword ? faEye : faEyeSlash}
+                      icon={showConfirmPassword ? faEye : faEyeSlash}
                       className={styles.passwordIcon}
-                      onClick={togglePasswordVisibility}
+                      onClick={toggleConfirmPasswordVisibility}
                     />
                   </div>
                 </div>
@@ -240,15 +301,15 @@ const Update = () => {
 
               {/* submit button */}
               {!isWaitingForm2 && (
-                  <button type="submit" className={styles.button}>
-                   به روز رسانی رمز عبور
-                  </button>
-                )}
-                {isWaitingForm2 && (
-                  <button type="submit" className={styles.button}>
-                    <div className={`${styles.spinner2}`}></div>
-                  </button>
-                )}
+                <button type="submit" className={styles.button} style={{ borderRadius: '10px' }}>
+                  به روز رسانی رمز عبور
+                </button>
+              )}
+              {isWaitingForm2 && (
+                <button type="submit" className={styles.button} style={{ borderRadius: '10px' }}>
+                  <div className={`${styles.spinner2}`}></div>
+                </button>
+              )}
             </form>
 
           </div>
@@ -281,30 +342,44 @@ const Update = () => {
 
     if (!name) {
       errors.push('نام سازمان را وارد کنید.');
+
+      createNotification('fail','نام سازمان را وارد کنید.')();
     }
     if (!admin_first_name) {
       errors.push('نام مدیر را وارد کنید.');
+
+      createNotification('fail','نام مدیر را وارد کنید.')();
     }
     if (!admin_last_name) {
       errors.push('نام خانودگی مدیر را وارد کنید.');
+
+      createNotification('fail','نام خانودگی مدیر را وارد کنید.')();
     }
     if (!admin_username) {
       errors.push('نام کاربری مدیر را وارد کنید.');
+
+      createNotification('fail','نام کاربری مدیر را وارد کنید.')();
     }
     if (!admin_email) {
       errors.push(' ایمیل مدیر را وارد کنید.');
+
+      createNotification('fail',' ایمیل مدیر را وارد کنید.')();
     }
     if (!admin_phone_number) {
       errors.push('شماره مدیر را وارد کنید.');
+      createNotification('fail','شماره مدیر را وارد کنید.')();
     }
-    if (!/^([a-zA-Z0-9]+)@([a-zA-Z]+)\.([a-zA-Z]{2,})$/.test(admin_email)) {
-      errors.push(' ایمیل مدیر را به درستی وارد کنید.');
+    if (!/^([a-zA-Z0-9!_.]+)@([a-zA-Z]+)\.([a-zA-Z]{2,})$/.test(admin_email)) {
+      errors.push('ایمیل مدیر را به درستی وارد کنید.');
+      createNotification('fail','ایمیل مدیر را به درستی وارد کنید.')();
     }
     if (admin_phone_number.startsWith('98') && admin_phone_number.length !== 12) {
       errors.push('شماره مدیر را به درستی وارد کنید.');
+      createNotification('fail','شماره مدیر را به درستی وارد کنید.')();
     }
     if (admin_phone_number.startsWith('09') && admin_phone_number.length !== 11) {
       errors.push('شماره مدیر را به درستی وارد کنید.');
+      createNotification('fail','شماره مدیر را به درستی وارد کنید.')();
     }
 
     let admin_phone_number_english = admin_phone_number.replace(/[۰-۹]/g, function (w) {
@@ -314,10 +389,12 @@ const Update = () => {
     // check if admin_phone_number contains only numbers and starts with '989' or '09'
     if (!/^\d+$/.test(admin_phone_number_english) || !/^(989|09)/.test(admin_phone_number_english)) {
       errors.push('شماره مدیر را به درستی وارد کنید.');
+      createNotification('fail','شماره مدیر را به درستی وارد کنید.')();
     }
 
     if (errors.length > 0) {
-      alert(errors.join('\n'));
+      // alert(errors.join('\n'));
+      
       setFormErrors(errors);
       return;
     }
@@ -346,16 +423,43 @@ const Update = () => {
 
       if (response.status === 200) {
         setIsWaitingForm1(false);
-        alert('اطلاعات با موفقیت ثبت شد ');
-        window.location.href = '/';
+        // alert('اطلاعات با موفقیت ثبت شد ');
+        // window.location.href = '/';
+        createNotification('success')();
       } else {
         const errorData = await response.json();
         setIsWaitingForm1(false);
-        alert(response.message);
+        // alert(response.message);
+        createNotification('fail',response.message)();
       }
     } catch (error) {
       setIsWaitingForm1(false);
-      alert(error.message);
+      console.error(error.response.data);
+
+      if (error.response.data.name) {
+        // alert(error.response.data.name);
+        createNotification('fail',error.response.data.name)();
+      }
+      if (error.response.data.admin_first_name) {
+        // alert(error.response.data.admin_first_name);
+        createNotification('fail',error.response.data.admin_first_name)();
+      }
+      if (error.response.data.admin_last_name) {
+        // alert(error.response.data.admin_last_name);
+        createNotification('fail',error.response.data.admin_last_name)();
+      }
+      if (error.response.data.admin_username) {
+        // alert(error.response.data.admin_username);
+        createNotification('fail',error.response.data.admin_username)();
+      }
+      if (error.response.data.admin_email) {
+        // alert(error.response.data.admin_email);
+        createNotification('fail',error.response.data.admin_email)();
+      }
+      if (error.response.data.admin_phone_number) {
+        // alert(error.response.data.admin_phone_number);
+        createNotification('fail',error.response.data.admin_phone_number)();
+      }
     }
     setIsWaitingForm1(false);
   };
@@ -369,24 +473,30 @@ const Update = () => {
 
     if (!new_password) {
       errors.push('رمز عبور جدید را وارد کنید.');
+      createNotification('fail','رمز عبور جدید را وارد کنید.')();
+      
     }
     if (!old_password) {
-      errors.push('رمز عبور جدید را وارد کنید.');
+      errors.push('رمز عبور فعلی را وارد کنید.');
+      createNotification('fail','رمز عبور فعلی را وارد کنید')();
+      
     }
     if (!confirm_new_password) {
       errors.push('تأیید رمز عبور جدید را وارد کنید.');
+      createNotification('fail','تأیید رمز عبور جدید را وارد کنید.')();
     }
     if (new_password !== confirm_new_password) {
       errors.push('رمز عبور جدید و تأیید آن مطابقت ندارند.');
+      createNotification('fail','رمز عبور جدید و تأیید آن مطابقت ندارند.')();
     }
     if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(new_password)) {
       errors.push(' رمز عبور باید حداقل ۸ کاراکتر و شامل اعداد و حروف باشد. ');
+      createNotification('fail',' رمز عبور باید حداقل ۸ کاراکتر و شامل اعداد و حروف باشد. ')();
     }
 
-
     if (errors.length > 0) {
-      setPassErrors(errors);
-      alert(errors.join('\n'));
+      // setPassErrors(errors);
+      // alert(errors.join('\n'));
       return;
     }
 
@@ -406,23 +516,29 @@ const Update = () => {
 
       if (response.status === 200) {
         setIsWaitingForm2(false);
-        alert('اطلاعات با موفقیت ثبت شد ');
-        window.location.href = '/';
+        // alert('اطلاعات با موفقیت ثبت شد ');
+        // window.location.href = '/';
+        createNotification('success')();
       } else {
         const errorData = await response.json();
         setIsWaitingForm2(false);
-        alert(' مشکلی پیش امده.لطفا در زمانی دیگر امتحان کنید ')
+        // alert(' مشکلی پیش امده.لطفا در زمانی دیگر امتحان کنید ')
+        createNotification('fail',' مشکلی پیش امده.لطفا در زمانی دیگر امتحان کنید ')();
       }
     } catch (error) {
       // console.error('An error occurred:', error);
       setIsWaitingForm2(false);
       if (error.response.data.old_password) {
-        alert(error.response.data.old_password[0]);
+        // alert(error.response.data.old_password[0]);
+        createNotification('fail',error.response.data.old_password[0])();
       } else if (error.response.data.new_password) {
-        alert(error.response.data.new_password[0]);
+        // alert(error.response.data.new_password[0]);
+        createNotification('fail',error.response.data.new_password[0])();
       } else if (error.response.data.new_password & error.response.data.old_password) {
-        alert(error.response.data.new_password[0]);
-        alert(error.response.data.new_password[0]);
+        // alert(error.response.data.new_password[0]);
+        // alert(error.response.data.old_password[0]);
+        createNotification('fail',error.response.data.new_password[0])();
+        createNotification('fail',error.response.data.old_password[0])();
       }
     }
     setIsWaitingForm2(false);
@@ -431,6 +547,7 @@ const Update = () => {
   return (
     <div className={`${styles.bg} flex flex-col`} >
       <Navbarparent />
+      <NotificationContainer />
       {Form()}
     </div>
   );

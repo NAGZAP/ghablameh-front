@@ -11,6 +11,13 @@ import { Tab, initTWE } from 'tw-elements';
 import Register from '../components/org'
 import { ToastContainer, toast } from 'react-toastify';
 import Navbarparent from '../components/navbarparent';
+
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+import '../styles/customNotifications.css';
+
+
+
 initTWE({ Tab });
 /* SignUpTailwind.module.css */
 /* import styles from './SignUp.module.css' */
@@ -41,12 +48,49 @@ const validationSchema2 = Yup.object({
     .required('رمز خود را تکرار کنید!'),
     Account: Yup.string().required('نام کاربری خود را به درستی وارد کنید!'),
 });
+
 function SignUp() {
   const [activeTab, setActiveTab] = useState('tabs-Persons');
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
+
+
+
+
+  const ErrorSignUp = () => {
+    toast.warn(
+        <div className="flex flex-col items-center">
+            <div className="text-center mb-4">{"حساب کاربری دیگری با اطلاعاتی مشابه وجود دارد."}</div>
+        </div>,
+        {
+            position: 'top-center',
+            autoClose: 3000,
+            closeButton: true,
+            hideProgressBar: false,
+            progress: undefined,
+            icon: true,
+        }
+    );
+};
+
+  const createNotification = (type,data) => {
+    return () => {
+      switch (type) {
+        case 'ErrorSignUp':
+          NotificationManager.error("حساب کاربری دیگری با اطلاعاتی مشابه وجود دارد", '', 3000);
+          break;
+
+
+        default:
+          break;
+      }
+    };
+  };
+
+
+
 
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -84,23 +128,11 @@ function SignUp() {
 /*       console.error('Error sending data:', error); */
 /*           alert("اکانتی با اطلاعاتی مشابه استفاده شده است.") */
           ErrorSignUp();
+          createNotification('ErrorSignUp')();
+
      }
   };
-  const ErrorSignUp = () => {
-    toast.warn(
-        <div className="flex flex-col items-center">
-            <div className="text-center mb-4">{"حساب کاربری دیگری با اطلاعاتی مشابه وجود دارد."}</div>
-        </div>,
-        {
-            position: 'top-center',
-            autoClose: 3000,
-            closeButton: true,
-            hideProgressBar: false,
-            progress: undefined,
-            icon: true,
-        }
-    );
-};
+
   const onSubmit2 = async (data) => {
     try {
       const formattedPhoneNumber = '+98' + data.phonenumber.slice(1); 
@@ -131,6 +163,7 @@ function SignUp() {
   return (
     <>
     <Navbarparent/>
+    <NotificationContainer />
     <div className={styles.container}>
     <div className={styles.signup}>
     <p className="max font-semibold text-template-custom-blue text-4xl dark:text-template-custom-blue text-center mt-5">ثبت نام</p>
@@ -456,7 +489,7 @@ function SignUp() {
         )}
       </div>
     </div>
-    <ToastContainer />
+    {/* <ToastContainer /> */}
     </div>
     </>
   );

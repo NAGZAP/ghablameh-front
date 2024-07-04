@@ -4,13 +4,13 @@ import io from "socket.io-client";
 import AuthManager from "../APIs/AuthManager";
 import jalaliMoment from 'jalali-moment';
 import moment from 'moment';
+import axios from "axios";
 const Notificationbox = () => {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const Reads = useRef(null);
   const All = useRef(null);
   const content = useRef(null);
-  const [socket , setSocket] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,13 +18,17 @@ const Notificationbox = () => {
       setData(alldata.data);
       setCount(alldata.count);
       const token = AuthManager.getToken();
-      const ws = new WebSocket("https://ghablameh.fiust.ir/api/ws/notifications");
+      const ws = new WebSocket(`ws://your-websocket-server.com?token=${token}`);
       ws.onopen(() => {
-        ws.send(JSON.stringify({ type: 'auth', token }));
+        
       });
       ws.onmessage((event)=> {
-        setData([...data , event.data]);
+        const newMessage = event.data;
+        setData((prevdata) => [...prevdata, newMessage]);
       })
+      ws.onerror = (error) => {
+        console.log('WebSocket error:', error);
+      };
     };
     fetchData();
   }, []);
@@ -47,8 +51,14 @@ const Notificationbox = () => {
   function gregorianToPersian(dateString) {
     let options = { year: 'numeric', month: 'long', day: 'numeric' };
     let today = new Date(dateString).toLocaleDateString('fa-IR', options);
-    console.log(today);
     return today;
+  }
+
+  const MarkAsRead = async (event) => {
+    const id = event.target.id;
+    let token = AuthManager.getToken();
+    await axios.put("https://ghablameh.fiust.ir/api/v1/notifications/"+id+"/", {read : 'true'} ,{headers:{Authorization:"JWT " + token}});
+    window.location.reload();
   }
 
   return (
@@ -87,17 +97,14 @@ const Notificationbox = () => {
           data.map((m) => (
             <div
               key={m.id}
-              className={m.read ? "bg-slate-300 p-2 mx-1 my-2 rounded" : "bg-slate-300 p-2 mx-1 my-2 rounded"}
+              className={m.read == "true" ? "bg-slate-300 p-2 mx-1 my-2 rounded" : "bg-slate-300 p-2 mx-1 my-2 rounded"}
             >
               <span>{m.title}</span>
-              {/* <p style={{ fontSize: "14px" }}>{m.message.slice(0, 10)}</p> */}
-              <div className="grid grid-cols-2" style={{ fontSize: "12px" }}>
+              <div className="grid grid-cols-2" style={{ fontSize: "12px" }} id={m.id} onClick={MarkAsRead}>
                 <div>{gregorianToPersian(m.created_at.slice(0,10))}</div>
-                {/* <div style={{ textAlign: "left" }}>{m.user}</div> */}
               </div>
             </div>
           ))
-
         )}
       </div>
     </div>

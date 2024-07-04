@@ -26,7 +26,7 @@ function Verify() {
         hidden: { scale: 0, opacity: 0 },
     };
 
-    // fetch transactoin data
+    // send transactoin data
     useEffect(() => {
         const verifyPayment = async () => {
             setIsLoading(true);

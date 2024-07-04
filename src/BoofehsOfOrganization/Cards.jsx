@@ -4,7 +4,9 @@ import styles from './Cards.module.css';
 import { useState } from "react";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+import '../styles/customNotifications.css';
 
 function Cards(props) {
 
@@ -16,6 +18,28 @@ function Cards(props) {
   const [Emojichanger3, setEmojichanger3] = useState(emojis[2])
   const [Emojichanger4, setEmojichanger4] = useState(emojis[2])
   const [Emojichanger5, setEmojichanger5] = useState(emojis[2])
+
+
+
+    //Toast
+    const createNotification = (type) => {
+      return () => {
+        switch (type) {
+          case 'ErrorSent':
+            NotificationManager.error('ارسال اطلاعات با مشکل مواجه شد ', '', 2000);
+            break;
+          case 'Sendsuc':
+            NotificationManager.success(`نظر شما با موفقیت ثبت شد`, '', 2000);
+            break;
+
+          default:
+            break;
+        }
+      };
+    };
+
+    
+
   const ErrorSent = () => {
     toast.warn(
       <div className="flex flex-col items-center">
@@ -76,10 +100,12 @@ function Cards(props) {
       };
       await axios.post('https://ghablameh.fiust.ir/api/v1/buffets/' + props.index + '/rates/', rate1, { headers: { Authorization: `JWT ${token}` } });
       /*       alert('Data sent successfully! Org'); */
-      Sendsuc();
+      // Sendsuc();
+      createNotification('Sendsuc')();
 
     } catch (error) {
-      ErrorSent();
+      // ErrorSent();
+      createNotification('ErrorSent')();
     }
 
 
@@ -123,12 +149,12 @@ function Cards(props) {
   }
   return (
     <div className={styles.card}>
-      <h2 className={`${styles.card_orgName} font-bold text-xl`}>{props.name}</h2>
+      <h2 className={`${styles.card_orgName} font-bold text-2xl`}>{props.name}</h2>
       <h3 className={styles.card_orgNum}>{props.counter_organ}</h3>
 
       <div className={`${styles.itemscenter} flex `}>
-        <button type="button" className={`${styles.button} font-normal text-sm`} onClick={openModal}>
-          <h3>نظرسنجی غذا بوفه</h3>
+        <button type="button" className={`${styles.button}`} onClick={openModal}>
+          <h4 className=''>نظرسنجی غذا بوفه</h4>
         </button>
 
         {isModalOpen && (

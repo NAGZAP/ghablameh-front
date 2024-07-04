@@ -26,8 +26,9 @@ function ListOfJoinRequests() {
       const pendingRequests = response.data.filter((request) => request.status === "P");
 
       setRequests(pendingRequests);
+      console.log(pendingRequests)
 
-      console.log("requests: ", requests)
+      // console.log("requests: ", requests)
 
     } catch (error) {
       console.error('Error fetching user data: ', error);
@@ -200,9 +201,9 @@ function ListOfJoinRequests() {
               <div className="text-center mb-4 mx-2 mt-2">آیا از رد کردن این درخواست مطمئن هستید؟</div>
               <div className="flex justify-center space-x-3">
                 <div className='mx-2'>
-                  <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowRejectModel(false)}>خیر</button>
+                  <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowRejectModel(false)}>خیر</button>
                 </div>
-                <div className='mx-2'><button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handlereject()}>بله</button>
+                <div className='mx-2'><button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handlereject()}>بله</button>
                 </div></div>
             </div>
           </div>
@@ -216,9 +217,9 @@ function ListOfJoinRequests() {
               <div className="text-center mb-4 mx-2 mt-2">آیا از قبول کردن این درخواست مطمئن هستید؟</div>
               <div className="flex justify-center space-x-3">
                 <div className='mx-2'>
-                  <button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowAcceptModel(false)}>خیر</button>
+                  <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowAcceptModel(false)}>خیر</button>
                 </div>
-                <div className='mx-2'><button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handleaccept()}>بله</button>
+                <div className='mx-2'><button style={{ background:'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handleaccept()}>بله</button>
                 </div></div>
             </div>
           </div>
