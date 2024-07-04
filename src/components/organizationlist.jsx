@@ -47,17 +47,18 @@ function OrganizationList() {
         }
     };
 
-    //fetch oragnizations every 5 seconds
-    // useEffect(() => {
-    //     // Fetch immediately for the first time
-    //     if (AuthManager.isLoggedIn()) fetchOrganizations();
-    //     const interval = setInterval(() => {
-    //         if (AuthManager.isLoggedIn()) fetchOrganizations();
-    //     }, 5000); // (fetch every 5 seconds)
+    // fetch oragnizations every 5 seconds
+    useEffect(() => {
+        // Fetch immediately for the first time
+        if (AuthManager.isLoggedIn()) fetchOrganizations();
+        // const interval = setInterval(() => {
+            // if (AuthManager.isLoggedIn()) fetchOrganizations();
+        // });
+         // (fetch every 5 seconds)
 
-    //     // Clear the interval when the component is unmounted
-    //     return () => clearInterval(interval);
-    // });
+        // Clear the interval when the component is unmounted
+        // return () => clearInterval(interval);
+    },[]);
     //search
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
