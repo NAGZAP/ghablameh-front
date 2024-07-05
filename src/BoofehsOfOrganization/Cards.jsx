@@ -30,7 +30,7 @@ function Cards(props) {
             break;
           case 'Sendsuc':
             
-          NotificationManager.success(' رفتن به صفحه اصلی ','اطلاعات با موفقیت ثبت شد ',  3000,() => {navigate("/")});
+          NotificationManager.success(' مدیریت بوفه ها ','اطلاعات با موفقیت ثبت شد ',  3000,() => {navigate("/")});
             break;
 
           default:
@@ -104,10 +104,10 @@ function Cards(props) {
       // };
       console.log(rate1)
       await axios.post('https://ghablameh.fiust.ir/api/v1/buffets/' + props.index + '/rates/', rate1, { headers: { Authorization: `JWT ${token}` } });
-      /*       alert('Data sent successfully! Org'); */
+            // alert('Data sent successfully! Org'); 
       // Sendsuc();
-      // createNotification('Sendsuc')(' رفتن به صفحه اصلی ','اطلاعات با موفقیت ثبت شد ',  3000,() => {navigate("/")});
-      createNotification('success')();
+      // createNotification('Sendsuc')(' مدیریت بوفه ها ','اطلاعات با موفقیت ثبت شد ',  3000,() => {navigate("/myorgs")});
+      createNotification('Sendsuc')(); 
               // window.location.href = '/myorgs';
 
     } catch (error) {
