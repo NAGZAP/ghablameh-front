@@ -119,6 +119,7 @@ const Reserve = () => {
             try {
                 let result = await Organizations.GetOrganizationBuffets();
                 setData(result);
+                // console.log(result)
             } catch (error) {
                 console.error("Error fetching data:", error);
             } finally {
@@ -133,7 +134,7 @@ const Reserve = () => {
 
     //fetch table data
     const fetchData = async () => {
-        setFetchedData([]);
+        // setFetchedData([]);
         setIsLoading(true);
         // console.log('xdfcgvhmbj,nklkjhvgcxzfgnvmhj,kkhgfxcghjkl')
         try {
@@ -182,17 +183,17 @@ const Reserve = () => {
     //fetch every 5 seconds
     useEffect(() => {
         if (currentBuffet.current !== null) {
-            const fetchReservationsId = setInterval(() => {
-                fetchReservations();
-            }, 5000); // 5 seconds
+            // const fetchReservationsId = setInterval(() => {
+            //     fetchReservations();
+            // }, 5000); // 5 seconds
             // const fetchDataId = setInterval(() => {
             //     fetchData();
             // }, 5000); // 5 seconds
 
-            return () => {
-                clearInterval(fetchReservationsId);
-                // clearInterval(fetchDataId);
-            };
+            // return () => {
+            //     clearInterval(fetchReservationsId);
+            //     // clearInterval(fetchDataId);
+            // };
 
         }
     }, []);
@@ -248,11 +249,17 @@ const Reserve = () => {
                 createNotification('reserved',food)();
             } else {
                 console.log('Reservation update failed:', response.data);
+                fetchData();
                 createNotification('fail', food)();
             }
         } catch (error) {
             console.error('An error occurred:', error);
             // failToast();
+            
+            if(error.response.data.non_field_errors){
+                createNotification('failreserve', error.response.data.non_field_errors)();
+                return;
+            }
             createNotification('fail', food)();
         }
     }
@@ -272,6 +279,7 @@ const Reserve = () => {
 
             if (response.status == 204) {
                 // uncheckedToast(food);
+                fetchData();
                 createNotification('unreserved',food)();
                 fetchReservations();
             } else {
@@ -305,6 +313,10 @@ const Reserve = () => {
                 case 'wallet':
                     NotificationManager.warning('کیف پول خود را شارژ کنید ','', 2000);
                     break;
+                    case 'failreserve':
+                        NotificationManager.error(`${food}`,'', 3000);
+                        break;
+
                 default:
                     break;
             }
@@ -478,7 +490,7 @@ const Reserve = () => {
                 <div className="flex flex-col items-center justify-center">
 
                     {/* last week / next week button */}
-                    <div className="flex flex-row my-5 justify-center items-center bg-white bg-opacity-60 rounded-lg" style={{ padding: isBigScreen ? '16px' : '10px' }}>
+                    <div className="flex flex-row my-5 justify-center items-center bg-white bg-opacity-60 rounded-lg" style={{ padding: isBigScreen ? '16px' : '10px'}}>
                         <button className="rounded-lg bg-sky-800 px-5 py-2 text-white hover:bg-sky-900" onClick={getLastWeek} style={{ fontSize: isBigScreen ? '1rem' : '0.6rem', marginLeft: isBigScreen ? '40px' : '10px', paddingLeft: isBigScreen ? '1rem' : '0.5rem', paddingRight: isBigScreen ? '1rem' : '0.5rem' }}> هفته قبلی </button>
                         {/* currentBuffet.current.value */}
                         <div className=" flex items-center justify-center flex-row bg-opacity-50 py-1 px-2 rounded-lg" style={{ background: 'rgba(38, 87, 124, 0.2)', fontSize: isBigScreen ? '1rem' : '0.8rem' }}>
@@ -537,7 +549,7 @@ const Reserve = () => {
                             </thead>
                             <tbody>
                                 {organizedData.map((entry, rowIndex) => (
-                                    <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
+                                    <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-slate-50'} style={{border:'0.5px solid rgba(38, 87, 124, 0.2)'}}>
                                         <td className="p-2 text-center">{convertToJalali(entry.date)}</td>
                                         {mealNames.map((mealName, index) => (
                                             <td key={index} className="p-2">
@@ -573,7 +585,7 @@ const Reserve = () => {
 
     const options = data.map((item) => ({
         value: item.id,
-        label: item.name
+        label: item.name + ' - ' +item.organization_name
     }));
 
     return (
@@ -588,7 +600,7 @@ const Reserve = () => {
 
                     {/* choose buffet */}
                     <div className="mb-3 content-center w-full flex justify-center items-center">
-                        {options.length === 0 ? (
+                        {options.length === 0  && !isLoading ? (
                             <div className='flex flex-col w-full justify-center items-center'>
                                 <p className='text-lg mb-7 w-full'> برای رزرو غذا ابتدا عضو سازمان ها شوید. </p>
                                 <Link to='/chooseOrg' className='bg-sky-800 hover:bg-sky-900 text-white text-center rounded-lg py-2 px-2'> عضویت در سازمان ها </Link>

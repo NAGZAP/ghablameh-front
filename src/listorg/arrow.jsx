@@ -94,7 +94,8 @@ const AutoPlayMethods = () => {
                 />
               )}
               <h3>{org.name}</h3>
-              <p>Average Rate: {org.average_rate}</p>
+              {/* <p>امتیاز: {org.average_rate}</p> */}
+              <p>امتیاز: {org.average_rate !== null ? org.average_rate : 'بدون نظر '}</p>
             </div>
           </div>
         ))}

@@ -2,15 +2,19 @@ import styles from "./EmailVerify.module.css"
 import axios from 'axios';
 import { Link, redirect } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import Navbarparent from "../components/navbarparent";
 import Footer from "../components/footer";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import '../styles/customNotifications.css';
+import styless from '../styles/wallet.module.css'
 
 function EmailVerify() {
 
+
+    const [isWaiting, setIsWaiting] = useState(false);
 
     const createNotification = (type, data) => {
         return () => {
@@ -81,6 +85,7 @@ function EmailVerify() {
     }
     const ChecVerfiCode = async (e) => {
         //console.log(e)
+        setIsWaiting(true);
         try {
             const formattedData = {
                 code: e,
@@ -92,7 +97,9 @@ function EmailVerify() {
             localStorage.setItem('emailtoverify', '');
             //const accessToken = response.data.tokens.access;
             //localStorage.setItem('token', accessToken);
-            alert("اکانت شما با موفقیت ثبت شد!");
+            // alert("اکانت شما با موفقیت ثبت شد!");
+            setIsWaiting(false);
+
             createNotification('Success', "اکانت شما با موفقیت ثبت شد!")();
             navigate("/login");
         } catch (error) {
@@ -116,7 +123,18 @@ function EmailVerify() {
                             <h2 classNmae="lg:scale-100 md:scale-100 scale-75 ">برای تایید ایمیل خود کد ۵ رقمی ارسالی را وارد کنید!</h2>
                             <input type="text" id="Code" maxlength="5" class="lg:scale-100 md:scale-100 scale-75 text-center py-2 lg:w-48 md:w-48 w-32 inline border-template-custom-blue rounded-lg text-sm focus:border-template-custom-orange focus:ring-template-custom-orange disabled:opacity-150 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" />
                             <br />
-                            <button onClick={() => ChecVerfiCode(document.getElementById('Code').value)} className={styles.button_sign + " " + "text-center  lg:scale-90 md:scale-90 scale-75"}>ثبت کد</button>
+                            {!isWaiting && (
+                                <button onClick={() => ChecVerfiCode(document.getElementById('Code').value)} className={`${styless.button1} ${styles.button_sign} text-center text-lg  lg:scale-90 md:scale-90 scale-75`}>
+                                    ثبت کد
+                                </button>
+                            )}
+                            {isWaiting && (
+                                <button className={`} ${styles.button_sign} text-center  lg:scale-90 md:scale-90 scale-75`}>
+                                    <div className={`${styless.spinner2}`}></div>
+                                </button>
+                            )}
+
+                            {/* <button onClick={() => ChecVerfiCode(document.getElementById('Code').value)} className={styles.button_sign + " " + "text-center  lg:scale-90 md:scale-90 scale-75"}>ثبت کد</button> */}
                             <br />
                             <button onClick={() => Resend()} className="dfad text-template-custom-blue hover:text-template-custom-orange">ارسال مجدد</button>
                         </div>

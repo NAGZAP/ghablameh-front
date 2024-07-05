@@ -434,7 +434,7 @@ const Update = () => {
       }
     } catch (error) {
       setIsWaitingForm1(false);
-      console.error(error.response.data);
+      console.error(error);
 
       if (error.response.data.name) {
         // alert(error.response.data.name);
@@ -462,6 +462,7 @@ const Update = () => {
       }
     }
     setIsWaitingForm1(false);
+    createNotification('fail',' مشکلی پیش آمده، در زمان دیگری امتحان کنید ')();
   };
 
   //send form pass
