@@ -340,16 +340,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
 
       {/* notifications */}
       <div
-        style={{
-          display: "none",
-          position: "absolute",
-          top: "8%",
-          right: "1%",
-          maxHeight: "300px",
-          width: "20%",
-          zIndex: "2",
-          backgroundColor: "white"
-        }}
+        className={styles.notifbox}
         ref={notification}
       >
         {AuthManager.isLoggedIn() && <Notificationbox />}
