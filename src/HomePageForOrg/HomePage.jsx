@@ -44,14 +44,14 @@ function HomeOrgPage() {
         setActiveSlide((prevSlide) => (prevSlide + 1) % slides.length);
     };
 
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         setActiveSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    //     }, 5000);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveSlide((prevSlide) => (prevSlide + 1) % slides.length);
+        }, 5000);
 
-    //     return () => clearInterval(interval);
-    // }, [slides.length]
-    // );
+        return () => clearInterval(interval);
+    }, [slides.length]
+    );
 
     /*         const slides = [
                 { text: 'First slide', color: 'gray-400' },
