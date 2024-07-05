@@ -67,10 +67,10 @@ function App() {
       <div className="App">
         <Routes>
           
-          <Route path="/" element={<Home />} />
-          {/* {userRole === 1 && <Route path="/" element={<Home />} />}
+          {/* <Route path="/" element={<Home />} /> */}
+          {userRole === 1 && <Route path="/" element={<Home />} />}
           {userRole === 2 && <Route path="/" element={<Home />} />}
-          {userRole === 3 && <Route path="/" element={<Landing />} />} */}
+          {userRole === 3 && <Route path="/" element={<Landing />} />}
 
           {/*<Route path="/footer" element={<Footer />} />*/}
           {/* <Route path="/Update" element={<Update />} /> {/* User */}

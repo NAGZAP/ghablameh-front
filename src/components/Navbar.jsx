@@ -328,9 +328,10 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
         style={{
           display: "none",
           position: "absolute",
-          top: "10%",
-          right: "0",
+          top: "5",
+          // right: "0",
           maxHeight: "300px",
+          // opacity:'100%'
         }}
         ref={sideBar}
       >
@@ -342,7 +343,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
         style={{
           display: "none",
           position: "absolute",
-          top: "10%",
+          top: "8%",
           right: "1%",
           maxHeight: "300px",
           width: "20%",

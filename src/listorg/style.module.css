@@ -224,6 +224,7 @@ margin-bottom: 80px;
     cursor: pointer;
     color: #120b0b;
     border: 1px solid transparent; /* Add a border to each navbar item */
+
   }
   .m-navbar-item:hover {
     background-color: #6f9bd9;
@@ -234,6 +235,25 @@ margin-bottom: 80px;
     border-color:#ab4414 ; /* Change the border color to red for the active item */
   }
   
+  .n-navbar-item {
+    flex: 0 0 140px; /* Reduce the flex basis to make the navbar items smaller */
+   
+    padding: 10px;
+    margin-right: 40px;
+    text-align: center;
+    cursor: pointer;
+    color: #120b0b;
+    /* border: 1px solid transparent; Add a border to each navbar item */
+  }
+  .n-navbar-item:hover {
+    background-color: #e95815;
+  }
+  
+  .n-navbar-item.active {
+    background-color:rgb(249 115 22);
+    border-color:#ab4414 ; /* Change the border color to red for the active item */
+  }
+
   .content {
     margin-top: 20px;
     /* background-color: white; */

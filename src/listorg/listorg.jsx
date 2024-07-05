@@ -146,19 +146,19 @@ function ListOrg() {
   <div className={styles.menu}>
     <ul className={styles['m-navbar']}>
       <li
-        className={`${styles['m-navbar-item']} ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}
+        className={`${styles['n-navbar-item']} rounded-lg ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}
         onClick={() => handleItemClick('تمام بوفه ها')}
       >
         تمام بوفه ها
       </li>
       <li
-        className={`${styles['m-navbar-item']} ${selectedItem === 'Item 2' ? styles.active : ''}`}
+        className={`${styles['n-navbar-item']} rounded-lg ${selectedItem === 'Item 2' ? styles.active : ''}`}
         onClick={() => handleItemClick('Item 2')}
       >
         نام
       </li>
       <li
-        className={`${styles['m-navbar-item']} ${selectedItem === 'Item 3' ? styles.active : ''}`}
+        className={`${styles['n-navbar-item']} rounded-lg ${selectedItem === 'Item 3' ? styles.active : ''}`}
         onClick={() => handleItemClick('Item 3')}
       >
         تاریخ تشکیل شده
@@ -237,9 +237,9 @@ function ListOrg() {
 </div>
         </div>
    
-      <div class="pagination-container">
+      <div class="pagination-container ">
   <button
-    class="pagination-button rounded-l-lg"
+    class="pagination-button rounded-lg text-gray-800"
     disabled={currentPage === 1}
     onClick={() => changePage(currentPage - 1)}
   >
@@ -248,7 +248,7 @@ function ListOrg() {
   {Array.from({ length: Math.ceil(filteredItems.length / pageSize) }).map((_, index) => (
     <button
       key={index}
-      class={`pagination-button ${
+      class={`pagination-button bg-orange-500 mx-2 rounded-lg ${
         currentPage === index + 1 ? 'pagination-button-active' : ''
       }`}
       onClick={() => changePage(index + 1)}
@@ -257,7 +257,7 @@ function ListOrg() {
     </button>
   ))}
   <button
-    class="pagination-button rounded-r-lg"
+    class="pagination-button rounded-lg text-gray-800"
     disabled={currentPage === Math.ceil(filteredItems.length / pageSize)}
     onClick={() => changePage(currentPage + 1)}
   >
