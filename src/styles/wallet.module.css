@@ -122,3 +122,11 @@
   height: 22px;
   animation: spinner 1s linear infinite;
 }
+
+.passwordIcon {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+}

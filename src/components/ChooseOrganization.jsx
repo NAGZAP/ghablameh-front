@@ -100,6 +100,7 @@ import requests from "../APIs/AuthManager";
 import orgrequests from "../APIs/Organizations";
 import Swal from "sweetalert2";
 import styles from '../styles/Swal.module.css';
+
 const ChooseOrganization = () => {
   const [organizations, setOrganizations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -110,21 +111,22 @@ const ChooseOrganization = () => {
       try {
         const data = await requests.GetOrganizations();
         setOrganizations(data);
+        // console.log('asdfghjkl',data)
       } catch (error) {
         console.error("Error fetching organizations:", error);
       }
       setIsLoading(false);
     };
 
-// useEffect(() => {
-//   fetchOrganizations();
-//   const intervalId = setInterval(() => {
-//     fetchOrganizations();
-//   }, 5000); //5 seconds
+useEffect(() => {
+  fetchOrganizations();
+  // const intervalId = setInterval(() => {
+  //   fetchOrganizations();
+  // }, 5000); //5 seconds
 
-//   return () => clearInterval(intervalId); // Clear the interval when the component is unmounted 
+  // return () => clearInterval(intervalId); // Clear the interval when the component is unmounted 
 
-// }, []); 
+}, []); 
 
   const handleJoin = async () => {
     let orgs = document.querySelectorAll(".organizationCheckbox");
@@ -202,7 +204,7 @@ const ChooseOrganization = () => {
                 />
               </svg>
 
-              <div className="mx-3 text-base">سازمان مورد نظر خود را انتخاب نمایید.</div>
+              <div className="mx-3 text-lg">سازمان مورد نظر خود را انتخاب نمایید.</div>
 
             </div>
 
@@ -210,20 +212,22 @@ const ChooseOrganization = () => {
 
           <div
             className=" mb-5 rounded-xl p-4 bg-sky-900 w-80"
-            style={{ maxHeight: "350px", overflowY: "scroll", background: '' }}
+            // style={{ maxHeight: "350px", overflowY: "scroll", background: '' }}
           >
             {/* border border-sky-800 */}
 
             {organizations.length === 0 ?
               isLoading ? (
+                <div className="flex justify-center items-center">
                 <div className={styles.spinner}></div>
+                </div>
               ) : (
                 <p className="p-1 text-white"> سازمانی یافت نشد. </p>
               ) : (
                 <div className="bg-white bg-opacity-85 rounded-lg p-0.5">
                 
                   {organizations.map((item, index) => (
-                    <div className="p-1 m-2" style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }} key={item.id}>
+                    <div className="p-2 m-2" key={item.id}  style={{ borderBottom: index === requests.length - 1 ? 'none' : '1px solid rgb(38, 87, 124)' }}>
                       {item.name}
                       <input
                         type="checkbox"

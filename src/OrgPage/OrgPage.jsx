@@ -185,7 +185,6 @@ function OrgPage() {
       {/* <div className=''>*/}
       <div className={styles.containment_boof} >
         <div className={styles.app}>
-
           <div className='flex flex-row justify-between items-center'>
 
             <div className={`${styles.itemscenter} flex-grow`}>

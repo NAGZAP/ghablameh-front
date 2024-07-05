@@ -72,6 +72,7 @@ import Navbar from "../components/Navbar";
 import styles from "../styles/updateinfo.module.css";
 import organizationsRequest from '../APIs/Organizations';
 import Navbarparent from "../components/navbarparent";
+import { Link } from "react-router-dom";
 const Myorgs = () => {
   const [orgs, setOrgs] = useState([]);
   const [filteredOrgs, setFilteredOrgs] = useState([]);
@@ -81,8 +82,13 @@ const Myorgs = () => {
     const fetchOrganizations = async () => {
       try {
         const gottenOrgs = await organizationsRequest.GetMyOrganizations();
+        gottenOrgs.sort((a, b) => {
+                  const order = ['P', 'R', 'A'];
+                  return order.indexOf(a.status) - order.indexOf(b.status);
+                });
         setOrgs(gottenOrgs);
         setFilteredOrgs(gottenOrgs);
+        // console.log(gottenOrgs)
       } catch (error) {
         console.error('Error fetching organizations:', error);
       }
@@ -92,7 +98,7 @@ const Myorgs = () => {
   function gregorianToPersian(dateString) {
     let options = { year: 'numeric', month: 'long', day: 'numeric' };
     let today = new Date(dateString).toLocaleDateString('fa-IR', options);
-    console.log(today);
+    // console.log(today);
     return today;
   }
   const handleSearch = () => {
@@ -100,6 +106,7 @@ const Myorgs = () => {
       item.organization_name.toLowerCase().includes(searchData.current.value.toLowerCase())
     );
     setFilteredOrgs(filtered);
+    // console.log(filtered)
   };
 
   return (
@@ -133,9 +140,12 @@ const Myorgs = () => {
 
         <div className="mx-3 my-6">
           {filteredOrgs.length === 0 ? (
-            <p className="text-red-600 text-center my-5" style={{ fontSize: "24px" }}>
+            <div className="flex items-center justify-center flex-col">
+            <p className="text-sky-800 text-center my-5" style={{ fontSize: "24px" }}>
               سازمانی یافت نشد!
             </p>
+            <Link to='/chooseOrg' className="p-2 text-white bg-orange-500 rounded-lg"> درخواست عضویت </Link>
+            </div>
           ) : (
             filteredOrgs.map((item) => (
               <div

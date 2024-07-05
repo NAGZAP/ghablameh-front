@@ -103,7 +103,7 @@ const AddWeeklyMenu = () => {
         }
       );
   
-      console.log('New food item added:', response.data);
+      // console.log('New food item added:', response.data);
       setNewFoodItem({ name: '', description: '' });
       await fetchFoods(); // Fetch the updated list of foods
     } catch (error) {
@@ -137,6 +137,8 @@ const AddWeeklyMenu = () => {
       );
       const newMeal = response.data;
       setMeals([...meals, newMeal]); // Update the meals state with the new meal
+      // setMenuName('');
+      // setMenuTime('');
       console.log('Meals added:', response.data);
     } catch (error) {
       console.error('Error adding meals:', error);
@@ -194,8 +196,8 @@ const AddWeeklyMenu = () => {
         },
       });
 
-      console.log('Foods retrieved:', response.data);
-      console.log('sdxfcgvhbjnklljhgv')
+      // console.log('Foods retrieved:', response.data);
+      // console.log('sdxfcgvhbjnklljhgv')
       setFoods(response.data);
       console.log('foods: ',foods)
     } catch (error) {

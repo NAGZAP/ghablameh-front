@@ -43,7 +43,9 @@ function App() {
 
   useEffect(() => {
     const fetchUserRole = async () => {
+      // console.log('asdfghjklasdfghjkl')
       const role = await AuthManager.orguser();
+      // console.log('aaaaaaaaaaasdfghjklasfvdfghjkl')
       setUserRole(role);
     };
 
@@ -63,7 +65,12 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Home />} />
+          
+          {/* <Route path="/" element={<Home />} /> */}
+          {userRole === 1 && <Route path="/" element={<Home />} />}
+          {userRole === 2 && <Route path="/" element={<Home />} />}
+          {userRole === 3 && <Route path="/" element={<Landing />} />}
+
           {/*<Route path="/footer" element={<Footer />} />*/}
           {/* <Route path="/Update" element={<Update />} /> {/* User */}
           {userRole === 2 && <Route path="/Update" element={<Update />} />}
