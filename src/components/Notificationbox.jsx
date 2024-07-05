@@ -154,7 +154,7 @@ const Notificationbox = () => {
               className="bg-slate-300 p-2 mx-1 my-2 rounded"
               style={{ backgroundColor: '#edf3fc' }}
             >
-              <span className="text-base w-full text-left block">{m.title}</span>
+              <span className="text-base w-full text-right block">{m.title}</span>
           
               <div className="grid grid-cols-2" style={{ fontSize: "12px" }} id={m.id}
                 onClick={MarkAsRead}
