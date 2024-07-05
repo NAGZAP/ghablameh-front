@@ -1,4 +1,3 @@
-
 import React from 'react';
 import DataFetcher from "./arrow";
 import Select from "react-select";
@@ -12,7 +11,7 @@ import "keen-slider/keen-slider.min.css"
 import Navbarparent from '../components/navbarparent';
 import OrganizationList from '../components/organizationlist';
 import ReservationCalendar from '../components/lastreservation/lastreservation';
-
+import './pagination.css'
 const colors = ["#0088FE", "#00C49F", "#FFBB28"];
 const delay = 2500;
 
@@ -25,7 +24,7 @@ function ListOrg() {
   const [items, setItems] = useState([]);
   const [filterLetter, setFilterLetter] = useState('');
   const [organizations, setOrganizations] = useState([]);
-
+  const itemsPerPage = 8; // Define the number of items per page
   const fetchDataFromURL = async () => {
     const token = 'JWT ' + localStorage.getItem("token");
 
@@ -41,6 +40,7 @@ function ListOrg() {
       console.error('Error retrieving data:', error);
     }
   };
+
 
   const fetchOrganizations = async () => {
     try {
@@ -120,56 +120,85 @@ function ListOrg() {
     const options = { day: 'numeric', month: 'short', year: 'numeric' };
     return date.toLocaleDateString('fa-IR', options);
   };
+  const pageSize = 8; // Number of items per page
+  const [currentPage, setCurrentPage] = useState(1);
 
+  // Calculate the start and end indexes of the current page
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+
+  // Get the items to be displayed on the current page
+  const paginatedItems = filteredItems.slice(startIndex, endIndex);
+
+  // Update the current page
+  const changePage = (page) => {
+    setCurrentPage(page);
+  };
   return (
+
     <div className={styles.land}>
       <Navbarparent></Navbarparent>
       <body>
         <div>
           < DataFetcher />
         </div>
-        <div className={styles.menu}>
-          <ul className={styles['m-navbar']}>
-            <li
-              className={`${styles['m-navbar-item']} ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}
-              onClick={() => handleItemClick('تمام بوفه ها')}
-            >
-              تمام بوفه ها
-            </li>
-            <li
-              className={`${styles['m-navbar-item']} ${selectedItem === 'Item 2' ? styles.active : ''}`}
-              onClick={() => handleItemClick('Item 2')}
-            >
-              نام
-            </li>
-            <li
-              className={`${styles['m-navbar-item']} ${selectedItem === 'Item 3' ? styles.active : ''}`}
-              onClick={() => handleItemClick('Item 3')}
-            >
-              تاریخ تشکیل شده
-            </li>
-         
+        {items.length > 0 ? (
+  <div className={styles.menu}>
+    <ul className={styles['m-navbar']}>
+      <li
+        className={`${styles['m-navbar-item']} ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}
+        onClick={() => handleItemClick('تمام بوفه ها')}
+      >
+        تمام بوفه ها
+      </li>
+      <li
+        className={`${styles['m-navbar-item']} ${selectedItem === 'Item 2' ? styles.active : ''}`}
+        onClick={() => handleItemClick('Item 2')}
+      >
+        نام
+      </li>
+      <li
+        className={`${styles['m-navbar-item']} ${selectedItem === 'Item 3' ? styles.active : ''}`}
+        onClick={() => handleItemClick('Item 3')}
+      >
+        تاریخ تشکیل شده
+      </li>
+    </ul>
+    <div className={styles.content}>
+      <div className={`${styles['content-item']} ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}>
+        <div className="grid grid-cols-6 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {paginatedItems.map((item, index) => (
+            <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden custom-width" style={{ border: '1px solid rgb(38, 87, 124)', width: '300px' }}>
+              {organizations.length > 0 && organizations.find(org => org.id === item.organization)?.image_url && organizations.find(org => org.id === item.organization)?.image_url.toLowerCase().endsWith('.jpeg') ? (
+                <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
+                  <img src={'https://ghablameh.fiust.ir' + organizations.find(org => org.id === item.organization)?.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} alt={item.organization_name} />
+                </div>
+              ) : (
+                <div></div>
+              )}
+              <div className="p-4">
+                <h3 className="text-lg font-bold">{item.name}</h3>
+                <p className="text-gray-600">{item.organization_name}</p>
+                <p className="text-gray-600">{new Date(item.created_at).toLocaleDateString('fa-IR')}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-          </ul>
-          <div className={styles.content}>
-  <div className={`${styles['content-item']} ${selectedItem === 'تمام بوفه ها' ? styles.active : ''}`}>
+      <div className={`${styles['content-item']} ${selectedItem === 'Item 2' ? styles.active : ''}`}>
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      {items.map((item, index) => (
+    {filteredItems
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+      .map((item, index) => (
         <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden custom-width" style={{ border: '1px solid rgb(38, 87, 124)', width: '300px' }}>
           {organizations.length > 0 && organizations.find(org => org.id === item.organization)?.image_url && organizations.find(org => org.id === item.organization)?.image_url.toLowerCase().endsWith('.jpeg') ? (
             <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
               <img src={'https://ghablameh.fiust.ir' + organizations.find(org => org.id === item.organization)?.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} alt={item.organization_name} />
             </div>
           ) : (
-            <div style={{
-              height: "160px",
-         
-              backgroundImage: "repeating-conic-gradient(#26577c  0% 25%, #ffffff 0% 50%)",
-              backgroundPosition: "0 0, 32px 32px",
-              backgroundSize: "50px 50px",
-              opacity: '0.5'
-            }}
-            />
+            <div></div>
           )}
           <div className="p-4">
             <h3 className="text-lg font-bold">{item.name}</h3>
@@ -178,70 +207,70 @@ function ListOrg() {
           </div>
         </div>
       ))}
+  </div>
+</div>
+
+      <div className={`${styles['content-item']} ${selectedItem === 'Item 3' ? styles.active : ''}`}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+         
+
+{filteredItems
+  .slice()
+  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+  .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+  .map((item, index) => (
+    <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden" style={{ border: '1px solid rgb(38, 87, 124)', width: '300px' }}>
+      {organizations.length > 0 && organizations.find(org => org.id === item.organization)?.image_url && organizations.find(org => org.id === item.organization)?.image_url.toLowerCase().endsWith('.jpeg') ? (
+        <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
+          <img src={'https://ghablameh.fiust.ir' + organizations.find(org => org.id === item.organization)?.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} alt={item.organization_name} />
+        </div>
+      ) : (
+       <div></div>
+      )}
+      <div className="p-4">
+        <h3 className="text-lg font-bold">{item.name}</h3>
+        <p className="text-gray-600">{item.organization_name}</p>
+        <p className="text-gray-600">{new Date(item.created_at).toLocaleDateString('fa-IR')}</p>
+      </div>
+    </div>
+  ))}
+</div>
+        </div>
+   
+      <div class="pagination-container">
+  <button
+    class="pagination-button rounded-l-lg"
+    disabled={currentPage === 1}
+    onClick={() => changePage(currentPage - 1)}
+  >
+    قبلی
+  </button>
+  {Array.from({ length: Math.ceil(filteredItems.length / pageSize) }).map((_, index) => (
+    <button
+      key={index}
+      class={`pagination-button ${
+        currentPage === index + 1 ? 'pagination-button-active' : ''
+      }`}
+      onClick={() => changePage(index + 1)}
+    >
+      {index + 1}
+    </button>
+  ))}
+  <button
+    class="pagination-button rounded-r-lg"
+    disabled={currentPage === Math.ceil(filteredItems.length / pageSize)}
+    onClick={() => changePage(currentPage + 1)}
+  >
+    بعدی
+  </button>
+</div>
     </div>
   </div>
-  <div className={`${styles['content-item']} ${selectedItem === 'Item 2' ? styles.active : ''}`}>
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-    {filteredItems
-      .slice()
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .map((item, index) => (
-        <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden" style={{ border: '1px solid rgb(38, 87, 124)' ,  width: '300px' }}>
-        {organizations.length > 0 && organizations.find(org => org.id === item.organization)?.image_url && organizations.find(org => org.id === item.organization)?.image_url.toLowerCase().endsWith('.jpeg') ? (
-          <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
-            <img src={'https://ghablameh.fiust.ir' + organizations.find(org => org.id === item.organization)?.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} alt={item.organization_name} />
-          </div>
-        ) : (
-          <div style={{
-            height: "160px",
-            backgroundImage: "repeating-conic-gradient(#26577c  0% 25%, #ffffff 0% 50%)",
-            backgroundPosition: "0 0, 32px 32px",
-            backgroundSize: "50px 50px",
-            opacity: '0.5'
-          }}
-          />
-        )}
-         <div className="p-4">
-            <h3 className="text-lg font-bold">{item.name}</h3>
-            <p className="text-gray-600">{item.organization_name}</p>
-            <p className="text-gray-600">{new Date(item.created_at).toLocaleDateString('fa-IR')}</p>
-          </div>
-        </div>
-      ))}
-  </div>
-  </div>
-  <div className={`${styles['content-item']} ${selectedItem === 'Item 3' ? styles.active : ''}`}>
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-    {filteredItems
-      .slice()
-      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-      .map((item, index) => (
-        <div key={index} className="bg-white bg-opacity-50 shadow-md rounded-lg overflow-hidden" style={{ border: '1px solid rgb(38, 87, 124)', width: '300px' }}>
-        {organizations.length > 0 && organizations.find(org => org.id === item.organization)?.image_url && organizations.find(org => org.id === item.organization)?.image_url.toLowerCase().endsWith('.jpeg') ? (
-          <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
-            <img src={'https://ghablameh.fiust.ir' + organizations.find(org => org.id === item.organization)?.image_url} className="w-full h-full rounded-lg" style={{ objectFit: 'contain' }} alt={item.organization_name} />
-          </div>
-        ) : (
-          <div style={{
-            height: "160px",
-            backgroundImage: "repeating-conic-gradient(#26577c  0% 25%, #ffffff 0% 50%)",
-            backgroundPosition: "0 0, 32px 32px",
-            backgroundSize: "50px 50px",
-            opacity: '0.5'
-          }}
-          />
-        )}
-         <div className="p-4">
-            <h3 className="text-lg font-bold">{item.name}</h3>
-            <p className="text-gray-600">{item.organization_name}</p>
-            <p className="text-gray-600">{new Date(item.created_at).toLocaleDateString('fa-IR')}</p>
-          </div>
-        </div>
-      ))}
-  </div>
-</div>
-</div>
-        </div>
+) : (
+  <div className={styles['empty-message']}> </div>
+)}
+
+
       </body>
       {/* <ReservationCalendar/> */}
       <OrganizationList />
