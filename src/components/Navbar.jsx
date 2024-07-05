@@ -328,9 +328,10 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
         style={{
           display: "none",
           position: "absolute",
-          top: "10%",
-          right: "0",
+          top: "5",
+          // right: "0",
           maxHeight: "300px",
+          // opacity:'100%'
         }}
         ref={sideBar}
       >
@@ -339,19 +340,11 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
 
       {/* notifications */}
       <div
-        style={{
-          display: "none",
-          position: "absolute",
-          top: "10%",
-          right: "1%",
-          maxHeight: "300px",
-          width: "20%",
-          zIndex: "2",
-          backgroundColor: "white"
-        }}
+        className={styles.notifbox}
         ref={notification}
       >
         {AuthManager.isLoggedIn() && <Notificationbox />}
+        {/* <Notificationbox/> */}
       </div>
 
       {/* wallet */}

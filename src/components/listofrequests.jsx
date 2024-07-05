@@ -26,7 +26,7 @@ function ListOfJoinRequests() {
       const pendingRequests = response.data.filter((request) => request.status === "P");
 
       setRequests(pendingRequests);
-      console.log(pendingRequests)
+      // console.log(response.data[0].client.image_url)
 
       // console.log("requests: ", requests)
 
@@ -36,16 +36,16 @@ function ListOfJoinRequests() {
   };
 
   // //fetch requests every 5 seconds
-  // useEffect(() => {
-  //   // Fetch immediately for the first time
-  //   fetchRequests();
-  //   const interval = setInterval(() => {
-  //     fetchRequests();
-  //   }, 5000); // (fetch every 5 seconds)
+  useEffect(() => {
+    //   // Fetch immediately for the first time
+    fetchRequests();
+    //   const interval = setInterval(() => {
+    //     fetchRequests();
+    //   }, 5000); // (fetch every 5 seconds)
 
-  //   // Clear the interval when the component is unmounted
-  //   return () => clearInterval(interval);
-  // });
+    //   // Clear the interval when the component is unmounted
+    //   return () => clearInterval(interval);
+  }, []);
 
   //patch requests
   const handleaccept = async () => {
@@ -127,7 +127,7 @@ function ListOfJoinRequests() {
 
   const ListOfUserRequests = () => (
     <div style={{ border: '1px solid rgb(38, 87, 124)', borderRadius: '8px', width: '50vw', backgroundColor: 'rgba(255, 255, 255,0.6)' }} className="w-64  font-medium text-gray-900  rounded-lg">
-      <h2 className="text-xl font-semibold text-gray-800  text-center py-3 px-2" style={{ borderBottom: '1px solid rgb(38, 87, 124)',fontSize: isBigScreen ? '1.3rem' : '1rem' }}> لیست درخواست ها </h2>
+      <h2 className="text-xl font-semibold text-gray-800  text-center py-3 px-2" style={{ borderBottom: '1px solid rgb(38, 87, 124)', fontSize: isBigScreen ? '1.3rem' : '1rem' }}> لیست درخواست ها </h2>
 
       {isBigScreen && requests.length > 0 && (
         <ul className="w-full">
@@ -141,15 +141,36 @@ function ListOfJoinRequests() {
                 {/* <div style={{ backgroundColor: 'rgb(38, 87, 124)', color: 'white', borderRadius: '5px', height: '3vh', width: '5vw' }} className="rounded p-1 mx-5 flex  items-center justify-center">
                   {user.organization_name}
                 </div> */}
-                <div className="flex items-center">
+                <div className="flex flex-rowitems-center">
                   <div className="ml-3 text-base">
-                    <div style={{ fontSize: '1.3rem' }}>{user.client_name}</div>
+                    <div style={{ fontSize: '1.3rem' }}>{user.client.first_name} {user.client.last_name}</div>
                   </div>
-                  {user.img_url ? (
-                    <img src={user.avatar} alt={`${user.client_name}`} className="h-11 w-11 rounded-full" />
+                  {/* {user.client.image_url ? (
+                    // <img src={user.avatar} alt={`${user.client_name}`} className="h-11 w-11 rounded-full" />
+                    <div className="overflow-hidden h-40" style={{ padding: '10px' }}>
+                      <img src={'https://ghablameh.fiust.ir' + user.client.image_url} className="w-4 h-4 rounded-lg" style={{ objectFit: 'contain' }} />
+                    </div>
                   ) : (
-                    <Avatar name={`${user.client_name}`} size={44} round={true} maxInitials={1} />
-                  )}
+                    <Avatar name={`${user.client.first_name}`} size={44} round={true} maxInitials={1} />
+                  )} */}
+
+
+<div className={`flex items-center ml-1`}>
+          {user.client.image_url ? (
+            <img src={'https://ghablameh.fiust.ir' + user.client.image_url} alt={`${user.client_name}`} style={{ width: isBigScreen ? "2.7rem" : "2.1rem", height: isBigScreen ? "2.7rem" : "2.1rem", borderRadius: "50%" }} />
+          ) : (
+            <Avatar
+              // onClick={toggleDropdown}
+              name={`${user.client.first_name}`} 
+              size={isBigScreen ? "50" : "45"}
+              round={true}
+              maxInitials={1}
+            />
+          )}
+        </div>
+
+
+
                 </div>
 
 
@@ -219,7 +240,7 @@ function ListOfJoinRequests() {
                 <div className='mx-2'>
                   <button style={{ background: '#ff5e14' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => setShowAcceptModel(false)}>خیر</button>
                 </div>
-                <div className='mx-2'><button style={{ background:'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handleaccept()}>بله</button>
+                <div className='mx-2'><button style={{ background: 'rgb(38, 87, 124)' }} className="text-white font-bold py-1 px-3 rounded" onClick={() => handleaccept()}>بله</button>
                 </div></div>
             </div>
           </div>

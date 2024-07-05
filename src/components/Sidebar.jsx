@@ -106,6 +106,9 @@ export default function DefaultSidebar() {
           <MenuItem component={<Link to='/orgpage' />}>
             مدیریت بوفه ها
           </MenuItem>
+          <MenuItem component={<Link to='/weeklymenu2' />}>
+           مشاهده منو هفتگی بوفه ها 
+          </MenuItem>
           
         </Menu>
       </Sidebar>

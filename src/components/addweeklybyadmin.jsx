@@ -523,29 +523,31 @@ const AddWeeklyMenu = () => {
             <h3 className={style.h33}> اضافه کردن غذا در منو هفتگی </h3>
             <hr style={{ border: '0.5px solid #bdbdbd', width: '15rem', marginTop: '0.5rem', marginBottom: '0.5rem' }} />
             <div className='my-2'></div>
-            <Select
-              className={style.selectt}
-              onChange={handleFoodChange}
-              options={
-                foods.results
-                  ? foods.results.map((food) => ({
-                    value: food.id,
-                    label: food.name,
-                  }))
-                  : []
-              }
-              placeholder="انتخاب غذا"
-              theme={(theme) => ({
-                ...theme,
-                colors: {
-                  ...theme.colors,
-                  text: 'de6016',
-                  primary: 'rgb(38, 87, 124)',
-                  primary25: 'rgba(38, 87, 124,0.4)',
-                }
-              })}
-            />
 
+
+           
+            <Select
+      className={style.selectt}
+      onChange={handleFoodChange}
+      options={
+        foods.length > 0
+          ? foods.map((food) => ({
+              value: food.id,
+              label: food.name,
+            }))
+          : []
+      }
+      placeholder="انتخاب غذا"
+      theme={(theme) => ({
+        ...theme,
+        colors: {
+          ...theme.colors,
+          text: 'de6016',
+          primary: 'rgb(38, 87, 124)',
+          primary25: 'rgba(38, 87, 124,0.4)',
+        },
+      })}
+    />
             <Select
               className={style.selectt}
               onChange={handleMealChange}

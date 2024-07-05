@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import Slider from "react-slick";
 import styles from './FlexLayout.module.css';
 import axios from "axios";
-
+import './pagination.css'
 const AutoPlayMethods = () => {
   const [topOrganizations, setTopOrganizations] = useState([]);
   const sliderRef = useRef(null);

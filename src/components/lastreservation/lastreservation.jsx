@@ -44,29 +44,31 @@ const ReservationCalendar = () => {
 
   return (
     <div className={styles.app}>
-      {/* <Navbarparent /> */}
-      <div className={styles.card}>
-        <div className={styles.cardcontent}>
-          <div className={styles.icon}>
-            <div className={styles.circle}>
-              <img src={cup} alt="" />
-            </div>
-          </div>
-          <strong>
-            <h3>رزرو های آینده</h3>
-          </strong>
-          {reservations.map((reservation, index) => (
-            <div key={index}>
-              <p>Organization: {reservation.buffet.organization_name}</p>
-              <p>Food: {reservation.meal_food.food.name}</p>
-              <p>Buffet: {reservation.buffet.name}</p>
-              <p>Date: {moment(reservation.created_at).format('YYYY-MM-DD')}</p>
-            </div>
-          ))}
-         
+  {/* <Navbarparent /> */}
+  <div className={styles.card}>
+    <div className={styles.cardcontent}>
+      <div className={styles.icon}>
+        <div className={styles.circle}>
+          <img src={cup} alt="" />
         </div>
       </div>
+      <strong>
+        <h3> آخرین رزرو </h3>
+      </strong>
+      {reservations.map((reservation, index) => (
+        <div key={index}>
+          <p>نام سازمان: {reservation.buffet.organization_name}</p>
+          <p>غذا: {reservation.meal_food.food.name}</p>
+          <p>بوفه: {reservation.buffet.name}</p>
+          <p>تاریخ : {new Date(reservation.created_at).toLocaleDateString('fa-IR')}</p>
+        </div>
+      ))}
     </div>
+  </div>
+
+  
+
+</div>
   );
 };
 

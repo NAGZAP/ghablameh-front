@@ -37,6 +37,7 @@ import AuthManager from "./APIs/AuthManager";
 import { useEffect } from "react";
 import { useState } from "react";
 import Landing from "./landing/landing";
+import Adminfoodtable from "./components/adminfoodtable";
 // 1== Org 2 == User 3 == no-log or sign
 function App() {
   const [userRole, setUserRole] = useState(null);
@@ -104,7 +105,7 @@ function App() {
           {/* <Route path="/Response" element={<Response />} /> */}
           {/* <Route path="/panel" element={<Panel />} /> */}
           {/* <Route path="/weeklymenu2" element={<WeeklyMenu />} /> admin */}
-          {userRole === 1 && <Route path="/weeklymenu2" element={<WeeklyMenu />} />}
+          {userRole === 1 && <Route path="/weeklymenu2" element={<Adminfoodtable />} />}
           {userRole === 3 && <Route path="/weeklymenu2" element={<Login />} />}
           <Route path="/last" element={<ReservationCalendar />} />
           {/* <Route path="/forgetpassword" element={<ForgetPasswordWindow />} /> */}
@@ -129,6 +130,7 @@ function App() {
           {userRole === 1 && <Route path="/addweeklymenu" element={<AddWeeklyMenu />} />}
           {userRole === 3 && <Route path="/addweeklymenu" element={<Login />} />}
           <Route path="/landing" element={<Landing />} />
+          {/* <Route path="/weeklymenu2" element={<Adminfoodtable />} /> */}
         </Routes>
         <Footer />
       </div>
