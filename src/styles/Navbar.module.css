@@ -26,3 +26,27 @@
   width: 100%;
   padding: 0 !important; */
 }
+
+.notifbox {
+  display: none;
+  position: absolute;
+  top: 8%;
+  right: 1%;
+  max-height: 300px;
+  width: 20%;
+  z-index: 2;
+  background-color: white
+}
+
+@media (max-width:800px) {
+  .notifbox {
+    display: none;
+    position: absolute;
+    top: 8%;
+    right: 1%;
+    max-height: 300px;
+    width: 50%;
+    z-index: 2;
+    background-color: white
+  }
+}

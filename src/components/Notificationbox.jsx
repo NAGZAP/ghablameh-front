@@ -18,19 +18,11 @@ const Notificationbox = () => {
       setData(alldata.data);
       setCount(alldata.count);
       const token = AuthManager.getToken();
-<<<<<<< HEAD
       const ws = new WebSocket(`ws://ghablameh.fiust.ir/ws/notifications/?token=${token}`);
       ws.onopen = () => {
         console.log("SUUUUUUUUUUUUUUUUUUUUU")
       };
       ws.onmessage = (event)=> {
-=======
-      const ws = new WebSocket(`ws://your-websocket-server.com?token=${token}`);
-      ws.onopen(() => {
-
-      });
-      ws.onmessage((event) => {
->>>>>>> 33fc854b2e827d90f8e6fbf3fb1424968462c540
         const newMessage = event.data;
         setData((prevdata) => [...prevdata, newMessage]);
       }
