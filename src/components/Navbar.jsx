@@ -352,6 +352,7 @@ const Navbar = ({ openWallet, setOpenWallet }) => {
         ref={notification}
       >
         {AuthManager.isLoggedIn() && <Notificationbox />}
+        {/* <Notificationbox/> */}
       </div>
 
       {/* wallet */}

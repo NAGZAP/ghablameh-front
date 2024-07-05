@@ -230,8 +230,8 @@ margin-bottom: 80px;
   }
   
   .m-navbar-item.active {
-    background-color: #67ace1;
-    border-color: rgb(43, 100, 207); /* Change the border color to red for the active item */
+    background-color: #ff5e14;
+    border-color:#ab4414 ; /* Change the border color to red for the active item */
   }
   
   .content {
@@ -521,4 +521,20 @@ margin-bottom: 80px;
   padding: 16px;
   width: 100%;
   box-sizing: border-box;
+}
+
+/* Navbar container */
+
+
+/* Navbar container */
+.m-navbar {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000;
+  border-radius: 4px;
+  padding: 8px;
+  max-width: 800px; /* Adjust the maximum width as per your needs */
+  margin: 0 auto; /* Center the container horizontally */
 }
